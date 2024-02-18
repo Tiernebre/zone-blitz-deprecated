@@ -35,6 +35,7 @@ jobs:
             git clone ${{ github.repositoryUrl }} ${{ env.DIRECTORY }} || echo 'already cloned'
             cd ${{ env.DIRECTORY }}
             git pull
+            docker-compose pull
             docker-compose down || echo 'no existing docker image'
             docker-compose up -d 
       - name: Verify deployment was successful
