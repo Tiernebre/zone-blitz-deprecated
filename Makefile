@@ -1,5 +1,5 @@
 .PHONY: serve
-serve: compile assets-build run
+serve: compile run
 
 .PHONY: run
 run:
@@ -7,6 +7,7 @@ run:
 
 .PHONY: compile
 compile:
+	npm run build
 	mvn compile assembly:single -q
 
 .PHONY: test
@@ -20,12 +21,4 @@ clean:
 
 .PHONY: format
 format:
-	npm run format
-
-.PHONY: assets-build
-assets-build:
-	npm run build
-	
-.PHONY: fmt
-fmt:
 	npm run format
