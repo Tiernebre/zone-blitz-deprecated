@@ -5,7 +5,7 @@ COPY . .
 
 RUN apk add openjdk21 maven make npm
 RUN make compile
-RUN apk remove npm
+RUN apk del npm
 
 EXPOSE 8000
 
