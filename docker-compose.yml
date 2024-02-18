@@ -15,4 +15,4 @@ services:
   web:
     image: brendantierney/zone-blitz:latest
     labels:
-      - "traefik.http.routers.web.rule=Host(`localhost`)"
+      - "traefik.http.routers.web.rule=HostRegexp(`{any:.+}`)"
