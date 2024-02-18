@@ -23,4 +23,4 @@ services:
   web:
     image: brendantierney/zone-blitz:latest
     labels:
-      - "traefik.http.routers.web.rule=Host(`zoneblitz.app`)"
+      - "traefik.http.routers.web.rule=Host(`zoneblitz.app`, `localhost`)"
