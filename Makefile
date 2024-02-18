@@ -6,7 +6,8 @@ run:
 	java -jar target/zone-blitz-1.0-SNAPSHOT.jar
 
 .PHONY: compile
-compile: assets-build
+compile:
+	npm run build
 	mvn compile assembly:single -q
 
 .PHONY: test
@@ -22,10 +23,6 @@ clean:
 format:
 	npm run format
 
-.PHONY: assets-build
-assets-build:
-	npm run build
-	
 .PHONY: fmt
 fmt:
 	npm run format
