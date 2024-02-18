@@ -1,0 +1,24 @@
+{
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "context": "."
+  },
+  "forwardPorts": [
+    8000
+  ],
+  "postCreateCommand": ".devcontainer/post-create-command.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-gradle",
+        "ms-vscode.makefile-tools",
+        "imgildev.vscode-mustache-snippets",
+        "humao.rest-client",
+        "antfu.unocss",
+        "redhat.fabric8-analytics",
+        "github.vscode-github-actions"
+      ]
+    }
+  }
+}

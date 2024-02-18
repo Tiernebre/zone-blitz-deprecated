@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "build": "npm run build:htmx && npm run build:unocss",
+    "build:htmx": "cp node_modules/htmx.org/dist/htmx.min.js src/main/resources/assets/htmx.js ",
+    "build:unocss": "unocss \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css",
+    "format": "prettier --write **/*.{java,xml}",
+    "lint": "prettier --check **/*.{java,xml}",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@prettier/plugin-xml": "^3.2.2",
+    "htmx.org": "^1.9.10",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.1",
+    "prettier-plugin-java": "^2.5.0",
+    "unocss": "^0.58.3"
+  },
+  "lint-staged": {
+    "*.{java,xml}": "prettier --write"
+  }
+}
