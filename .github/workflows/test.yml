@@ -27,6 +27,6 @@ jobs:
       - name: Verify image runs with correct assets
         uses: jtalk/url-health-check-action@v4
         with:
-          url: http://localhost:8000|http://localhost:8000/assets/htmx.js|http://localhost:8000/assets/styles.css
+          url: http://127.0.0.1:8000|http://127.0.0.1:8000/assets/htmx.js|http://127.0.0.1:8000/assets/styles.css
           max-attempts: 10
           retry-delay: 5s
