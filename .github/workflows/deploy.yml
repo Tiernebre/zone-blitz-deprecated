@@ -5,6 +5,7 @@ on:
     branches: [ main ]
 
 env:
+  DIRECTORY: zone-blitz
   DOCKER_IMAGE: brendantierney/zone-blitz:latest
   DOCKER_NAME: zone-blitz
       
@@ -31,9 +32,12 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY}}
           script: |
-            docker stop ${{ env.DOCKER_NAME }}
-            docker rm -f ${{ env.DOCKER_NAME }}
-            docker run --name ${{ env.DOCKER_NAME }} -d -p 80:8000 ${{ env.DOCKER_IMAGE }}
+            git clone ${{ github.repositoryUrl }} ${{ env.DIRECTORY }} || echo 'already cloned'
+            cd ${{ env.DIRECTORY }}
+            git pull
+            docker-compose pull
+            docker-compose down || echo 'no existing docker image'
+            docker-compose up -d 
       - name: Verify deployment was successful
         uses: jtalk/url-health-check-action@v4
         with:

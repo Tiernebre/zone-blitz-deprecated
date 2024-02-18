@@ -17,7 +17,8 @@
         "humao.rest-client",
         "antfu.unocss",
         "redhat.fabric8-analytics",
-        "github.vscode-github-actions"
+        "github.vscode-github-actions",
+        "william-voyek.vscode-nginx"
       ]
     }
   }
