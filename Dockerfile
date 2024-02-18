@@ -1,5 +1,6 @@
 FROM alpine:3.19
 
+WORKDIR /usr/app
 COPY . .
 
 RUN apk add openjdk21 maven make npm
