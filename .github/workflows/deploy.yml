@@ -32,9 +32,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY}}
           script: |
-            git clone ${{ github.repositoryUrl }} ${{ env.DIRECTORY }} || echo 'already cloned'
-            cd ${{ env.DIRECTORY }}
-            git pull
+            wget -O https://raw.githubusercontent.com/Tiernebre/zone-blitz/main/docker-compose.yml
             docker-compose pull
             docker-compose down || echo 'no existing docker image'
             docker-compose up -d 
