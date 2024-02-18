@@ -1,21 +1,25 @@
 name: Test
 
 on: push
+  
+env:
+  PORT: 8000
+  URL: http://127.0.0.1:8000
 
 jobs:
-  test:
-    name: Test
+  unit-test:
+    name: Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build and run Dev Container for testing
+      - name: Run unit tests in development container
         uses: devcontainers/ci@v0.3
         with:
           runCmd: make test
 
-  test-docker:
-    name: Test Docker Build
+  smoke-test:
+    name: Smoke Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,11 +27,11 @@ jobs:
       - name: Build Docker image
         run: docker build -t brendantierney/zone-blitz:latest .
       - name: Run Docker image
-        run: docker run -d -p 8000:8000 brendantierney/zone-blitz:latest
-      - name: Verify image runs with correct assets
+        run: docker run -d -p $PORT:$PORT brendantierney/zone-blitz:latest
+      - name: Verify app runs and serves healthy responses
         uses: jtalk/url-health-check-action@v4
         with:
-          url: http://127.0.0.1:8000|http://127.0.0.1:8000/assets/htmx.js|http://127.0.0.1:8000/assets/styles.css
+          url: ${{ env.URL }}|${{ env.URL }}/assets/htmx.js|${{ env.URL }}/assets/styles.css
           max-attempts: 10
           retry-delay: 5s
           retry-all: true
