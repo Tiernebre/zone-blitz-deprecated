@@ -7,6 +7,8 @@ run:
 
 .PHONY: compile
 compile:
+	npm ci
+	mvn dependency:resolve
 	npm run build
 	mvn compile assembly:single -q
 
