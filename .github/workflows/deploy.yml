@@ -1,5 +1,4 @@
 name: Deploy
-run-name: ${{ github.actor }} is deploying a change.
 
 on:
   push:

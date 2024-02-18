@@ -1,6 +1,6 @@
 FROM alpine:3.19
 
-RUN apk add openjdk21 fish make git openssh-client maven nodejs npm R
+RUN apk add openjdk21 fish make git openssh-client maven nodejs npm R bash
 
 # shell setup
 SHELL ["fish", "--command"]
