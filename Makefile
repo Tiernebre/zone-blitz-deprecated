@@ -1,12 +1,12 @@
 .PHONY: serve
-serve: compile assets-build run
+serve: compile run
 
 .PHONY: run
 run:
 	java -jar target/zone-blitz-1.0-SNAPSHOT.jar
 
 .PHONY: compile
-compile:
+compile: assets-build
 	mvn compile assembly:single -q
 
 .PHONY: test
