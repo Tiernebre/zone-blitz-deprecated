@@ -22,7 +22,3 @@ clean:
 .PHONY: format
 format:
 	npm run format
-
-.PHONY: fmt
-fmt:
-	npm run format
