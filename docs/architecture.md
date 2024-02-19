@@ -37,6 +37,16 @@ Of course, we have the usual drawbacks of a monolith (scaling concerns, too much
 - [Javalin](https://javalin.io/): HTTP Web framework used for serving HTTP routes and infrastructure.
 - [jstachio](https://github.com/jstachio/jstachio): HTML Template Engine.
 
+## Data Science
+
+### Technology Stack
+
+- [R](https://www.r-project.org/about.html)
+
+### Libraries and Frameworks
+
+- [nflfastR](https://www.nflfastr.com/)
+
 ## Operations Stack
 
 - [Docker](https://www.docker.com/)
