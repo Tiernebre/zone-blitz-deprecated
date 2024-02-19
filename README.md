@@ -8,9 +8,14 @@ You can think of this simulator as being the american football version of popula
 [Out of the Park Baseball](https://www.ootpdevelopments.com/out-of-the-park-baseball-home/) or
 [Football Manager](https://www.footballmanager.com/).
 
+### Status
+
+Zone Blitz is in a pre-alpha stage of development, and still needs to implement even basic
+business logic. See [roadmap](#roadmap) for more details!
+
 ### Roadmap
 
-Zone Blitz still has a _ways_ to go, and is currently **not** a proof-of-concept product. Progress
+Zone Blitz still has a _ways_ to go, and is **currently not a working proof-of-concept product**. Progress
 is being made steadily though! Below are the high level goals I wish to accomplish before calling
 Zone Blitz a working minimum viable alpha proof-of-concept:
 
