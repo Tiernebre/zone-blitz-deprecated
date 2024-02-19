@@ -36,3 +36,11 @@ Follow the instructions below if you wish to develop and contribute to zone blit
 4. Wait for the container window to load and the post create compilation command to finish.
 5. Run `make` to serve zone blitz. You should start seeing logs and eventually see a prompt for the Java server running.
 6. Navigate to `http://localhost:8000` in a browser of your choice. You should now see zone blitz running in development mode.
+
+## Authors
+
+- [Brendan Tierney](https://tiernebre.com)
+
+## License
+
+This project is licensed under the GNU GENERAL PUBLIC LICENSE Version 3. See [LICENSE](LICENSE) for details.
