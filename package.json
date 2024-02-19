@@ -5,8 +5,8 @@
     "build:unocss": "unocss \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css",
     "dev:htmx": "cp node_modules/htmx.org/dist/htmx.js src/main/resources/assets/htmx.js ",
     "dev:unocss": "unocss --watch \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css",
-    "format": "prettier --write **/*.{java,xml,md,yml}",
-    "lint": "prettier --check **/*.{java,xml,md,yml}",
+    "format": "prettier --write **/*.{java,xml,md,yml,mustache}",
+    "lint": "prettier --check **/*.{java,xml,md,yml,mustache}",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -19,6 +19,6 @@
     "unocss": "^0.58.3"
   },
   "lint-staged": {
-    "*.{java,xml,md,yml}": "prettier --write"
+    "*.{java,xml,md,yml,mustache}": "prettier --write"
   }
 }
