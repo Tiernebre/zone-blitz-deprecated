@@ -20,7 +20,12 @@
         "github.vscode-github-actions",
         "william-voyek.vscode-nginx",
         "bierner.markdown-mermaid"
-      ]
+      ],
+      "settings": {
+        "unocss.include": [
+          "src/main/resources/templates/**/*.mustache"
+        ]
+      }
     }
   }
 }
