@@ -3,7 +3,7 @@ FROM alpine:3.19
 WORKDIR /usr/app
 COPY . .
 
-RUN apk add openjdk21 fish make git openssh-client maven nodejs npm R bash
+RUN apk add openjdk21 fish make git openssh-client maven nodejs npm R bash inotify-tools
 
 # shell setup
 SHELL ["fish", "--command"]

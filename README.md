@@ -41,6 +41,15 @@ Follow the instructions below if you wish to develop and contribute to zone blit
 5. Run `make` to serve zone blitz. You should start seeing logs and eventually see a prompt for the Java server running.
 6. Navigate to `http://localhost:8000` in a browser of your choice. You should now see zone blitz running in development mode.
 
+#### Hot Reload Support
+
+If you don't want to run `make` everytime you make changes, you can run this script which will watch for file changes
+and restart the server to reflect your new changes:
+
+```sh
+./bin/dev.sh
+```
+
 #### Testing
 
 You can run the unit testing suite by just running the following command in your [development environment](#environment).

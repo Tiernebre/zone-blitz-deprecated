@@ -1,16 +1,25 @@
 .PHONY: serve
 serve: compile run
 
+.PHONY: dev
+dev: clean build run
+
 .PHONY: run
 run:
 	java -jar target/zone-blitz-1.0-SNAPSHOT.jar
 
 .PHONY: compile
-compile:
-	npm ci
-	mvn dependency:resolve
+compile: clean install build
+
+.PHONY: build
+build:
 	npm run build
 	mvn compile assembly:single -q
+
+.PHONY: install
+install:
+	npm ci
+	mvn dependency:resolve
 
 .PHONY: test
 test:
