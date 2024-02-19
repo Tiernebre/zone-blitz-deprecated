@@ -2,13 +2,13 @@ name: Deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 env:
   DIRECTORY: zone-blitz
   DOCKER_IMAGE: brendantierney/zone-blitz:latest
   DOCKER_NAME: zone-blitz
-      
+
 jobs:
   deploy:
     name: Deploy
@@ -35,11 +35,10 @@ jobs:
             wget -O docker-compose.yml https://raw.githubusercontent.com/Tiernebre/zone-blitz/main/docker-compose.yml
             docker-compose pull
             docker-compose down || echo 'no existing docker image'
-            docker-compose up -d 
+            docker-compose up -d
       - name: Verify deployment was successful
         uses: jtalk/url-health-check-action@v4
         with:
           url: https://zoneblitz.app
           max-attempts: 3
           retry-delay: 5s
-        
