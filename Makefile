@@ -9,7 +9,7 @@ run:
 	java -jar target/zone-blitz-1.0-SNAPSHOT.jar
 
 .PHONY: compile
-compile: clean build install
+compile: clean install build
 
 .PHONY: build
 build:
