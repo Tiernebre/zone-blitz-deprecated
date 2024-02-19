@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Zone Blitz</title>
+    <meta
+      name="description"
+      content="{{$description}}American football manager simulator{{/description}}"
+    />
+    <title>{{$title}}Zone Blitz{{/title}}</title>
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -23,8 +27,9 @@
       href="assets/favicon-16x16.png"
     />
     <link rel="manifest" href="assets/site.webmanifest" />
+    <link rel="stylesheet" href="assets/reset.css" />
     <link rel="stylesheet" href="assets/styles.css" />
-    <script src="assets/htmx.js"></script>
+    {{$head}}{{/head}}
   </head>
   <body>
     {{$body}}{{/body}}

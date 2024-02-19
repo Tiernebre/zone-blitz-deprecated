@@ -1,16 +1,16 @@
 {
   "scripts": {
-    "build": "npm run build:htmx && npm run build:unocss",
+    "build": "npm run build:htmx && npm run build:css-reset && npm run build:unocss",
     "build:htmx": "cp node_modules/htmx.org/dist/htmx.min.js src/main/resources/assets/htmx.js ",
+    "build:css-reset": "cp node_modules/@unocss/reset/tailwind.css src/main/resources/assets/reset.css",
     "build:unocss": "unocss \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css",
-    "dev:htmx": "cp node_modules/htmx.org/dist/htmx.js src/main/resources/assets/htmx.js ",
-    "dev:unocss": "unocss --watch \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css",
     "format": "prettier --write **/*.{java,xml,md,yml,mustache}",
     "lint": "prettier --check **/*.{java,xml,md,yml,mustache}",
     "prepare": "husky install"
   },
   "dependencies": {
     "@prettier/plugin-xml": "^3.2.2",
+    "@unocss/reset": "^0.58.5",
     "htmx.org": "^1.9.10",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
