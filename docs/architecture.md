@@ -3,9 +3,12 @@
 ```mermaid
 flowchart LR
   client[Web Browser Client]
+  proxy[Traefik Proxy]
   server[Monolith HTTP Server]
-  client -- HTTP requests --> server
-  server -- HTML, static files --> client
+  client -- HTTP requests --> proxy
+  server -- HTML, static files --> proxy
+  proxy -- forwarded request with SSL termination--> server
+  proxy -- forwarded response --> client
 ```
 
 ## Philosophy
