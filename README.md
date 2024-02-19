@@ -15,7 +15,7 @@ business logic. See [roadmap](./docs/roadmap.md) for more details!
 
 ### [Documentation](./docs/README.md)
 
-If you wish to learn more about the technical direction, product roadmap, explanations of decisions made, or
+If you wish to learn in great (and sometimes verbose) detail more about the technical direction, product roadmap, explanations of decisions made, or
 want to learn about my mindset with developing software products do check out the [documentation](./docs/README.md)!
 
 ## Getting started
