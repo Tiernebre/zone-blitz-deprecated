@@ -57,7 +57,7 @@ Follow the instructions below if you wish to develop and contribute to zone blit
 
 ## Contributing
 
-Contributing is currently closed off
+Contributing is currently closed off _until_ an alpha launch has been fully published. Please see the above [roadmap](#roadmap) for more details.
 
 ## Authors
 
