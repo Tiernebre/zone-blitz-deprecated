@@ -24,6 +24,8 @@ Below is a visual sequence diagram of the steps taken on the automated deploymen
 ```mermaid
 sequenceDiagram
   actor EU as End User
+  actor D as Developer
+  D->>GitHub: Merge in a pull request onto `main`.
   activate GitHub
   GitHub->>Dockerhub: Build and Publish `zone-blitz:latest` docker image.
   activate Dockerhub
