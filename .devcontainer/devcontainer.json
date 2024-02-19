@@ -18,7 +18,8 @@
         "antfu.unocss",
         "redhat.fabric8-analytics",
         "github.vscode-github-actions",
-        "william-voyek.vscode-nginx"
+        "william-voyek.vscode-nginx",
+        "bierner.markdown-mermaid"
       ]
     }
   }

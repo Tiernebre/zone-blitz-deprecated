@@ -11,31 +11,12 @@ You can think of this simulator as being the american football version of popula
 ### Status
 
 Zone Blitz is in a pre-alpha stage of development, and still needs to implement even basic
-business logic. See [roadmap](#roadmap) for more details!
+business logic. See [roadmap](./docs/roadmap.md) for more details!
 
-### Roadmap
+### [Documentation](./docs/README.md)
 
-Zone Blitz still has a _ways_ to go, and is **currently not a working proof-of-concept product**. Progress
-is being made steadily though! Below are the high level goals I wish to accomplish before calling
-Zone Blitz a working minimum viable alpha proof-of-concept:
-
-- Game logic and rules engine with accurate and realistic statistics.
-- Management logic to set depth charts, rosters, coaching staffs, free agency, and drafting.
-- Player progression and regression based on performance, age, and other factors.
-- Ability to simulate full seasons with AI / CPU managed teams with working year-to-year progression and schedule management.
-- Web interface for users to login and manage their leagues and teams.
-
-For an alpha launch, the above goals are going to be purposefully _just good enough_ in exchange
-for getting a working proof-of-concept out soon.
-
-Beta launch will start to really hone in and refine the quality of the goals above, along with
-brainstorming some brand new, innovative goals.
-
-### Technology stack
-
-- [Java via OpenJDK](https://openjdk.org/)
-- [HTMX](https://htmx.org/)
-- [UnoCSS](https://unocss.dev/)
+If you wish to learn in great (and sometimes verbose) detail more about the technical direction, product roadmap, explanations of decisions made, or
+want to learn about my mindset with developing software products do check out the [documentation](./docs/README.md)!
 
 ## Getting started
 
@@ -60,9 +41,17 @@ Follow the instructions below if you wish to develop and contribute to zone blit
 5. Run `make` to serve zone blitz. You should start seeing logs and eventually see a prompt for the Java server running.
 6. Navigate to `http://localhost:8000` in a browser of your choice. You should now see zone blitz running in development mode.
 
+#### Testing
+
+You can run the unit testing suite by just running the following command in your [development environment](#environment).
+
+```sh
+make test
+```
+
 ## Contributing
 
-Contributing is currently closed off _until_ an alpha launch has been fully published. Please see the above [roadmap](#roadmap) for more details.
+Contributing is currently closed off _until_ an alpha launch has been fully published. Please see the above [roadmap](./docs/roadmap.md) for more details.
 
 ## Authors
 
