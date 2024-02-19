@@ -24,16 +24,15 @@ Follow the instructions below if you wish to develop and contribute to zone blit
 
 - [docker](https://www.docker.com/products/docker-desktop/)
 - [vscode](https://code.visualstudio.com/)
-    - Dev containers is the supported containerized tooling for zone blitz. Using a different IDE could work, but is not and will not be supported.
+  - Dev containers is the supported containerized tooling for zone blitz. Using a different IDE could work, but is not and will not be supported.
 
 #### Environment
 
-1. Clone the repository. 
-    - ```git clone https://github.com/Tiernebre/zone-blitz```
+1. Clone the repository.
+   - `git clone https://github.com/Tiernebre/zone-blitz`
 2. Open the cloned folder within VSCode.
 3. VSCode will prompt you about the dev container support. Run the project within the dev container.
-    - if not prompted, execute the shortcut `Cmd + Shift + P` then type `Dev Containers: Rebuild and Reopen`.
+   - if not prompted, execute the shortcut `Cmd + Shift + P` then type `Dev Containers: Rebuild and Reopen`.
 4. Wait for the container window to load and the post create compilation command to finish.
 5. Run `make` to serve zone blitz. You should start seeing logs and eventually see a prompt for the Java server running.
 6. Navigate to `http://localhost:8000` in a browser of your choice. You should now see zone blitz running in development mode.
-
