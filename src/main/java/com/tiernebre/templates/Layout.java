@@ -2,5 +2,5 @@ package com.tiernebre.templates;
 
 import io.jstach.jstache.JStache;
 
-@JStache(path = "templates/layout.mustache")
+@JStache(path = "layout")
 public record Layout() {}
