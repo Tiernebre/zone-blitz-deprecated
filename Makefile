@@ -6,7 +6,7 @@ run:
 	java -jar target/zone-blitz-1.0-SNAPSHOT.jar
 
 .PHONY: compile
-compile:
+compile: clean
 	npm ci
 	mvn dependency:resolve
 	npm run build
