@@ -1,6 +1,6 @@
 package com.tiernebre;
 
-import com.tiernebre.templates.Hello;
+import com.tiernebre.web.templates.Hello;
 import io.javalin.Javalin;
 import io.jstach.jstachio.JStachio;
 
