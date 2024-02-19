@@ -13,13 +13,9 @@ You can think of this simulator as being the american football version of popula
 Zone Blitz is in a pre-alpha stage of development, and still needs to implement even basic
 business logic. See [roadmap](./docs/roadmap.md) for more details!
 
+### [Architecture](./docs/architecture.md)
+
 ### [Roadmap](./docs/roadmap.md)
-
-### Technology stack
-
-- [Java via OpenJDK](https://openjdk.org/)
-- [HTMX](https://htmx.org/)
-- [UnoCSS](https://unocss.dev/)
 
 ## Getting started
 
