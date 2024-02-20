@@ -3,7 +3,7 @@ package com.tiernebre.util;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.tiernebre.engine.util.PercentageCalculator;
+import com.tiernebre.game_simulation.util.PercentageCalculator;
 import java.util.Random;
 import org.junit.Test;
 
