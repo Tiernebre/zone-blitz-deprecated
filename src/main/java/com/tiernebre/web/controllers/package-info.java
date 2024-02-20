@@ -1,5 +1,5 @@
 /**
- * HTTP based controllers for Zone Blitz.
+ * HTTP and Web Socket based controllers for Zone Blitz.
  *
  * Logic of the controller flow will typically look like:
  *
