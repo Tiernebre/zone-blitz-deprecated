@@ -1,9 +1,8 @@
-package com.tiernebre.util;
+package com.tiernebre.game_simulation.util;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.tiernebre.game_simulation.util.PercentageCalculator;
 import java.util.Random;
 import org.junit.Test;
 
