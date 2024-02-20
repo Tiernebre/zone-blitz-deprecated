@@ -1,20 +1,17 @@
 package com.tiernebre.web;
 
-import com.tiernebre.web.templates.FrontPage;
+import com.tiernebre.web.controllers.FrontPageController;
 import io.javalin.Javalin;
-import io.jstach.jstachio.JStachio;
 
-public class Router {
+public final class Router {
+
+  private final FrontPageController frontPageController;
+
+  public Router(FrontPageController frontPageController) {
+    this.frontPageController = frontPageController;
+  }
 
   public Javalin register(Javalin app) {
-    return app.get(
-      "/",
-      ctx -> {
-        var hello = new FrontPage();
-        var output = new StringBuilder();
-        JStachio.render(hello, output);
-        ctx.html(output.toString());
-      }
-    );
+    return app.get("/", frontPageController::render);
   }
 }

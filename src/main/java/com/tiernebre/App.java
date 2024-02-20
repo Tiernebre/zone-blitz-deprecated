@@ -1,11 +1,10 @@
 package com.tiernebre;
 
-import com.tiernebre.web.Router;
-import com.tiernebre.web.Server;
+import com.tiernebre.web.ServerFactory;
 
 public class App {
 
   public static void main(String[] args) {
-    new Server(new Router()).start();
+    new ServerFactory().create().start();
   }
 }
