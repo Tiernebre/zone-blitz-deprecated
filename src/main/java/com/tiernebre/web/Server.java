@@ -2,11 +2,11 @@ package com.tiernebre.web;
 
 import io.javalin.Javalin;
 
-public final class ZoneBlitzWebServer {
+public final class Server {
 
   private final Router router;
 
-  public ZoneBlitzWebServer(Router router) {
+  public Server(Router router) {
     this.router = router;
   }
 
