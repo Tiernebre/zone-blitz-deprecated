@@ -1,7 +1,9 @@
 # Architecture
 
+## High Level Cloud Diagram
+
 ```mermaid
-flowchart LR
+flowchart TB
   client[Web Browser Client]
   proxy[Traefik Proxy]
   server[Monolith HTTP Server]
