@@ -1,4 +1,4 @@
 # Documentation
 
-- [Architecture](./architecture.md)
+- [Architecture](./architecture/README.md)
 - [Roadmap](./roadmap.md)
