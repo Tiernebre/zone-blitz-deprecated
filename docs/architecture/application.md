@@ -12,6 +12,8 @@
 
 ## Web Server
 
+### Diagrams
+
 #### HTTP Flow
 
 ```mermaid
