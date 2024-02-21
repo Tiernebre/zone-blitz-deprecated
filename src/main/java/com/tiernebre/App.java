@@ -1,20 +1,10 @@
 package com.tiernebre;
 
-import com.tiernebre.web.Router;
-import io.javalin.Javalin;
+import com.tiernebre.web.ServerFactory;
 
 public class App {
 
   public static void main(String[] args) {
-    new Router()
-      .register(
-        Javalin.create(config -> {
-          config.staticFiles.add(staticFiles -> {
-            staticFiles.hostedPath = "/assets";
-            staticFiles.directory = "/assets";
-          });
-        })
-      )
-      .start(8000);
+    new ServerFactory().create().start();
   }
 }

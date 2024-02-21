@@ -1,5 +1,23 @@
 # Application
 
+## Architecture
+
+## Web Server
+
+#### HTTP Flow
+
+```mermaid
+flowchart LR
+  client[Web Client]
+  subgraph server[Zone Blitz Web Server]
+    direction LR
+    controller[Controllers]
+    service[Services]
+    controller<--mapped DTO(s)-->service
+  end
+  client<--HTTP Communication -->server
+```
+
 ## Monolith
 
 In alignment with the [philosophy](./architecture.md#philosophy), Zone Blitz is starting off as a monolith rather than microservices. This
