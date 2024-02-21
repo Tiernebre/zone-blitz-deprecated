@@ -10,7 +10,7 @@ flowchart RL
   client-- HTTP Request -->server
   subgraph server[Zone Blitz Web Server]
     direction LR
-    controller[HTTP Controller]
+    controller[Controller]
     service[Services]
     controller-- mapped request DTO(s) -->service
     service-- DTO -->controller
