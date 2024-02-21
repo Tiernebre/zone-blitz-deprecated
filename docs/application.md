@@ -2,20 +2,20 @@
 
 ## Architecture
 
-### HTTP Flow
+## Web Server
+
+#### HTTP Flow
 
 ```mermaid
-flowchart RL
+flowchart LR
   client[Web Client]
-  client-- HTTP Request -->server
   subgraph server[Zone Blitz Web Server]
     direction LR
-    controller[Controller]
+    controller[Controllers]
     service[Services]
-    controller-- mapped request DTO(s) -->service
-    service-- DTO -->controller
+    controller<--mapped DTO(s)-->service
   end
-  server-- HTTP Response (HTML or JSON)-->client
+  client<--HTTP Communication -->server
 ```
 
 ## Monolith
