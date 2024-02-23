@@ -72,6 +72,7 @@
             <configuration>
                 <source>21</source>
                 <target>21</target>
+                <useIncrementalCompilation>false</useIncrementalCompilation>
                 <annotationProcessorPaths>
                     <path>
                         <groupId>io.jstach</groupId>
