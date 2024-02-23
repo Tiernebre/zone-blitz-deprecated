@@ -1,20 +1,17 @@
 .PHONY: serve
 serve: compile run
 
-.PHONY: dev
-dev: clean build run
-
 .PHONY: run
 run:
 	mvn exec:java
 
 .PHONY: compile
-compile: clean install build
+compile: install build
 
 .PHONY: build
 build:
 	npm run build
-	mvn compile
+	mvn clean package -DskipTests=true
 
 .PHONY: install
 install:
@@ -25,10 +22,6 @@ test:
 	npm run lint
 	mvn test
 	
-.PHONY: clean
-clean:
-	mvn clean -q
-
 .PHONY: format
 format:
 	npm run format
