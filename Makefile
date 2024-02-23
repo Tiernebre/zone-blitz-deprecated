@@ -6,7 +6,7 @@ dev: clean build run
 
 .PHONY: run
 run:
-	java -jar target/zone-blitz-1.0-SNAPSHOT.jar
+	mvn exec:java
 
 .PHONY: compile
 compile: clean install build
@@ -14,7 +14,7 @@ compile: clean install build
 .PHONY: build
 build:
 	npm run build
-	mvn compile assembly:single -q
+	mvn compile
 
 .PHONY: install
 install:
