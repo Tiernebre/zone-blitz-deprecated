@@ -19,7 +19,6 @@ build:
 .PHONY: install
 install:
 	npm ci
-	mvn dependency:resolve
 
 .PHONY: test
 test:
