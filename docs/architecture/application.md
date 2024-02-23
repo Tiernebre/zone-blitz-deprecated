@@ -36,7 +36,7 @@ flowchart LR
 - Ensure everyone has access to using Zone Blitz. Whether they need to use a screen reader, do not want to use JavaScript, or are using an iPhone 1 with Safari to run their league.
 - We can scale the server, we cannot scale the client.
 
-#### Server Side Rendering and Minimal Client Work
+#### Multi Page App and Embracing Hypermedia
 
 I'm currently a fan of leveraging and expanding upon "old school" web values even for modern applications, like:
 
