@@ -1,6 +1,6 @@
 # [zone-blitz](https://zoneblitz.app/)
 
-A free (as in freedom AND beer!) and open source american football general manager simulator, built entirely with and served on web technologies!
+A free (as in freedom _and_ beer) and open source american football general manager simulator, built entirely with and served on web technologies!
 
 ## Description
 
