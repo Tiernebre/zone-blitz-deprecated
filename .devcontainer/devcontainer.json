@@ -1,8 +1,9 @@
 {
-  "build": {
-    "dockerfile": "./Dockerfile",
-    "context": "."
-  },
+  "name": "Zone Blitz",
+  "dockerComposeFile": "docker-compose.devcontainer.yml",
+  "service": "web",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
   "forwardPorts": [
     8000
   ],
