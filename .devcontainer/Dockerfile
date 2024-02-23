@@ -1,14 +1,11 @@
 FROM alpine:3.19
 
-COPY . /usr/app
-WORKDIR /usr/app
-
 RUN apk add openjdk21 fish make git openssh-client maven nodejs npm R bash inotify-tools
 
 # shell setup
 SHELL ["fish", "--command"]
 ENV SHELL /usr/bin/fish
-ADD .devcontainer/config.fish /root/.config/fish/config.fish
+ADD config.fish /root/.config/fish/config.fish
 
 EXPOSE 8000
 
