@@ -2,9 +2,7 @@ version: "3"
 
 services:
   proxy:
-    extends:
-      file: ../docker-compose.common.yml
-      service: proxy
+    image: traefik:v2.10
     command: --api.insecure=true --providers.docker --log.level=DEBUG
     ports:
       - "80:80"
