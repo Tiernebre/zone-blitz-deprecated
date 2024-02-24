@@ -5,6 +5,13 @@ services:
     extends:
       file: ../docker-compose.common.yml
       service: proxy
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "8000:8000"
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
 
   web:
     build:
@@ -13,3 +20,5 @@ services:
     tty: true
     volumes:
       - ..:/workspace:cached
+    labels:
+      - "traefik.http.routers.web.rule=Host(`localhost`)"

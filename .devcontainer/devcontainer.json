@@ -4,9 +4,6 @@
   "service": "web",
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
-  "forwardPorts": [
-    8000
-  ],
   "postCreateCommand": "make compile",
   "customizations": {
     "vscode": {
@@ -25,7 +22,8 @@
       "settings": {
         "unocss.include": [
           "src/main/resources/templates/**/*.mustache"
-        ]
+        ],
+        "makefile.configureOnOpen": false
       }
     }
   }
