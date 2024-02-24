@@ -11,16 +11,16 @@ compile: install build
 .PHONY: build
 build:
 	npm run build
-	mvn clean package -DskipTests=true
-
-.PHONY: install
-install:
-	npm ci
+	mvn clean package -q -DskipTests=true
 
 .PHONY: test
 test:
 	npm run lint
 	mvn test
+
+.PHONY: install
+install:
+	npm ci
 	
 .PHONY: format
 format:

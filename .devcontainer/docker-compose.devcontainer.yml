@@ -1,14 +1,24 @@
 version: "3"
 
 services:
+  proxy:
+    extends:
+      file: ../docker-compose.common.yml
+      service: proxy
+    command: --api.insecure=true --providers.docker --log.level=DEBUG
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+
   web:
     build:
       context: .
       dockerfile: Dockerfile
     tty: true
-    # Mounts the project folder to '/workspace'. The target path inside the container
-    # should match what your application expects. In this case, the compose file is
-    # in a sub-folder, so you will mount '..'. You would then reference this path as the
-    # 'workspaceFolder' in '.devcontainer/devcontainer.json' so VS Code starts here.
     volumes:
       - ..:/workspace:cached
+    labels:
+      - "traefik.http.routers.web.rule=Host(`localhost`)"

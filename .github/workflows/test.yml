@@ -16,7 +16,7 @@ jobs:
       - name: Run unit tests in development container
         uses: devcontainers/ci@v0.3
         with:
-          runCmd: make test
+          runCmd: make install && make test
 
   smoke-test:
     name: Smoke Test

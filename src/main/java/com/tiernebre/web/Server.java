@@ -14,6 +14,7 @@ public final class Server {
     return router
       .register(
         Javalin.create(config -> {
+          config.showJavalinBanner = false;
           config.staticFiles.add(staticFiles -> {
             staticFiles.hostedPath = "/assets";
             staticFiles.directory = "/assets";

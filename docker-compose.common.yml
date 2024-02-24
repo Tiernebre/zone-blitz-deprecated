@@ -1,0 +1,5 @@
+version: "3"
+
+services:
+  proxy:
+    image: traefik:v2.10
