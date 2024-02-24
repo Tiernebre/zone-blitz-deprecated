@@ -37,7 +37,7 @@ Follow the instructions below if you wish to develop and contribute to zone blit
 2. Open the cloned folder within VSCode.
 3. VSCode will prompt you about the dev container support. Run the project within the dev container.
    - if not prompted, execute the shortcut `Cmd + Shift + P` then type `Dev Containers: Rebuild and Reopen`.
-4. Wait for the container window to load and the post create compilation command to finish.
+4. Wait for the container window to finish loading. **This can take a few minutes on your first run as it needs to download any Docker image dependencies.**
 5. Run `make` to serve zone blitz. You should start seeing logs and eventually see a prompt for the Java server running.
 6. Navigate to `http://localhost:8000` in a browser of your choice. You should now see zone blitz running in development mode.
 
