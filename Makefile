@@ -13,14 +13,14 @@ build:
 	npm run build
 	mvn clean package -q -DskipTests=true
 
-.PHONY: install
-install:
-	npm ci
-
 .PHONY: test
 test:
 	npm run lint
 	mvn test
+
+.PHONY: install
+install:
+	npm ci
 	
 .PHONY: format
 format:
