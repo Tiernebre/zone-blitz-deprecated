@@ -11,7 +11,7 @@ compile: install build
 .PHONY: build
 build:
 	npm run build
-	mvn clean package -DskipTests=true
+	mvn clean package -q -DskipTests=true
 
 .PHONY: install
 install:
