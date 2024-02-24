@@ -3,9 +3,6 @@ version: "3"
 services:
   proxy:
     image: traefik:v2.10
-    extends:
-      file: docker-compose.common.yml
-      service: proxy
     command:
       - "--api.insecure=false"
       - "--providers.docker=true"
