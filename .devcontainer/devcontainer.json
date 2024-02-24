@@ -4,7 +4,6 @@
   "service": "web",
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
-  "postCreateCommand": "make compile",
   "otherPortsAttributes": {
     "onAutoForward": "ignore"
   },
