@@ -5,9 +5,9 @@ services:
     extends:
       file: ../docker-compose.common.yml
       service: proxy
-    command: --api.insecure=true --providers.docker
+    command: --api.insecure=true --providers.docker --log.level=DEBUG
     ports:
-      - "8000:8000"
+      - "80:80"
       - "8080:8080"
     volumes:
       # So that Traefik can listen to the Docker events

@@ -28,7 +28,7 @@ Follow the instructions below if you wish to develop and contribute to zone blit
 
 - [docker](https://www.docker.com/products/docker-desktop/)
 - [vscode](https://code.visualstudio.com/)
-  - Dev containers is the supported containerized tooling for zone blitz. Using a different IDE could work, but is not and will not be supported.
+  - [Dev containers](https://code.visualstudio.com/docs/devcontainers/containers) is the supported containerized tooling for zone blitz. Using a different IDE could work, but is not and will not be supported.
 
 #### Environment
 
@@ -40,6 +40,10 @@ Follow the instructions below if you wish to develop and contribute to zone blit
 4. Wait for the container window to load and the post create compilation command to finish.
 5. Run `make` to serve zone blitz. You should start seeing logs and eventually see a prompt for the Java server running.
 6. Navigate to `http://localhost:8000` in a browser of your choice. You should now see zone blitz running in development mode.
+
+Additionally:
+
+- You can access the Traefik web dashboard in http://localhost:8080 for debugging and visually observing your local Traefik instance.
 
 #### Hot Reload Support
 
