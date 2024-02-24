@@ -39,12 +39,12 @@ Follow the instructions below if you wish to develop and contribute to zone blit
    - if not prompted, execute the shortcut `Cmd + Shift + P` then type `Dev Containers: Rebuild and Reopen`.
 4. Wait for the container window to finish loading. **This can take a few minutes on your first run as it needs to download any Docker image dependencies.**
 5. Run `make` to serve zone blitz. You should start seeing logs and eventually see a prompt for the Java server running.
-6. Navigate to `http://0.0.0.0` in a browser of your choice. You should now see zone blitz running in development mode.
-   - You could also navigate to `http:/0.0.0.0:8000` if you wanted to access the server directly without going through the proxy.
+6. Navigate to http://0.0.0.0 in a browser of your choice. You should now see zone blitz running in development mode.
+   - You could also navigate to http:/0.0.0.0:8000 if you wanted to access the server directly without going through the proxy.
 
-Additionally:
+##### Traefik Proxy Development
 
-- You can access the Traefik web dashboard in http://localhost:8080 for debugging and visually observing your local Traefik instance.
+You can access the Traefik web dashboard in http://0.0.0.0:8080 for debugging and visually observing your local Traefik instance that runs within the dev container environment.
 
 #### Hot Reload Support
 
