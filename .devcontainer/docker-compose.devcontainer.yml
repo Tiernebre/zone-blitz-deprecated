@@ -8,7 +8,6 @@ services:
       - "80:80"
       - "8080:8080"
     volumes:
-      # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
 
   web:
@@ -19,4 +18,4 @@ services:
     volumes:
       - ..:/workspace:cached
     labels:
-      - "traefik.http.routers.web.rule=Host(`localhost`)"
+      - "traefik.http.routers.web.rule=Host(`0.0.0.0`)"
