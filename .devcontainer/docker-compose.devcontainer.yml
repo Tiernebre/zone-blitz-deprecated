@@ -20,4 +20,4 @@ services:
     volumes:
       - ..:/workspace:cached
     labels:
-      - "traefik.http.routers.web.rule=Host(`localhost`)"
+      - "traefik.http.routers.web.rule=Host(`0.0.0.0`)"

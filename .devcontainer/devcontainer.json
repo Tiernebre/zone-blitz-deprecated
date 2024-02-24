@@ -27,9 +27,7 @@
       "settings": {
         "unocss.include": [
           "src/main/resources/templates/**/*.mustache"
-        ],
-        "makefile.configureOnOpen": false,
-        "java.autobuild.enabled": false
+        ]
       }
     }
   }

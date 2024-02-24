@@ -21,6 +21,6 @@ public final class Server {
           });
         })
       )
-      .start(8000);
+      .start("0.0.0.0", 8000);
   }
 }
