@@ -54,14 +54,13 @@ jobs:
       - name: Create and start development containers
         run: docker-compose -f .devcontainer/docker-compose.devcontainer.yml up -d
       - name: Start web server in its development container
-        timeout-minutes: 1.5
         run: |
           docker-compose -f .devcontainer/docker-compose.devcontainer.yml exec -T -w /workspace web make
-          docker-compose -f .devcontainer/docker-compose.devcontainer.yml logs web -f
+          timeout 30s grep -q 'Listening on http' <(docker-compose -f .devcontainer/docker-compose.devcontainer.yml logs -f web) || exit 1
       - name: Verify development container proxy runs and proxies to web server
         uses: jtalk/url-health-check-action@v4
         with:
           url: ${{ env.URL }}
-          max-attempts: 12
-          retry-delay: 5s
+          max-attempts: 5
+          retry-delay: 1s
           retry-all: true
