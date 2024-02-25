@@ -1,6 +1,7 @@
 plugins:
   - prettier-plugin-java
   - "@prettier/plugin-xml"
+  - prettier-plugin-sh
 
 overrides:
   - files: "*.mustache"
