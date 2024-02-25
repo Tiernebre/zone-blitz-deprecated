@@ -54,9 +54,10 @@ jobs:
       - name: Create and start development containers
         run: docker-compose -f .devcontainer/docker-compose.devcontainer.yml up -d
       - name: Start web server in its development container
-        run: docker-compose -f .devcontainer/docker-compose.devcontainer.yml exec -d web make
-      - name: DEBUG compose logs
-        run: docker-compose -f .devcontainer/docker-compose.devcontainer.yml logs -f web
+        timeout-minutes: 1.5
+        run: |
+          docker-compose -f .devcontainer/docker-compose.devcontainer.yml exec -d -w /workspace web make
+          while ! docker-compose -f .devcontainer/docker-compose.devcontainer.yml logs web | grep -q "Listening on http"; do sleep 1; done
       - name: Verify development container proxy runs and proxies to web server
         uses: jtalk/url-health-check-action@v4
         with:
