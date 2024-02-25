@@ -46,6 +46,7 @@ services:
 
   database-admin:
     image: sosedoff/pgweb
+    restart: always
     ports:
       - "3000:8081"
     environment:
