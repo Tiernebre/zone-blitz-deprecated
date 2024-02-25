@@ -4,10 +4,11 @@ on: push
 
 env:
   PORT: 8000
-  URL: http://127.0.0.1:8000
+  WEB_SERVER_URL: http://127.0.0.1:8000
+  URL: https://localhost
 
 jobs:
-  unit-test:
+  unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
     steps:
@@ -18,20 +19,46 @@ jobs:
         with:
           runCmd: make test
 
-  smoke-test:
-    name: Smoke Test
+  web-server-smoke-test:
+    name: Web Server Smoke Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build Docker image
+      - name: Build Web Server Docker image
         run: docker build -t brendantierney/zone-blitz:latest .
-      - name: Run Docker image
+      - name: Run Web Server Docker container
         run: docker run -d -p $PORT:$PORT brendantierney/zone-blitz:latest
-      - name: Verify app runs and serves healthy responses
+      - name: Verify web server container runs and serves healthy responses
         uses: jtalk/url-health-check-action@v4
         with:
-          url: ${{ env.URL }}|${{ env.URL }}/assets/htmx.js|${{ env.URL }}/assets/styles.css
+          url: ${{ env.WEB_SERVER_URL }}|${{ env.WEB_SERVER_URL }}/assets/htmx.js|${{ env.WEB_SERVER_URL }}/assets/styles.css
           max-attempts: 10
+          retry-delay: 5s
+          retry-all: true
+
+  development-environment-smoke-test:
+    name: Development Environment Smoke Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install mkcert
+        run: |
+          sudo apt install libnss3-tools
+          curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+          chmod +x mkcert-v*-linux-amd64
+          sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+      - name: Generate SSL certificates
+        run: .devcontainer/generateCertificates.sh
+      - name: Create and start development containers
+        run: docker-compose -f .devcontainer/docker-compose.devcontainer.yml up -d
+      - name: Start web server in its development container
+        run: docker-compose -f .devcontainer/docker-compose.devcontainer.yml exec -T -w /workspace web make &
+      - name: Verify development container proxy runs and proxies to web server
+        uses: jtalk/url-health-check-action@v4
+        with:
+          url: ${{ env.URL }}
+          max-attempts: 12
           retry-delay: 5s
           retry-all: true
