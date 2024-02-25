@@ -49,10 +49,7 @@ jobs:
           chmod +x mkcert-v*-linux-amd64
           sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
       - name: Generate SSL certificates
-        run: |
-          ls -lah
-          mkcert -install
-          mkcert -cert-file localhost.cert -key-file localhost.key localhost
+        run: .devcontainer/generateCertificates.sh
       - name: Start development containers
         run: docker-compose -d -f .devcontainer/docker-compose.devcontainer.yml up
       - name: List Applications
