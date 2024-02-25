@@ -51,6 +51,6 @@ jobs:
       - name: Generate SSL certificates
         run: .devcontainer/initializeCommand.sh
       - name: Start development containers
-        run: docker-compose up -d -f .devcontainer/docker-compose.devcontainer.yml
+        run: docker-compose -d -f .devcontainer/docker-compose.devcontainer.yml up
       - name: List Applications
         run: docker ps -a
