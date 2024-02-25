@@ -52,7 +52,7 @@ jobs:
         run: |
           ls -lah
           mkcert -install
-          mkcert -cert-file .devcontainer/certs/localhost.cert -key-file .devcontainer/certs/localhost.key localhost
+          mkcert -cert-file localhost.cert -key-file localhost.key localhost
       - name: Start development containers
         run: docker-compose -d -f .devcontainer/docker-compose.devcontainer.yml up
       - name: List Applications
