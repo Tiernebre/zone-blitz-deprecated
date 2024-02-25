@@ -15,7 +15,7 @@ else
   echo "Certification does not exist already for dev container. Proceeding to create certifications."
 fi
 
-if [ -n "${CI}" ] && ! command -v mkcert &> /dev/null; then
+if [ -z "${CI}" ] && ! command -v mkcert &> /dev/null; then
   echo "mkcert is required to run the zone blitz dev container. Please install using the instructions at https://github.com/FiloSottile/mkcert?tab=readme-ov-file#installation"
   exit 1
 fi
