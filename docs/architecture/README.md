@@ -7,10 +7,10 @@ flowchart TB
   client[Web Browser Client]
   proxy[Traefik Proxy]
   server[Monolith HTTP Server]
-  client -- HTTP requests --> proxy
-  server -- HTML, static files --> proxy
-  proxy -- forwarded request with SSL termination--> server
-  proxy -- forwarded response --> client
+  database[(Database)]
+  client <-- HTTP --> proxy
+  proxy <-- forwarded request and response --> server
+  server <-- SQL --> database
 ```
 
 ## Philosophy
