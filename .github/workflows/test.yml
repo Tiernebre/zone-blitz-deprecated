@@ -37,7 +37,6 @@ jobs:
           retry-delay: 5s
           retry-all: true
 
-      # timeout 30s grep -q 'Listening on http' <(docker-compose -f .devcontainer/docker-compose.devcontainer.yml logs -f web) || exit 1
   development-environment-smoke-test:
     name: Development Environment Smoke Test
     runs-on: ubuntu-latest
