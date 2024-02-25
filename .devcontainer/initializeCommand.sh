@@ -19,7 +19,7 @@ if grep -Fxq "$DEVELOPMENT_HOST" /etc/hosts; then
   echo "${DEVELOPMENT_HOST} already exists in /etc/hosts. Skipping automated host resolution setup."
 else
   echo "${DEVELOPMENT_HOST} does not exist in /etc/hosts. Proceeding with adding this host to your /etc/hosts file.\n"
-  echo "Adding the host requires sudo permissions. You will need to provide your sudo password below.\n${bold}If you do not feel comfortable with this, you can manually add the following hosts to your /etc/hosts file:${normal}\n"
+  echo "Adding the host requires sudo permissions. You may need to provide your sudo password below.\n${bold}If you do not feel comfortable with this, you can manually add the following hosts to your /etc/hosts file:${normal}\n"
   echo "${HOST_ENTRY}"
   echo "${HOST_ENTRY}" | sudo tee -a /etc/hosts > /dev/null
   echo "Automatically added ${DEVELOPMENT_HOST} to your hosts file."
