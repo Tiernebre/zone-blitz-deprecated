@@ -77,6 +77,13 @@ You can access the Traefik web dashboard in http://0.0.0.0:8080 for debugging
 and visually observing your local Traefik instance that runs within the dev
 container environment.
 
+##### Database Development
+
+The PostgreSQL database instance is available at `postgres://dev:password@database:5432/zone_blitz`.
+
+You can also use an already spun up instance of [pgweb](https://github.com/sosedoff/pgweb) at http://0.0.0.0:3000
+that is already connected to the database instance in the development container.
+
 #### Hot Reload Support
 
 If you don't want to run `make` everytime you make changes, you can run this

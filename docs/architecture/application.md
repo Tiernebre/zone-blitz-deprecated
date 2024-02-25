@@ -9,6 +9,7 @@
 - [jstachio](https://github.com/jstachio/jstachio): HTML Template Engine.
 - [HTMX](https://htmx.org/)
 - [UnoCSS](https://unocss.dev/)
+- [PostgreSQL](https://www.postgresql.org/)
 
 ## Web Server
 
@@ -19,6 +20,7 @@
 ```mermaid
 flowchart LR
   client[Web Client]
+  database[(PostgreSQL Server)]
   subgraph server[Zone Blitz Web Server]
     direction LR
     controller[Controllers]
@@ -26,6 +28,7 @@ flowchart LR
     controller<--mapped DTO(s)-->service
   end
   client<--HTTP Communication -->server
+  server<--SQL-->database
 ```
 
 ### Philosophy
