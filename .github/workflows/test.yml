@@ -15,6 +15,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install mkcert
+        run: |
+          sudo apt install libnss3-tools
+          curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+          chmod +x mkcert-v*-linux-amd64
+          sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
       - name: Run unit tests in development container
         uses: devcontainers/ci@v0.3
         with:
@@ -50,8 +56,6 @@ jobs:
           curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
           chmod +x mkcert-v*-linux-amd64
           sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
-      - name: Generate SSL certificates
-        run: .devcontainer/generateCertificates.sh
       - name: Run initialize command
         run: .devcontainer/initializeCommand.sh
       - name: Create and start development containers
