@@ -29,6 +29,8 @@ Follow the instructions below if you wish to develop and contribute to zone blit
 - [docker](https://www.docker.com/products/docker-desktop/)
 - [vscode](https://code.visualstudio.com/)
   - [Dev containers](https://code.visualstudio.com/docs/devcontainers/containers) is the supported containerized tooling for zone blitz. Using a different IDE could work, but is not and will not be supported.
+- [mkcert](https://github.com/FiloSottile/mkcert)
+  - `mkcert` is used to establish a localhost HTTPS certificate that is used within the proxy. This helps ensure the dev environment is consistent with production.
 
 #### Development Environment
 
@@ -39,7 +41,7 @@ Follow the instructions below if you wish to develop and contribute to zone blit
    - if not prompted, execute the shortcut `Cmd + Shift + P` then type `Dev Containers: Rebuild and Reopen`.
 4. Wait for the container window to finish loading. **This can take a few minutes on your first run as it needs to download any Docker image dependencies.**
 5. Run `make` to serve zone blitz. You should start seeing logs and eventually see a prompt for the Java server running.
-6. Navigate to http://0.0.0.0 in a browser of your choice. You should now see zone blitz running in development mode.
+6. Navigate to https://localhost a browser of your choice. You should now see zone blitz running in development mode.
    - You could also navigate to http:/0.0.0.0:8000 if you wanted to access the server directly without going through the proxy.
 
 ##### Traefik Proxy Development
