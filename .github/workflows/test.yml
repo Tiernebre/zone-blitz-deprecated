@@ -5,7 +5,7 @@ on: push
 env:
   PORT: 8000
   WEB_SERVER_URL: http://127.0.0.1:8000
-  URL: https://localhost
+  URL: https://dev.zoneblitz.app
 
 jobs:
   unit-tests:
@@ -51,6 +51,8 @@ jobs:
           sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
       - name: Generate SSL certificates
         run: .devcontainer/generateCertificates.sh
+      - name: Run initialize command
+        run: .devcontainer/initializeCommand.sh
       - name: Create and start development containers
         run: docker-compose -f .devcontainer/docker-compose.devcontainer.yml up -d
       - name: Start web server in its development container
