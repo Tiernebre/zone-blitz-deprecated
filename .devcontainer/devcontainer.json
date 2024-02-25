@@ -4,6 +4,7 @@
   "service": "web",
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
+  "initializeCommand": ".devcontainer/initializeCommand.sh",
   "postCreateCommand": ".devcontainer/postCreateCommand.sh",
   "otherPortsAttributes": {
     "onAutoForward": "ignore"
