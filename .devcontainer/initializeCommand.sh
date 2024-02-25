@@ -6,7 +6,7 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 
 DEVELOPMENT_HOST=dev.zoneblitz.app
-HOST_ENTRY="127.0.0.1\t${DEVELOPMENT_HOST}\n::1\t${DEVELOPMENT_HOST}\n"
+HOST_ENTRY="127.0.0.1\t${DEVELOPMENT_HOST}\n::1             ${DEVELOPMENT_HOST}\n"
 
 if [ -n "${CI}" ]; then
   echo "Certification does not need to be created as this is being ran in a CI environment. Skipping and proceeding with dev container creation."
