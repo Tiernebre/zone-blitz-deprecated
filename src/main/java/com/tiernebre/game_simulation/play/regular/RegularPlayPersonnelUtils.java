@@ -31,12 +31,12 @@ public final class RegularPlayPersonnelUtils {
     if (players.length == 0) return EngineConstants.MINIMUM_PLAYER_ATTRIBUTE;
 
     return (
-      Stream
-        .of(players)
-        .map(player ->
-          player == null
-            ? EngineConstants.MINIMUM_PLAYER_ATTRIBUTE
-            : toAttribute.apply(player.attributes())
+      Stream.of(players)
+        .map(
+          player ->
+            player == null
+              ? EngineConstants.MINIMUM_PLAYER_ATTRIBUTE
+              : toAttribute.apply(player.attributes())
         )
         .reduce(0, (total, attribute) -> (total + attribute)) /
       players.length

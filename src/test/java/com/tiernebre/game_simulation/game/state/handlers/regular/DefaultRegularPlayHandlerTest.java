@@ -35,8 +35,9 @@ public class DefaultRegularPlayHandlerTest {
     var state = GameMockFactory.state(drive);
     var result = PlayResultMockFactory.rushResult(yards);
     var newState = GameMockFactory.randomizedState();
-    when(scoringPlayHandler.handle(eq(state), eq(Score.TOUCHDOWN)))
-      .thenReturn(newState);
+    when(scoringPlayHandler.handle(eq(state), eq(Score.TOUCHDOWN))).thenReturn(
+      newState
+    );
     assertEquals(newState, defaultRegularPlayHandler.handle(state, result));
   }
 

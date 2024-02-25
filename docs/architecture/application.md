@@ -91,17 +91,12 @@ a _lot_ like your traditional Express server in Node:
 
 ```java
 public static void main(String[] args) {
-  Javalin
-    .get(
-      "/",
-      ctx -> {
-        var hello = new Hello();
-        var output = new StringBuilder();
-        JStachio.render(hello, output);
-        ctx.html(output.toString());
-      }
-    )
-    .start(8000);
+  Javalin.get("/", ctx -> {
+    var hello = new Hello();
+    var output = new StringBuilder();
+    JStachio.render(hello, output);
+    ctx.html(output.toString());
+  }).start(8000);
 }
 
 ```

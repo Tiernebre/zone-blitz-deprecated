@@ -18,11 +18,10 @@ public class PercentageFumbleCalculatorTest {
     assertTrue(
       new PercentageFumbleCalculator(
         new PercentageCalculator(new Random(seedForTrue))
+      ).occurred(
+        DtoMockFactory.player(),
+        RegularPlaySimulatorMockFactory.defensivePersonnel()
       )
-        .occurred(
-          DtoMockFactory.player(),
-          RegularPlaySimulatorMockFactory.defensivePersonnel()
-        )
     );
   }
 
@@ -32,11 +31,10 @@ public class PercentageFumbleCalculatorTest {
     assertFalse(
       new PercentageFumbleCalculator(
         new PercentageCalculator(new Random(seedForFalse))
+      ).occurred(
+        DtoMockFactory.player(),
+        RegularPlaySimulatorMockFactory.defensivePersonnel()
       )
-        .occurred(
-          DtoMockFactory.player(),
-          RegularPlaySimulatorMockFactory.defensivePersonnel()
-        )
     );
   }
 
