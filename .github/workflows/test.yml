@@ -51,10 +51,10 @@ jobs:
           sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
       - name: Generate SSL certificates
         run: .devcontainer/generateCertificates.sh
-      - name: Start development containers
+      - name: Create and start development containers
         run: docker-compose -f .devcontainer/docker-compose.devcontainer.yml up -d
       - name: Start web server in its development container
-        run: docker-compose -f .devcontainer/docker-compose.devcontainer.yml run web make
+        run: docker-compose -f .devcontainer/docker-compose.devcontainer.yml exec -d web make
       - name: Verify development container proxy runs and proxies to web server
         uses: jtalk/url-health-check-action@v4
         with:
