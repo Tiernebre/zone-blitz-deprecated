@@ -73,8 +73,9 @@ public final class DefaultFieldGoalAttemptHandlerTest {
     var state = GameMockFactory.state(drive);
     var result = PlayResultMockFactory.fieldGoalAttemptResult(100, true);
     var expectedState = GameMockFactory.randomizedState();
-    when(scoringPlayHandler.handle(eq(state), eq(Score.FIELD_GOAL)))
-      .thenReturn(expectedState);
+    when(scoringPlayHandler.handle(eq(state), eq(Score.FIELD_GOAL))).thenReturn(
+      expectedState
+    );
     assertEquals(
       expectedState,
       defaultFieldGoalAttemptHandler.handle(state, result)
@@ -92,8 +93,9 @@ public final class DefaultFieldGoalAttemptHandlerTest {
     var state = GameMockFactory.state(drive);
     var result = PlayResultMockFactory.fieldGoalAttemptResult(100, true);
     var expectedState = GameMockFactory.randomizedState();
-    when(scoringPlayHandler.handle(eq(state), eq(Score.FIELD_GOAL)))
-      .thenReturn(expectedState);
+    when(scoringPlayHandler.handle(eq(state), eq(Score.FIELD_GOAL))).thenReturn(
+      expectedState
+    );
     assertEquals(
       expectedState,
       defaultFieldGoalAttemptHandler.handle(state, result)
@@ -132,8 +134,9 @@ public final class DefaultFieldGoalAttemptHandlerTest {
     var state = GameMockFactory.state(drive);
     var result = PlayResultMockFactory.fieldGoalAttemptResult(67, true);
     var expectedState = GameMockFactory.randomizedState();
-    when(scoringPlayHandler.handle(eq(state), eq(Score.FIELD_GOAL)))
-      .thenReturn(expectedState);
+    when(scoringPlayHandler.handle(eq(state), eq(Score.FIELD_GOAL))).thenReturn(
+      expectedState
+    );
     assertEquals(
       expectedState,
       defaultFieldGoalAttemptHandler.handle(state, result)

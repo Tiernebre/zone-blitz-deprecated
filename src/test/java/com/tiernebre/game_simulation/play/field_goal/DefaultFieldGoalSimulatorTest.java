@@ -47,11 +47,11 @@ public class DefaultFieldGoalSimulatorTest {
         eq(kickPlayCall.personnel()),
         eq(blockPlayCall.personnel())
       )
-    )
-      .thenReturn(true);
+    ).thenReturn(true);
     var blocker = blockPlayCall.personnel().blitzers()[0];
-    when(blockedByCalculator.blockedBy(eq(blockPlayCall.personnel())))
-      .thenReturn(blocker);
+    when(
+      blockedByCalculator.blockedBy(eq(blockPlayCall.personnel()))
+    ).thenReturn(blocker);
     var result = defaultFieldGoalSimulator.simulate(
       kickPlayCall,
       blockPlayCall
@@ -72,8 +72,7 @@ public class DefaultFieldGoalSimulatorTest {
         eq(kickPlayCall.personnel()),
         eq(blockPlayCall.personnel())
       )
-    )
-      .thenReturn(false);
+    ).thenReturn(false);
     var distance = 36;
     var accurate = true;
     when(distanceCalculator.calculate(eq(kicker))).thenReturn(distance);

@@ -51,9 +51,8 @@ public final class DefaultRegularPlayHandler implements RegularPlayHandler {
     int newLineToGain;
     if (pastLineToGain) {
       down = Down.FIRST;
-      newLineToGain =
-        lineToGain +
-        YardNormalizer.normalize(state, EngineConstants.DEFAULT_YARDS_TO_GO);
+      newLineToGain = lineToGain +
+      YardNormalizer.normalize(state, EngineConstants.DEFAULT_YARDS_TO_GO);
     } else {
       if (drive.down() == Down.FOURTH) {
         return turnoverHandler.onDowns(state);

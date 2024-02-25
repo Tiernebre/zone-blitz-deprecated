@@ -35,8 +35,7 @@ public class DefaultPassingSimulatorTest {
     when(interceptionCalculator.intercepted(any())).thenReturn(false);
     when(
       tackledByCalculator.tackledBy(any(RegularPlayDefensivePersonnel.class))
-    )
-      .thenReturn(tackledBy);
+    ).thenReturn(tackledBy);
     var simulator = new DefaultPassingSimulator(
       passingYardageCalculator,
       completedPassCalculator,
@@ -63,8 +62,7 @@ public class DefaultPassingSimulatorTest {
     when(interceptionCalculator.intercepted(any())).thenReturn(true);
     when(
       tackledByCalculator.tackledBy(any(RegularPlayOffensivePersonnel.class))
-    )
-      .thenReturn(tackledBy);
+    ).thenReturn(tackledBy);
     var simulator = new DefaultPassingSimulator(
       passingYardageCalculator,
       completedPassCalculator,

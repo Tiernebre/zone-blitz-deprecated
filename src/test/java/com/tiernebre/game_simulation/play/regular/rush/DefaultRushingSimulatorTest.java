@@ -34,8 +34,7 @@ public class DefaultRushingSimulatorTest {
     var tackledBy = arguments.offensiveDecision().personnel().center();
     when(
       tackledByCalculator.tackledBy(any(RegularPlayOffensivePersonnel.class))
-    )
-      .thenReturn(tackledBy);
+    ).thenReturn(tackledBy);
     DefaultRushingSimulator simulator = new DefaultRushingSimulator(
       rushingYardageCalculator,
       fumbleCalculator,
@@ -60,8 +59,7 @@ public class DefaultRushingSimulatorTest {
     var tackledBy = arguments.defensivePersonnel().freeSafety();
     when(
       tackledByCalculator.tackledBy(any(RegularPlayDefensivePersonnel.class))
-    )
-      .thenReturn(tackledBy);
+    ).thenReturn(tackledBy);
     DefaultRushingSimulator simulator = new DefaultRushingSimulator(
       rushingYardageCalculator,
       fumbleCalculator,
