@@ -176,3 +176,6 @@ buildNumber.properties
 src/main/resources/assets/styles.css
 src/main/resources/assets/reset.css
 src/main/resources/assets/htmx.js
+
+# visual studio code configuration
+.vscode
