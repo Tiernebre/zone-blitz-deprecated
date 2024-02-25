@@ -1,16 +1,19 @@
 #!/bin/sh
 
-bold=$(tput bold)
-normal=$(tput sgr0)
-
 DEVELOPMENT_HOST=dev.zoneblitz.app
 HOST_ENTRY="127.0.0.1\t${DEVELOPMENT_HOST}\n::1             ${DEVELOPMENT_HOST}\n"
 
 if [ -n "${CI}" ]; then
   echo "Certification does not need to be created as this is being ran in a CI environment. Skipping and proceeding with dev container creation."
+  if [ "${TERM:-}" = "" ]; then
+    TERM="ci"
+  fi
 else
   .devcontainer/generateCertificates.sh
 fi
+
+bold=$(tput bold)
+normal=$(tput sgr0)
 
 if grep -q "$DEVELOPMENT_HOST" /etc/hosts; then
   echo "${DEVELOPMENT_HOST} already exists in /etc/hosts. Skipping automated host resolution setup."
