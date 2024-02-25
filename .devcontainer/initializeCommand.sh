@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 bold=$(tput bold)
 normal=$(tput sgr0)
 
@@ -15,7 +13,7 @@ else
   .devcontainer/generateCertificates.sh
 fi
 
-if grep -Fxq "$DEVELOPMENT_HOST" /etc/hosts; then
+if grep -q "$DEVELOPMENT_HOST" /etc/hosts; then
   echo "${DEVELOPMENT_HOST} already exists in /etc/hosts. Skipping automated host resolution setup."
 else
   echo "${DEVELOPMENT_HOST} does not exist in /etc/hosts. Proceeding with adding this host to your /etc/hosts file.\n"
