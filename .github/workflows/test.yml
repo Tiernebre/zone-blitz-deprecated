@@ -18,8 +18,8 @@ jobs:
         with:
           runCmd: make test
 
-  smoke-test:
-    name: Smoke Test
+  app-smoke-test:
+    name: Application Smoke Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -35,3 +35,22 @@ jobs:
           max-attempts: 10
           retry-delay: 5s
           retry-all: true
+
+  development-environment-smoke-test:
+    name: Development Environment Smoke Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install mkcert
+        run: |
+          sudo apt install libnss3-tools
+          curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+          chmod +x mkcert-v*-linux-amd64
+          sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+      - name: Generate SSL certificates
+        run: .devcontainer/initializeCommand.sh
+      - name: Start development containers
+        run: docker-compose up -d -f .devcontainer/docker-compose.devcontainer.yml
+      - name: List Applications
+        run: docker ps -a
