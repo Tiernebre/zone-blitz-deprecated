@@ -20,5 +20,4 @@ fi
 
 echo "You _may_ need to require sudo access. This is because mkcert will trust the generated certificate for you to avoid browser issues. Please provide the sudo password, otherwise you can run mkcert manually outside of this script."
 
-mkcert -install
-mkcert -cert-file .devcontainer/certs/localhost.cert -key-file .devcontainer/certs/localhost.key localhost
+./installCertificates.sh
