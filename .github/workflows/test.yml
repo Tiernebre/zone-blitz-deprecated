@@ -57,7 +57,7 @@ jobs:
         timeout-minutes: 1.5
         run: |
           docker-compose -f .devcontainer/docker-compose.devcontainer.yml exec -d -w /workspace web make
-          while ! docker-compose -f .devcontainer/docker-compose.devcontainer.yml logs web | grep -q "Listening on http"; do sleep 1; done
+          docker-compose -f .devcontainer/docker-compose.devcontainer.yml logs web
       - name: Verify development container proxy runs and proxies to web server
         uses: jtalk/url-health-check-action@v4
         with:
