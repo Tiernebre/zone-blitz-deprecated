@@ -1,6 +1,7 @@
 #!/bin/sh
 
 if [ -f .devcontainer/certs/localhost.cert ]; then
+  echo "Certification was already created. Skipping certification creation and proceeding with dev container creation."
   exit 0
 else
   echo "Certification does not exist already for dev container. Proceeding to create certifications."
