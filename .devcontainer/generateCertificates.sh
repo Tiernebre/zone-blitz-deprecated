@@ -1,9 +1,5 @@
 #!/bin/sh
 
-if [ -n "${CI}" ] && [ "${TERM:-}" = "" ]; then
-  TERM="ci"
-fi
-
 bold=$(tput bold)
 normal=$(tput sgr0)
 
