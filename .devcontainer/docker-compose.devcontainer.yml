@@ -45,12 +45,12 @@ services:
       - "traefik.enable=false"
 
   database-admin:
-    image: dpage/pgadmin4:latest
+    image: sosedoff/pgweb
     ports:
-      - "3000:80"
+      - "3000:8081"
     environment:
-      PGADMIN_DEFAULT_EMAIL: "dev@dev.zoneblitz.app"
-      PGADMIN_DEFAULT_PASSWORD: "password"
-      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGWEB_DATABASE_URL: postgres://dev:password@database:5432/zone_blitz?sslmode=disable
+    depends_on:
+      - database
     labels:
       - "traefik.enable=false"
