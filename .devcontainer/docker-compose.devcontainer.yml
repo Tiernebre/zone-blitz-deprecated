@@ -52,7 +52,6 @@ services:
     environment:
       PGWEB_DATABASE_URL: postgres://dev:password@database:5432/zone_blitz?sslmode=disable
     depends_on:
-      - database:
-          condition: service_healthy
+      - database
     labels:
       - "traefik.enable=false"
