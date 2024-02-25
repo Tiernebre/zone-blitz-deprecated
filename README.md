@@ -45,7 +45,7 @@ Follow the instructions below if you wish to develop and contribute to zone blit
    - This is a first-time step, any proceeding dev container runs and builds will not need the sudo request unless you re-clone or are on a new machine.
 6. Wait for the container window to finish loading. **This can take a few minutes on your first run as it needs to download any Docker image dependencies.**
 7. Run `make` to serve zone blitz. You should start seeing logs and eventually see a prompt for the Java server running.
-8. **Navigate to https://localhost a browser of your choice**. You should now see zone blitz running in development mode.
+8. **Navigate to https://dev.zoneblitz.app a browser of your choice**. You should now see your locally running copy of the zone blitz website.
    - You could also navigate to http:/0.0.0.0:8000 if you wanted to access the server directly without going through the proxy.
 
 ##### Traefik Proxy Development
