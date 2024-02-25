@@ -25,3 +25,8 @@ install:
 .PHONY: format
 format:
 	npm run format
+
+.PHONY: update
+update:
+	npm upgrade
+	mvn versions:use-latest-versions
