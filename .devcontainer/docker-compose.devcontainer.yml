@@ -6,6 +6,7 @@ services:
     command:
       - "--api.insecure=true"
       - "--providers.docker"
+      - "--providers.file.directory=/etc/traefik/dynamic"
       - "--log.level=DEBUG"
       - "--entryPoints.http.address=:80"
       - "--entryPoints.http.http.redirections.entryPoint.to=https"
@@ -17,6 +18,7 @@ services:
       - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./certs-traefik.yml:/etc/traefik/dynamic/certs-traefik.yml
       - ./certs:/etc/certs
 
   web:
@@ -27,7 +29,6 @@ services:
     volumes:
       - ..:/workspace:cached
     labels:
-      - "traefik.http.routers.web.rule=Host(`0.0.0.0`)"
+      - "traefik.http.routers.web.entrypoints=websecure"
       - "traefik.http.routers.web.tls=true"
-      - "tls.certificates.certFile=/etc/certs/local-cert.pem"
-      - "tls.certificates.keyFile=/etc/certs/local-key.pem"
+      - "traefik.http.routers.web.rule=Host(`localhost`)"
