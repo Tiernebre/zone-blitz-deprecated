@@ -35,7 +35,7 @@ jobs:
             wget -O docker-compose.yml https://raw.githubusercontent.com/Tiernebre/zone-blitz/main/docker-compose.yml
             docker-compose pull
             docker-compose down || echo 'no existing docker image'
-            docker-compose up -d
+            docker-compose up -d --wait
       - name: Verify deployment was successful
         uses: jtalk/url-health-check-action@v4
         with:
