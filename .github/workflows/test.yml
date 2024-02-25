@@ -50,6 +50,7 @@ jobs:
           sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
       - name: Generate SSL certificates
         run: |
+          ls -lah
           mkcert -install
           mkcert -cert-file .devcontainer/certs/localhost.cert -key-file .devcontainer/certs/localhost.key localhost
       - name: Start development containers
