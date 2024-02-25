@@ -32,3 +32,25 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.web.tls=true"
       - "traefik.http.routers.web.rule=Host(`dev.zoneblitz.app`)"
+
+  database:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: zone_blitz
+    labels:
+      - "traefik.enable=false"
+
+  database-admin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - "3000:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "dev@dev.zoneblitz.app"
+      PGADMIN_DEFAULT_PASSWORD: "password"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    labels:
+      - "traefik.enable=false"
