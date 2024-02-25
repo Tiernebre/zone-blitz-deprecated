@@ -32,3 +32,26 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.web.tls=true"
       - "traefik.http.routers.web.rule=Host(`dev.zoneblitz.app`)"
+
+  database:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: zone_blitz
+    labels:
+      - "traefik.enable=false"
+
+  database-admin:
+    image: sosedoff/pgweb
+    restart: always
+    ports:
+      - "3000:8081"
+    environment:
+      PGWEB_DATABASE_URL: postgres://dev:password@database:5432/zone_blitz?sslmode=disable
+    depends_on:
+      - database
+    labels:
+      - "traefik.enable=false"
