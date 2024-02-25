@@ -29,6 +29,6 @@ services:
     volumes:
       - ..:/workspace:cached
     labels:
-      - "traefik.http.routers.web.entrypoints=websecure"
+      - "traefik.enable=true"
       - "traefik.http.routers.web.tls=true"
       - "traefik.http.routers.web.rule=Host(`localhost`)"
