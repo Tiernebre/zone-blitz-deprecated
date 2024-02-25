@@ -1,7 +1,6 @@
 #!/bin/sh
 
-while true
-do
+while true; do
   make &
   inotifywait -r -e modify src/main/java/com/tiernebre src/main/resources/templates
   killall make
