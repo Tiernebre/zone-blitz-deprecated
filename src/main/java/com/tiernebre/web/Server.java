@@ -16,7 +16,7 @@ public final class Server {
         Javalin.create(config -> {
           config.showJavalinBanner = false;
           config.staticFiles.add(staticFiles -> {
-            staticFiles.hostedPath = "/assets";
+            staticFiles.hostedPath = "/";
             staticFiles.directory = "/assets";
           });
         })
