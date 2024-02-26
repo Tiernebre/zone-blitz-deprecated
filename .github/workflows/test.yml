@@ -36,8 +36,8 @@ jobs:
         run: docker build -t brendantierney/zone-blitz:latest .
       - name: Run Web Server Docker container
         run: |
-          docker run -d --name web -p  $PORT:$PORT brendantierney/zone-blitz:latest
-          while [ "`docker inspect -f {{.State.Health.Status}} web" != "healthy" ]; do     sleep 2; done
+          docker run -d --name web -p $PORT:$PORT brendantierney/zone-blitz:latest
+          while [ "`docker inspect -f {{.State.Health.Status}} web" != "healthy" ]; do sleep 0.1; done
       - name: Verify web server container runs and serves healthy responses
         uses: jtalk/url-health-check-action@v4
         with:
