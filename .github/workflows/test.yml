@@ -2,6 +2,10 @@ name: Test
 
 on: push
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 env:
   PORT: 8000
   WEB_SERVER_URL: http://127.0.0.1:8000
