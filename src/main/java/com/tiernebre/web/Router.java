@@ -20,6 +20,6 @@ public final class Router {
   public Javalin register(Javalin app) {
     return app
       .get("/", frontPageController::render)
-      .get("/health", healthController::health);
+      .get("/api/health", healthController::health);
   }
 }

@@ -2,6 +2,10 @@ name: Test
 
 on: push
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 env:
   PORT: 8000
   WEB_SERVER_URL: http://127.0.0.1:8000
@@ -41,7 +45,7 @@ jobs:
       - name: Verify web server container runs and serves healthy responses
         uses: jtalk/url-health-check-action@v4
         with:
-          url: ${{ env.WEB_SERVER_URL }}|${{ env.WEB_SERVER_URL }}/assets/htmx.js|${{ env.WEB_SERVER_URL }}/assets/styles.css
+          url: ${{ env.WEB_SERVER_URL }}/api/health|${{ env.WEB_SERVER_URL }}/assets/htmx.js|${{ env.WEB_SERVER_URL }}/assets/styles.css
           max-attempts: 1
 
   development-environment-smoke-test:
