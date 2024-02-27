@@ -1,5 +1,10 @@
 plugins {
+    id 'application'
     id 'java'
+}
+
+application {
+    mainClassName = 'com.tiernebre.App'
 }
 
 java {
