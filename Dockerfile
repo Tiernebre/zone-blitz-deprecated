@@ -5,8 +5,8 @@ COPY . .
 
 RUN apk add openjdk21 gradle make npm curl
 RUN make install
-RUN apk del npm
 RUN make build
+RUN apk del npm
 
 EXPOSE 8000
 
