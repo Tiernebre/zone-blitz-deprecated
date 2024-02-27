@@ -7,6 +7,6 @@ public class HealthController {
 
   public void health(Context ctx) {
     ctx.status(HttpStatus.OK);
-    ctx.result("Healthy");
+    ctx.result("Healthy updated");
   }
 }
