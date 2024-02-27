@@ -5,7 +5,7 @@
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
   "initializeCommand": ".devcontainer/initializeCommand.sh",
-  "postCreateCommand": "make install && make build",
+  "postCreateCommand": "make build",
   "otherPortsAttributes": {
     "onAutoForward": "ignore"
   },
