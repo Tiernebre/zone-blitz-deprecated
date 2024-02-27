@@ -10,7 +10,7 @@
     "onAutoForward": "ignore"
   },
   "containerEnv": {
-    "JAVA_TOOL_OPTIONS": "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug"
+    "JAVA_TOOL_OPTIONS": "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug -Dorg.gradle.native=false"
   },
   "customizations": {
     "vscode": {
