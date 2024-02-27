@@ -5,7 +5,7 @@ COPY . .
 ENV JAVA_TOOL_OPTIONS="-Dorg.gradle.native=false"
 
 RUN apk add openjdk21 gradle make npm curl 7zip
-RUN make build
+RUN make
 RUN 7z x -odistribution build/distributions/zone-blitz.zip
 
 FROM alpine:3.19

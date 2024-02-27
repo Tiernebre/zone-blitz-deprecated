@@ -6,7 +6,7 @@ stop_gradle() {
 
 stop_gradle
 while true; do
-  make &
+  make run &
   PID=$!
   inotifywait -r -e modify src/main/java/com/tiernebre src/main/resources/templates >> /dev/ull
   stop_gradle
