@@ -4,8 +4,6 @@ WORKDIR /usr/app
 COPY . .
 
 RUN apk add openjdk21 gradle make npm curl
-RUN make compile
-RUN apk del npm
 
 EXPOSE 8000
 

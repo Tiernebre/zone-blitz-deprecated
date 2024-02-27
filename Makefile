@@ -1,31 +1,21 @@
-.PHONY: serve
-serve: compile run
-
 .PHONY: run
-run:
+run: build-client 
 	gradle run
 
-.PHONY: compile
-compile: install build
-
 .PHONY: build
-build:
-	npm run build
+build: build-client
 	gradle build
+
+.PHONY: build-client
+build-client:
+	npm ci
+	npm run build
 
 .PHONY: test
 test:
 	npm run lint
 	gradle test
 
-.PHONY: install
-install:
-	npm ci
-	
 .PHONY: format
 format:
 	npm run format
-
-.PHONY: clean
-clean:
-	gradle clean
