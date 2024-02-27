@@ -25,3 +25,7 @@ install:
 .PHONY: format
 format:
 	npm run format
+
+.PHONY: clean
+clean:
+	gradle clean
