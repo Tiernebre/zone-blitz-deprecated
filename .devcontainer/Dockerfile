@@ -1,6 +1,6 @@
 FROM alpine:3.19
 
-RUN apk add openjdk21 fish make git openssh-client maven nodejs npm bash inotify-tools gradle
+RUN apk add openjdk21 fish make git openssh-client nodejs npm inotify-tools gradle
 
 # shell setup
 SHELL ["fish", "--command"]
