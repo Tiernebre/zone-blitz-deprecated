@@ -1,6 +1,6 @@
 .PHONY: run
 run: build-client
-	gradle run
+	gradle run --no-daemon
 	
 .PHONY: build
 build: build-client
