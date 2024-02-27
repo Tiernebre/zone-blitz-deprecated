@@ -52,7 +52,7 @@ jobs:
         with:
           urls: |
             ${{ env.WEB_SERVER_URL }}
-          configPath: "./lighthouserc.json"
+          configPath: "./.lighthouserc.json"
 
   development-environment-smoke-test:
     name: Development Environment Smoke Test
