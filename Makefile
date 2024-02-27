@@ -7,6 +7,7 @@ run: build-client
 	gradle run --no-daemon
 	
 .PHONY: build-client
+build-client:
 	npm ci
 	npm run build
 
