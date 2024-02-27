@@ -1,5 +1,8 @@
 .PHONY: run
-run: build-client 
+run: build-client serve
+
+.PHONY: serve
+serve:
 	gradle run
 
 .PHONY: build
@@ -19,3 +22,7 @@ test:
 .PHONY: format
 format:
 	npm run format
+	
+.PHONY: dev
+dev:
+	./.devcontainer/dev.sh

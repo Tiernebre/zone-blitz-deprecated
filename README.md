@@ -87,11 +87,11 @@ that is already connected to the database instance in the development container.
 #### Hot Reload Support
 
 If you don't want to run `make` everytime you make changes, you can run this
-script which will watch for file changes and restart the server to reflect your
+command which will watch for file changes and restart the server to reflect your
 new changes:
 
 ```sh
-./.devcontainer/dev.sh
+make dev
 ```
 
 #### Testing
