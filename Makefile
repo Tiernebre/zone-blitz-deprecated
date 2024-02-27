@@ -1,18 +1,18 @@
 .PHONY: run
 run: build-client serve
-
-.PHONY: serve
-serve:
 	gradle run
-
+	
 .PHONY: build
-build: build-client
+compile: build-client
 	gradle build
 
 .PHONY: build-client
 build-client:
-	npm ci
 	npm run build
+
+.PHONY: install-client
+install-client:
+	npm ci
 
 .PHONY: test
 test:
