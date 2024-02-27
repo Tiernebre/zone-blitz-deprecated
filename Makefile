@@ -3,7 +3,7 @@ serve: compile run
 
 .PHONY: run
 run:
-	mvn exec:java
+	gradle run
 
 .PHONY: compile
 compile: install build
