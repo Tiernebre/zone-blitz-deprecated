@@ -7,7 +7,7 @@ build: build-client
 	gradle build
 
 .PHONY: build-client
-build-client:
+build-client: install
 	npm run build
 
 .PHONY: install
