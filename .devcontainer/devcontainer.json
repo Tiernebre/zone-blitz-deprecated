@@ -5,18 +5,17 @@
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
   "initializeCommand": ".devcontainer/initializeCommand.sh",
-  "postCreateCommand": ".devcontainer/postCreateCommand.sh",
+  "postCreateCommand": "make compile",
   "otherPortsAttributes": {
     "onAutoForward": "ignore"
   },
   "containerEnv": {
-    "JAVA_TOOL_OPTIONS": "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug"
+    "JAVA_TOOL_OPTIONS": "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug -Dorg.gradle.native=false"
   },
   "customizations": {
     "vscode": {
       "extensions": [
         "vscjava.vscode-java-pack",
-        "vscjava.vscode-gradle",
         "ms-vscode.makefile-tools",
         "imgildev.vscode-mustache-snippets",
         "humao.rest-client",

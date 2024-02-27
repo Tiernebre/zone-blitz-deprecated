@@ -3,7 +3,7 @@ serve: compile run
 
 .PHONY: run
 run:
-	mvn exec:java
+	gradle run
 
 .PHONY: compile
 compile: install build
@@ -11,12 +11,12 @@ compile: install build
 .PHONY: build
 build:
 	npm run build
-	mvn clean package -q -DskipTests=true
+	gradle build
 
 .PHONY: test
 test:
 	npm run lint
-	mvn test
+	gradle test
 
 .PHONY: install
 install:
@@ -26,7 +26,6 @@ install:
 format:
 	npm run format
 
-.PHONY: update
-update:
-	npm upgrade
-	mvn versions:use-latest-versions
+.PHONY: clean
+clean:
+	gradle clean

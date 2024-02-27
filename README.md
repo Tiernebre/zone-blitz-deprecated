@@ -91,7 +91,7 @@ script which will watch for file changes and restart the server to reflect your
 new changes:
 
 ```sh
-./bin/dev.sh
+./.devcontainer/dev.sh
 ```
 
 #### Testing
