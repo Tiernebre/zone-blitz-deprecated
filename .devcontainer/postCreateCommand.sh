@@ -1,4 +1,5 @@
 #!/bin/sh
 
-make install
-make compile
+npm ci
+# make install
+# make compile
