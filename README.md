@@ -84,16 +84,6 @@ The PostgreSQL database instance is available at `postgres://dev:password@databa
 You can also use an already spun up instance of [pgweb](https://github.com/sosedoff/pgweb) at http://0.0.0.0:3000
 that is already connected to the database instance in the development container.
 
-#### Hot Reload Support
-
-If you don't want to run `make` everytime you make changes, you can run this
-command which will watch for file changes and restart the server to reflect your
-new changes:
-
-```sh
-make dev
-```
-
 #### Testing
 
 You can run the unit testing suite by just running the following command in your

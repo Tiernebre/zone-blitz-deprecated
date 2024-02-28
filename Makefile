@@ -21,6 +21,3 @@ test:
 format:
 	npm run format
 	
-.PHONY: dev
-dev:
-	./.devcontainer/dev.sh
