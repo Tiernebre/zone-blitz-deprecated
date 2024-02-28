@@ -5,7 +5,6 @@
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
   "initializeCommand": ".devcontainer/initializeCommand.sh",
-  "postCreateCommand": "make",
   "otherPortsAttributes": {
     "onAutoForward": "ignore"
   },
