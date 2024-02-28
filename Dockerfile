@@ -15,6 +15,6 @@ RUN apk add openjdk21 curl
 COPY --from=build /usr/app/distribution/zone-blitz .
 
 EXPOSE 8000
-HEALTHCHECK --interval=5s --start-period=5s --timeout=2s --retries=5 CMD curl http://0.0.0.0:8000/api/health || exit 1
+HEALTHCHECK --interval=2s --timeout=2s --retries=5 CMD curl http://0.0.0.0:8000/api/health || exit 1
 
 CMD [ "zone-blitz" ]
