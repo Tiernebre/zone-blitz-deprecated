@@ -1,6 +1,6 @@
 FROM alpine:3.19
 
-RUN apk add openjdk21 fish make git openssh-client nodejs npm inotify-tools gradle
+RUN apk add openjdk21 fish make git openssh-client nodejs npm inotify-tools gradle 7zip
 
 # needed for DevContainers CI :(
 RUN apk add bash

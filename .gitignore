@@ -184,6 +184,7 @@ src/main/resources/assets/htmx.js
 .gradle
 **/build/
 !src/**/build/
+distribution
 
 # Ignore Gradle GUI config
 gradle-app.setting

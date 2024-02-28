@@ -1,15 +1,8 @@
 .PHONY: build
-build: build-client
-	gradle build
-
-.PHONY: run
-run: build-client
-	gradle run --no-daemon
-	
-.PHONY: build-client
-build-client:
+build:
 	npm ci
 	npm run build
+	gradle installDist
 
 .PHONY: test
 test:
