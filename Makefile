@@ -1,15 +1,16 @@
-.PHONY: build
-build: build-client
-	gradle build
-
 .PHONY: run
-run: build-client
-	gradle run --no-daemon
-	
-.PHONY: build-client
-build-client:
+run: build install
+	zone-blitz
+
+.PHONY: build
+build:
 	npm ci
 	npm run build
+	gradle installDist
+
+.PHONY: install
+install:
+	cp -r build/install/zone-blitz/. /
 
 .PHONY: test
 test:
@@ -20,6 +21,3 @@ test:
 format:
 	npm run format
 	
-.PHONY: dev
-dev:
-	./.devcontainer/dev.sh
