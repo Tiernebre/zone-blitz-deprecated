@@ -21,3 +21,6 @@ test:
 format:
 	npm run format
 	
+.PHONY: migrate
+migrate:
+	dbmate -e ZONE_BLITZ_POSTGRES_URL up
