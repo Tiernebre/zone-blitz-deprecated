@@ -9,7 +9,7 @@ install: build migrate
 	cp -r build/install/zone-blitz/. /
 	
 .PHONY: build
-build: migrate
+build:
 	npm ci
 	npm run build
 	gradle installDist
