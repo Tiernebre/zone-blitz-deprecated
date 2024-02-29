@@ -50,7 +50,7 @@ services:
     ports:
       - "3000:8081"
     environment:
-      - PGWEB_DATABASE_URL=${ZONE_BLITZ_POSTGRES_URL_WITH_AUTHENTICATION}
+      - PGWEB_DATABASE_URL=${ZONE_BLITZ_POSTGRES_URL}
     depends_on:
       - database
     labels:
