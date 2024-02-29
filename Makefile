@@ -5,14 +5,11 @@ run: install
 	zone-blitz
 
 .PHONY: install
-install: build
+install: build migrate
 	cp -r build/install/zone-blitz/. /
 	
-.PHONY: development
-development: build migrate
-
 .PHONY: build
-build:
+build: migrate
 	npm ci
 	npm run build
 	gradle installDist
