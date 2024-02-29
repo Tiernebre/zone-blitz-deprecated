@@ -5,7 +5,7 @@
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
   "initializeCommand": ".devcontainer/initializeCommand.sh",
-  "postCreateCommand": "make build",
+  "postCreateCommand": "make install",
   "containerEnv": {
     "JAVA_TOOL_OPTIONS": "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug -Dorg.gradle.native=false"
   },

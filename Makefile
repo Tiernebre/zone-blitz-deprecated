@@ -1,11 +1,13 @@
+DBMATE=dbmate -e ZONE_BLITZ_POSTGRES_URL
+
 .PHONY: run
 run: install
 	zone-blitz
 
 .PHONY: install
-install: build
+install: build migrate
 	cp -r build/install/zone-blitz/. /
-
+	
 .PHONY: build
 build:
 	npm ci
@@ -21,3 +23,10 @@ test:
 format:
 	npm run format
 	
+.PHONY: migrate
+migrate:
+	$(DBMATE) up
+
+.PHONY: migraion
+migration:
+	$(DBMATE) new $(NAME)
