@@ -13,8 +13,8 @@ env:
   TERM: dumb
 
 jobs:
-  unit-tests:
-    name: Unit Tests
+  tests:
+    name: Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,10 +25,19 @@ jobs:
           curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
           chmod +x mkcert-v*-linux-amd64
           sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
-      - name: Run unit tests in development container
+      - name: Run tests and server in development container
         uses: devcontainers/ci@v0.3
         with:
-          runCmd: make test
+          runCmd: |
+            make test
+            make &
+      - name: Run smoke test on devcontainer environment
+        uses: jtalk/url-health-check-action@v4
+        with:
+          url: ${{ env.URL }}/api/health
+          max-attempts: 20
+          retry-delay: 3s
+          retry-all: true
 
   web-server-test:
     name: Web Server Test
@@ -54,29 +63,3 @@ jobs:
             ${{ env.WEB_SERVER_URL }}
           configPath: "./.lighthouserc.json"
           runs: 5
-
-  development-environment-smoke-test:
-    name: Development Environment Smoke Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install mkcert
-        run: |
-          sudo apt install libnss3-tools
-          curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
-          chmod +x mkcert-v*-linux-amd64
-          sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
-      - name: Run initialize command
-        run: .devcontainer/initializeCommand.sh
-      - name: Create and start development containers
-        run: docker-compose -f .devcontainer/docker-compose.devcontainer.yml up -d
-      - name: Start web server in its development container
-        run: docker-compose -f .devcontainer/docker-compose.devcontainer.yml exec -T -w /workspace web make &
-      - name: Verify development container proxy runs and proxies to web server
-        uses: jtalk/url-health-check-action@v4
-        with:
-          url: ${{ env.URL }}/api/health
-          max-attempts: 12
-          retry-delay: 5s
-          retry-all: true
