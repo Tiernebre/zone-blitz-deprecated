@@ -38,6 +38,8 @@ services:
       - db_password
     labels:
       - "traefik.enable=false"
+    volumes:
+      - /var/lib/postgresql/data:/var/lib/postgresgql/data
 
 secrets:
   postgres_password:
