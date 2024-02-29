@@ -44,7 +44,7 @@ jooq {
     configuration {
         jdbc {
             driver = 'org.postgresql.Driver'
-            url = System.getenv('ZONE_BLITZ_POSTGRES_')
+            url = System.getenv('ZONE_BLITZ_POSTGRES_JDBC_URL')
             user = System.getenv('ZONE_BLITZ_POSTGRES_USER')
             password = System.getenv('ZONE_BLITZ_POSTGRES_PASSWORD')
         }
