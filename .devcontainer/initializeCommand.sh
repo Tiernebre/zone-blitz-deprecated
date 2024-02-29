@@ -17,6 +17,14 @@ if [ -f "${CERT_FILE}" ]; then
   echo "Certification was already created. Skipping certification creation and proceeding with dev container creation.\n"
 else
   echo "Certification does not exist already for dev container. Proceeding to create certifications."
+
+  if [ -n "${CI}" ]; then
+    echo "In a CI environment, automatically installing mkcert."
+    curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+    chmod +x mkcert-v*-linux-amd64
+    sudo mv mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+  fi
+
   echo "You ${italic}may${normal} need to require sudo access. This is because mkcert will trust the generated certificate for you to avoid browser issues.\n"
   echo "Please provide the sudo password, ${bold}otherwise you can run mkcert manually outside of this script with the following command:${normal}\n\n"
   echo "${bold}mkcert -install\nmkcert -cert-file ${CERT_FILE} -key-file ${KEY_FILE} ${DOMAIN}\n${normal}"
