@@ -44,7 +44,19 @@ jooq {
     configuration {
         jdbc {
             driver = 'org.postgresql.Driver'
-            url = ''
+            url = System.getenv('ZONE_BLITZ_POSTGRES_')
+            user = System.getenv('ZONE_BLITZ_POSTGRES_USER')
+            password = System.getenv('ZONE_BLITZ_POSTGRES_PASSWORD')
+        }
+        generator {
+            name = 'org.jooq.codegen.JavaGenerator'
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+            }
+            target {
+                packageName = 'com.tiernebre.jooq'
+                directory = '/build/generated/source/jooq/main'
+            }
         }
     }
 }
