@@ -32,7 +32,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY}}
           script: |
-            wget -O docker-compose.yml https://raw.githubusercontent.com/Tiernebre/zone-blitz/main/docker-compose.yml
+            git clone ${{ github.repositoryUrl }} || echo "repository already cloned"
+            cd zone-blitz
             docker compose pull
             docker compose up -d --wait
             docker system prune --all --force
