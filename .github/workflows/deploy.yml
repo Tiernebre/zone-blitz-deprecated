@@ -33,8 +33,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY}}
           script: |
             git clone ${{ github.repositoryUrl }} || echo "repository already cloned"
-            git pull
             cd zone-blitz
+            git pull
             docker compose pull
             docker compose up -d --wait
             docker system prune --all --force
