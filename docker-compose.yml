@@ -34,12 +34,12 @@ services:
       POSTGRES_USER: ${ZONE_BLITZ_POSTGRES_USER}
       POSTGRES_PASSWORD: /run/secrets/postgres_password
       POSTGRES_DB: ${ZONE_BLITZ_POSTGRES_NAME}
-    secrets:
-      - db_password
-    labels:
-      - "traefik.enable=false"
     volumes:
       - /var/lib/postgresql/data:/var/lib/postgresgql/data
+    secrets:
+      - postgres_password
+    labels:
+      - "traefik.enable=false"
 
 secrets:
   postgres_password:
