@@ -31,8 +31,14 @@ services:
   database:
     image: postgres:16
     environment:
-      - POSTGRES_USER=${ZONE_BLITZ_POSTGRES_USER}
-      - POSTGRES_PASSWORD=${ZONE_BLITZ_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${ZONE_BLITZ_POSTGRES_NAME}
+      POSTGRES_USER: ${ZONE_BLITZ_POSTGRES_USER}
+      POSTGRES_PASSWORD: /run/secrets/postgres_password
+      POSTGRES_DB: ${ZONE_BLITZ_POSTGRES_NAME}
+    secrets:
+      - db_password
     labels:
       - "traefik.enable=false"
+
+secrets:
+  postgres_password:
+    file: postgres_password.txt
