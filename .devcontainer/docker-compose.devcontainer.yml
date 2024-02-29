@@ -32,15 +32,15 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.web.tls=true"
       - "traefik.http.routers.web.rule=Host(`dev.zoneblitz.app`)"
+    env_file:
+      - .env
 
   database:
     image: postgres:16
-    ports:
-      - "5432:5432"
     environment:
-      POSTGRES_USER: dev
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: zone_blitz
+      - POSTGRES_USER=${ZONE_BLITZ_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${ZONE_BLITZ_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${ZONE_BLITZ_POSTGRES_NAME}
     labels:
       - "traefik.enable=false"
 
@@ -50,7 +50,7 @@ services:
     ports:
       - "3000:8081"
     environment:
-      PGWEB_DATABASE_URL: postgres://dev:password@database:5432/zone_blitz?sslmode=disable
+      - PGWEB_DATABASE_URL=${ZONE_BLITZ_POSTGRES_URL}
     depends_on:
       - database
     labels:
