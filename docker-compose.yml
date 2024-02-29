@@ -27,3 +27,12 @@ services:
       - "traefik.http.routers.web.rule=Host(`zoneblitz.app`)"
       - "traefik.http.routers.web.entrypoints=websecure"
       - "traefik.http.routers.web.tls.certresolver=myresolver"
+
+  database:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=${ZONE_BLITZ_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${ZONE_BLITZ_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${ZONE_BLITZ_POSTGRES_NAME}
+    labels:
+      - "traefik.enable=false"
