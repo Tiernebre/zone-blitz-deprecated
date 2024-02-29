@@ -24,3 +24,7 @@ format:
 .PHONY: migrate
 migrate:
 	dbmate -e ZONE_BLITZ_POSTGRES_URL up
+
+.PHONY: migraion
+migration:
+	dbmate -e ZONE_BLITZ_POSTGRES_URL new $(NAME)
