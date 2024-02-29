@@ -30,7 +30,9 @@ jobs:
         with:
           runCmd: |
             make test
-            make
+            make &
+      - name: Check docker processes
+        run: docker ps -a
       - name:
         uses: jtalk/url-health-check-action@v4
         with:
