@@ -3,7 +3,6 @@ WORKDIR /usr/app
 COPY . .
 ENV JAVA_TOOL_OPTIONS="-Dorg.gradle.native=false"
 RUN apk add openjdk21 gradle make npm curl
-RUN ls -lah
 RUN make build
 
 FROM alpine:3.19
