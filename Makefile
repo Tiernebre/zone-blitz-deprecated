@@ -7,6 +7,9 @@ run: install
 .PHONY: install
 install: build
 	cp -r build/install/zone-blitz/. /
+	
+.PHONY: development
+development: build migrate
 
 .PHONY: build
 build:

@@ -84,6 +84,23 @@ The PostgreSQL database instance is available at `postgres://dev:password@databa
 You can also use an already spun up instance of [pgweb](https://github.com/sosedoff/pgweb) at http://0.0.0.0:3000
 that is already connected to the database instance in the development container.
 
+###### Migrations
+
+Database migrations are managed through [dbmate](https://github.com/amacneil/dbmate). It is already installed
+within the development container environment for you.
+
+To create a new migration, simply run:
+
+```sh
+make migration NAME=<name of the new migration>
+```
+
+To run migrations, simply run:
+
+```sh
+make migrate
+```
+
 #### Testing
 
 You can run the unit testing suite by just running the following command in your
