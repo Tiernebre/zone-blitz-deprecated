@@ -1,3 +1,5 @@
+DBMATE=dbmate -e ZONE_BLITZ_POSTGRES_URL
+
 .PHONY: run
 run: install
 	zone-blitz
@@ -23,8 +25,8 @@ format:
 	
 .PHONY: migrate
 migrate:
-	dbmate -e ZONE_BLITZ_POSTGRES_URL up
+	$(DBMATE) up
 
 .PHONY: migraion
 migration:
-	dbmate -e ZONE_BLITZ_POSTGRES_URL new $(NAME)
+	$(DBMATE) new $(NAME)
