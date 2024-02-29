@@ -48,7 +48,7 @@ services:
     ports:
       - "3000:8081"
     environment:
-      PGWEB_DATABASE_URL: "postgres://${ZONE_BLITZ_POSTGRES_USER}:${ZONE_BLITZ_POSTGRES_PASSWORD}@database:5432/${ZONE_BLITZ_POSTGRES_NAME}?sslmode=disable"
+      - PGWEB_DATABASE_URL=${ZONE_BLITZ_POSTGRES_URL}
     depends_on:
       - database
     labels:
