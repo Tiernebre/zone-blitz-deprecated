@@ -27,6 +27,6 @@ format:
 migrate:
 	$(DBMATE) up
 
-.PHONY: migraion
+.PHONY: migration
 migration:
 	$(DBMATE) new $(NAME)
