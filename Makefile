@@ -26,6 +26,7 @@ format:
 .PHONY: migrate
 migrate:
 	$(DBMATE) up
+	gradle jooqCodegen
 
 .PHONY: migration
 migration:
