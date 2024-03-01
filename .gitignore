@@ -205,3 +205,4 @@ gradle-app.setting
 
 # production configurations
 letsencrypt
+secrets
