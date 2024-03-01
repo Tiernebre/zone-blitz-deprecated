@@ -101,6 +101,20 @@ To run migrations, simply run:
 make migrate
 ```
 
+###### jOOQ Code Generation
+
+We're using [jOOQ](https://www.jooq.org/) as our main database query driver tool. jOOQ generates code based
+upon a database schema.
+
+When you run the development environment, everytime you [make a database migration change](#migrations) the
+jOOQ code will auto generate for you.
+
+At this point, we are **specifically tracking code generated from jOOQ in version control**. [This has some benefits
+and drawbacks](https://www.jooq.org/doc/latest/manual/code-generation/codegen-version-control/), and for the state
+that Zone Blitz is in I'm OK with it but could change direction as the project becomes more complex.
+
+You can find generated jOOQ code in the package `com.tiernebre.database.jooq`.
+
 #### Testing
 
 You can run the unit testing suite by just running the following command in your
