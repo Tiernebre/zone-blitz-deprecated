@@ -75,7 +75,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Start development container
+      - name: Run unit tests in development container
         uses: devcontainers/ci@v0.3
+        with:
+          runCmd: make build && make migrate
       - name: Verify the git repository is not in a dirty state
         run: git add . && git diff --quiet && git diff --cached --quiet
