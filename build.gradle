@@ -52,10 +52,11 @@ jooq {
             name = 'org.jooq.codegen.JavaGenerator'
             database {
                 name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = 'public'
             }
             target {
                 packageName = 'com.tiernebre.jooq'
-                directory = '/build/generated/source/jooq/main'
+                directory = 'src/main/java'
             }
         }
     }
