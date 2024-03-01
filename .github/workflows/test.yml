@@ -78,4 +78,6 @@ jobs:
       - name: Verify there is no difference in generated code
         uses: devcontainers/ci@v0.3
         with:
-          runCmd: git add . && git diff --quiet && git diff --cached --quiet
+          runCmd: |
+            git config --global --add safe.directory /workspace
+            git add . && git diff --quiet && git diff --cached --quiet
