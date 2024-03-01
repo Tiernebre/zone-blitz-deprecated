@@ -23,7 +23,7 @@ services:
     image: brendantierney/zone-blitz:latest
     environment:
       ZONE_BLITZ_POSTGRES_USER: ${ZONE_BLITZ_POSTGRES_USER}
-      ZONE_BLITZ_POSTGRES_PASSWORD: ${ZONE_BLTIZ_POSTGRES_PASSWORD}
+      ZONE_BLITZ_POSTGRES_PASSWORD: ${ZONE_BLITZ_POSTGRES_PASSWORD}
       ZONE_BLITZ_POSTGRES_JDBC_URL: jdbc:postgresql://${ZONE_BLITZ_POSTGRES_HOST}
     labels:
       - "traefik.enable=true"
