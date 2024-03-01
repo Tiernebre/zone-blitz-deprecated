@@ -9,7 +9,7 @@ install: build migrate
 	cp -r build/install/zone-blitz/. /
 
 .PHONY: development-environment
-development-environment: build migrate
+development-environment: migrate build
 	
 .PHONY: build
 build:
