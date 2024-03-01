@@ -83,8 +83,4 @@ ALTER TABLE ONLY public.schema_migrations
 --
 
 INSERT INTO public.schema_migrations (version) VALUES
-    ('20240229161633'),
-    ('20240229162630'),
-    ('20240229162729'),
-    ('20240229162856'),
     ('20240229231656');
