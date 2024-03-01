@@ -16,7 +16,6 @@ services:
     volumes:
       - ./letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
-
     depends_on:
       - web
 
@@ -33,6 +32,9 @@ services:
       - "traefik.http.routers.web.rule=Host(`zoneblitz.app`)"
       - "traefik.http.routers.web.entrypoints=websecure"
       - "traefik.http.routers.web.tls.certresolver=myresolver"
+    depends_on:
+      - database
+      - database-migration
 
   database:
     image: postgres:16
