@@ -55,7 +55,7 @@ services:
       - postgres_password
     environment:
       ZONE_BLITZ_POSTGRES_PASSWORD: /run/secrets/postgres_password
-      DATABASE_URL: postgres://${ZONE_BLITZ_POSTGRES_USER}:${ZONE_BLITZ_POSTGRES_PASSWORD}@${ZONE_BLITZ_POSTGRES_HOST}?sslmode=disable
+      DATABASE_URL: postgres://${ZONE_BLITZ_POSTGRES_USER}:$ZONE_BLITZ_POSTGRES_PASSWORD@${ZONE_BLITZ_POSTGRES_HOST}?sslmode=disable
     volumes:
       - ./db:/db
     command: --wait up
