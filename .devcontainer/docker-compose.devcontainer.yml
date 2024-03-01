@@ -38,9 +38,9 @@ services:
   database:
     image: postgres:16
     environment:
-      - POSTGRES_USER=${ZONE_BLITZ_POSTGRES_USER}
-      - POSTGRES_PASSWORD=${ZONE_BLITZ_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${ZONE_BLITZ_POSTGRES_NAME}
+      POSTGRES_USER: ${ZONE_BLITZ_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${ZONE_BLITZ_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${ZONE_BLITZ_POSTGRES_NAME}
     labels:
       - "traefik.enable=false"
 
@@ -50,7 +50,7 @@ services:
     ports:
       - "3000:8081"
     environment:
-      - PGWEB_DATABASE_URL=${ZONE_BLITZ_POSTGRES_URL}
+      PGWEB_DATABASE_URL: ${ZONE_BLITZ_POSTGRES_URL}
     depends_on:
       - database
     labels:
@@ -59,7 +59,7 @@ services:
   database-migration:
     image: ghcr.io/amacneil/dbmate
     environment:
-      - DATABASE_URL=${ZONE_BLITZ_POSTGRES_URL}
+      DATABASE_URL: ${ZONE_BLITZ_POSTGRES_URL}
     volumes:
       - ../db:/db
     command: --wait up
