@@ -38,7 +38,6 @@ jobs:
           script: |
             git -C "$TARGET_DIR" pull || git clone ${{ github.repositoryUrl }} "$TARGET_DIR"
             cd zone-blitz
-            scripts/deploy.sh
             docker compose pull
             docker compose up -d --wait
             docker system prune --all --force
