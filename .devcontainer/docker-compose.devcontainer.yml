@@ -50,7 +50,7 @@ services:
     ports:
       - "3000:8081"
     environment:
-      - PGWEB_DATABASE_URL=${ZONE_BLITZ_POSTGRES_URL}
+      PGWEB_DATABASE_URL: ${ZONE_BLITZ_POSTGRES_URL}
     depends_on:
       - database
     labels:
@@ -59,7 +59,7 @@ services:
   database-migration:
     image: ghcr.io/amacneil/dbmate
     environment:
-      - DATABASE_URL: ${ZONE_BLITZ_POSTGRES_URL}
+      DATABASE_URL: ${ZONE_BLITZ_POSTGRES_URL}
     volumes:
       - ../db:/db
     command: --wait up
