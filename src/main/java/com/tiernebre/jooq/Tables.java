@@ -4,7 +4,6 @@
 package com.tiernebre.jooq;
 
 import com.tiernebre.jooq.tables.Player;
-import com.tiernebre.jooq.tables.SchemaMigrations;
 
 /**
  * Convenience access to all tables in public.
@@ -16,10 +15,4 @@ public class Tables {
    * The table <code>public.player</code>.
    */
   public static final Player PLAYER = Player.PLAYER;
-
-  /**
-   * The table <code>public.schema_migrations</code>.
-   */
-  public static final SchemaMigrations SCHEMA_MIGRATIONS =
-    SchemaMigrations.SCHEMA_MIGRATIONS;
 }

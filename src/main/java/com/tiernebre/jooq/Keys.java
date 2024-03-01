@@ -4,9 +4,7 @@
 package com.tiernebre.jooq;
 
 import com.tiernebre.jooq.tables.Player;
-import com.tiernebre.jooq.tables.SchemaMigrations;
 import com.tiernebre.jooq.tables.records.PlayerRecord;
-import com.tiernebre.jooq.tables.records.SchemaMigrationsRecord;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
@@ -28,13 +26,6 @@ public class Keys {
       Player.PLAYER,
       DSL.name("player_pkey"),
       new TableField[] { Player.PLAYER.ID },
-      true
-    );
-  public static final UniqueKey<SchemaMigrationsRecord> SCHEMA_MIGRATIONS_PKEY =
-    Internal.createUniqueKey(
-      SchemaMigrations.SCHEMA_MIGRATIONS,
-      DSL.name("schema_migrations_pkey"),
-      new TableField[] { SchemaMigrations.SCHEMA_MIGRATIONS.VERSION },
       true
     );
 }
