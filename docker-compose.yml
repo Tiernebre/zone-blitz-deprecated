@@ -32,15 +32,9 @@ services:
     image: postgres:16
     environment:
       POSTGRES_USER: ${ZONE_BLITZ_POSTGRES_USER}
-      POSTGRES_PASSWORD: /run/secrets/postgres_password
+      POSTGRES_PASSWORD: ${ZONE_BLITZ_POSTGRES_PASSWORD}
       POSTGRES_DB: ${ZONE_BLITZ_POSTGRES_NAME}
     volumes:
       - /var/lib/postgresql/data:/var/lib/postgresgql/data
-    secrets:
-      - postgres_password
     labels:
       - "traefik.enable=false"
-
-secrets:
-  postgres_password:
-    file: postgres_password.txt
