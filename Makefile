@@ -7,10 +7,12 @@ run: install
 .PHONY: install
 install: build migrate
 	cp -r build/install/zone-blitz/. /
+
+.PHONY: development-environment
+development-environment: migrate build
 	
 .PHONY: build
-build:
-	npm ci
+build: dependencies
 	npm run build
 	gradle installDist
 
@@ -21,7 +23,7 @@ test:
 
 .PHONY: migrate
 migrate:
-	$(DBMATE) up
+	$(DBMATE) --wait up
 	gradle jooqCodegen
 	make format
 
@@ -30,5 +32,9 @@ migration:
 	$(DBMATE) new $(NAME)
 
 .PHONY: format
-format:
+format: dependencies
 	npm run format
+
+.PHONY: dependencies
+dependencies:
+	npm ci
