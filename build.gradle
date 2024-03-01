@@ -56,7 +56,7 @@ jooq {
                 excludes = 'public.schema_migrations'
             }
             target {
-                packageName = 'com.tiernebre.jooq'
+                packageName = 'com.tiernebre.database.jooq'
                 directory = 'src/main/java'
             }
         }

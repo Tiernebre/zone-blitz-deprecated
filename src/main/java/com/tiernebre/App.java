@@ -1,7 +1,7 @@
 package com.tiernebre;
 
-import com.tiernebre.jooq.tables.Player;
-import com.tiernebre.jooq.tables.records.PlayerRecord;
+import com.tiernebre.database.jooq.tables.Player;
+import com.tiernebre.database.jooq.tables.records.PlayerRecord;
 import com.tiernebre.web.ServerFactory;
 import java.sql.DriverManager;
 import java.sql.SQLException;
