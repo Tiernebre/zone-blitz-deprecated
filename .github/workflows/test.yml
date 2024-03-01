@@ -80,4 +80,4 @@ jobs:
         with:
           runCmd: make migrate
       - name: Verify the git repository is not in a dirty state
-        run: git diff --no-ext-diff --quiet --exit-code
+        run: git add . && git diff --quiet && git diff --cached --quiet
