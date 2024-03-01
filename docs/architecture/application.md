@@ -5,11 +5,13 @@
 ## Technology Stack
 
 - [Java via OpenJDK](https://openjdk.org/)
+- [PostgreSQL](https://www.postgresql.org/)
 - [Javalin](https://javalin.io/): HTTP Web framework used for serving HTTP routes and infrastructure.
 - [jstachio](https://github.com/jstachio/jstachio): HTML Template Engine.
 - [HTMX](https://htmx.org/)
-- [UnoCSS](https://unocss.dev/)
-- [PostgreSQL](https://www.postgresql.org/)
+- [UnoCSS](https://unocss.dev/): Atomic CSS framework for utility-first styling.
+- [jOOQ](https://www.jooq.org/): Database query builder library.
+- [dbmate](https://github.com/amacneil/dbmate): Database migration tool.
 
 ## Web Server
 
