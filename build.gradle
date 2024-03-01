@@ -53,10 +53,10 @@ jooq {
             database {
                 name = 'org.jooq.meta.postgres.PostgresDatabase'
                 inputSchema = 'public'
-                excludes = 'schema_migrations'
+                excludes = 'public.schema_migrations'
             }
             target {
-                packageName = 'com.tiernebre.jooq'
+                packageName = 'com.tiernebre.database.jooq'
                 directory = 'src/main/java'
             }
         }
