@@ -24,7 +24,7 @@ test:
 
 .PHONY: migrate
 migrate:
-	$(DBMATE) up
+	$(DBMATE) --wait up
 	gradle jooqCodegen
 	make format
 
