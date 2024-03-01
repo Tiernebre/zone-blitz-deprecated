@@ -22,6 +22,10 @@ services:
 
   web:
     image: brendantierney/zone-blitz:latest
+    environment:
+      ZONE_BLITZ_POSTGRES_USER: ${ZONE_BLITZ_POSTGRES_USER}
+      ZONE_BLITZ_POSTGRES_PASSWORD: ${ZONE_BLITZ_POSTGRES_PASSWORD}
+      ZONE_BLITZ_POSTGRES_JDBC_URL: ${ZONE_BLITZ_POSTGRES_JDBC_URL}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.web.rule=Host(`zoneblitz.app`)"
