@@ -12,8 +12,7 @@ install: build migrate
 development-environment: migrate build
 	
 .PHONY: build
-build:
-	npm ci
+build: dependencies
 	npm run build
 	gradle installDist
 
@@ -33,5 +32,9 @@ migration:
 	$(DBMATE) new $(NAME)
 
 .PHONY: format
-format:
+format: dependencies
 	npm run format
+
+.PHONY: dependencies
+dependencies:
+	npm ci
