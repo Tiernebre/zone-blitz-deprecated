@@ -78,6 +78,6 @@ jobs:
       - name: Run unit tests in development container
         uses: devcontainers/ci@v0.3
         with:
-          runCmd: make build && make migrate
+          runCmd: make development-environment
       - name: Verify the git repository is not in a dirty state
         run: git add . && git diff --quiet && git diff --cached --quiet
