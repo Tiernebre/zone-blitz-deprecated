@@ -52,10 +52,9 @@ services:
   database-migration:
     image: ghcr.io/amacneil/dbmate
     secrets:
-      - postgres_password
+      - postgres_url
     environment:
-      ZONE_BLITZ_POSTGRES_PASSWORD: /run/secrets/postgres_password
-      DATABASE_URL: postgres://${ZONE_BLITZ_POSTGRES_USER}:$ZONE_BLITZ_POSTGRES_PASSWORD@${ZONE_BLITZ_POSTGRES_HOST}?sslmode=disable
+      DATABASE_URL: /run/secrets/postgres_url
     volumes:
       - ./db:/db
     command: --wait up
@@ -65,3 +64,5 @@ services:
 secrets:
   postgres_password:
     file: ./secrets/postgres_password.txt
+  postgres_url:
+    file: ./secrets/postgres_url.txt
