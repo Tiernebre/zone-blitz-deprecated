@@ -34,9 +34,11 @@ services:
 
   database:
     image: postgres:16
+    secrets:
+      - postgres_password
     environment:
       POSTGRES_USER: ${ZONE_BLITZ_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${ZONE_BLITZ_POSTGRES_PASSWORD}
+      POSTGRES_PASSWORD: /run/secrets/postgres_password
       POSTGRES_DB: ${ZONE_BLITZ_POSTGRES_NAME}
     volumes:
       - /var/lib/postgresql/data:/var/lib/postgresgql/data
@@ -52,3 +54,7 @@ services:
     command: --wait up
     depends_on:
       - database
+
+secrets:
+  postgres_password:
+    file: ./secrets/postgres_password.txt
