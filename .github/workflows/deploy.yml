@@ -34,7 +34,6 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY}}
           envs: TARGET_DIR
-          script_stop: true
           script: |
             git -C "$TARGET_DIR" pull || git clone ${{ github.repositoryUrl }} "$TARGET_DIR"
             cd zone-blitz
