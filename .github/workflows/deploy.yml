@@ -38,7 +38,9 @@ jobs:
           script: |
             git -C "$TARGET_DIR" pull || git clone ${{ github.repositoryUrl }} "$TARGET_DIR"
             cd zone-blitz
-            scripts/deploy.sh
+            docker compose pull
+            docker compose up -d --wait
+            docker system prune --all --force
       - name: Verify deployment was successful
         uses: jtalk/url-health-check-action@v4
         with:
