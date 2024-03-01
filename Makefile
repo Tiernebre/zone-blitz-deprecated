@@ -19,10 +19,6 @@ test:
 	npm run lint
 	gradle test
 
-.PHONY: format
-format:
-	npm run format
-	
 .PHONY: migrate
 migrate:
 	$(DBMATE) up
@@ -32,3 +28,7 @@ migrate:
 .PHONY: migration
 migration:
 	$(DBMATE) new $(NAME)
+
+.PHONY: format
+format:
+	npm run format
