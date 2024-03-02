@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ZONE_BLITZ_WEB_DOCKER_IMAGE: brendantierney/zone-blitz:staging
-      ZONE_BLITZ_DOMAIN: zoneblitz.app
+      ZONE_BLITZ_DOMAIN: 0.0.0.0
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,8 +46,6 @@ jobs:
           ZONE_BLITZ_POSTGRES_NAME: zone_blitz
           ZONE_BLITZ_POSTGRES_HOST: database:5432/zone_blitz
         run: docker compose up -d --wait
-      - name: Add hosts to /etc/hosts
-        run: sudo echo "127.0.0.1 ${{ env.ZONE_BLITZ_DOMAIN }}" | sudo tee -a /etc/hosts
       - name: Verify application is running and healthy
         run: curl -fv https://${{ env.ZONE_BLITZ_DOMAIN }}/api/health
 
