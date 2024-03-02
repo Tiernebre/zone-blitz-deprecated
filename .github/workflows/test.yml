@@ -48,6 +48,7 @@ jobs:
         run: docker compose up -d --wait
       - name: Verify application is running and healthy
         run: |
+          curl -fv https://${{ env.ZONE_BLITZ_DOMAIN }}
           curl -fv https://${{ env.ZONE_BLITZ_DOMAIN }}/api/health
           curl -fv https://${{ env.ZONE_BLITZ_DOMAIN }}/favicon.ico
 
