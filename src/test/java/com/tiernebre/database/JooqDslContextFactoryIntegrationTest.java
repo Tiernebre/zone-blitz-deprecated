@@ -9,7 +9,7 @@ public final class JooqDslContextFactoryIntegrationTest {
 
   @Test
   public void connectsToDatabase() throws SQLException {
-    var results = new JooqDslContextFactory()
+    var results = new JooqDslContextFactory(new DatabaseConnectionFactory())
       .create()
       .resultQuery("SELECT 1")
       .fetch();
