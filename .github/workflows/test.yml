@@ -50,7 +50,7 @@ jobs:
         run: docker compose up -d --wait
       - name: Verify application is running and healthy
         run: |
-          ${{ env.CURL }} 
+          ${{ env.CURL }}
           ${{ env.CURL }}/api/health
           ${{ env.CURL }}/favicon.ico
 
