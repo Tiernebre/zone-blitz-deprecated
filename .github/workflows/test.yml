@@ -7,12 +7,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  PORT: 8000
-  WEB_SERVER_URL: http://127.0.0.1:8000
-  URL: https://dev.zoneblitz.app
   TERM: dumb
-  ZONE_BLITZ_WEB_DOCKER_IMAGE: brendantierney/zone-blitz:staging
-  ZONE_BLITZ_DOMAIN: "0.0.0.0"
 
 jobs:
   application-tests:
@@ -29,6 +24,9 @@ jobs:
   e2e-test:
     name: E2E Test
     runs-on: ubuntu-latest
+    env:
+      ZONE_BLITZ_WEB_DOCKER_IMAGE: brendantierney/zone-blitz:staging
+      ZONE_BLITZ_DOMAIN: "0.0.0.0"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -47,10 +45,19 @@ jobs:
           ZONE_BLITZ_POSTGRES_PASSWORD: e2e_test
           ZONE_BLITZ_POSTGRES_NAME: zone_blitz
           ZONE_BLITZ_POSTGRES_HOST: database:5432/zone_blitz
-        run: docker-compose up
+        run: docker-compose up -d --wait
+      - name: Verify development container proxy runs and proxies to web server
+        uses: jtalk/url-health-check-action@v4
+        with:
+          url: https://${{ env.ZONE_BLITZ_DOMAIN }}/api/health
+          max-attempts: 5
+          retry-delay: 2s
+          retry-all: true
 
   development-environment-smoke-test:
     name: Development Environment Smoke Test
+    env:
+      DEVELOPMENT_URL: https://dev.zoneblitz.app
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -64,7 +71,7 @@ jobs:
       - name: Verify development container proxy runs and proxies to web server
         uses: jtalk/url-health-check-action@v4
         with:
-          url: ${{ env.URL }}/api/health
+          url: ${{ env.DEVELOPMENT_URL }}/api/health
           max-attempts: 12
           retry-delay: 5s
           retry-all: true
