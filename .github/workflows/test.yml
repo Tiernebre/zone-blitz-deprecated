@@ -63,9 +63,9 @@ jobs:
       - name: Run initialize command
         run: .devcontainer/initializeCommand.sh
       - name: Create and start development containers
-        run: docker compose -f .devcontainer/docker compose.devcontainer.yml up -d
+        run: docker compose -f .devcontainer/docker-compose.devcontainer.yml up -d
       - name: Start web server in its development container
-        run: docker compose -f .devcontainer/docker compose.devcontainer.yml exec -T -w /workspace web make &
+        run: docker compose -f .devcontainer/docker-compose.devcontainer.yml exec -T -w /workspace web make &
       - name: Verify development container proxy runs and proxies to web server
         uses: jtalk/url-health-check-action@v4
         with:
