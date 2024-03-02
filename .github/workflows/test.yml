@@ -27,6 +27,8 @@ jobs:
     env:
       ZONE_BLITZ_WEB_DOCKER_IMAGE: brendantierney/zone-blitz:staging
       ZONE_BLITZ_DOMAIN: 0.0.0.0
+      ZONE_BLITZ_URL: https://$ZONE_BLITZ_DOMAIN
+      CURL: curl -fkv $ZONE_BLITZ_URL
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -48,9 +50,9 @@ jobs:
         run: docker compose up -d --wait
       - name: Verify application is running and healthy
         run: |
-          curl -fv https://${{ env.ZONE_BLITZ_DOMAIN }}
-          curl -fv https://${{ env.ZONE_BLITZ_DOMAIN }}/api/health
-          curl -fv https://${{ env.ZONE_BLITZ_DOMAIN }}/favicon.ico
+          ${{ env.CURL }} 
+          ${{ env.CURL }}/api/health
+          ${{ env.CURL }}/favicon.ico
 
   development-environment-smoke-test:
     name: Development Environment Smoke Test
