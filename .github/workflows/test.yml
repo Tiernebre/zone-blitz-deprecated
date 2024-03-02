@@ -24,7 +24,8 @@ jobs:
         with:
           runCmd: |
             make test
-            make &
+            make install
+            make run &
       - name: Verify development container web server proxies requests
         uses: jtalk/url-health-check-action@v4
         with:
