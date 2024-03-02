@@ -38,7 +38,7 @@ blitz.
 6. Wait for the container window to finish loading. **This can take a few
    minutes on your first run as it needs to download any Docker image
    dependencies.**
-7. Run `make run` to serve zone blitz. You should start seeing logs and eventually
+7. Run `make` to serve zone blitz. You should start seeing logs and eventually
    see a prompt for the Java server running.
 8. **Navigate to https://dev.zoneblitz.app a browser of your choice**. You
    should now see your locally running copy of the zone blitz website.
