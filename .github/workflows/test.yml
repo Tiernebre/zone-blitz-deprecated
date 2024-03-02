@@ -40,13 +40,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Publish Docker image
+        run: docker push $ZONE_BLITZ_WEB_DOCKER_IMAGE
+      - name: Run full application stack
         env:
           ZONE_BLITZ_POSTGRES_USER: e2e_test
           ZONE_BLITZ_POSTGRES_PASSWORD: e2e_test
           ZONE_BLITZ_POSTGRES_NAME: zone_blitz
           ZONE_BLITZ_POSTGRES_HOST: database:5432/zone_blitz
-        run: docker push $ZONE_BLITZ_WEB_DOCKER_IMAGE
-      - name: Run full application stack
         run: docker-compose up
 
   development-environment-smoke-test:
