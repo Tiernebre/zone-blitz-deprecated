@@ -27,8 +27,7 @@ jobs:
     env:
       ZONE_BLITZ_WEB_DOCKER_IMAGE: brendantierney/zone-blitz:staging
       ZONE_BLITZ_DOMAIN: 0.0.0.0
-      ZONE_BLITZ_URL: https://${ZONE_BLITZ_DOMAIN}
-      CURL: curl -fkv ${ZONE_BLITZ_URL}
+      CURL: curl -fkv https://0.0.0.0
     steps:
       - name: Checkout
         uses: actions/checkout@v4
