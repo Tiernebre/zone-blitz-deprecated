@@ -39,15 +39,15 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Publish Docker image
         run: docker push $ZONE_BLITZ_WEB_DOCKER_IMAGE
-      - name: Add hosts to /etc/hosts
-        run: sudo echo "127.0.0.1 ${{ env.ZONE_BLITZ_DOMAIN }}" | sudo tee -a /etc/hosts
       - name: Run full application stack
         env:
           ZONE_BLITZ_POSTGRES_USER: e2e_test
           ZONE_BLITZ_POSTGRES_PASSWORD: e2e_test
           ZONE_BLITZ_POSTGRES_NAME: zone_blitz
           ZONE_BLITZ_POSTGRES_HOST: database:5432/zone_blitz
-        run: docker compose up
+        run: docker compose up -d --wait
+      - name: Add hosts to /etc/hosts
+        run: sudo echo "127.0.0.1 ${{ env.ZONE_BLITZ_DOMAIN }}" | sudo tee -a /etc/hosts
       - name: Verify application is running and healthy
         run: curl -kq https://${{ env.ZONE_BLITZ_DOMAIN }}/api/health
 
