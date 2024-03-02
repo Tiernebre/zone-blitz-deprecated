@@ -42,7 +42,7 @@ jobs:
       - name: Publish Docker image
         run: docker push $ZONE_BLITZ_WEB_DOCKER_IMAGE
       - name: Run full application stack
-        run: docker-compose up -d --wait
+        run: docker-compose up
 
   development-environment-smoke-test:
     name: Development Environment Smoke Test
