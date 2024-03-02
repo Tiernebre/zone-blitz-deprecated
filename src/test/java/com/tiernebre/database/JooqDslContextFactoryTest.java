@@ -8,7 +8,9 @@ public final class JooqDslContextFactoryTest {
 
   @Test
   public void connectsToDatabase() {
-    var results = new JooqDslContextFactory(new DatabaseConnectionFactory())
+    var results = new JooqDslContextFactory(
+      new DatabaseConnectionFactory(Constants.CONFIGURATION)
+    )
       .create()
       .resultQuery("SELECT 1")
       .fetch();

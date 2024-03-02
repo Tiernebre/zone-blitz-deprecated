@@ -10,9 +10,22 @@ public final class DatabaseConnectionFactoryTest {
 
   @Test
   public void createsAWorkingConnection() throws SQLException {
-    var connection = new DatabaseConnectionFactory().create();
+    var connection = new DatabaseConnectionFactory(
+      Constants.CONFIGURATION
+    ).create();
     assertFalse(connection.isClosed());
     var result = connection.createStatement().executeQuery("SELECT 1 as test");
     assertEquals(1, result.findColumn("test"));
+  }
+
+  @Test(expected = DatabaseConnectionError.class)
+  public void failsFastIfConnectionInvalid() throws SQLException {
+    new DatabaseConnectionFactory(
+      new DatabaseConfiguration(
+        "notauser",
+        "notapassword",
+        "jdbc:postgresql://0.0.0.0:5432/not_a_db"
+      )
+    ).create();
   }
 }
