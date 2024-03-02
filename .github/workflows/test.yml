@@ -49,7 +49,7 @@ jobs:
       - name: Add hosts to /etc/hosts
         run: sudo echo "127.0.0.1 ${{ env.ZONE_BLITZ_DOMAIN }}" | sudo tee -a /etc/hosts
       - name: Verify application is running and healthy
-        run: curl -kq https://${{ env.ZONE_BLITZ_DOMAIN }}/api/health
+        run: curl -v https://${{ env.ZONE_BLITZ_DOMAIN }}/api/health
 
   development-environment-smoke-test:
     name: Development Environment Smoke Test
