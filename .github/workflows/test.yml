@@ -45,8 +45,8 @@ jobs:
           ZONE_BLITZ_POSTGRES_PASSWORD: e2e_test
           ZONE_BLITZ_POSTGRES_NAME: zone_blitz
           ZONE_BLITZ_POSTGRES_HOST: database:5432/zone_blitz
-        run: docker-compose up -d --wait
-      - name: Verify development container proxy runs and proxies to web server
+        run: docker compose up -d --wait
+      - name: Verify application is running and healthy
         uses: jtalk/url-health-check-action@v4
         with:
           url: https://${{ env.ZONE_BLITZ_DOMAIN }}/api/health
