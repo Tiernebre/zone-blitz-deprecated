@@ -13,13 +13,13 @@ env:
   TERM: dumb
 
 jobs:
-  unit-tests:
-    name: Unit Tests
+  application-tests:
+    name: Application Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Run unit tests in development container
+      - name: Run application tests in development container
         uses: devcontainers/ci@v0.3
         with:
           runCmd: make test
