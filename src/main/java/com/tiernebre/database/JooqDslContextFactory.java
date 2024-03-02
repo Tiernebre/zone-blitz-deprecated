@@ -1,6 +1,5 @@
 package com.tiernebre.database;
 
-import java.sql.SQLException;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
@@ -14,7 +13,7 @@ public final class JooqDslContextFactory {
     this.databaseConnectionFactory = databaseConnectionFactory;
   }
 
-  public DSLContext create() throws SQLException {
+  public DSLContext create() {
     return DSL.using(databaseConnectionFactory.create());
   }
 }
