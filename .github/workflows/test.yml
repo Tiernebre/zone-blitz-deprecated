@@ -27,7 +27,7 @@ jobs:
     env:
       ZONE_BLITZ_WEB_DOCKER_IMAGE: brendantierney/zone-blitz:staging
       ZONE_BLITZ_DOMAIN: localhost
-      CURL: curl -fkv https://localhost
+      CURL: curl --retry 15 --retry-delay 1 --retry-all-errors -fkv https://localhost
     steps:
       - name: Checkout
         uses: actions/checkout@v4
