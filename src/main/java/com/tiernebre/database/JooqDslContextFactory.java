@@ -1,19 +1,19 @@
 package com.tiernebre.database;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
-public class JooqDslContextFactory {
+public final class JooqDslContextFactory {
 
-  public DSLContext create() throws SQLException {
-    return DSL.using(
-      DriverManager.getConnection(
-        System.getenv("ZONE_BLITZ_POSTGRES_JDBC_URL"),
-        System.getenv("ZONE_BLITZ_POSTGRES_USER"),
-        System.getenv("ZONE_BLITZ_POSTGRES_PASSWORD")
-      )
-    );
+  private final DatabaseConnectionFactory databaseConnectionFactory;
+
+  public JooqDslContextFactory(
+    DatabaseConnectionFactory databaseConnectionFactory
+  ) {
+    this.databaseConnectionFactory = databaseConnectionFactory;
+  }
+
+  public DSLContext create() {
+    return DSL.using(databaseConnectionFactory.create());
   }
 }

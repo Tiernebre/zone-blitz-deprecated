@@ -2,14 +2,15 @@ package com.tiernebre.database;
 
 import static org.junit.Assert.assertEquals;
 
-import java.sql.SQLException;
 import org.junit.Test;
 
-public final class JooqDslContextFactoryIntegrationTest {
+public final class JooqDslContextFactoryTest {
 
   @Test
-  public void connectsToDatabase() throws SQLException {
-    var results = new JooqDslContextFactory()
+  public void connectsToDatabase() {
+    var results = new JooqDslContextFactory(
+      new DatabaseConnectionFactory(Constants.CONFIGURATION)
+    )
       .create()
       .resultQuery("SELECT 1")
       .fetch();
