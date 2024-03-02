@@ -27,7 +27,7 @@ learn about my mindset with developing software products do check out the
 ## Contributing
 
 Contributing is currently closed off _until_ an alpha launch has been fully
-published. Please see the above [roadmap](./docs/roadmap.md) for more details.
+published. Please see the [roadmap](./docs/roadmap.md) for more details.
 
 ## Authors
 
