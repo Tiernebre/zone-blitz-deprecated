@@ -46,7 +46,7 @@ jobs:
           ZONE_BLITZ_POSTGRES_PASSWORD: e2e_staging_test
           ZONE_BLITZ_POSTGRES_NAME: zone_blitz
           ZONE_BLITZ_POSTGRES_HOST: database:5432/zone_blitz
-        run: docker compose up
+        run: docker compose up -d --wait
       - name: Verify application is running and healthy
         run: |
           ${{ env.CURL }}
