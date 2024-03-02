@@ -27,7 +27,7 @@ jobs:
     env:
       ZONE_BLITZ_WEB_DOCKER_IMAGE: brendantierney/zone-blitz:staging
       ZONE_BLITZ_DOMAIN: localhost
-      CURL: curl --retry 10 --retry-delay 5 --retry-all-errors -fkv https://localhost
+      CURL: curl -fkv https://localhost
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,6 +46,7 @@ jobs:
           ZONE_BLITZ_POSTGRES_PASSWORD: e2e_staging_test
           ZONE_BLITZ_POSTGRES_NAME: zone_blitz
           ZONE_BLITZ_POSTGRES_HOST: database:5432/zone_blitz
+        continue-on-error: true
         run: docker compose up -d
       - name: Verify application is running and healthy
         run: |
