@@ -41,6 +41,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Publish Docker image
         run: docker push $ZONE_BLITZ_WEB_DOCKER_IMAGE
+      - name: Run full application stack
+        run: docker-compose up -d --wait
 
   development-environment-smoke-test:
     name: Development Environment Smoke Test
