@@ -42,8 +42,6 @@ blitz.
    see a prompt for the Java server running.
 8. **Navigate to https://dev.zoneblitz.app a browser of your choice**. You
    should now see your locally running copy of the zone blitz website.
-   - You could also navigate to http://0.0.0.0:8000 if you wanted to access the
-     server directly without going through the proxy.
 
 ### Debug Support
 

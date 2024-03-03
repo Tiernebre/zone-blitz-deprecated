@@ -1,5 +1,6 @@
 package com.tiernebre.authentication.google;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -33,16 +34,23 @@ public final class GoogleAuthenticationService {
       );
     }
 
+    GoogleIdToken token;
     try {
-      var token = verifier.verify(request.credential());
-
-      if (token != null) {
-        var payload = token.getPayload();
-        var userId = payload.getSubject();
-      }
+      token = verifier.verify(request.credential());
     } catch (GeneralSecurityException | IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      throw new InvalidGoogleSignOnAttemptException(
+        "Token provided in Google sign on request was not able to be parsed."
+      );
+    }
+
+    if (token != null) {
+      LOG.debug(
+        "Successfully processed and verified Google sign on token that was valid."
+      );
+      var payload = token.getPayload();
+      var userId = payload.getSubject();
+    } else {
+      LOG.debug("Token provided was not parsed.");
     }
   }
 }

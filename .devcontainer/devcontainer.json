@@ -6,6 +6,9 @@
   "shutdownAction": "stopCompose",
   "initializeCommand": ".devcontainer/initializeCommand.sh",
   "postCreateCommand": "make development-environment",
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  },
   "containerEnv": {
     "JAVA_TOOL_OPTIONS": "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug -Dorg.gradle.native=false -Dorg.jooq.no-logo=true -Dorg.jooq.no-tips=true"
   },
@@ -25,7 +28,9 @@
       "settings": {
         "unocss.include": [
           "src/main/resources/templates/**/*.mustache"
-        ]
+        ],
+        "terminal.integrated.scrollback": 5000,
+        "remote.autoForwardPorts": false
       }
     }
   }
