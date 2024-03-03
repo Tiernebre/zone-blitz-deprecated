@@ -4,6 +4,10 @@ DBMATE=dbmate -e ZONE_BLITZ_POSTGRES_URL
 run: install
 	zone-blitz
 
+.PHONY: debug
+debug: install
+	ZONE_BLITZ_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=7999 zone-blitz
+
 .PHONY: install
 install: build migrate
 	cp -r build/install/zone-blitz/. /
