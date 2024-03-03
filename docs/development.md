@@ -42,8 +42,14 @@ blitz.
    see a prompt for the Java server running.
 8. **Navigate to https://dev.zoneblitz.app a browser of your choice**. You
    should now see your locally running copy of the zone blitz website.
-   - You could also navigate to http://0.0.0.0:8000 if you wanted to access the
-     server directly without going through the proxy.
+
+### Debug Support
+
+For debugging you will want to run `make debug` instead of `make`, then you'll
+want to open the "Run and Debug" menu in your VSCode window and run the "Debug (attach)" command.
+
+The application will not start until your debugger is attached. From there, you can use VSCode's
+debug tooling to debug the app.
 
 ### Traefik Proxy Development
 

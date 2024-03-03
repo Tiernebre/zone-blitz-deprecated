@@ -13,7 +13,7 @@ public final class JooqDslContextFactory {
     this.databaseConnectionFactory = databaseConnectionFactory;
   }
 
-  public DSLContext create() {
+  public DSLContext create() throws DatabaseConnectionError {
     return DSL.using(databaseConnectionFactory.create());
   }
 }

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public final class DatabaseConnectionFactory {
 
   private final DatabaseConfiguration configuration;
-  private static final Logger logger = LoggerFactory.getLogger(
+  private static final Logger LOG = LoggerFactory.getLogger(
     DatabaseConnectionFactory.class
   );
 
@@ -17,7 +17,7 @@ public final class DatabaseConnectionFactory {
     this.configuration = configuration;
   }
 
-  public Connection create() {
+  public Connection create() throws DatabaseConnectionError {
     try {
       return DriverManager.getConnection(
         configuration.url(),
@@ -29,7 +29,7 @@ public final class DatabaseConnectionFactory {
         "Could not connect to the PostgreSQL database. Received exception %s",
         e
       );
-      logger.error(error);
+      LOG.error(error);
       throw new DatabaseConnectionError(error);
     }
   }

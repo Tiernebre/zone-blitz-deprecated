@@ -9,7 +9,8 @@ import org.junit.Test;
 public final class DatabaseConnectionFactoryTest {
 
   @Test
-  public void createsAWorkingConnection() throws SQLException {
+  public void createsAWorkingConnection()
+    throws SQLException, DatabaseConnectionError {
     var connection = new DatabaseConnectionFactory(
       Constants.CONFIGURATION
     ).create();
@@ -19,7 +20,8 @@ public final class DatabaseConnectionFactoryTest {
   }
 
   @Test(expected = DatabaseConnectionError.class)
-  public void failsFastIfConnectionInvalid() throws SQLException {
+  public void failsFastIfConnectionInvalid()
+    throws SQLException, DatabaseConnectionError {
     new DatabaseConnectionFactory(
       new DatabaseConfiguration(
         "notauser",
