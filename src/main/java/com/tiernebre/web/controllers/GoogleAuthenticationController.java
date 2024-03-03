@@ -1,7 +1,7 @@
 package com.tiernebre.web.controllers;
 
-import com.tiernebre.authentication.GoogleAuthenticationRequest;
-import com.tiernebre.authentication.GoogleAuthenticationService;
+import com.tiernebre.authentication.google.GoogleAuthenticationRequest;
+import com.tiernebre.authentication.google.GoogleAuthenticationService;
 import io.javalin.http.Context;
 
 public final class GoogleAuthenticationController {

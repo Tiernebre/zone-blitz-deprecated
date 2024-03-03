@@ -1,4 +1,4 @@
-package com.tiernebre.authentication;
+package com.tiernebre.authentication.google;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import java.io.IOException;

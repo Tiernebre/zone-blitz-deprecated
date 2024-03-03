@@ -1,4 +1,4 @@
-package com.tiernebre.authentication;
+package com.tiernebre.authentication.google;
 
 public record GoogleAuthenticationRequest(
   String credential,

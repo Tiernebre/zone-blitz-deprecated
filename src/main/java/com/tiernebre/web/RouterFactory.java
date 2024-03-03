@@ -1,6 +1,6 @@
 package com.tiernebre.web;
 
-import com.tiernebre.authentication.GoogleAuthenticationService;
+import com.tiernebre.authentication.google.GoogleAuthenticationService;
 import com.tiernebre.web.controllers.FrontPageController;
 import com.tiernebre.web.controllers.GoogleAuthenticationController;
 import com.tiernebre.web.controllers.HealthController;
