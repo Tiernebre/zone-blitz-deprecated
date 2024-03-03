@@ -1,6 +1,7 @@
 package com.tiernebre.authentication.session;
 
 import com.tiernebre.database.jooq.Tables;
+import java.util.UUID;
 import org.jooq.DSLContext;
 
 public final class JooqSessionRepository implements SessionRepository {
@@ -18,5 +19,12 @@ public final class JooqSessionRepository implements SessionRepository {
       .values(accountId)
       .returning()
       .fetchSingleInto(Session.class);
+  }
+
+  @Override
+  public Session getOne(UUID id) {
+    return dsl
+      .fetchOne(Tables.SESSION, Tables.SESSION.ID.eq(id))
+      .into(Session.class);
   }
 }
