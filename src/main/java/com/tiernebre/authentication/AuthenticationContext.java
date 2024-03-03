@@ -1,8 +1,8 @@
 package com.tiernebre.authentication;
 
-import com.tiernebre.authentication.google.GoogleAuthenticationService;
+import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 
 public record AuthenticationContext(
   AuthenticationConfiguration configuration,
-  GoogleAuthenticationService googleAuthenticationService
+  GoogleAuthenticationStrategy googleAuthenticationService
 ) {}
