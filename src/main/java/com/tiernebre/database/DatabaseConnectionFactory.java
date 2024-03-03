@@ -17,7 +17,7 @@ public final class DatabaseConnectionFactory {
     this.configuration = configuration;
   }
 
-  public Connection create() {
+  public Connection create() throws DatabaseConnectionError {
     try {
       return DriverManager.getConnection(
         configuration.url(),
