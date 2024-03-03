@@ -47,7 +47,7 @@ jobs:
           ZONE_BLITZ_POSTGRES_NAME: zone_blitz
           ZONE_BLITZ_POSTGRES_HOST: database:5432/zone_blitz
         continue-on-error: true
-        run: docker compose up -d --wait
+        run: docker compose up
       - name: Verify application is running and healthy
         run: |
           ${{ env.CURL }}
