@@ -11,7 +11,7 @@ public final class JooqDslContextFactoryTest {
   public void connectsToDatabase()
     throws DataAccessException, DatabaseConnectionError {
     var results = new JooqDslContextFactory(
-      new DatabaseConnectionFactory(Constants.CONFIGURATION)
+      new DatabaseConnectionFactory(DatabaseConstants.CONFIGURATION)
     )
       .create()
       .resultQuery("SELECT 1")

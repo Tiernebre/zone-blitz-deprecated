@@ -12,7 +12,7 @@ public final class DatabaseConnectionFactoryTest {
   public void createsAWorkingConnection()
     throws SQLException, DatabaseConnectionError {
     var connection = new DatabaseConnectionFactory(
-      Constants.CONFIGURATION
+      DatabaseConstants.CONFIGURATION
     ).create();
     assertFalse(connection.isClosed());
     var result = connection.createStatement().executeQuery("SELECT 1 as test");
