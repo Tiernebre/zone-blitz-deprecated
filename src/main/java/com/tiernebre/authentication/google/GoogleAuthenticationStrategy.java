@@ -2,6 +2,7 @@ package com.tiernebre.authentication.google;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.tiernebre.authentication.AuthenticationStrategy;
 import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionRepository;
 import java.io.IOException;
@@ -10,16 +11,17 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class GoogleAuthenticationService {
+public final class GoogleAuthenticationStrategy
+  implements AuthenticationStrategy<GoogleAuthenticationRequest> {
 
   private static final Logger LOG = LoggerFactory.getLogger(
-    GoogleAuthenticationService.class
+    GoogleAuthenticationStrategy.class
   );
 
   private final GoogleIdTokenVerifier verifier;
   private final SessionRepository sessionRepository;
 
-  public GoogleAuthenticationService(
+  public GoogleAuthenticationStrategy(
     GoogleIdTokenVerifier verifier,
     SessionRepository sessionRepository
   ) {
@@ -27,8 +29,8 @@ public final class GoogleAuthenticationService {
     this.sessionRepository = sessionRepository;
   }
 
-  public Optional<Session> login(GoogleAuthenticationRequest request)
-    throws InvalidGoogleSignOnAttemptException {
+  @Override
+  public Optional<Session> authenticate(GoogleAuthenticationRequest request) {
     var bodyCrsfToken = request.bodyCrsfToken();
     var cookieCsrfToken = request.cookieCsrfToken();
 
@@ -37,18 +39,20 @@ public final class GoogleAuthenticationService {
       cookieCsrfToken == null ||
       !bodyCrsfToken.equals(cookieCsrfToken)
     ) {
-      throw new InvalidGoogleSignOnAttemptException(
-        "No or invalid CSRF token provided."
+      LOG.debug(
+        "No or invalid CSRF token provided on Google authentication attempt."
       );
+      return Optional.empty();
     }
 
     GoogleIdToken token;
     try {
       token = verifier.verify(request.credential());
     } catch (GeneralSecurityException | IOException e) {
-      throw new InvalidGoogleSignOnAttemptException(
+      LOG.debug(
         "Token provided in Google sign on request was not able to be parsed."
       );
+      return Optional.empty();
     }
 
     if (token != null) {

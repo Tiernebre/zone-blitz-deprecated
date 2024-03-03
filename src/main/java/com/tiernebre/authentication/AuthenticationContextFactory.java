@@ -1,6 +1,6 @@
 package com.tiernebre.authentication;
 
-import com.tiernebre.authentication.google.GoogleAuthenticationService;
+import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import com.tiernebre.authentication.google.GoogleIdTokenVerifierFactory;
 import com.tiernebre.authentication.session.JooqSessionRepository;
 import com.tiernebre.database.DatabaseConnectionError;
@@ -25,7 +25,7 @@ public final class AuthenticationContextFactory {
     throws GeneralSecurityException, IOException, DatabaseConnectionError {
     return new AuthenticationContext(
       configuration,
-      new GoogleAuthenticationService(
+      new GoogleAuthenticationStrategy(
         new GoogleIdTokenVerifierFactory(
           configuration.oauthGoogleClientId()
         ).create(),
