@@ -1,13 +1,24 @@
 package com.tiernebre;
 
 import com.tiernebre.web.ServerFactory;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class App {
 
-  public static void main(String[] args)
-    throws GeneralSecurityException, IOException {
-    new ServerFactory().create().start();
+  private static final Logger logger = LoggerFactory.getLogger(App.class);
+
+  public static void main(String[] args) {
+    try {
+      new ServerFactory().create().start();
+    } catch (Exception e) {
+      logger.error(
+        String.format(
+          "Fatal error occurred %s.\n\nExiting Zone Blitz startup with an error code.",
+          e
+        )
+      );
+      System.exit(1);
+    }
   }
 }
