@@ -14,10 +14,7 @@ public final class LoginPageController {
 
   public void render(Context ctx) {
     var output = new StringBuilder();
-    JStachio.render(
-      new LoginPage(googleClientId, "https://dev.zoneblitz.app"),
-      output
-    );
+    JStachio.render(new LoginPage(googleClientId), output);
     ctx.html(output.toString());
   }
 }
