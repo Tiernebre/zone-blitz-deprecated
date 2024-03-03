@@ -45,6 +45,14 @@ blitz.
    - You could also navigate to http://0.0.0.0:8000 if you wanted to access the
      server directly without going through the proxy.
 
+### Debug Support
+
+For debugging you will want to run `make debug` instead of `make`, then you'll
+want to open the "Run and Debug" menu in your VSCode window and run the "Debug (attach)" command.
+
+The application will not start until your debugger is attached. From there, you can use VSCode's
+debug tooling to debug the app.
+
 ### Traefik Proxy Development
 
 You can access the Traefik web dashboard in http://0.0.0.0:8080 for debugging
