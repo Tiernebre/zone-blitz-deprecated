@@ -55,7 +55,8 @@ jooq {
             database {
                 name = 'org.jooq.meta.postgres.PostgresDatabase'
                 inputSchema = 'public'
-                excludes = 'public.schema_migrations'
+                excludes = 'public.schema_migrations|uuid.*'
+                tableValuedFunctions = false
             }
             target {
                 packageName = 'com.tiernebre.database.jooq'

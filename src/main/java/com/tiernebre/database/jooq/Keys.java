@@ -4,7 +4,9 @@
 package com.tiernebre.database.jooq;
 
 import com.tiernebre.database.jooq.tables.Player;
+import com.tiernebre.database.jooq.tables.Session;
 import com.tiernebre.database.jooq.tables.records.PlayerRecord;
+import com.tiernebre.database.jooq.tables.records.SessionRecord;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
@@ -26,6 +28,13 @@ public class Keys {
       Player.PLAYER,
       DSL.name("player_pkey"),
       new TableField[] { Player.PLAYER.ID },
+      true
+    );
+  public static final UniqueKey<SessionRecord> SESSION_PKEY =
+    Internal.createUniqueKey(
+      Session.SESSION,
+      DSL.name("session_pkey"),
+      new TableField[] { Session.SESSION.ID },
       true
     );
 }
