@@ -22,16 +22,28 @@ public final class GoogleAuthenticationController {
   }
 
   public void handleGoogleSignOn(Context context) {
-    authenticationService.authenticate(
-      new GoogleAuthenticationRequest(
-        context.formParam(CREDENTIAL_FIELD_NAME),
-        context.formParam(CSRF_TOKEN_FIELD_NAME),
-        context.cookie(CSRF_TOKEN_FIELD_NAME)
+    authenticationService
+      .authenticate(
+        new GoogleAuthenticationRequest(
+          context.formParam(CREDENTIAL_FIELD_NAME),
+          context.formParam(CSRF_TOKEN_FIELD_NAME),
+          context.cookie(CSRF_TOKEN_FIELD_NAME)
+        )
       )
-    );
-    LOG.debug(
-      String.format("Received and processed a valid google sign on attempt.")
-    );
+      .ifPresentOrElse(
+        session -> {
+          LOG.debug(
+            String.format(
+              "Received and processed a valid google sign on attempt for account id = %s.",
+              session.accountId()
+            )
+          );
+        },
+        () -> {
+          LOG.debug(String.format("No session was created."));
+        }
+      );
+
     context.redirect("/");
   }
 }
