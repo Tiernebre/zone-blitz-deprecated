@@ -31,8 +31,8 @@ services:
       - "traefik.http.routers.web.entrypoints=websecure"
       - "traefik.http.routers.web.tls.certresolver=myresolver"
     depends_on:
-      - database
-      - database-migration
+      database:
+        condition: service_healthy
 
   database:
     image: postgres:16
@@ -58,4 +58,5 @@ services:
       - ./db:/db
     command: --wait up
     depends_on:
-      - database
+      database:
+        condition: service_healthy
