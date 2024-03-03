@@ -4,6 +4,7 @@
 package com.tiernebre.database.jooq;
 
 import com.tiernebre.database.jooq.tables.Player;
+import com.tiernebre.database.jooq.tables.Session;
 
 /**
  * Convenience access to all tables in public.
@@ -15,4 +16,9 @@ public class Tables {
    * The table <code>public.player</code>.
    */
   public static final Player PLAYER = Player.PLAYER;
+
+  /**
+   * The table <code>public.session</code>.
+   */
+  public static final Session SESSION = Session.SESSION;
 }

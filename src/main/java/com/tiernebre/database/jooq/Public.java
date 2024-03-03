@@ -4,6 +4,7 @@
 package com.tiernebre.database.jooq;
 
 import com.tiernebre.database.jooq.tables.Player;
+import com.tiernebre.database.jooq.tables.Session;
 import java.util.Arrays;
 import java.util.List;
 import org.jooq.Catalog;
@@ -29,6 +30,11 @@ public class Public extends SchemaImpl {
   public final Player PLAYER = Player.PLAYER;
 
   /**
+   * The table <code>public.session</code>.
+   */
+  public final Session SESSION = Session.SESSION;
+
+  /**
    * No further instances allowed
    */
   private Public() {
@@ -42,6 +48,6 @@ public class Public extends SchemaImpl {
 
   @Override
   public final List<Table<?>> getTables() {
-    return Arrays.asList(Player.PLAYER);
+    return Arrays.asList(Player.PLAYER, Session.SESSION);
   }
 }

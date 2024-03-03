@@ -1,6 +1,6 @@
 package com.tiernebre.database;
 
-public final class Constants {
+public final class DatabaseConstants {
 
   public static final DatabaseConfiguration CONFIGURATION =
     new DatabaseConfiguration(
