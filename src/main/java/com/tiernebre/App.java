@@ -14,7 +14,7 @@ public class App {
     } catch (Exception e) {
       logger.error(
         String.format(
-          "Fatal error occurred %s.\n\nExiting Zone Blitz startup with an error code.",
+          "Fatal error occurred when creating the application: %s.\n\nExiting Zone Blitz application startup with an error code.",
           e
         )
       );
