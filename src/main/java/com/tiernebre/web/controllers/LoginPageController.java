@@ -4,15 +4,18 @@ import com.tiernebre.web.templates.LoginPage;
 import io.javalin.http.Context;
 import io.jstach.jstachio.JStachio;
 
-public class LoginPageController {
+public final class LoginPageController {
+
+  private final String googleClientId;
+
+  public LoginPageController(String googleClientId) {
+    this.googleClientId = googleClientId;
+  }
 
   public void render(Context ctx) {
     var output = new StringBuilder();
     JStachio.render(
-      new LoginPage(
-        System.getenv("ZONE_BLITZ_OAUTH_GOOGLE_CLIENT_ID"),
-        "https://dev.zoneblitz.app"
-      ),
+      new LoginPage(googleClientId, "https://dev.zoneblitz.app"),
       output
     );
     ctx.html(output.toString());

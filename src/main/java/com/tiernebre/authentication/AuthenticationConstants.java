@@ -1,6 +1,6 @@
-package com.tiernebre.configuration;
+package com.tiernebre.authentication;
 
-public final class AuthenticationConstants {
+public class AuthenticationConstants {
 
   public static final AuthenticationConfiguration CONFIGURATION =
     new AuthenticationConfiguration(
