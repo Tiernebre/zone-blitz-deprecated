@@ -1,14 +1,14 @@
-package com.tiernebre.web.routers;
+package com.tiernebre.web.routes;
 
 import com.tiernebre.authentication.AuthenticationContext;
 import com.tiernebre.web.controllers.FrontPageController;
 import com.tiernebre.web.controllers.HealthController;
 import com.tiernebre.web.controllers.LoginPageController;
 import com.tiernebre.web.controllers.authentication.GoogleAuthenticationController;
-import com.tiernebre.web.routers.api.ApiRoutes;
-import com.tiernebre.web.routers.api.AuthenticationRoutes;
-import com.tiernebre.web.routers.api.HealthRoutes;
-import com.tiernebre.web.routers.page.PageRoutes;
+import com.tiernebre.web.routes.api.ApiRoutes;
+import com.tiernebre.web.routes.api.AuthenticationRoutes;
+import com.tiernebre.web.routes.api.HealthRoutes;
+import com.tiernebre.web.routes.page.PageRoutes;
 
 public final class RoutesFactory {
 

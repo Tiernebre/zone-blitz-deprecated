@@ -1,6 +1,6 @@
 package com.tiernebre.web;
 
-import com.tiernebre.web.routers.Routes;
+import com.tiernebre.web.routes.Routes;
 import io.javalin.Javalin;
 
 public final class Server {

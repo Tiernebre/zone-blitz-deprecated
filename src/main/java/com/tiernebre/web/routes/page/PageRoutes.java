@@ -1,4 +1,4 @@
-package com.tiernebre.web.routers.page;
+package com.tiernebre.web.routes.page;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
