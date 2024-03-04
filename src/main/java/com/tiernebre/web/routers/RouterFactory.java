@@ -1,4 +1,4 @@
-package com.tiernebre.web;
+package com.tiernebre.web.routers;
 
 import com.tiernebre.authentication.AuthenticationContext;
 import com.tiernebre.web.controllers.FrontPageController;

@@ -6,6 +6,7 @@ import com.tiernebre.database.DatabaseConnectionError;
 import com.tiernebre.database.DatabaseConnectionFactory;
 import com.tiernebre.database.DatabaseConstants;
 import com.tiernebre.database.JooqDslContextFactory;
+import com.tiernebre.web.routers.RouterFactory;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
