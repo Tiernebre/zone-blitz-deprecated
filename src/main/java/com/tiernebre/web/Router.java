@@ -1,9 +1,9 @@
 package com.tiernebre.web;
 
 import com.tiernebre.web.controllers.FrontPageController;
-import com.tiernebre.web.controllers.GoogleAuthenticationController;
 import com.tiernebre.web.controllers.HealthController;
 import com.tiernebre.web.controllers.LoginPageController;
+import com.tiernebre.web.controllers.authentication.AuthenticationController;
 import io.javalin.Javalin;
 
 public final class Router {
@@ -11,18 +11,18 @@ public final class Router {
   private final FrontPageController frontPageController;
   private final HealthController healthController;
   private final LoginPageController loginPageController;
-  private final GoogleAuthenticationController googleAuthenticationController;
+  private final AuthenticationController authenticationController;
 
   public Router(
     FrontPageController frontPageController,
     HealthController healthController,
     LoginPageController loginPageController,
-    GoogleAuthenticationController googleAuthenticationController
+    AuthenticationController authenticationController
   ) {
     this.frontPageController = frontPageController;
     this.healthController = healthController;
     this.loginPageController = loginPageController;
-    this.googleAuthenticationController = googleAuthenticationController;
+    this.authenticationController = authenticationController;
   }
 
   public Javalin register(Javalin app) {
@@ -30,9 +30,6 @@ public final class Router {
       .get("/", frontPageController::render)
       .get("/login", loginPageController::render)
       .get("/api/health", healthController::health)
-      .post(
-        "/api/authenticate/google",
-        googleAuthenticationController::handleGoogleSignOn
-      );
+      .post("/api/authenticate", authenticationController::handle);
   }
 }
