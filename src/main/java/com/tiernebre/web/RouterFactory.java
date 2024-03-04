@@ -2,9 +2,9 @@ package com.tiernebre.web;
 
 import com.tiernebre.authentication.AuthenticationContext;
 import com.tiernebre.web.controllers.FrontPageController;
-import com.tiernebre.web.controllers.GoogleAuthenticationController;
 import com.tiernebre.web.controllers.HealthController;
 import com.tiernebre.web.controllers.LoginPageController;
+import com.tiernebre.web.controllers.authentication.GoogleAuthenticationController;
 
 public final class RouterFactory {
 

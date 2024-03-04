@@ -1,8 +1,7 @@
-package com.tiernebre.web.controllers;
+package com.tiernebre.web.controllers.authentication;
 
 import com.tiernebre.authentication.google.GoogleAuthenticationRequest;
 import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
-import com.tiernebre.web.controllers.authentication.AuthenticationController;
 import io.javalin.http.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
