@@ -1,27 +1,24 @@
 package com.tiernebre.web;
 
-import com.tiernebre.web.routers.Router;
+import com.tiernebre.web.routers.Routes;
 import io.javalin.Javalin;
 
 public final class Server {
 
-  private final Router router;
+  private final Routes routes;
 
-  public Server(Router router) {
-    this.router = router;
+  public Server(Routes routes) {
+    this.routes = routes;
   }
 
   public Javalin start() {
-    return router
-      .register(
-        Javalin.create(config -> {
-          config.showJavalinBanner = false;
-          config.staticFiles.add(staticFiles -> {
-            staticFiles.hostedPath = "/";
-            staticFiles.directory = "/assets";
-          });
-        })
-      )
-      .start("0.0.0.0", 8000);
+    return Javalin.create(config -> {
+      config.showJavalinBanner = false;
+      config.staticFiles.add(staticFiles -> {
+        staticFiles.hostedPath = "/";
+        staticFiles.directory = "/assets";
+      });
+      config.router.apiBuilder(routes::addEndpoints);
+    }).start("0.0.0.0", 8000);
   }
 }
