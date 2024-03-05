@@ -4,32 +4,27 @@ import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import com.tiernebre.authentication.google.GoogleIdTokenVerifierFactory;
 import com.tiernebre.authentication.session.JooqSessionRepository;
 import com.tiernebre.database.DatabaseConnectionError;
-import com.tiernebre.database.JooqDslContextFactory;
+import com.tiernebre.database.DatabaseContext;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 public final class AuthenticationContextFactory {
 
-  private final AuthenticationConfiguration configuration;
-  private final JooqDslContextFactory jooqDslContextFactory;
+  private final DatabaseContext databaseContext;
 
-  public AuthenticationContextFactory(
-    AuthenticationConfiguration configuration,
-    JooqDslContextFactory jooqDslContextFactory
-  ) {
-    this.configuration = configuration;
-    this.jooqDslContextFactory = jooqDslContextFactory;
+  public AuthenticationContextFactory(DatabaseContext databaseContext) {
+    this.databaseContext = databaseContext;
   }
 
   public AuthenticationContext create()
     throws GeneralSecurityException, IOException, DatabaseConnectionError {
     return new AuthenticationContext(
-      configuration,
+      AuthenticationConstants.CONFIGURATION,
       new GoogleAuthenticationStrategy(
         new GoogleIdTokenVerifierFactory(
-          configuration.oauthGoogleClientId()
+          AuthenticationConstants.CONFIGURATION.oauthGoogleClientId()
         ).create(),
-        new JooqSessionRepository(jooqDslContextFactory.create())
+        new JooqSessionRepository(databaseContext.dslContext())
       )
     );
   }

@@ -43,6 +43,12 @@ blitz.
 8. **Navigate to https://dev.zoneblitz.app a browser of your choice**. You
    should now see your locally running copy of the zone blitz website.
 
+## Development Philosophy and Direction
+
+If you're curious about _why_ I chose a specific technology or approach to solving a problem, I have documented
+my approaches in the [architecture documentation](./architecture/README.md). These articles can help
+provide guidance if you are developing a new feature or fixing a bug on Zone Blitz.
+
 ### Debug Support
 
 For debugging you will want to run `make debug` instead of `make`, then you'll
