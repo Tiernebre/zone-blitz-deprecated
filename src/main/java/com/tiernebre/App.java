@@ -1,6 +1,6 @@
 package com.tiernebre;
 
-import com.tiernebre.web.DependencyContextFactory;
+import com.tiernebre.context.DependencyContextFactory;
 import com.tiernebre.web.ServerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.tiernebre.web;
+package com.tiernebre.context;
 
 import com.tiernebre.authentication.AuthenticationContextFactory;
 import com.tiernebre.database.DatabaseConnectionError;

@@ -1,5 +1,6 @@
 package com.tiernebre.web;
 
+import com.tiernebre.context.DependencyContext;
 import com.tiernebre.database.DatabaseConnectionError;
 import com.tiernebre.web.routes.RoutesFactory;
 import java.io.IOException;
