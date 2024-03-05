@@ -1,5 +1,6 @@
 package com.tiernebre;
 
+import com.tiernebre.web.DependencyContextFactory;
 import com.tiernebre.web.ServerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,9 @@ public class App {
 
   public static void main(String[] args) {
     try {
-      new ServerFactory().create().start();
+      new ServerFactory(new DependencyContextFactory().create())
+        .create()
+        .start();
     } catch (Exception e) {
       LOG.error(
         String.format(
