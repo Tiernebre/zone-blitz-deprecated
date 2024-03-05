@@ -43,7 +43,7 @@ blitz.
 8. **Navigate to https://dev.zoneblitz.app a browser of your choice**. You
    should now see your locally running copy of the zone blitz website.
 
-## Zone Blitz Development Philosophy and Direction
+## Development Philosophy and Direction
 
 If you're curious about _why_ I chose a specific technology or approach to solving a problem, I have documented
 my approaches in the [architecture documentation](./architecture/README.md). These articles can help
