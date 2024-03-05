@@ -1,10 +1,19 @@
 package com.tiernebre.authentication.google;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.json.webtoken.JsonWebToken;
+import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionRepository;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.UUID;
 import org.junit.Test;
 
 public final class GoogleAuthenticationStrategyTest {
@@ -41,5 +50,64 @@ public final class GoogleAuthenticationStrategyTest {
         )
         .isEmpty()
     );
+  }
+
+  @Test
+  public void returnsEmptyIfCsrfTokensDoNotMatch() {
+    assertTrue(
+      googleAuthenticationStrategy
+        .authenticate(
+          new GoogleAuthenticationRequest(
+            "creds",
+            "bodyCsrfToken",
+            "cookieCsrfToken"
+          )
+        )
+        .isEmpty()
+    );
+  }
+
+  @Test
+  public void returnsEmptyIfTokenVerifierThrew()
+    throws GeneralSecurityException, IOException {
+    var request = new GoogleAuthenticationRequest(
+      "creds",
+      "csrfToken",
+      "csrfToken"
+    );
+    when(verifier.verify(request.credential())).thenThrow(new IOException());
+    assertTrue(googleAuthenticationStrategy.authenticate(request).isEmpty());
+  }
+
+  @Test
+  public void returnsEmptyIfTokenVerifierReturnedNull()
+    throws GeneralSecurityException, IOException {
+    var request = new GoogleAuthenticationRequest(
+      "creds",
+      "csrfToken",
+      "csrfToken"
+    );
+    when(verifier.verify(request.credential())).thenReturn(null);
+    assertTrue(googleAuthenticationStrategy.authenticate(request).isEmpty());
+  }
+
+  @Test
+  public void returnsSession() throws GeneralSecurityException, IOException {
+    var request = new GoogleAuthenticationRequest(
+      "creds",
+      "csrfToken",
+      "csrfToken"
+    );
+    var token = mock(GoogleIdToken.class);
+    var payload = mock(Payload.class);
+    String accountId = UUID.randomUUID().toString();
+    when(payload.getSubject()).thenReturn(accountId);
+    when(token.getPayload()).thenReturn(payload);
+    when(verifier.verify(request.credential())).thenReturn(token);
+    var expectedSession = new Session(UUID.randomUUID(), accountId);
+    when(repository.insertOne(accountId)).thenReturn(expectedSession);
+    var session = googleAuthenticationStrategy.authenticate(request);
+    assertTrue(session.isPresent());
+    assertEquals(expectedSession, session.get());
   }
 }
