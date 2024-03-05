@@ -11,10 +11,12 @@ public final class ServerFactory {
 
   public Server create()
     throws GeneralSecurityException, IOException, DatabaseConnectionError {
-    var databaseContext = new DatabaseContextFactory().create();
-    var authenticationContext = new AuthenticationContextFactory(
-      databaseContext
-    ).create();
-    return new Server(new RoutesFactory(authenticationContext).create());
+    return new Server(
+      new RoutesFactory(
+        new AuthenticationContextFactory(
+          new DatabaseContextFactory().create()
+        ).create()
+      ).create()
+    );
   }
 }
