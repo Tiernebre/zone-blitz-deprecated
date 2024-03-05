@@ -11,7 +11,7 @@ public final class Server {
     this.routes = routes;
   }
 
-  public Javalin start() {
+  public Javalin create() {
     return Javalin.create(config -> {
       config.showJavalinBanner = false;
       config.staticFiles.add(staticFiles -> {
@@ -19,6 +19,10 @@ public final class Server {
         staticFiles.directory = "/assets";
       });
       config.router.apiBuilder(routes::addEndpoints);
-    }).start("0.0.0.0", 8000);
+    });
+  }
+
+  public Javalin start() {
+    return create().start("0.0.0.0", 8000);
   }
 }

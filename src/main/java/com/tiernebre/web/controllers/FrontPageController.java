@@ -7,9 +7,8 @@ import io.jstach.jstachio.JStachio;
 public final class FrontPageController {
 
   public void render(Context ctx) {
-    var hello = new FrontPage();
     var output = new StringBuilder();
-    JStachio.render(hello, output);
+    JStachio.render(new FrontPage(), output);
     ctx.html(output.toString());
   }
 }
