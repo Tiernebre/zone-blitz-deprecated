@@ -20,4 +20,26 @@ public final class GoogleAuthenticationStrategyTest {
   public void returnsEmptyIfNoRequest() {
     assertTrue(googleAuthenticationStrategy.authenticate(null).isEmpty());
   }
+
+  @Test
+  public void returnsEmptyIfNoBodyCsrfToken() {
+    assertTrue(
+      googleAuthenticationStrategy
+        .authenticate(
+          new GoogleAuthenticationRequest("creds", null, "cookieCrsfToken")
+        )
+        .isEmpty()
+    );
+  }
+
+  @Test
+  public void returnsEmptyIfNoCookieCsrfToken() {
+    assertTrue(
+      googleAuthenticationStrategy
+        .authenticate(
+          new GoogleAuthenticationRequest("creds", "bodyCsrfToken", null)
+        )
+        .isEmpty()
+    );
+  }
 }
