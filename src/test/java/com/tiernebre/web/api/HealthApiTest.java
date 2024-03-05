@@ -13,6 +13,7 @@ public class HealthApiTest {
     JavalinTest.test(TestServer.create(), (server, client) -> {
       var response = client.get("/api/health");
       assertEquals(200, response.code());
+      assertEquals("Healthy", response.body().string());
     });
   }
 }
