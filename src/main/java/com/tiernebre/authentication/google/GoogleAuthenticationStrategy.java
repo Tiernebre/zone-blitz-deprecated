@@ -7,6 +7,7 @@ import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionRepository;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,10 @@ public final class GoogleAuthenticationStrategy
 
   @Override
   public Optional<Session> authenticate(GoogleAuthenticationRequest request) {
+    if (request == null) {
+      return Optional.empty();
+    }
+
     var bodyCrsfToken = request.bodyCrsfToken();
     var cookieCsrfToken = request.cookieCsrfToken();
 
