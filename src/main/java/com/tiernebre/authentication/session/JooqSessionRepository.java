@@ -1,7 +1,7 @@
 package com.tiernebre.authentication.session;
 
 import com.tiernebre.database.jooq.Tables;
-import java.util.Optional;
+import io.vavr.control.Option;
 import java.util.UUID;
 import org.jooq.DSLContext;
 
@@ -23,8 +23,8 @@ public final class JooqSessionRepository implements SessionRepository {
   }
 
   @Override
-  public Optional<Session> selectOne(UUID id) {
-    return Optional.ofNullable(
+  public Option<Session> selectOne(UUID id) {
+    return Option.of(
       dsl.fetchOne(Tables.SESSION, Tables.SESSION.ID.eq(id))
     ).map(result -> result.into(Session.class));
   }
