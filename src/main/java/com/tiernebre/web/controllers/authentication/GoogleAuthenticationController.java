@@ -5,6 +5,7 @@ import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import io.javalin.http.Context;
 import io.javalin.http.Cookie;
 import io.javalin.http.HttpStatus;
+import io.javalin.http.SameSite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +42,8 @@ public final class GoogleAuthenticationController
         );
         sessionCookie.setHttpOnly(true);
         sessionCookie.setSecure(true);
+        sessionCookie.setPath("/");
+        sessionCookie.setSameSite(SameSite.STRICT);
         context.cookie(sessionCookie);
         context.status(HttpStatus.CREATED);
         context.redirect("/");
