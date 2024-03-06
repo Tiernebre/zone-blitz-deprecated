@@ -3,6 +3,7 @@ package com.tiernebre.web.controllers.authentication;
 import com.tiernebre.authentication.google.GoogleAuthenticationRequest;
 import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import io.javalin.http.Context;
+import io.javalin.http.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,14 +25,28 @@ public final class GoogleAuthenticationController
 
   @Override
   public void handle(Context context) {
-    authenticationService.authenticate(
-      new GoogleAuthenticationRequest(
-        context.formParam(CREDENTIAL_FIELD_NAME),
-        context.formParam(CSRF_TOKEN_FIELD_NAME),
-        context.cookie(CSRF_TOKEN_FIELD_NAME)
+    authenticationService
+      .authenticate(
+        new GoogleAuthenticationRequest(
+          context.formParam(CREDENTIAL_FIELD_NAME),
+          context.formParam(CSRF_TOKEN_FIELD_NAME),
+          context.cookie(CSRF_TOKEN_FIELD_NAME)
+        )
       )
-    );
-
-    context.redirect("/");
+      .peek(session -> {
+        Cookie sessionCookie = new Cookie(
+          WebAuthenticationConstants.SESSION_COOKIE_TOKEN_NAME,
+          session.id().toString()
+        );
+        sessionCookie.setHttpOnly(true);
+        sessionCookie.setSecure(true);
+        context.cookie(sessionCookie);
+      })
+      .orElseRun(error -> {
+        LOG.debug(
+          "Could not create Google authentication session due to error: " +
+          error
+        );
+      });
   }
 }
