@@ -53,7 +53,7 @@ public final class GoogleAuthenticationController
       })
       .orElseRun(error -> {
         LOG.debug(
-          "Could not create Google authentication session due to error: " +
+          "Could not create Google authentication session due to error=%s" +
           error
         );
         context.status(HttpStatus.BAD_REQUEST);
