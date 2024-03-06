@@ -35,9 +35,7 @@ public final class GoogleAuthenticationStrategy
       )
       .map(GoogleAuthenticationRequest::credential)
       .flatMap(this::verifyAndParseCredential)
-      .map(token -> {
-        return token.getPayload();
-      })
+      .map(GoogleIdToken::getPayload)
       .map(Payload::getSubject)
       .map(sessionRepository::insertOne);
   }
