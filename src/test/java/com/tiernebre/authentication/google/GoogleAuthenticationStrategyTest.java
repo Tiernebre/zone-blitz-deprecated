@@ -55,6 +55,11 @@ public final class GoogleAuthenticationStrategyTest {
         new GoogleAuthenticationRequest("creds", "body", "cookie"),
         "Request has invalid CSRF tokens."
       ),
+      new FailureTestCase(
+        "No Credential",
+        new GoogleAuthenticationRequest(null, "csrf", "csrf"),
+        "Could not verify and parse given Google credential."
+      ),
     };
     Stream.of(tests).forEach(test -> {
       System.out.println(test.name);
