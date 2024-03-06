@@ -40,6 +40,21 @@ public final class GoogleAuthenticationStrategyTest {
         new GoogleAuthenticationRequest("creds", null, "csrf"),
         "Request has invalid CSRF tokens."
       ),
+      new FailureTestCase(
+        "No Cookie CSRF Token",
+        new GoogleAuthenticationRequest("creds", "csrf", null),
+        "Request has invalid CSRF tokens."
+      ),
+      new FailureTestCase(
+        "No Body and Cookie CSRF Token",
+        new GoogleAuthenticationRequest("creds", null, null),
+        "Request has invalid CSRF tokens."
+      ),
+      new FailureTestCase(
+        "Body and Cookie CSRF Tokens are not equal",
+        new GoogleAuthenticationRequest("creds", "body", "cookie"),
+        "Request has invalid CSRF tokens."
+      ),
     };
     Stream.of(tests).forEach(test -> {
       System.out.println(test.name);
