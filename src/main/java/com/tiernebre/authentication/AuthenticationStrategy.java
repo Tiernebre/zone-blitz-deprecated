@@ -1,8 +1,8 @@
 package com.tiernebre.authentication;
 
 import com.tiernebre.authentication.session.Session;
-import java.util.Optional;
+import io.vavr.control.Either;
 
 public interface AuthenticationStrategy<T> {
-  public Optional<Session> authenticate(T request);
+  public Either<String, Session> authenticate(T request);
 }

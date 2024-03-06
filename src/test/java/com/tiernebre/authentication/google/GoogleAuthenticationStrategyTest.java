@@ -1,7 +1,6 @@
 package com.tiernebre.authentication.google;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -10,9 +9,11 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionRepository;
+import io.vavr.control.Either;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.UUID;
+import java.util.function.Consumer;
 import org.junit.Test;
 
 public final class GoogleAuthenticationStrategyTest {
@@ -24,89 +25,91 @@ public final class GoogleAuthenticationStrategyTest {
   private final GoogleAuthenticationStrategy googleAuthenticationStrategy =
     new GoogleAuthenticationStrategy(verifier, repository);
 
-  @Test
-  public void returnsEmptyIfNoRequest() {
-    assertTrue(googleAuthenticationStrategy.authenticate(null).isEmpty());
-  }
+  private final record Case(
+    String name,
+    GoogleAuthenticationRequest request,
+    Either<String, Session> expected,
+    Consumer<GoogleAuthenticationRequest> mock
+  ) {}
 
   @Test
-  public void returnsEmptyIfNoBodyCsrfToken() {
-    assertTrue(
-      googleAuthenticationStrategy
-        .authenticate(
-          new GoogleAuthenticationRequest("creds", null, "cookieCrsfToken")
-        )
-        .isEmpty()
-    );
-  }
-
-  @Test
-  public void returnsEmptyIfNoCookieCsrfToken() {
-    assertTrue(
-      googleAuthenticationStrategy
-        .authenticate(
-          new GoogleAuthenticationRequest("creds", "bodyCsrfToken", null)
-        )
-        .isEmpty()
-    );
-  }
-
-  @Test
-  public void returnsEmptyIfCsrfTokensDoNotMatch() {
-    assertTrue(
-      googleAuthenticationStrategy
-        .authenticate(
-          new GoogleAuthenticationRequest(
-            "creds",
-            "bodyCsrfToken",
-            "cookieCsrfToken"
-          )
-        )
-        .isEmpty()
-    );
-  }
-
-  @Test
-  public void returnsEmptyIfTokenVerifierThrew()
-    throws GeneralSecurityException, IOException {
-    var request = new GoogleAuthenticationRequest(
-      "creds",
-      "csrfToken",
-      "csrfToken"
-    );
-    when(verifier.verify(request.credential())).thenThrow(new IOException());
-    assertTrue(googleAuthenticationStrategy.authenticate(request).isEmpty());
-  }
-
-  @Test
-  public void returnsEmptyIfTokenVerifierReturnedNull()
-    throws GeneralSecurityException, IOException {
-    var request = new GoogleAuthenticationRequest(
-      "creds",
-      "csrfToken",
-      "csrfToken"
-    );
-    when(verifier.verify(request.credential())).thenReturn(null);
-    assertTrue(googleAuthenticationStrategy.authenticate(request).isEmpty());
-  }
-
-  @Test
-  public void returnsSession() throws GeneralSecurityException, IOException {
-    var request = new GoogleAuthenticationRequest(
-      "creds",
-      "csrfToken",
-      "csrfToken"
-    );
-    var token = mock(GoogleIdToken.class);
-    var payload = mock(Payload.class);
-    String accountId = UUID.randomUUID().toString();
-    when(payload.getSubject()).thenReturn(accountId);
-    when(token.getPayload()).thenReturn(payload);
-    when(verifier.verify(request.credential())).thenReturn(token);
-    var expectedSession = new Session(UUID.randomUUID(), accountId);
-    when(repository.insertOne(accountId)).thenReturn(expectedSession);
-    var session = googleAuthenticationStrategy.authenticate(request);
-    assertTrue(session.isPresent());
-    assertEquals(expectedSession, session.get());
+  public void cases() throws GeneralSecurityException, IOException {
+    var tests = new Case[] {
+      new Case(
+        "Null request",
+        null,
+        Either.left("Request received was null."),
+        null
+      ),
+      new Case(
+        "No Body CSRF Token",
+        new GoogleAuthenticationRequest("creds", null, "csrf"),
+        Either.left("Request has invalid CSRF tokens."),
+        null
+      ),
+      new Case(
+        "No Cookie CSRF Token",
+        new GoogleAuthenticationRequest("creds", "csrf", null),
+        Either.left("Request has invalid CSRF tokens."),
+        null
+      ),
+      new Case(
+        "No Body and Cookie CSRF Token",
+        new GoogleAuthenticationRequest("creds", null, null),
+        Either.left("Request has invalid CSRF tokens."),
+        null
+      ),
+      new Case(
+        "Body and Cookie CSRF Tokens are not equal",
+        new GoogleAuthenticationRequest("creds", "body", "cookie"),
+        Either.left("Request has invalid CSRF tokens."),
+        null
+      ),
+      new Case(
+        "No Credential",
+        new GoogleAuthenticationRequest(null, "csrf", "csrf"),
+        Either.left(
+          "Could not verify and parse given Google authentication credential."
+        ),
+        null
+      ),
+      new Case(
+        "Google token verifier returns null",
+        new GoogleAuthenticationRequest("creds", "csrf", "csrf"),
+        Either.left(
+          "Could not verify and parse given Google authentication credential."
+        ),
+        request -> {
+          try {
+            when(verifier.verify(request.credential())).thenReturn(null);
+          } catch (Exception e) {}
+        }
+      ),
+      new Case("Created happy path session", new GoogleAuthenticationRequest(
+          "creds",
+          "csrf",
+          "csrf"
+        ), Either.right(new Session(new UUID(0, 0), "accountId")), request -> {
+          var token = mock(GoogleIdToken.class);
+          var payload = mock(Payload.class);
+          String accountId = "accountId";
+          var expectedSession = new Session(new UUID(0, 0), accountId);
+          when(payload.getSubject()).thenReturn(accountId);
+          when(token.getPayload()).thenReturn(payload);
+          when(repository.insertOne(accountId)).thenReturn(expectedSession);
+          try {
+            when(verifier.verify(request.credential())).thenReturn(token);
+          } catch (Exception e) {}
+        }),
+    };
+    for (var test : tests) {
+      if (test.mock() != null) {
+        test.mock().accept(test.request());
+      }
+      assertEquals(
+        test.expected(),
+        googleAuthenticationStrategy.authenticate(test.request())
+      );
+    }
   }
 }

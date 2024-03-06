@@ -6,9 +6,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.tiernebre.authentication.AuthenticationStrategy;
 import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionRepository;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.Optional;
+import io.vavr.control.Either;
+import io.vavr.control.Option;
 
 public final class GoogleAuthenticationStrategy
   implements AuthenticationStrategy<GoogleAuthenticationRequest> {
@@ -25,12 +24,20 @@ public final class GoogleAuthenticationStrategy
   }
 
   @Override
-  public Optional<Session> authenticate(GoogleAuthenticationRequest request) {
-    return Optional.ofNullable(request)
-      .filter(this::hasValidCsrfTokens)
+  public Either<String, Session> authenticate(
+    GoogleAuthenticationRequest request
+  ) {
+    return Option.of(request)
+      .toEither("Request received was null.")
+      .filterOrElse(
+        this::hasValidCsrfTokens,
+        __ -> "Request has invalid CSRF tokens."
+      )
       .map(GoogleAuthenticationRequest::credential)
-      .flatMap(this::fetchIdToken)
-      .map(GoogleIdToken::getPayload)
+      .flatMap(this::verifyAndParseCredential)
+      .map(token -> {
+        return token.getPayload();
+      })
       .map(Payload::getSubject)
       .map(sessionRepository::insertOne);
   }
@@ -45,11 +52,15 @@ public final class GoogleAuthenticationStrategy
     );
   }
 
-  private Optional<GoogleIdToken> fetchIdToken(String credential) {
-    try {
-      return Optional.ofNullable(verifier.verify(credential));
-    } catch (GeneralSecurityException | IOException e) {
-      return Optional.empty();
-    }
+  private Either<String, GoogleIdToken> verifyAndParseCredential(
+    String credential
+  ) {
+    return Option.of(credential)
+      .toTry()
+      .mapTry(verifier::verify)
+      .filter(token -> token != null)
+      .toEither(
+        "Could not verify and parse given Google authentication credential."
+      );
   }
 }
