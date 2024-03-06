@@ -103,13 +103,13 @@ public final class GoogleAuthenticationStrategyTest {
         }),
     };
     for (var test : tests) {
-      System.out.println(test.name() + " RUNNING");
       if (test.mock() != null) {
         test.mock().accept(test.request());
       }
-      var result = googleAuthenticationStrategy.authenticate(test.request());
-      assertEquals(test.expected(), result);
-      System.out.println(test.name() + " PASSED");
+      assertEquals(
+        test.expected(),
+        googleAuthenticationStrategy.authenticate(test.request())
+      );
     }
   }
 }
