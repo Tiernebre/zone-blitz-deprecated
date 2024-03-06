@@ -25,7 +25,7 @@ public final class GoogleAuthenticationStrategyTest {
   private final GoogleAuthenticationStrategy googleAuthenticationStrategy =
     new GoogleAuthenticationStrategy(verifier, repository);
 
-  private final record FailureTestCase(
+  private final record Case(
     String name,
     GoogleAuthenticationRequest request,
     String expectedError,
@@ -33,48 +33,43 @@ public final class GoogleAuthenticationStrategyTest {
   ) {}
 
   @Test
-  public void failureCases() throws GeneralSecurityException, IOException {
-    var tests = new FailureTestCase[] {
-      new FailureTestCase(
-        "Null request",
-        null,
-        "Request received was null.",
-        null
-      ),
-      new FailureTestCase(
+  public void cases() throws GeneralSecurityException, IOException {
+    var tests = new Case[] {
+      new Case("Null request", null, "Request received was null.", null),
+      new Case(
         "No Body CSRF Token",
         new GoogleAuthenticationRequest("creds", null, "csrf"),
         "Request has invalid CSRF tokens.",
         null
       ),
-      new FailureTestCase(
+      new Case(
         "No Cookie CSRF Token",
         new GoogleAuthenticationRequest("creds", "csrf", null),
         "Request has invalid CSRF tokens.",
         null
       ),
-      new FailureTestCase(
+      new Case(
         "No Body and Cookie CSRF Token",
         new GoogleAuthenticationRequest("creds", null, null),
         "Request has invalid CSRF tokens.",
         null
       ),
-      new FailureTestCase(
+      new Case(
         "Body and Cookie CSRF Tokens are not equal",
         new GoogleAuthenticationRequest("creds", "body", "cookie"),
         "Request has invalid CSRF tokens.",
         null
       ),
-      new FailureTestCase(
+      new Case(
         "No Credential",
         new GoogleAuthenticationRequest(null, "csrf", "csrf"),
-        "Could not verify and parse given Google credential.",
+        "Could not verify and parse given Google authentication credential.",
         null
       ),
-      new FailureTestCase(
+      new Case(
         "Google token verifier returns null",
         new GoogleAuthenticationRequest("creds", "csrf", "csrf"),
-        "Could not verify and parse given Google credential.",
+        "Could not verify and parse given Google authentication credential.",
         request -> {
           try {
             when(verifier.verify(request.credential())).thenReturn(null);
@@ -83,7 +78,7 @@ public final class GoogleAuthenticationStrategyTest {
       ),
     };
     for (var test : tests) {
-      System.out.println(test.name() + "RUNNING");
+      System.out.println(test.name() + " RUNNING");
       if (test.mock() != null) {
         test.mock().accept(test.request());
       }

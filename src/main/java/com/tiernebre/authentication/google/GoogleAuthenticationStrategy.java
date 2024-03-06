@@ -35,7 +35,9 @@ public final class GoogleAuthenticationStrategy
       )
       .map(GoogleAuthenticationRequest::credential)
       .flatMap(this::verifyAndParseCredential)
-      .map(GoogleIdToken::getPayload)
+      .map(token -> {
+        return token.getPayload();
+      })
       .map(Payload::getSubject)
       .map(sessionRepository::insertOne);
   }
@@ -55,7 +57,10 @@ public final class GoogleAuthenticationStrategy
   ) {
     return Option.of(credential)
       .toTry()
-      .mapTry(token -> verifier.verify(token))
-      .toEither("Could not verify and parse given Google credential.");
+      .mapTry(verifier::verify)
+      .filter(token -> token != null)
+      .toEither(
+        "Could not verify and parse given Google authentication credential."
+      );
   }
 }
