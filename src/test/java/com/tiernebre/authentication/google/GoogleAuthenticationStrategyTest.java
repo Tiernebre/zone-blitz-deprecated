@@ -106,7 +106,7 @@ public final class GoogleAuthenticationStrategyTest {
     var expectedSession = new Session(UUID.randomUUID(), accountId);
     when(repository.insertOne(accountId)).thenReturn(expectedSession);
     var session = googleAuthenticationStrategy.authenticate(request);
-    assertTrue(session.isPresent());
+    assertTrue(session.isRight());
     assertEquals(expectedSession, session.get());
   }
 }

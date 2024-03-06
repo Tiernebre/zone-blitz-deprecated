@@ -6,9 +6,10 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.tiernebre.authentication.AuthenticationStrategy;
 import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionRepository;
+import io.vavr.control.Either;
+import io.vavr.control.Option;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Optional;
 
 public final class GoogleAuthenticationStrategy
   implements AuthenticationStrategy<GoogleAuthenticationRequest> {
@@ -25,9 +26,15 @@ public final class GoogleAuthenticationStrategy
   }
 
   @Override
-  public Optional<Session> authenticate(GoogleAuthenticationRequest request) {
-    return Optional.ofNullable(request)
-      .filter(this::hasValidCsrfTokens)
+  public Either<String, Session> authenticate(
+    GoogleAuthenticationRequest request
+  ) {
+    return Option.of(request)
+      .toEither("Request received was null.")
+      .filterOrElse(
+        this::hasValidCsrfTokens,
+        __ -> "Request has invalid CSRF tokens."
+      )
       .map(GoogleAuthenticationRequest::credential)
       .flatMap(this::fetchIdToken)
       .map(GoogleIdToken::getPayload)
@@ -45,11 +52,15 @@ public final class GoogleAuthenticationStrategy
     );
   }
 
-  private Optional<GoogleIdToken> fetchIdToken(String credential) {
+  private Either<String, GoogleIdToken> fetchIdToken(String credential) {
+    Option<GoogleIdToken> token;
     try {
-      return Optional.ofNullable(verifier.verify(credential));
+      token = Option.of(verifier.verify(credential));
     } catch (GeneralSecurityException | IOException e) {
-      return Optional.empty();
+      token = Option.none();
     }
+    return token.toEither(
+      "Google token verifier failed to verify the given credential."
+    );
   }
 }
