@@ -17,17 +17,18 @@ public final class GoogleAuthenticationController
   );
   private static final String CREDENTIAL_FIELD_NAME = "credential";
   private static final String CSRF_TOKEN_FIELD_NAME = "g_csrf_token";
-  private final GoogleAuthenticationStrategy authenticationService;
+  private static final String GOOGLE_STATE_FIELD_NAME = "g_state";
+  private final GoogleAuthenticationStrategy authenticationStrategy;
 
   public GoogleAuthenticationController(
     GoogleAuthenticationStrategy authenticationService
   ) {
-    this.authenticationService = authenticationService;
+    this.authenticationStrategy = authenticationService;
   }
 
   @Override
   public void handle(Context context) {
-    authenticationService
+    authenticationStrategy
       .authenticate(
         new GoogleAuthenticationRequest(
           context.formParam(CREDENTIAL_FIELD_NAME),
@@ -45,6 +46,8 @@ public final class GoogleAuthenticationController
         sessionCookie.setPath("/");
         sessionCookie.setSameSite(SameSite.STRICT);
         context.cookie(sessionCookie);
+        context.cookie(CSRF_TOKEN_FIELD_NAME, "", 0);
+        context.cookie(GOOGLE_STATE_FIELD_NAME, "", 0);
         context.status(HttpStatus.CREATED);
         context.redirect("/");
         LOG.debug(
