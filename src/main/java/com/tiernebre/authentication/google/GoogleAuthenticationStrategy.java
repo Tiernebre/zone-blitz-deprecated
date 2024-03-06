@@ -8,8 +8,6 @@ import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionRepository;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 public final class GoogleAuthenticationStrategy
   implements AuthenticationStrategy<GoogleAuthenticationRequest> {
@@ -36,7 +34,7 @@ public final class GoogleAuthenticationStrategy
         __ -> "Request has invalid CSRF tokens."
       )
       .map(GoogleAuthenticationRequest::credential)
-      .flatMap(this::fetchIdToken)
+      .flatMap(this::verifyAndParseCredential)
       .map(GoogleIdToken::getPayload)
       .map(Payload::getSubject)
       .map(sessionRepository::insertOne);
@@ -52,15 +50,12 @@ public final class GoogleAuthenticationStrategy
     );
   }
 
-  private Either<String, GoogleIdToken> fetchIdToken(String credential) {
-    Option<GoogleIdToken> token;
-    try {
-      token = Option.of(verifier.verify(credential));
-    } catch (GeneralSecurityException | IOException e) {
-      token = Option.none();
-    }
-    return token.toEither(
-      "Google token verifier failed to verify the given credential."
-    );
+  private Either<String, GoogleIdToken> verifyAndParseCredential(
+    String credential
+  ) {
+    return Option.of(credential)
+      .toTry()
+      .mapTry(token -> verifier.verify(token))
+      .toEither("Could not verify and parse given Google credential.");
   }
 }

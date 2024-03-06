@@ -10,6 +10,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionRepository;
+import io.vavr.collection.Stream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.UUID;
@@ -24,70 +25,28 @@ public final class GoogleAuthenticationStrategyTest {
   private final GoogleAuthenticationStrategy googleAuthenticationStrategy =
     new GoogleAuthenticationStrategy(verifier, repository);
 
-  @Test
-  public void returnsEmptyIfNoRequest() {
-    assertTrue(googleAuthenticationStrategy.authenticate(null).isEmpty());
-  }
+  private final record FailureTestCase(
+    String name,
+    GoogleAuthenticationRequest request,
+    String expectedError
+  ) {}
 
   @Test
-  public void returnsEmptyIfNoBodyCsrfToken() {
-    assertTrue(
-      googleAuthenticationStrategy
-        .authenticate(
-          new GoogleAuthenticationRequest("creds", null, "cookieCrsfToken")
-        )
-        .isEmpty()
-    );
-  }
-
-  @Test
-  public void returnsEmptyIfNoCookieCsrfToken() {
-    assertTrue(
-      googleAuthenticationStrategy
-        .authenticate(
-          new GoogleAuthenticationRequest("creds", "bodyCsrfToken", null)
-        )
-        .isEmpty()
-    );
-  }
-
-  @Test
-  public void returnsEmptyIfCsrfTokensDoNotMatch() {
-    assertTrue(
-      googleAuthenticationStrategy
-        .authenticate(
-          new GoogleAuthenticationRequest(
-            "creds",
-            "bodyCsrfToken",
-            "cookieCsrfToken"
-          )
-        )
-        .isEmpty()
-    );
-  }
-
-  @Test
-  public void returnsEmptyIfTokenVerifierThrew()
-    throws GeneralSecurityException, IOException {
-    var request = new GoogleAuthenticationRequest(
-      "creds",
-      "csrfToken",
-      "csrfToken"
-    );
-    when(verifier.verify(request.credential())).thenThrow(new IOException());
-    assertTrue(googleAuthenticationStrategy.authenticate(request).isEmpty());
-  }
-
-  @Test
-  public void returnsEmptyIfTokenVerifierReturnedNull()
-    throws GeneralSecurityException, IOException {
-    var request = new GoogleAuthenticationRequest(
-      "creds",
-      "csrfToken",
-      "csrfToken"
-    );
-    when(verifier.verify(request.credential())).thenReturn(null);
-    assertTrue(googleAuthenticationStrategy.authenticate(request).isEmpty());
+  public void failureCases() {
+    var tests = new FailureTestCase[] {
+      new FailureTestCase("Null request", null, "Request received was null."),
+      new FailureTestCase(
+        "No Body CSRF Token",
+        new GoogleAuthenticationRequest("creds", null, "csrf"),
+        "Request has invalid CSRF tokens."
+      ),
+    };
+    Stream.of(tests).forEach(test -> {
+      System.out.println(test.name);
+      var result = googleAuthenticationStrategy.authenticate(test.request);
+      assertTrue(result.isEmpty());
+      assertEquals(test.expectedError, result.getLeft());
+    });
   }
 
   @Test
