@@ -10,10 +10,10 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionRepository;
-import io.vavr.collection.Stream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.UUID;
+import java.util.function.Consumer;
 import org.junit.Test;
 
 public final class GoogleAuthenticationStrategyTest {
@@ -28,45 +28,70 @@ public final class GoogleAuthenticationStrategyTest {
   private final record FailureTestCase(
     String name,
     GoogleAuthenticationRequest request,
-    String expectedError
+    String expectedError,
+    Consumer<GoogleAuthenticationRequest> mock
   ) {}
 
   @Test
-  public void failureCases() {
+  public void failureCases() throws GeneralSecurityException, IOException {
     var tests = new FailureTestCase[] {
-      new FailureTestCase("Null request", null, "Request received was null."),
+      new FailureTestCase(
+        "Null request",
+        null,
+        "Request received was null.",
+        null
+      ),
       new FailureTestCase(
         "No Body CSRF Token",
         new GoogleAuthenticationRequest("creds", null, "csrf"),
-        "Request has invalid CSRF tokens."
+        "Request has invalid CSRF tokens.",
+        null
       ),
       new FailureTestCase(
         "No Cookie CSRF Token",
         new GoogleAuthenticationRequest("creds", "csrf", null),
-        "Request has invalid CSRF tokens."
+        "Request has invalid CSRF tokens.",
+        null
       ),
       new FailureTestCase(
         "No Body and Cookie CSRF Token",
         new GoogleAuthenticationRequest("creds", null, null),
-        "Request has invalid CSRF tokens."
+        "Request has invalid CSRF tokens.",
+        null
       ),
       new FailureTestCase(
         "Body and Cookie CSRF Tokens are not equal",
         new GoogleAuthenticationRequest("creds", "body", "cookie"),
-        "Request has invalid CSRF tokens."
+        "Request has invalid CSRF tokens.",
+        null
       ),
       new FailureTestCase(
         "No Credential",
         new GoogleAuthenticationRequest(null, "csrf", "csrf"),
-        "Could not verify and parse given Google credential."
+        "Could not verify and parse given Google credential.",
+        null
+      ),
+      new FailureTestCase(
+        "Google token verifier returns null",
+        new GoogleAuthenticationRequest("creds", "csrf", "csrf"),
+        "Could not verify and parse given Google credential.",
+        request -> {
+          try {
+            when(verifier.verify(request.credential())).thenReturn(null);
+          } catch (Exception e) {}
+        }
       ),
     };
-    Stream.of(tests).forEach(test -> {
-      System.out.println(test.name);
-      var result = googleAuthenticationStrategy.authenticate(test.request);
+    for (var test : tests) {
+      System.out.println(test.name() + "RUNNING");
+      if (test.mock() != null) {
+        test.mock().accept(test.request());
+      }
+      var result = googleAuthenticationStrategy.authenticate(test.request());
       assertTrue(result.isEmpty());
       assertEquals(test.expectedError, result.getLeft());
-    });
+      System.out.println(test.name() + " PASSED");
+    }
   }
 
   @Test
