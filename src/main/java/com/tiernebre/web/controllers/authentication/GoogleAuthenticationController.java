@@ -4,6 +4,7 @@ import com.tiernebre.authentication.google.GoogleAuthenticationRequest;
 import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import io.javalin.http.Context;
 import io.javalin.http.Cookie;
+import io.javalin.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,12 +42,22 @@ public final class GoogleAuthenticationController
         sessionCookie.setHttpOnly(true);
         sessionCookie.setSecure(true);
         context.cookie(sessionCookie);
+        context.status(HttpStatus.CREATED);
+        context.redirect("/");
+        LOG.debug(
+          String.format(
+            "Created valid Google authentication session for accountId=%s",
+            session.accountId()
+          )
+        );
       })
       .orElseRun(error -> {
         LOG.debug(
           "Could not create Google authentication session due to error: " +
           error
         );
+        context.status(HttpStatus.BAD_REQUEST);
+        context.redirect("/login");
       });
   }
 }
