@@ -35,6 +35,20 @@ public class Keys {
       new TableField[] { Account.ACCOUNT.ID },
       true
     );
+  public static final UniqueKey<AccountRecord> UNIQUE_GOOGLE_ACCOUNT_ID =
+    Internal.createUniqueKey(
+      Account.ACCOUNT,
+      DSL.name("unique_google_account_id"),
+      new TableField[] { Account.ACCOUNT.GOOGLE_ACCOUNT_ID },
+      true
+    );
+  public static final UniqueKey<AccountRecord> UNIQUE_REGISTRATION_ID =
+    Internal.createUniqueKey(
+      Account.ACCOUNT,
+      DSL.name("unique_registration_id"),
+      new TableField[] { Account.ACCOUNT.REGISTRATION_ID },
+      true
+    );
   public static final UniqueKey<PlayerRecord> PLAYER_PKEY =
     Internal.createUniqueKey(
       Player.PLAYER,

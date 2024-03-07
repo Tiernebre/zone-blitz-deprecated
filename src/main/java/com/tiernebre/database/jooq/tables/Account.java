@@ -183,6 +183,14 @@ public class Account extends TableImpl<AccountRecord> {
   }
 
   @Override
+  public List<UniqueKey<AccountRecord>> getUniqueKeys() {
+    return Arrays.asList(
+      Keys.UNIQUE_REGISTRATION_ID,
+      Keys.UNIQUE_GOOGLE_ACCOUNT_ID
+    );
+  }
+
+  @Override
   public List<ForeignKey<AccountRecord, ?>> getReferences() {
     return Arrays.asList(Keys.ACCOUNT__ACCOUNT_REGISTRATION_ID_FKEY);
   }
