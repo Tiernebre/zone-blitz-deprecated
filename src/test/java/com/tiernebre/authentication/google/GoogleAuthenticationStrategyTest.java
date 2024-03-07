@@ -109,12 +109,15 @@ public final class GoogleAuthenticationStrategyTest {
           "creds",
           "csrf",
           "csrf"
-        ), Either.right(new Session(new UUID(0, 0), "accountId")), request -> {
+        ), Either.right(new Session(new UUID(0, 0), 1L)), request -> {
           var token = mock(GoogleIdToken.class);
           var payload = mock(Payload.class);
           var accountId = "accountId";
           var expectedAccount = new Account(1L, 1L, accountId);
-          var expectedSession = new Session(new UUID(0, 0), accountId);
+          var expectedSession = new Session(
+            new UUID(0, 0),
+            expectedAccount.id()
+          );
           when(payload.getSubject()).thenReturn(accountId);
           when(token.getPayload()).thenReturn(payload);
           when(accountService.getForGoogleAccountId(accountId)).thenReturn(
