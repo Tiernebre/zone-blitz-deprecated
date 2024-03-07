@@ -14,7 +14,7 @@ public final class JooqSessionRepository implements SessionRepository {
   }
 
   @Override
-  public Session insertOne(String accountId) {
+  public Session insertOne(long accountId) {
     return dsl
       .insertInto(Tables.SESSION, Tables.SESSION.ACCOUNT_ID)
       .values(accountId)

@@ -5,14 +5,21 @@ package com.tiernebre.database.jooq.tables;
 
 import com.tiernebre.database.jooq.Keys;
 import com.tiernebre.database.jooq.Public;
+import com.tiernebre.database.jooq.tables.Account.AccountPath;
 import com.tiernebre.database.jooq.tables.records.SessionRecord;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -61,9 +68,9 @@ public class Session extends TableImpl<SessionRecord> {
   /**
    * The column <code>public.session.account_id</code>.
    */
-  public final TableField<SessionRecord, String> ACCOUNT_ID = createField(
+  public final TableField<SessionRecord, Long> ACCOUNT_ID = createField(
     DSL.name("account_id"),
-    SQLDataType.CLOB,
+    SQLDataType.BIGINT.nullable(false),
     this,
     ""
   );
@@ -110,6 +117,51 @@ public class Session extends TableImpl<SessionRecord> {
     this(DSL.name("session"), null);
   }
 
+  public <O extends Record> Session(
+    Table<O> path,
+    ForeignKey<O, SessionRecord> childPath,
+    InverseForeignKey<O, SessionRecord> parentPath
+  ) {
+    super(path, childPath, parentPath, SESSION);
+  }
+
+  /**
+   * A subtype implementing {@link Path} for simplified path-based joins.
+   */
+  public static class SessionPath
+    extends Session
+    implements Path<SessionRecord> {
+
+    private static final long serialVersionUID = 1L;
+
+    public <O extends Record> SessionPath(
+      Table<O> path,
+      ForeignKey<O, SessionRecord> childPath,
+      InverseForeignKey<O, SessionRecord> parentPath
+    ) {
+      super(path, childPath, parentPath);
+    }
+
+    private SessionPath(Name alias, Table<SessionRecord> aliased) {
+      super(alias, aliased);
+    }
+
+    @Override
+    public SessionPath as(String alias) {
+      return new SessionPath(DSL.name(alias), this);
+    }
+
+    @Override
+    public SessionPath as(Name alias) {
+      return new SessionPath(alias, this);
+    }
+
+    @Override
+    public SessionPath as(Table<?> alias) {
+      return new SessionPath(alias.getQualifiedName(), this);
+    }
+  }
+
   @Override
   public Schema getSchema() {
     return aliased() ? null : Public.PUBLIC;
@@ -118,6 +170,26 @@ public class Session extends TableImpl<SessionRecord> {
   @Override
   public UniqueKey<SessionRecord> getPrimaryKey() {
     return Keys.SESSION_PKEY;
+  }
+
+  @Override
+  public List<ForeignKey<SessionRecord, ?>> getReferences() {
+    return Arrays.asList(Keys.SESSION__SESSION_ACCOUNT_ID_FKEY);
+  }
+
+  private transient AccountPath _account;
+
+  /**
+   * Get the implicit join path to the <code>public.account</code> table.
+   */
+  public AccountPath account() {
+    if (_account == null) _account = new AccountPath(
+      this,
+      Keys.SESSION__SESSION_ACCOUNT_ID_FKEY,
+      null
+    );
+
+    return _account;
   }
 
   @Override

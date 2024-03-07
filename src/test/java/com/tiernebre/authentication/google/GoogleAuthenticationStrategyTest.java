@@ -7,8 +7,10 @@ import static org.mockito.Mockito.when;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.tiernebre.authentication.account.Account;
+import com.tiernebre.authentication.account.AccountService;
 import com.tiernebre.authentication.session.Session;
-import com.tiernebre.authentication.session.SessionRepository;
+import com.tiernebre.authentication.session.SessionService;
 import io.vavr.control.Either;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -21,9 +23,10 @@ public final class GoogleAuthenticationStrategyTest {
   private final GoogleIdTokenVerifier verifier = mock(
     GoogleIdTokenVerifier.class
   );
-  private final SessionRepository repository = mock(SessionRepository.class);
+  private final SessionService sessionService = mock(SessionService.class);
+  private final AccountService accountService = mock(AccountService.class);
   private final GoogleAuthenticationStrategy googleAuthenticationStrategy =
-    new GoogleAuthenticationStrategy(verifier, repository);
+    new GoogleAuthenticationStrategy(verifier, sessionService, accountService);
 
   private final record Case(
     String name,
@@ -34,7 +37,7 @@ public final class GoogleAuthenticationStrategyTest {
 
   @Test
   public void cases() throws GeneralSecurityException, IOException {
-    var tests = new Case[] {
+    var cases = new Case[] {
       new Case(
         "Null request",
         null,
@@ -85,24 +88,50 @@ public final class GoogleAuthenticationStrategyTest {
           } catch (Exception e) {}
         }
       ),
+      new Case("Getting account had an error", new GoogleAuthenticationRequest(
+          "creds",
+          "csrf",
+          "csrf"
+        ), Either.left("Get account error"), request -> {
+          var token = mock(GoogleIdToken.class);
+          var payload = mock(Payload.class);
+          var accountId = "accountId";
+          when(payload.getSubject()).thenReturn(accountId);
+          when(token.getPayload()).thenReturn(payload);
+          when(accountService.getForGoogleAccountId(accountId)).thenReturn(
+            Either.left("Get account error")
+          );
+          try {
+            when(verifier.verify(request.credential())).thenReturn(token);
+          } catch (Exception e) {}
+        }),
       new Case("Created happy path session", new GoogleAuthenticationRequest(
           "creds",
           "csrf",
           "csrf"
-        ), Either.right(new Session(new UUID(0, 0), "accountId")), request -> {
+        ), Either.right(new Session(new UUID(0, 0), 1L)), request -> {
           var token = mock(GoogleIdToken.class);
           var payload = mock(Payload.class);
-          String accountId = "accountId";
-          var expectedSession = new Session(new UUID(0, 0), accountId);
+          var accountId = "accountId";
+          var expectedAccount = new Account(1L, 1L, accountId);
+          var expectedSession = new Session(
+            new UUID(0, 0),
+            expectedAccount.id()
+          );
           when(payload.getSubject()).thenReturn(accountId);
           when(token.getPayload()).thenReturn(payload);
-          when(repository.insertOne(accountId)).thenReturn(expectedSession);
+          when(accountService.getForGoogleAccountId(accountId)).thenReturn(
+            Either.right(expectedAccount)
+          );
+          when(sessionService.create(expectedAccount)).thenReturn(
+            expectedSession
+          );
           try {
             when(verifier.verify(request.credential())).thenReturn(token);
           } catch (Exception e) {}
         }),
     };
-    for (var test : tests) {
+    for (var test : cases) {
       if (test.mock() != null) {
         test.mock().accept(test.request());
       }

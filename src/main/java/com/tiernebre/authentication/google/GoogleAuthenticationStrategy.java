@@ -4,8 +4,9 @@ import com.google.api.client.auth.openidconnect.IdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.tiernebre.authentication.AuthenticationStrategy;
+import com.tiernebre.authentication.account.AccountService;
 import com.tiernebre.authentication.session.Session;
-import com.tiernebre.authentication.session.SessionRepository;
+import com.tiernebre.authentication.session.SessionService;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 
@@ -13,14 +14,17 @@ public final class GoogleAuthenticationStrategy
   implements AuthenticationStrategy<GoogleAuthenticationRequest> {
 
   private final GoogleIdTokenVerifier verifier;
-  private final SessionRepository sessionRepository;
+  private final AccountService accountService;
+  private final SessionService sessionService;
 
   public GoogleAuthenticationStrategy(
     GoogleIdTokenVerifier verifier,
-    SessionRepository sessionRepository
+    SessionService sessionService,
+    AccountService accountService
   ) {
     this.verifier = verifier;
-    this.sessionRepository = sessionRepository;
+    this.sessionService = sessionService;
+    this.accountService = accountService;
   }
 
   @Override
@@ -37,7 +41,8 @@ public final class GoogleAuthenticationStrategy
       .flatMap(this::verifyAndParseCredential)
       .map(GoogleIdToken::getPayload)
       .map(Payload::getSubject)
-      .map(sessionRepository::insertOne);
+      .flatMap(accountService::getForGoogleAccountId)
+      .map(sessionService::create);
   }
 
   private boolean hasValidCsrfTokens(GoogleAuthenticationRequest request) {

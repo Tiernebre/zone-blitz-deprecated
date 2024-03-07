@@ -33,15 +33,15 @@ public class SessionRecord extends UpdatableRecordImpl<SessionRecord> {
   /**
    * Setter for <code>public.session.account_id</code>.
    */
-  public void setAccountId(String value) {
+  public void setAccountId(Long value) {
     set(1, value);
   }
 
   /**
    * Getter for <code>public.session.account_id</code>.
    */
-  public String getAccountId() {
-    return (String) get(1);
+  public Long getAccountId() {
+    return (Long) get(1);
   }
 
   // -------------------------------------------------------------------------
@@ -67,7 +67,7 @@ public class SessionRecord extends UpdatableRecordImpl<SessionRecord> {
   /**
    * Create a detached, initialised SessionRecord
    */
-  public SessionRecord(UUID id, String accountId) {
+  public SessionRecord(UUID id, Long accountId) {
     super(Session.SESSION);
     setId(id);
     setAccountId(accountId);
