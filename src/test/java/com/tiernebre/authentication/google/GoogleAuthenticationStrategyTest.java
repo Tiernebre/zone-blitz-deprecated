@@ -37,7 +37,7 @@ public final class GoogleAuthenticationStrategyTest {
 
   @Test
   public void cases() throws GeneralSecurityException, IOException {
-    var tests = new Case[] {
+    var cases = new Case[] {
       new Case(
         "Null request",
         null,
@@ -128,7 +128,7 @@ public final class GoogleAuthenticationStrategyTest {
           } catch (Exception e) {}
         }),
     };
-    for (var test : tests) {
+    for (var test : cases) {
       if (test.mock() != null) {
         test.mock().accept(test.request());
       }
