@@ -9,7 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 import org.junit.Test;
 
-public class HealthApiTest {
+public class HealthHttpApiTest {
 
   Javalin server = WebHttpTestUtils.startServer();
 
