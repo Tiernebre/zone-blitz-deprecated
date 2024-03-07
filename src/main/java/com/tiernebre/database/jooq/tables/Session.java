@@ -70,7 +70,7 @@ public class Session extends TableImpl<SessionRecord> {
    */
   public final TableField<SessionRecord, Long> ACCOUNT_ID = createField(
     DSL.name("account_id"),
-    SQLDataType.BIGINT,
+    SQLDataType.BIGINT.nullable(false),
     this,
     ""
   );

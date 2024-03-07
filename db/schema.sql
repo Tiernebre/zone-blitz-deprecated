@@ -130,7 +130,7 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE public.session (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    account_id bigint
+    account_id bigint NOT NULL
 );
 
 
@@ -231,4 +231,5 @@ ALTER TABLE ONLY public.session
 INSERT INTO public.schema_migrations (version) VALUES
     ('20240229231656'),
     ('20240303182432'),
-    ('20240307092022');
+    ('20240307092022'),
+    ('20240307103926');
