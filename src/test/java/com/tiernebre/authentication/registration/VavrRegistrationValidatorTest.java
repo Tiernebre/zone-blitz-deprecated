@@ -4,18 +4,19 @@ import static org.junit.Assert.assertEquals;
 
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
-import io.vavr.control.Validation;
+import io.vavr.control.Either;
 import org.junit.Test;
 
-public final class RegistrationValidatorTest {
+public final class VavrRegistrationValidatorTest {
 
-  private final RegistrationValidator validator = new RegistrationValidator();
+  private final RegistrationValidator validator =
+    new VavrRegistrationValidator();
 
   private final record Case(
     String name,
     String username,
     String password,
-    Validation<Seq<String>, RegistrationRequest> expected
+    Either<Seq<String>, RegistrationRequest> expected
   ) {}
 
   @Test
@@ -25,43 +26,43 @@ public final class RegistrationValidatorTest {
         "null username",
         null,
         "password",
-        Validation.invalid(List.of("Username is a required field."))
+        Either.left(List.of("Username is a required field."))
       ),
       new Case(
         "empty string username",
         "",
         "password",
-        Validation.invalid(List.of("Username is a required field."))
+        Either.left(List.of("Username is a required field."))
       ),
       new Case(
         "blank string username",
         " ",
         "password",
-        Validation.invalid(List.of("Username is a required field."))
+        Either.left(List.of("Username is a required field."))
       ),
       new Case(
         "null password",
         "username",
         null,
-        Validation.invalid(List.of("Password is a required field."))
+        Either.left(List.of("Password is a required field."))
       ),
       new Case(
         "empty string password",
         "username",
         "",
-        Validation.invalid(List.of("Password is a required field."))
+        Either.left(List.of("Password is a required field."))
       ),
       new Case(
         "blank string password",
         "username",
         " ",
-        Validation.invalid(List.of("Password is a required field."))
+        Either.left(List.of("Password is a required field."))
       ),
       new Case(
         "valid happy path",
         "username",
         "password",
-        Validation.valid(new RegistrationRequest("username", "password"))
+        Either.right(new RegistrationRequest("username", "password"))
       ),
     };
     for (var test : cases) {

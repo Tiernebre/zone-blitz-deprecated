@@ -1,7 +1,7 @@
 package com.tiernebre.web.middlewares;
 
 import com.tiernebre.authentication.session.SessionService;
-import com.tiernebre.web.WebConstants;
+import com.tiernebre.web.constants.WebConstants;
 import com.tiernebre.web.controllers.authentication.WebAuthenticationConstants;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -23,7 +23,10 @@ public final class SessionMiddleware implements Handler {
       .map(UUID::fromString)
       .flatMap(sessionService::get)
       .peek(session -> {
-        ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE, session);
+        ctx.attribute(
+          WebConstants.Authentication.JAVALIN_SESSION_ATTRIBUTE,
+          session
+        );
       });
   }
 }
