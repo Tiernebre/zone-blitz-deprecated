@@ -4,6 +4,7 @@ import com.tiernebre.authentication.registration.RegistrationService;
 import com.tiernebre.authentication.registration.RegistrationValidator;
 import com.tiernebre.web.constants.WebConstants;
 import io.javalin.http.Context;
+import io.javalin.http.HttpStatus;
 
 public final class RegistrationController {
 
@@ -24,6 +25,12 @@ public final class RegistrationController {
         ctx.formParam(WebConstants.Authentication.REGISTRATION_USERNAME_PARAM),
         ctx.formParam(WebConstants.Authentication.REGISTRATION_PASSWORD_PARAM)
       )
-      .map(service::create);
+      .map(service::create)
+      .peek(registration -> {
+        ctx.status(HttpStatus.CREATED);
+      })
+      .peekLeft(errors -> {
+        ctx.status(HttpStatus.BAD_REQUEST);
+      });
   }
 }
