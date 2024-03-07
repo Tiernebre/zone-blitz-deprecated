@@ -28,6 +28,36 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: account; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.account (
+    id bigint NOT NULL,
+    registration_id bigint,
+    google_account_id text
+);
+
+
+--
+-- Name: account_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.account_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: account_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.account_id_seq OWNED BY public.account.id;
+
+
+--
 -- Name: player; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -56,6 +86,36 @@ ALTER SEQUENCE public.player_id_seq OWNED BY public.player.id;
 
 
 --
+-- Name: registration; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.registration (
+    id bigint NOT NULL,
+    username text NOT NULL,
+    password text NOT NULL
+);
+
+
+--
+-- Name: registration_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.registration_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: registration_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.registration_id_seq OWNED BY public.registration.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -70,8 +130,15 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE public.session (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    account_id text
+    account_id bigint
 );
+
+
+--
+-- Name: account id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.account ALTER COLUMN id SET DEFAULT nextval('public.account_id_seq'::regclass);
 
 
 --
@@ -82,11 +149,42 @@ ALTER TABLE ONLY public.player ALTER COLUMN id SET DEFAULT nextval('public.playe
 
 
 --
+-- Name: registration id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.registration ALTER COLUMN id SET DEFAULT nextval('public.registration_id_seq'::regclass);
+
+
+--
+-- Name: account account_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.account
+    ADD CONSTRAINT account_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: player player_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.player
     ADD CONSTRAINT player_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: registration registration_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.registration
+    ADD CONSTRAINT registration_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: registration registration_username_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.registration
+    ADD CONSTRAINT registration_username_key UNIQUE (username);
 
 
 --
@@ -106,6 +204,22 @@ ALTER TABLE ONLY public.session
 
 
 --
+-- Name: account account_registration_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.account
+    ADD CONSTRAINT account_registration_id_fkey FOREIGN KEY (registration_id) REFERENCES public.registration(id);
+
+
+--
+-- Name: session session_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.session
+    ADD CONSTRAINT session_account_id_fkey FOREIGN KEY (account_id) REFERENCES public.account(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -116,4 +230,5 @@ ALTER TABLE ONLY public.session
 
 INSERT INTO public.schema_migrations (version) VALUES
     ('20240229231656'),
-    ('20240303182432');
+    ('20240303182432'),
+    ('20240307092022');
