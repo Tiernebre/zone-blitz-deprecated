@@ -57,6 +57,12 @@ public final class RegistrationValidatorTest {
         " ",
         Validation.invalid(List.of("Password is a required field."))
       ),
+      new Case(
+        "valid happy path",
+        "username",
+        "password",
+        Validation.valid(new RegistrationRequest("username", "password"))
+      ),
     };
     for (var test : cases) {
       assertEquals(
