@@ -204,6 +204,22 @@ ALTER TABLE ONLY public.session
 
 
 --
+-- Name: account unique_google_account_id; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.account
+    ADD CONSTRAINT unique_google_account_id UNIQUE (google_account_id);
+
+
+--
+-- Name: account unique_registration_id; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.account
+    ADD CONSTRAINT unique_registration_id UNIQUE (registration_id);
+
+
+--
 -- Name: account account_registration_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -232,4 +248,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20240229231656'),
     ('20240303182432'),
     ('20240307092022'),
-    ('20240307103926');
+    ('20240307103926'),
+    ('20240307104439');
