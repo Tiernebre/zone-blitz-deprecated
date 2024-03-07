@@ -39,6 +39,24 @@ public final class RegistrationValidatorTest {
         "password",
         Validation.invalid(List.of("Username is a required field."))
       ),
+      new Case(
+        "null password",
+        "username",
+        null,
+        Validation.invalid(List.of("Password is a required field."))
+      ),
+      new Case(
+        "empty string password",
+        "username",
+        "",
+        Validation.invalid(List.of("Password is a required field."))
+      ),
+      new Case(
+        "blank string password",
+        "username",
+        " ",
+        Validation.invalid(List.of("Password is a required field."))
+      ),
     };
     for (var test : cases) {
       assertEquals(
