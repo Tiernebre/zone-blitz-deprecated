@@ -7,8 +7,10 @@ import static org.mockito.Mockito.when;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.tiernebre.authentication.account.Account;
+import com.tiernebre.authentication.account.AccountService;
 import com.tiernebre.authentication.session.Session;
-import com.tiernebre.authentication.session.SessionRepository;
+import com.tiernebre.authentication.session.SessionService;
 import io.vavr.control.Either;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -21,9 +23,10 @@ public final class GoogleAuthenticationStrategyTest {
   private final GoogleIdTokenVerifier verifier = mock(
     GoogleIdTokenVerifier.class
   );
-  private final SessionRepository repository = mock(SessionRepository.class);
+  private final SessionService sessionService = mock(SessionService.class);
+  private final AccountService accountService = mock(AccountService.class);
   private final GoogleAuthenticationStrategy googleAuthenticationStrategy =
-    new GoogleAuthenticationStrategy(verifier, repository);
+    new GoogleAuthenticationStrategy(verifier, sessionService, accountService);
 
   private final record Case(
     String name,
@@ -92,11 +95,17 @@ public final class GoogleAuthenticationStrategyTest {
         ), Either.right(new Session(new UUID(0, 0), "accountId")), request -> {
           var token = mock(GoogleIdToken.class);
           var payload = mock(Payload.class);
-          String accountId = "accountId";
+          var accountId = "accountId";
+          var expectedAccount = new Account(1L, 1L, accountId);
           var expectedSession = new Session(new UUID(0, 0), accountId);
           when(payload.getSubject()).thenReturn(accountId);
           when(token.getPayload()).thenReturn(payload);
-          when(repository.insertOne(accountId)).thenReturn(expectedSession);
+          when(accountService.getForGoogleAccountId(accountId)).thenReturn(
+            Either.right(expectedAccount)
+          );
+          when(sessionService.create(expectedAccount)).thenReturn(
+            expectedSession
+          );
           try {
             when(verifier.verify(request.credential())).thenReturn(token);
           } catch (Exception e) {}
