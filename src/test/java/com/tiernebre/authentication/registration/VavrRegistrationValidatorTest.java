@@ -62,7 +62,13 @@ public final class VavrRegistrationValidatorTest {
         "too short of a password",
         "username",
         "a".repeat(RegistrationConstants.MINIMUM_PASSWORD_LENGTH - 1),
-        Either.left(List.of("Password must be 8 characters long"))
+        Either.left(List.of("Password must be at least 8 characters long"))
+      ),
+      new Case(
+        "too long of a password",
+        "username",
+        "a".repeat(RegistrationConstants.MAXIMUM_PASSWORD_LENGTH + 1),
+        Either.left(List.of("Password must be at most 64 characters long"))
       ),
       new Case(
         "valid happy path",

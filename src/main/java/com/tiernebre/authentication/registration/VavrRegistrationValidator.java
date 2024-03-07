@@ -26,7 +26,9 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
   }
 
   private Validation<String, String> validatePassword(String password) {
-    return passwordIsRequired(password).flatMap(this::passwordIsLong);
+    return passwordIsRequired(password)
+      .flatMap(this::passwordIsLongEnough)
+      .flatMap(this::passwordIsShortEnough);
   }
 
   private Validation<String, String> passwordIsRequired(String password) {
@@ -35,9 +37,25 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
       : Validation.invalid("Password is a required field.");
   }
 
-  private Validation<String, String> passwordIsLong(String password) {
+  private Validation<String, String> passwordIsLongEnough(String password) {
     return password.length() >= RegistrationConstants.MINIMUM_PASSWORD_LENGTH
       ? Validation.valid(password)
-      : Validation.invalid("Password must be 8 characters long");
+      : Validation.invalid(
+        String.format(
+          "Password must be at least %s characters long",
+          RegistrationConstants.MINIMUM_PASSWORD_LENGTH
+        )
+      );
+  }
+
+  private Validation<String, String> passwordIsShortEnough(String password) {
+    return password.length() <= RegistrationConstants.MAXIMUM_PASSWORD_LENGTH
+      ? Validation.valid(password)
+      : Validation.invalid(
+        String.format(
+          "Password must be at most %s characters long",
+          RegistrationConstants.MAXIMUM_PASSWORD_LENGTH
+        )
+      );
   }
 }
