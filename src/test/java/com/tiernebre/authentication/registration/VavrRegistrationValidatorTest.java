@@ -16,6 +16,7 @@ public final class VavrRegistrationValidatorTest {
     String name,
     String username,
     String password,
+    String confirmPassword,
     Either<Seq<String>, RegistrationRequest> expected
   ) {}
 
@@ -26,11 +27,13 @@ public final class VavrRegistrationValidatorTest {
         "null username",
         null,
         "password",
+        "password",
         Either.left(List.of("Username is a required field."))
       ),
       new Case(
         "empty string username",
         "",
+        "password",
         "password",
         Either.left(List.of("Username is a required field."))
       ),
@@ -38,11 +41,13 @@ public final class VavrRegistrationValidatorTest {
         "blank string username",
         " ",
         "password",
+        "password",
         Either.left(List.of("Username is a required field."))
       ),
       new Case(
         "null password",
         "username",
+        null,
         null,
         Either.left(List.of("Password is a required field."))
       ),
@@ -50,29 +55,41 @@ public final class VavrRegistrationValidatorTest {
         "empty string password",
         "username",
         "",
+        "",
         Either.left(List.of("Password is a required field."))
       ),
       new Case(
         "blank string password",
         "username",
         " ",
+        "password",
         Either.left(List.of("Password is a required field."))
       ),
       new Case(
         "too short of a password",
         "username",
         "a".repeat(RegistrationConstants.MINIMUM_PASSWORD_LENGTH - 1),
-        Either.left(List.of("Password must be at least 8 characters long"))
+        "a".repeat(RegistrationConstants.MINIMUM_PASSWORD_LENGTH - 1),
+        Either.left(List.of("Password must be at least 8 characters long."))
       ),
       new Case(
         "too long of a password",
         "username",
         "a".repeat(RegistrationConstants.MAXIMUM_PASSWORD_LENGTH + 1),
-        Either.left(List.of("Password must be at most 64 characters long"))
+        "a".repeat(RegistrationConstants.MAXIMUM_PASSWORD_LENGTH + 1),
+        Either.left(List.of("Password must be at most 64 characters long."))
+      ),
+      new Case(
+        "confirm password is not equal",
+        "username",
+        "passwordA",
+        "passwordB",
+        Either.left(List.of("Confirm password must match password."))
       ),
       new Case(
         "valid happy path",
         "username",
+        "password",
         "password",
         Either.right(new RegistrationRequest("username", "password"))
       ),
@@ -80,7 +97,11 @@ public final class VavrRegistrationValidatorTest {
     for (var test : cases) {
       assertEquals(
         test.expected(),
-        validator.validate(test.username(), test.password())
+        validator.validate(
+          test.username(),
+          test.password(),
+          test.confirmPassword()
+        )
       );
     }
   }

@@ -7,13 +7,15 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class VavrRegistrationValidator implements RegistrationValidator {
 
+  @Override
   public Either<Seq<String>, RegistrationRequest> validate(
     String username,
-    String password
+    String password,
+    String confirmPassword
   ) {
     return Validation.combine(
       validateUsername(username),
-      validatePassword(password)
+      validatePassword(password, confirmPassword)
     )
       .ap(RegistrationRequest::new)
       .toEither();
@@ -25,10 +27,14 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
       : Validation.valid(username);
   }
 
-  private Validation<String, String> validatePassword(String password) {
+  private Validation<String, String> validatePassword(
+    String password,
+    String confirmPassword
+  ) {
     return passwordIsRequired(password)
       .flatMap(this::passwordIsLongEnough)
-      .flatMap(this::passwordIsShortEnough);
+      .flatMap(this::passwordIsShortEnough)
+      .flatMap(value -> this.passwordsMatch(value, confirmPassword));
   }
 
   private Validation<String, String> passwordIsRequired(String password) {
@@ -42,7 +48,7 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
       ? Validation.valid(password)
       : Validation.invalid(
         String.format(
-          "Password must be at least %s characters long",
+          "Password must be at least %s characters long.",
           RegistrationConstants.MINIMUM_PASSWORD_LENGTH
         )
       );
@@ -53,7 +59,21 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
       ? Validation.valid(password)
       : Validation.invalid(
         String.format(
-          "Password must be at most %s characters long",
+          "Password must be at most %s characters long.",
+          RegistrationConstants.MAXIMUM_PASSWORD_LENGTH
+        )
+      );
+  }
+
+  private Validation<String, String> passwordsMatch(
+    String password,
+    String confirmPassword
+  ) {
+    return password.equals(confirmPassword)
+      ? Validation.valid(password)
+      : Validation.invalid(
+        String.format(
+          "Confirm password must match password.",
           RegistrationConstants.MAXIMUM_PASSWORD_LENGTH
         )
       );

@@ -23,7 +23,10 @@ public final class RegistrationController {
     validator
       .validate(
         ctx.formParam(WebConstants.Authentication.REGISTRATION_USERNAME_PARAM),
-        ctx.formParam(WebConstants.Authentication.REGISTRATION_PASSWORD_PARAM)
+        ctx.formParam(WebConstants.Authentication.REGISTRATION_PASSWORD_PARAM),
+        ctx.formParam(
+          WebConstants.Authentication.REGISTRATION_CONFIRM_PASSWORD_PARAM
+        )
       )
       .map(service::create)
       .peek(registration -> {
