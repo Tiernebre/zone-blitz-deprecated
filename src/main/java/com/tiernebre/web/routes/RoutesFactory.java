@@ -1,6 +1,6 @@
 package com.tiernebre.web.routes;
 
-import com.tiernebre.authentication.AuthenticationContext;
+import com.tiernebre.context.DependencyContext;
 import com.tiernebre.web.controllers.FrontPageController;
 import com.tiernebre.web.controllers.HealthController;
 import com.tiernebre.web.controllers.LoginPageController;
@@ -12,10 +12,10 @@ import com.tiernebre.web.routes.page.PageRoutes;
 
 public final class RoutesFactory {
 
-  private final AuthenticationContext authenticationContext;
+  private final DependencyContext dependencyContext;
 
-  public RoutesFactory(AuthenticationContext authenticationContext) {
-    this.authenticationContext = authenticationContext;
+  public RoutesFactory(DependencyContext dependencyContext) {
+    this.dependencyContext = dependencyContext;
   }
 
   public Routes create() {
@@ -23,7 +23,7 @@ public final class RoutesFactory {
       new ApiRoutes(
         new AuthenticationRoutes(
           new GoogleAuthenticationController(
-            authenticationContext.googleAuthenticationService()
+            dependencyContext.authentication().googleAuthenticationService()
           )
         ),
         new HealthRoutes(new HealthController())
@@ -31,7 +31,10 @@ public final class RoutesFactory {
       new PageRoutes(
         new FrontPageController(),
         new LoginPageController(
-          authenticationContext.configuration().oauthGoogleClientId()
+          dependencyContext
+            .authentication()
+            .configuration()
+            .oauthGoogleClientId()
         )
       )
     );

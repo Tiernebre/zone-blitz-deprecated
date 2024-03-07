@@ -22,15 +22,19 @@ public final class AuthenticationContextFactory {
   public AuthenticationContext create()
     throws GeneralSecurityException, IOException, DatabaseConnectionError {
     var dsl = databaseContext.dslContext();
+    var sessionService = new DefaultSessionService(
+      new JooqSessionRepository(dsl)
+    );
     return new AuthenticationContext(
       AuthenticationConstants.CONFIGURATION,
       new GoogleAuthenticationStrategy(
         new GoogleIdTokenVerifierFactory(
           AuthenticationConstants.CONFIGURATION.oauthGoogleClientId()
         ).create(),
-        new DefaultSessionService(new JooqSessionRepository(dsl)),
+        sessionService,
         new DefaultAccountService(new JooqAccountRepository(dsl))
-      )
+      ),
+      sessionService
     );
   }
 }

@@ -1,25 +1,30 @@
 package com.tiernebre.web;
 
+import com.tiernebre.web.middlewares.Middlewares;
 import com.tiernebre.web.routes.Routes;
 import io.javalin.Javalin;
 
 public final class Server {
 
   private final Routes routes;
+  private final Middlewares middlewares;
 
-  public Server(Routes routes) {
+  public Server(Routes routes, Middlewares middlewares) {
     this.routes = routes;
+    this.middlewares = middlewares;
   }
 
   public Javalin create() {
-    return Javalin.create(config -> {
-      config.showJavalinBanner = false;
-      config.staticFiles.add(staticFiles -> {
-        staticFiles.hostedPath = "/";
-        staticFiles.directory = "/assets";
-      });
-      config.router.apiBuilder(routes::addEndpoints);
-    });
+    return middlewares.register(
+      Javalin.create(config -> {
+        config.showJavalinBanner = false;
+        config.staticFiles.add(staticFiles -> {
+          staticFiles.hostedPath = "/";
+          staticFiles.directory = "/assets";
+        });
+        config.router.apiBuilder(routes::addEndpoints);
+      })
+    );
   }
 
   public Javalin start() {
