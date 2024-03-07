@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.tiernebre.database.TestJooqDslContextFactory;
 import java.util.UUID;
@@ -34,5 +35,14 @@ public class JooqAccountRepositoryTest {
     );
     assertFalse(foundAccount.isEmpty());
     assertEquals(insertedAccount, foundAccount.get());
+  }
+
+  @Test
+  public void selectOneByGoogleAccountIdNone() {
+    assertTrue(
+      repository
+        .selectOneByGoogleAccountId(UUID.randomUUID().toString())
+        .isEmpty()
+    );
   }
 }
