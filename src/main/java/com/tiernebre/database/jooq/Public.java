@@ -3,7 +3,9 @@
  */
 package com.tiernebre.database.jooq;
 
+import com.tiernebre.database.jooq.tables.Account;
 import com.tiernebre.database.jooq.tables.Player;
+import com.tiernebre.database.jooq.tables.Registration;
 import com.tiernebre.database.jooq.tables.Session;
 import java.util.Arrays;
 import java.util.List;
@@ -25,9 +27,19 @@ public class Public extends SchemaImpl {
   public static final Public PUBLIC = new Public();
 
   /**
+   * The table <code>public.account</code>.
+   */
+  public final Account ACCOUNT = Account.ACCOUNT;
+
+  /**
    * The table <code>public.player</code>.
    */
   public final Player PLAYER = Player.PLAYER;
+
+  /**
+   * The table <code>public.registration</code>.
+   */
+  public final Registration REGISTRATION = Registration.REGISTRATION;
 
   /**
    * The table <code>public.session</code>.
@@ -48,6 +60,11 @@ public class Public extends SchemaImpl {
 
   @Override
   public final List<Table<?>> getTables() {
-    return Arrays.asList(Player.PLAYER, Session.SESSION);
+    return Arrays.asList(
+      Account.ACCOUNT,
+      Player.PLAYER,
+      Registration.REGISTRATION,
+      Session.SESSION
+    );
   }
 }
