@@ -1,4 +1,4 @@
-package com.tiernebre.web.api;
+package com.tiernebre.web.integration;
 
 import static org.junit.Assert.assertEquals;
 

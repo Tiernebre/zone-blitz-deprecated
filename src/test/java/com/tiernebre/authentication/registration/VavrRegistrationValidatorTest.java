@@ -59,6 +59,12 @@ public final class VavrRegistrationValidatorTest {
         Either.left(List.of("Password is a required field."))
       ),
       new Case(
+        "too short of a password",
+        "username",
+        "a".repeat(RegistrationConstants.MINIMUM_PASSWORD_LENGTH - 1),
+        Either.left(List.of("Password must be 8 characters long"))
+      ),
+      new Case(
         "valid happy path",
         "username",
         "password",

@@ -26,8 +26,18 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
   }
 
   private Validation<String, String> validatePassword(String password) {
-    return StringUtils.isBlank(password)
-      ? Validation.invalid("Password is a required field.")
-      : Validation.valid(password);
+    return passwordIsRequired(password).flatMap(this::passwordIsLong);
+  }
+
+  private Validation<String, String> passwordIsRequired(String password) {
+    return StringUtils.isNotBlank(password)
+      ? Validation.valid(password)
+      : Validation.invalid("Password is a required field.");
+  }
+
+  private Validation<String, String> passwordIsLong(String password) {
+    return password.length() >= RegistrationConstants.MINIMUM_PASSWORD_LENGTH
+      ? Validation.valid(password)
+      : Validation.invalid("Password must be 8 characters long");
   }
 }
