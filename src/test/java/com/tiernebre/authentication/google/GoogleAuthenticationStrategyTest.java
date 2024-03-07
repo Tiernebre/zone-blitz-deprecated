@@ -88,6 +88,23 @@ public final class GoogleAuthenticationStrategyTest {
           } catch (Exception e) {}
         }
       ),
+      new Case("Getting account had an error", new GoogleAuthenticationRequest(
+          "creds",
+          "csrf",
+          "csrf"
+        ), Either.left("Get account error"), request -> {
+          var token = mock(GoogleIdToken.class);
+          var payload = mock(Payload.class);
+          var accountId = "accountId";
+          when(payload.getSubject()).thenReturn(accountId);
+          when(token.getPayload()).thenReturn(payload);
+          when(accountService.getForGoogleAccountId(accountId)).thenReturn(
+            Either.left("Get account error")
+          );
+          try {
+            when(verifier.verify(request.credential())).thenReturn(token);
+          } catch (Exception e) {}
+        }),
       new Case("Created happy path session", new GoogleAuthenticationRequest(
           "creds",
           "csrf",
