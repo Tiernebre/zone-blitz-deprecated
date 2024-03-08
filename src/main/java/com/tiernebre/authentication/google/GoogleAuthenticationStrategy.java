@@ -41,7 +41,7 @@ public final class GoogleAuthenticationStrategy
       .flatMap(this::verifyAndParseCredential)
       .map(GoogleIdToken::getPayload)
       .map(Payload::getSubject)
-      .flatMap(accountService::getForGoogleAccountId)
+      .flatMap(accountService::getForGoogleAccount)
       .map(sessionService::create);
   }
 

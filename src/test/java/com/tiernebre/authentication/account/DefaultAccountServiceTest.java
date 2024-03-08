@@ -43,7 +43,9 @@ public class DefaultAccountServiceTest {
           when(repository.selectOneByGoogleAccountId(accountId)).thenReturn(
             Option.none()
           );
-          when(repository.insertOne(accountId)).thenReturn(accountResult.get());
+          when(repository.insertOne(accountId, null)).thenReturn(
+            accountResult.get()
+          );
         }),
     };
     for (var test : cases) {
@@ -52,7 +54,7 @@ public class DefaultAccountServiceTest {
       }
       assertEquals(
         test.expected(),
-        service.getForGoogleAccountId(test.googleAccountId())
+        service.getForGoogleAccount(test.googleAccountId())
       );
     }
   }

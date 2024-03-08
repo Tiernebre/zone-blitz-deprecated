@@ -29,6 +29,9 @@ public final class AuthenticationContextFactory {
     var sessionService = new DefaultSessionService(
       new JooqSessionRepository(dsl)
     );
+    var accountService = new DefaultAccountService(
+      new JooqAccountRepository(dsl)
+    );
     return new AuthenticationContext(
       AuthenticationConstants.CONFIGURATION,
       new GoogleAuthenticationStrategy(
@@ -36,12 +39,13 @@ public final class AuthenticationContextFactory {
           AuthenticationConstants.CONFIGURATION.oauthGoogleClientId()
         ).create(),
         sessionService,
-        new DefaultAccountService(new JooqAccountRepository(dsl))
+        accountService
       ),
       sessionService,
       new DefaultRegistrationService(
         new JooqRegistrationRepository(dsl),
-        new Argon2PasswordHasher()
+        new Argon2PasswordHasher(),
+        accountService
       ),
       new VavrRegistrationValidator()
     );

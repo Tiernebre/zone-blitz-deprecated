@@ -20,7 +20,7 @@ public class JooqAccountRepositoryTest {
   @Test
   public void insertOne() {
     var id = UUID.randomUUID().toString();
-    var insertedAccount = repository.insertOne(id);
+    var insertedAccount = repository.insertOne(id, null);
     assertNotNull(insertedAccount);
     assertNotNull(insertedAccount.id());
     assertEquals(id, insertedAccount.googleAccountId());
@@ -29,7 +29,10 @@ public class JooqAccountRepositoryTest {
 
   @Test
   public void selectOneByGoogleAccountIdExists() {
-    var insertedAccount = repository.insertOne(UUID.randomUUID().toString());
+    var insertedAccount = repository.insertOne(
+      UUID.randomUUID().toString(),
+      null
+    );
     var foundAccount = repository.selectOneByGoogleAccountId(
       insertedAccount.googleAccountId()
     );
