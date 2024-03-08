@@ -8,14 +8,12 @@ import org.apache.commons.lang3.StringUtils;
 public final class VavrRegistrationValidator implements RegistrationValidator {
 
   @Override
-  public Either<Seq<String>, RegistrationRequest> validate(
-    String username,
-    String password,
-    String confirmPassword
+  public Either<Seq<String>, RegistrationRequest> parse(
+    CreateRegistrationRequest request
   ) {
     return Validation.combine(
-      validateUsername(username),
-      validatePassword(password, confirmPassword)
+      validateUsername(request.username()),
+      validatePassword(request.password(), request.confirmPassword())
     )
       .ap(RegistrationRequest::new)
       .toEither();
@@ -77,5 +75,13 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
           RegistrationConstants.MAXIMUM_PASSWORD_LENGTH
         )
       );
+  }
+
+  @Override
+  public Either<Seq<String>, RegistrationAuthenticationRequest> parse(
+    RegistrationAuthenticationRequest request
+  ) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'parse'");
   }
 }
