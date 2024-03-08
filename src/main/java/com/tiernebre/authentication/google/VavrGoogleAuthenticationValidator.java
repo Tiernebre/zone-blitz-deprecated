@@ -5,13 +5,14 @@ import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Validation;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 public class VavrGoogleAuthenticationValidator
   implements GoogleAuthenticationValidator {
 
   @Override
-  public Either<Seq<String>, String> parseCredential(
+  public Either<String, String> parseCredential(
     GoogleAuthenticationRequest request
   ) {
     return Option.of(request)
@@ -21,6 +22,7 @@ public class VavrGoogleAuthenticationValidator
         )
       )
       .flatMap(req -> this.validateNonNull(req))
+      .mapError(errors -> errors.collect(Collectors.joining("\n")))
       .toEither();
   }
 

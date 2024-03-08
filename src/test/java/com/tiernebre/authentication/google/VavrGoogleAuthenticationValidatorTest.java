@@ -2,8 +2,6 @@ package com.tiernebre.authentication.google;
 
 import static org.junit.Assert.assertEquals;
 
-import io.vavr.collection.List;
-import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import org.junit.Test;
 
@@ -15,7 +13,7 @@ public final class VavrGoogleAuthenticationValidatorTest {
   private final record Case(
     String name,
     GoogleAuthenticationRequest request,
-    Either<Seq<String>, String> expected
+    Either<String, String> expected
   ) {}
 
   @Test
@@ -24,32 +22,32 @@ public final class VavrGoogleAuthenticationValidatorTest {
       new Case(
         "Null request",
         null,
-        Either.left(List.of("Google Authentication Request received was null."))
+        Either.left("Google Authentication Request received was null.")
       ),
       new Case(
         "No Body CSRF Token",
         new GoogleAuthenticationRequest("creds", null, "csrf"),
-        Either.left(List.of("Google CSRF token received was an empty string."))
+        Either.left("Google CSRF token received was an empty string.")
       ),
       new Case(
         "No Cookie CSRF Token",
         new GoogleAuthenticationRequest("creds", "csrf", null),
-        Either.left(List.of("Google CSRF token received was an empty string."))
+        Either.left("Google CSRF token received was an empty string.")
       ),
       new Case(
         "No Body and Cookie CSRF Token",
         new GoogleAuthenticationRequest("creds", null, null),
-        Either.left(List.of("Google CSRF token received was an empty string."))
+        Either.left("Google CSRF token received was an empty string.")
       ),
       new Case(
         "Body and Cookie CSRF Tokens are not equal",
         new GoogleAuthenticationRequest("creds", "body", "cookie"),
-        Either.left(List.of("Google CSRF tokens do not match each other."))
+        Either.left("Google CSRF tokens do not match each other.")
       ),
       new Case(
         "No Credential",
         new GoogleAuthenticationRequest(null, "csrf", "csrf"),
-        Either.left(List.of("Google Credential received was an empty string."))
+        Either.left("Google Credential received was an empty string.")
       ),
       new Case(
         "Valid request",
