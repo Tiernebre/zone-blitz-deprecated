@@ -2,9 +2,11 @@ package com.tiernebre.authentication.registration;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.tiernebre.authentication.session.Session;
 import io.vavr.control.Either;
+import io.vavr.control.Option;
 import java.util.function.BiConsumer;
 import org.junit.Test;
 
@@ -29,6 +31,18 @@ public final class RegistrationAuthenticationStrategyTest {
         null,
         Either.left("Given registration authentication request was null."),
         null
+      ),
+      new TestCase(
+        "registration not found",
+        new RegistrationAuthenticationRequest("username", "password"),
+        Either.left(
+          "Could not find a registration with the given username and password."
+        ),
+        (request, expected) -> {
+          when(
+            service.getOne(request.username(), request.password())
+          ).thenReturn(Option.none());
+        }
       ),
     };
     for (var testCase : cases) {
