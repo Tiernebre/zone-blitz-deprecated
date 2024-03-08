@@ -4,6 +4,7 @@ import com.tiernebre.authentication.account.DefaultAccountService;
 import com.tiernebre.authentication.account.JooqAccountRepository;
 import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import com.tiernebre.authentication.google.GoogleIdTokenVerifierFactory;
+import com.tiernebre.authentication.google.VavrGoogleAuthenticationValidator;
 import com.tiernebre.authentication.registration.Argon2PasswordHasher;
 import com.tiernebre.authentication.registration.DefaultRegistrationService;
 import com.tiernebre.authentication.registration.JooqRegistrationRepository;
@@ -39,7 +40,8 @@ public final class AuthenticationContextFactory {
           AuthenticationConstants.CONFIGURATION.oauthGoogleClientId()
         ).create(),
         sessionService,
-        accountService
+        accountService,
+        new VavrGoogleAuthenticationValidator()
       ),
       sessionService,
       new DefaultRegistrationService(
