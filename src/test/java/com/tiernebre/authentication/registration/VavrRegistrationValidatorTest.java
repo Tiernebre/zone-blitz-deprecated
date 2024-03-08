@@ -22,6 +22,11 @@ public final class VavrRegistrationValidatorTest {
   public void parseCreate() {
     var cases = new Case[] {
       new Case(
+        "null request",
+        null,
+        Either.left(List.of("Create registration request is null."))
+      ),
+      new Case(
         "null username",
         new CreateRegistrationRequest(null, "password", "password"),
         Either.left(List.of("Username is a required field."))
