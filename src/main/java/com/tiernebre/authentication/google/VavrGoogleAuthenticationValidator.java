@@ -29,7 +29,7 @@ public class VavrGoogleAuthenticationValidator
   ) {
     return Validation.combine(
       validateCredential(request.credential()),
-      validateCsrfToken(request.cookieCsrfToken())
+      validateCsrfTokens(request.cookieCsrfToken(), request.bodyCrsfToken())
     ).ap((credential, __) -> credential);
   }
 
@@ -39,9 +39,24 @@ public class VavrGoogleAuthenticationValidator
       : Validation.valid(credential);
   }
 
-  private Validation<String, String> validateCsrfToken(String csrfToken) {
-    return StringUtils.isBlank(csrfToken)
-      ? Validation.invalid("Google CRSF token received was an empty string.")
-      : Validation.valid(csrfToken);
+  private Validation<String, String> validateCsrfTokens(
+    String cookieCsrfToken,
+    String bodyCsrfToken
+  ) {
+    return Validation.<String, String>valid(cookieCsrfToken)
+      .flatMap(
+        token ->
+          StringUtils.isNoneBlank(token, bodyCsrfToken)
+            ? Validation.valid(token)
+            : Validation.invalid(
+              "Google CSRF token received was an empty string."
+            )
+      )
+      .flatMap(
+        token ->
+          token.equals(bodyCsrfToken)
+            ? Validation.valid(token)
+            : Validation.invalid("Google CSRF tokens do not match each other.")
+      );
   }
 }

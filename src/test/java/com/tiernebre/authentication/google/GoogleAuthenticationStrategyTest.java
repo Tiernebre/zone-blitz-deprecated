@@ -39,44 +39,6 @@ public final class GoogleAuthenticationStrategyTest {
   public void cases() throws GeneralSecurityException, IOException {
     var cases = new Case[] {
       new Case(
-        "Null request",
-        null,
-        Either.left("Request received was null."),
-        null
-      ),
-      new Case(
-        "No Body CSRF Token",
-        new GoogleAuthenticationRequest("creds", null, "csrf"),
-        Either.left("Request has invalid CSRF tokens."),
-        null
-      ),
-      new Case(
-        "No Cookie CSRF Token",
-        new GoogleAuthenticationRequest("creds", "csrf", null),
-        Either.left("Request has invalid CSRF tokens."),
-        null
-      ),
-      new Case(
-        "No Body and Cookie CSRF Token",
-        new GoogleAuthenticationRequest("creds", null, null),
-        Either.left("Request has invalid CSRF tokens."),
-        null
-      ),
-      new Case(
-        "Body and Cookie CSRF Tokens are not equal",
-        new GoogleAuthenticationRequest("creds", "body", "cookie"),
-        Either.left("Request has invalid CSRF tokens."),
-        null
-      ),
-      new Case(
-        "No Credential",
-        new GoogleAuthenticationRequest(null, "csrf", "csrf"),
-        Either.left(
-          "Could not verify and parse given Google authentication credential."
-        ),
-        null
-      ),
-      new Case(
         "Google token verifier returns null",
         new GoogleAuthenticationRequest("creds", "csrf", "csrf"),
         Either.left(

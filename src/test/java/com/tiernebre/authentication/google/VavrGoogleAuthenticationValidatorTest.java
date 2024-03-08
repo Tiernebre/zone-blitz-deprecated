@@ -26,6 +26,31 @@ public final class VavrGoogleAuthenticationValidatorTest {
         null,
         Either.left(List.of("Google Authentication Request received was null."))
       ),
+      new Case(
+        "No Body CSRF Token",
+        new GoogleAuthenticationRequest("creds", null, "csrf"),
+        Either.left(List.of("Google CSRF token received was an empty string."))
+      ),
+      new Case(
+        "No Cookie CSRF Token",
+        new GoogleAuthenticationRequest("creds", "csrf", null),
+        Either.left(List.of("Google CSRF token received was an empty string."))
+      ),
+      new Case(
+        "No Body and Cookie CSRF Token",
+        new GoogleAuthenticationRequest("creds", null, null),
+        Either.left(List.of("Google CSRF token received was an empty string."))
+      ),
+      new Case(
+        "Body and Cookie CSRF Tokens are not equal",
+        new GoogleAuthenticationRequest("creds", "body", "cookie"),
+        Either.left(List.of("Google CSRF tokens do not match each other."))
+      ),
+      new Case(
+        "No Credential",
+        new GoogleAuthenticationRequest(null, "csrf", "csrf"),
+        Either.left(List.of("Google Credential received was an empty string."))
+      ),
     };
     for (var test : cases) {
       assertEquals(test.expected(), validator.parseCredential(test.request()));
