@@ -26,8 +26,7 @@ public final class DefaultAccountService implements AccountService {
 
   @Override
   public Account create(Registration registration) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'create'");
+    return repository.insertOne(null, registration.id());
   }
 
   private Account selectOrCreateByGoogleAccountId(String accountId) {
