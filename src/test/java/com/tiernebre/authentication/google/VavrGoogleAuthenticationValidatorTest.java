@@ -51,6 +51,11 @@ public final class VavrGoogleAuthenticationValidatorTest {
         new GoogleAuthenticationRequest(null, "csrf", "csrf"),
         Either.left(List.of("Google Credential received was an empty string."))
       ),
+      new Case(
+        "Valid request",
+        new GoogleAuthenticationRequest("credential", "csrf", "csrf"),
+        Either.right("credential")
+      ),
     };
     for (var test : cases) {
       assertEquals(test.expected(), validator.parseCredential(test.request()));
