@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.tiernebre.web.UrlEncodedFormBodyPublisher;
 import com.tiernebre.web.WebHttpTestUtils;
+import com.tiernebre.web.constants.WebConstants;
 import io.javalin.Javalin;
 import java.io.IOException;
 import java.net.http.HttpRequest;
@@ -46,9 +47,11 @@ public class RegistrationHttpApiTest {
           .POST(
             UrlEncodedFormBodyPublisher.ofParams(
               Map.of(
-                "username",
+                WebConstants.Authentication.REGISTRATION_USERNAME_PARAM,
                 UUID.randomUUID().toString(),
+                WebConstants.Authentication.REGISTRATION_PASSWORD_PARAM,
                 "password",
+                WebConstants.Authentication.REGISTRATION_CONFIRM_PASSWORD_PARAM,
                 "password"
               )
             )
