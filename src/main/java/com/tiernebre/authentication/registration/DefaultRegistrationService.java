@@ -1,5 +1,7 @@
 package com.tiernebre.authentication.registration;
 
+import io.vavr.control.Option;
+
 public final class DefaultRegistrationService implements RegistrationService {
 
   private final RegistrationRepository repository;
@@ -19,5 +21,11 @@ public final class DefaultRegistrationService implements RegistrationService {
       request.username(),
       passwordHasher.hash(request.password())
     );
+  }
+
+  @Override
+  public Option<Registration> getOne(String username, String password) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getOne'");
   }
 }
