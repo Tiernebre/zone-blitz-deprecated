@@ -14,20 +14,22 @@ public final class Server {
     this.middlewares = middlewares;
   }
 
-  public Javalin create() {
-    return middlewares.register(
-      Javalin.create(config -> {
-        config.showJavalinBanner = false;
-        config.staticFiles.add(staticFiles -> {
-          staticFiles.hostedPath = "/";
-          staticFiles.directory = "/assets";
-        });
-        config.router.apiBuilder(routes::addEndpoints);
-      })
-    );
+  public Javalin start() {
+    return start(8000);
   }
 
-  public Javalin start() {
-    return create().start("0.0.0.0", 8000);
+  public Javalin start(int port) {
+    return middlewares
+      .register(
+        Javalin.create(config -> {
+          config.showJavalinBanner = false;
+          config.staticFiles.add(staticFiles -> {
+            staticFiles.hostedPath = "/";
+            staticFiles.directory = "/assets";
+          });
+          config.router.apiBuilder(routes::addEndpoints);
+        })
+      )
+      .start("0.0.0.0", port);
   }
 }

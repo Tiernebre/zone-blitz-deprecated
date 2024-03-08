@@ -2,6 +2,7 @@ package com.tiernebre.web.controllers.authentication;
 
 import com.tiernebre.authentication.google.GoogleAuthenticationRequest;
 import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
+import com.tiernebre.web.constants.WebConstants;
 import io.javalin.http.Context;
 import io.javalin.http.Cookie;
 import io.javalin.http.HttpStatus;
@@ -38,7 +39,7 @@ public final class GoogleAuthenticationController
       )
       .peek(session -> {
         Cookie sessionCookie = new Cookie(
-          WebAuthenticationConstants.SESSION_COOKIE_TOKEN_NAME,
+          WebConstants.Authentication.SESSION_COOKIE_TOKEN_NAME,
           session.id().toString()
         );
         sessionCookie.setHttpOnly(true);
