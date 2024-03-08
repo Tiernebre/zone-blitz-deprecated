@@ -31,10 +31,7 @@ public final class RoutesFactory {
         ),
         new HealthRoutes(new HealthController()),
         new RegistrationRoutes(
-          new RegistrationController(
-            authentication.registrationValidator(),
-            authentication.registrationService()
-          )
+          new RegistrationController(authentication.registrationService())
         )
       ),
       new PageRoutes(

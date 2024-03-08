@@ -16,43 +16,31 @@ public final class GoogleAuthenticationStrategy
   private final GoogleIdTokenVerifier verifier;
   private final AccountService accountService;
   private final SessionService sessionService;
+  private final GoogleAuthenticationValidator validator;
 
   public GoogleAuthenticationStrategy(
     GoogleIdTokenVerifier verifier,
     SessionService sessionService,
-    AccountService accountService
+    AccountService accountService,
+    GoogleAuthenticationValidator validator
   ) {
     this.verifier = verifier;
     this.sessionService = sessionService;
     this.accountService = accountService;
+    this.validator = validator;
   }
 
   @Override
   public Either<String, Session> authenticate(
     GoogleAuthenticationRequest request
   ) {
-    return Option.of(request)
-      .toEither("Request received was null.")
-      .filterOrElse(
-        this::hasValidCsrfTokens,
-        __ -> "Request has invalid CSRF tokens."
-      )
-      .map(GoogleAuthenticationRequest::credential)
+    return validator
+      .parseCredential(request)
       .flatMap(this::verifyAndParseCredential)
       .map(GoogleIdToken::getPayload)
       .map(Payload::getSubject)
       .flatMap(accountService::getForGoogleAccount)
       .map(sessionService::create);
-  }
-
-  private boolean hasValidCsrfTokens(GoogleAuthenticationRequest request) {
-    var bodyCrsfToken = request.bodyCrsfToken();
-    var cookieCsrfToken = request.cookieCsrfToken();
-    return (
-      bodyCrsfToken != null &&
-      cookieCsrfToken != null &&
-      bodyCrsfToken.equals(cookieCsrfToken)
-    );
   }
 
   private Either<String, GoogleIdToken> verifyAndParseCredential(
