@@ -4,6 +4,7 @@ import com.tiernebre.authentication.account.DefaultAccountService;
 import com.tiernebre.authentication.account.JooqAccountRepository;
 import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import com.tiernebre.authentication.google.GoogleIdTokenVerifierFactory;
+import com.tiernebre.authentication.registration.Argon2PasswordHasher;
 import com.tiernebre.authentication.registration.DefaultRegistrationService;
 import com.tiernebre.authentication.registration.JooqRegistrationRepository;
 import com.tiernebre.authentication.registration.VavrRegistrationValidator;
@@ -38,7 +39,10 @@ public final class AuthenticationContextFactory {
         new DefaultAccountService(new JooqAccountRepository(dsl))
       ),
       sessionService,
-      new DefaultRegistrationService(new JooqRegistrationRepository(dsl)),
+      new DefaultRegistrationService(
+        new JooqRegistrationRepository(dsl),
+        new Argon2PasswordHasher()
+      ),
       new VavrRegistrationValidator()
     );
   }
