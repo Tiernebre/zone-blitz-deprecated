@@ -47,9 +47,9 @@ public final class AuthenticationContextFactory {
       new DefaultRegistrationService(
         new JooqRegistrationRepository(dsl),
         new Argon2PasswordHasher(),
-        accountService
-      ),
-      new VavrRegistrationValidator()
+        accountService,
+        new VavrRegistrationValidator()
+      )
     );
   }
 }
