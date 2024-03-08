@@ -25,7 +25,7 @@ public final class JooqSessionRepositoryTest {
   @Test
   public void insertOne() {
     var accountId = accountRepository
-      .insertOne(UUID.randomUUID().toString())
+      .insertOne(UUID.randomUUID().toString(), null)
       .id();
     var session = repository.insertOne(accountId);
     assertEquals(accountId, session.accountId());
@@ -35,7 +35,7 @@ public final class JooqSessionRepositoryTest {
   @Test
   public void selectOne() {
     var existingSession = repository.insertOne(
-      accountRepository.insertOne(UUID.randomUUID().toString()).id()
+      accountRepository.insertOne(UUID.randomUUID().toString(), null).id()
     );
     var selectedSession = repository.selectOne(existingSession.id());
     assertEquals(existingSession, selectedSession.get());

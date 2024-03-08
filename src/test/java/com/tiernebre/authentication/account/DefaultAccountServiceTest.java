@@ -43,7 +43,9 @@ public class DefaultAccountServiceTest {
           when(repository.selectOneByGoogleAccountId(accountId)).thenReturn(
             Option.none()
           );
-          when(repository.insertOne(accountId)).thenReturn(accountResult.get());
+          when(repository.insertOne(accountId, null)).thenReturn(
+            accountResult.get()
+          );
         }),
     };
     for (var test : cases) {

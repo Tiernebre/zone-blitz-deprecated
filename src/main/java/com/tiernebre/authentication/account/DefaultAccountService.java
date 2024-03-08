@@ -1,5 +1,6 @@
 package com.tiernebre.authentication.account;
 
+import com.tiernebre.authentication.registration.Registration;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 
@@ -20,15 +21,18 @@ public final class DefaultAccountService implements AccountService {
 
   @Override
   public Option<Account> getForRegistration(long registrationId) {
+    return repository.selectOneByRegistrationId(registrationId);
+  }
+
+  @Override
+  public Account create(Registration registration) {
     // TODO Auto-generated method stub
-    throw new UnsupportedOperationException(
-      "Unimplemented method 'getForRegistration'"
-    );
+    throw new UnsupportedOperationException("Unimplemented method 'create'");
   }
 
   private Account selectOrCreateByGoogleAccountId(String accountId) {
     return repository
       .selectOneByGoogleAccountId(accountId)
-      .getOrElse(() -> repository.insertOne(accountId));
+      .getOrElse(() -> repository.insertOne(accountId, null));
   }
 }

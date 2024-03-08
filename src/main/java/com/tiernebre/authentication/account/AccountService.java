@@ -1,5 +1,6 @@
 package com.tiernebre.authentication.account;
 
+import com.tiernebre.authentication.registration.Registration;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 
@@ -22,4 +23,12 @@ public interface AccountService {
    * @return Empty if an account does not exist for the given registration id, or the existing account.
    */
   public Option<Account> getForRegistration(long registrationId);
+
+  /**
+   * Creates an account that is tied to a given Registration.
+   *
+   * @param registration The registration to create the Account for.
+   * @return The created account.
+   */
+  public Account create(Registration registration);
 }
