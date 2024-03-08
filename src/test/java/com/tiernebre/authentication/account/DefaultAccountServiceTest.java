@@ -52,7 +52,7 @@ public class DefaultAccountServiceTest {
       }
       assertEquals(
         test.expected(),
-        service.getForGoogleAccountId(test.googleAccountId())
+        service.getForGoogleAccount(test.googleAccountId())
       );
     }
   }

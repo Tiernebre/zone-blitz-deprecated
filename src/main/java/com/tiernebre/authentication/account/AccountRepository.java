@@ -6,4 +6,6 @@ public interface AccountRepository {
   public Account insertOne(String googleAccountId);
 
   public Option<Account> selectOneByGoogleAccountId(String googleAccountId);
+
+  public Option<Account> selectOneByRegistrationId(long registrationId);
 }

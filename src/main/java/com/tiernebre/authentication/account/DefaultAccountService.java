@@ -12,10 +12,18 @@ public final class DefaultAccountService implements AccountService {
   }
 
   @Override
-  public Either<String, Account> getForGoogleAccountId(String googleAccountId) {
+  public Either<String, Account> getForGoogleAccount(String googleAccountId) {
     return Option.of(googleAccountId)
       .toEither("Given Google account id is null.")
       .map(this::selectOrCreateByGoogleAccountId);
+  }
+
+  @Override
+  public Option<Account> getForRegistration(long registrationId) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException(
+      "Unimplemented method 'getForRegistration'"
+    );
   }
 
   private Account selectOrCreateByGoogleAccountId(String accountId) {

@@ -98,7 +98,7 @@ public final class GoogleAuthenticationStrategyTest {
           var accountId = "accountId";
           when(payload.getSubject()).thenReturn(accountId);
           when(token.getPayload()).thenReturn(payload);
-          when(accountService.getForGoogleAccountId(accountId)).thenReturn(
+          when(accountService.getForGoogleAccount(accountId)).thenReturn(
             Either.left("Get account error")
           );
           try {
@@ -120,7 +120,7 @@ public final class GoogleAuthenticationStrategyTest {
           );
           when(payload.getSubject()).thenReturn(accountId);
           when(token.getPayload()).thenReturn(payload);
-          when(accountService.getForGoogleAccountId(accountId)).thenReturn(
+          when(accountService.getForGoogleAccount(accountId)).thenReturn(
             Either.right(expectedAccount)
           );
           when(sessionService.create(expectedAccount)).thenReturn(
