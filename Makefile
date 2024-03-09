@@ -1,7 +1,10 @@
 DBMATE=dbmate -e ZONE_BLITZ_POSTGRES_URL
 
 .PHONY: run
-run: install
+run: install start
+
+.PHONY: start
+start:
 	zone-blitz
 
 .PHONY: debug
@@ -13,18 +16,13 @@ install: migrate build
 	cp -r build/install/zone-blitz/. /
 
 .PHONY: development-environment
-development-environment: build migrate
+development-environment: migrate build
 	
 .PHONY: build
 build:
 	npm ci
 	npm run build
 	gradle installDist
-
-.PHONY: test
-test:
-	npm run lint
-	gradle test
 
 .PHONY: migrate
 migrate:
@@ -34,6 +32,11 @@ migrate:
 .PHONY: migration
 migration:
 	$(DBMATE) new $(NAME)
+
+.PHONY: test
+test:
+	npm run lint
+	gradle test
 
 .PHONY: dev
 dev:
