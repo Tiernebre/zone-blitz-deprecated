@@ -40,12 +40,12 @@ public final class RegistrationController {
       )
       .peek(registration -> {
         ctx.status(HttpStatus.CREATED);
-        ctx.redirect("");
+        ctx.redirect("/");
         LOG.debug("Successful registration, redirecting to home page");
       })
       .peekLeft(errors -> {
         ctx.status(HttpStatus.BAD_REQUEST);
-        ctx.redirect("registration");
+        ctx.redirect("/registration");
         LOG.debug(
           "Failed registration, got errors ",
           errors.collect(Collectors.joining("\n"))
