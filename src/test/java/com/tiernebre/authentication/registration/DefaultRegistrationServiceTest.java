@@ -58,6 +58,31 @@ public final class DefaultRegistrationServiceTest {
           CreateRegistrationRequest,
           Either<Seq<String>, Registration>
         >(
+          "persist error",
+          new CreateRegistrationRequest(null, null, null),
+          __ ->
+            Either.left(
+              List.of(
+                "Could not create registration due to an error on our end."
+              )
+            ),
+          (request, expected) -> {
+            var username = request.username();
+            var password = request.password();
+            var hashedPassword = "hashed".getBytes();
+            when(validator.parse(request)).thenReturn(
+              Either.right(new RegistrationRequest(username, password))
+            );
+            when(passwordHasher.hash(password)).thenReturn(hashedPassword);
+            when(repository.insertOne(username, hashedPassword)).thenReturn(
+              Either.left(new RuntimeException("Unexpected server error"))
+            );
+          }
+        ),
+        new TestCase<
+          CreateRegistrationRequest,
+          Either<Seq<String>, Registration>
+        >(
           "happy path returns a created registration",
           new CreateRegistrationRequest("username", "password", "password"),
           request ->
@@ -77,7 +102,7 @@ public final class DefaultRegistrationServiceTest {
             );
             when(passwordHasher.hash(password)).thenReturn(hashedPassword);
             when(repository.insertOne(username, hashedPassword)).thenReturn(
-              expected.get()
+              Either.right(expected.get())
             );
             when(accountService.create(expected.get())).thenReturn(
               new Account(0, null, null)

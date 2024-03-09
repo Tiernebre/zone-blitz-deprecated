@@ -20,19 +20,24 @@ public final class JooqRegistrationRepositoryTest {
   public void insertOne() {
     var username = UUID.randomUUID().toString();
     var password = UUID.randomUUID().toString();
-    var inserted = repository.insertOne(username, password.getBytes());
+    var inserted = repository.insertOne(username, password.getBytes()).get();
     assertNotNull(inserted.id());
     assertEquals(username, inserted.username());
     assertTrue(Arrays.equals(password.getBytes(), inserted.password()));
   }
 
   @Test
+  public void insertOneFailure() {
+    var result = repository.insertOne(null, new byte[] {});
+    assertTrue(result.isLeft());
+  }
+
+  @Test
   public void selectOneByUsername() {
     var username = UUID.randomUUID().toString();
-    var inserted = repository.insertOne(
-      username,
-      UUID.randomUUID().toString().getBytes()
-    );
+    var inserted = repository
+      .insertOne(username, UUID.randomUUID().toString().getBytes())
+      .get();
     var found = repository.selectOneByUsername(username);
     assertTrue(found.isDefined());
     assertEquals(found.get().username(), inserted.username());
