@@ -1,6 +1,7 @@
 package com.tiernebre.authentication.registration;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.tiernebre.authentication.account.AccountService;
 import com.tiernebre.authentication.session.Session;
@@ -9,6 +10,7 @@ import com.tiernebre.test.TestCase;
 import com.tiernebre.test.TestCaseRunner;
 import io.vavr.collection.List;
 import io.vavr.control.Either;
+import io.vavr.control.Option;
 import org.junit.Test;
 
 public final class RegistrationAuthenticationStrategyTest {
@@ -36,6 +38,22 @@ public final class RegistrationAuthenticationStrategyTest {
           null,
           __ ->
             Either.left("Given registration authentication request was null.")
+        ),
+        new TestCase<
+          RegistrationAuthenticationRequest,
+          Either<String, Session>
+        >(
+          "registration not found",
+          new RegistrationAuthenticationRequest("username", "password"),
+          __ ->
+            Either.left(
+              "Could not find a registration with the given username and password."
+            ),
+          (request, expected) -> {
+            when(
+              service.getOne(request.username(), request.password())
+            ).thenReturn(Option.none());
+          }
         )
       ),
       strategy::authenticate
