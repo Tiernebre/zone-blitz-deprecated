@@ -16,7 +16,8 @@ install: build migrate
 development-environment: migrate build
 	
 .PHONY: build
-build: dependencies
+build:
+	npm ci
 	npm run build
 	gradle installDist
 
@@ -29,16 +30,12 @@ test:
 migrate:
 	$(DBMATE) --wait up
 	gradle jooqCodegen
-	make format
+	npx prettier --write src/main/java/com/tiernebre/database/jooq/**/*.java
 
 .PHONY: migration
 migration:
 	$(DBMATE) new $(NAME)
 
-.PHONY: format
-format: dependencies
-	npm run format
-
-.PHONY: dependencies
-dependencies:
-	npm ci
+.PHONY: dev
+dev:
+	.devcontainer/dev.sh
