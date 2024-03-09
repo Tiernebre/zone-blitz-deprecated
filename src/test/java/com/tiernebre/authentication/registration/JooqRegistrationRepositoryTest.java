@@ -28,8 +28,9 @@ public final class JooqRegistrationRepositoryTest {
   @Test
   public void selectOneByUsername() {
     var username = UUID.randomUUID().toString();
-    repository.insertOne(username, UUID.randomUUID().toString());
+    var inserted = repository.insertOne(username, UUID.randomUUID().toString());
     var found = repository.selectOneByUsername(username);
     assertTrue(found.isDefined());
+    assertEquals(inserted, found.get());
   }
 }
