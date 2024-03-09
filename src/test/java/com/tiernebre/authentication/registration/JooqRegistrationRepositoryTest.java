@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.tiernebre.database.TestJooqDslContextFactory;
+import java.util.Arrays;
 import java.util.UUID;
 import org.junit.Test;
 
@@ -19,18 +20,22 @@ public final class JooqRegistrationRepositoryTest {
   public void insertOne() {
     var username = UUID.randomUUID().toString();
     var password = UUID.randomUUID().toString();
-    var inserted = repository.insertOne(username, password);
+    var inserted = repository.insertOne(username, password.getBytes());
     assertNotNull(inserted.id());
     assertEquals(username, inserted.username());
-    assertEquals(password, inserted.password());
+    assertTrue(Arrays.equals(password.getBytes(), inserted.password()));
   }
 
   @Test
   public void selectOneByUsername() {
     var username = UUID.randomUUID().toString();
-    var inserted = repository.insertOne(username, UUID.randomUUID().toString());
+    var inserted = repository.insertOne(
+      username,
+      UUID.randomUUID().toString().getBytes()
+    );
     var found = repository.selectOneByUsername(username);
     assertTrue(found.isDefined());
-    assertEquals(inserted, found.get());
+    assertEquals(found.get().username(), inserted.username());
+    assertTrue(Arrays.equals(found.get().password(), inserted.password()));
   }
 }

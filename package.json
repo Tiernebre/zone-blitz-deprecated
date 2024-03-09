@@ -9,6 +9,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@julr/unocss-preset-forms": "^0.1.0",
     "@prettier/plugin-xml": "^3.2.2",
     "@unocss/reset": "^0.58.5",
     "htmx.org": "^1.9.10",

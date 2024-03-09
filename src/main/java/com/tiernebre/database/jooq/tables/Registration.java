@@ -70,7 +70,7 @@ public class Registration extends TableImpl<RegistrationRecord> {
     /**
      * The column <code>public.registration.password</code>.
      */
-    public final TableField<RegistrationRecord, String> PASSWORD = createField(DSL.name("password"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<RegistrationRecord, byte[]> PASSWORD = createField(DSL.name("password"), SQLDataType.BLOB.nullable(false), this, "");
 
     private Registration(Name alias, Table<RegistrationRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
