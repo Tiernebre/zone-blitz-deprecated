@@ -102,6 +102,46 @@ public final class DefaultRegistrationServiceTest {
               Option.none()
             );
           }
+        ),
+        new TestCase<Tuple2<String, String>, Option<Registration>>(
+          "passwords do not match",
+          Tuple.of("username", "password"),
+          request -> Option.none(),
+          (request, expected) -> {
+            var registration = new Registration(
+              1,
+              request._1,
+              "hashed password"
+            );
+            when(repository.selectOneByUsername(request._1)).thenReturn(
+              Option.of(registration)
+            );
+            when(
+              passwordHasher.verify(request._2, registration.password())
+            ).thenReturn(false);
+          }
+        ),
+        new TestCase<Tuple2<String, String>, Option<Registration>>(
+          "happy path existing registration",
+          Tuple.of("username", "password"),
+          request ->
+            Option.of(new Registration(1, request._1, "hashed password")),
+          (request, expected) -> {
+            var registration = expected.get();
+            var hashedPassword = "hashed password";
+            when(repository.selectOneByUsername(request._1)).thenReturn(
+              Option.of(
+                new Registration(
+                  registration.id(),
+                  request._1,
+                  "hashed password"
+                )
+              )
+            );
+            when(passwordHasher.verify(request._2, hashedPassword)).thenReturn(
+              true
+            );
+          }
         )
       ),
       request -> service.getOne(request._1, request._2)
