@@ -14,7 +14,7 @@ public final class JooqRegistrationRepository
   }
 
   @Override
-  public Registration insertOne(String username, String password) {
+  public Registration insertOne(String username, byte[] password) {
     return dsl
       .insertInto(
         Tables.REGISTRATION,

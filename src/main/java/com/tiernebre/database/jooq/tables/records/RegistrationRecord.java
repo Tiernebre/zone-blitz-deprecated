@@ -49,15 +49,15 @@ public class RegistrationRecord extends UpdatableRecordImpl<RegistrationRecord> 
     /**
      * Setter for <code>public.registration.password</code>.
      */
-    public void setPassword(String value) {
+    public void setPassword(byte[] value) {
         set(2, value);
     }
 
     /**
      * Getter for <code>public.registration.password</code>.
      */
-    public String getPassword() {
-        return (String) get(2);
+    public byte[] getPassword() {
+        return (byte[]) get(2);
     }
 
     // -------------------------------------------------------------------------
@@ -83,7 +83,7 @@ public class RegistrationRecord extends UpdatableRecordImpl<RegistrationRecord> 
     /**
      * Create a detached, initialised RegistrationRecord
      */
-    public RegistrationRecord(Long id, String username, String password) {
+    public RegistrationRecord(Long id, String username, byte[] password) {
         super(Registration.REGISTRATION);
 
         setId(id);

@@ -62,12 +62,16 @@ public final class DefaultRegistrationServiceTest {
           new CreateRegistrationRequest("username", "password", "password"),
           request ->
             Either.right(
-              new Registration(0, request.username(), request.password())
+              new Registration(
+                0,
+                request.username(),
+                UUID.randomUUID().toString().getBytes()
+              )
             ),
           (request, expected) -> {
             var username = request.username();
             var password = request.password();
-            var hashedPassword = UUID.randomUUID().toString();
+            var hashedPassword = expected.get().password();
             when(validator.parse(request)).thenReturn(
               Either.right(new RegistrationRequest(username, password))
             );
@@ -111,7 +115,7 @@ public final class DefaultRegistrationServiceTest {
             var registration = new Registration(
               1,
               request._1,
-              "hashed password"
+              UUID.randomUUID().toString().getBytes()
             );
             when(repository.selectOneByUsername(request._1)).thenReturn(
               Option.of(registration)
@@ -125,22 +129,21 @@ public final class DefaultRegistrationServiceTest {
           "happy path existing registration",
           Tuple.of("username", "password"),
           request ->
-            Option.of(new Registration(1, request._1, "hashed password")),
+            Option.of(
+              new Registration(
+                1,
+                request._1,
+                UUID.randomUUID().toString().getBytes()
+              )
+            ),
           (request, expected) -> {
             var registration = expected.get();
-            var hashedPassword = "hashed password";
             when(repository.selectOneByUsername(request._1)).thenReturn(
-              Option.of(
-                new Registration(
-                  registration.id(),
-                  request._1,
-                  "hashed password"
-                )
-              )
+              expected
             );
-            when(passwordHasher.verify(request._2, hashedPassword)).thenReturn(
-              true
-            );
+            when(
+              passwordHasher.verify(request._2, registration.password())
+            ).thenReturn(true);
           }
         )
       ),

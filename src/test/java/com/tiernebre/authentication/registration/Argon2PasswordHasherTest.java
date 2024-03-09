@@ -1,9 +1,10 @@
 package com.tiernebre.authentication.registration;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import org.junit.Test;
 
 public final class Argon2PasswordHasherTest {
@@ -12,16 +13,23 @@ public final class Argon2PasswordHasherTest {
 
   @Test
   public void hash() {
-    String password = "password";
-    String result = passwordHasher.hash(password);
+    var password = "password";
+    var result = passwordHasher.hash(password);
     assertNotNull(result);
-    assertNotEquals(password, result);
+    assertFalse(Arrays.equals(password.getBytes(), result));
   }
 
   @Test
-  public void verify() {
-    String password = "password";
-    String result = passwordHasher.hash(password);
+  public void verifyValid() {
+    var password = "password";
+    var result = passwordHasher.hash(password);
     assertTrue(passwordHasher.verify(password, result));
+  }
+
+  @Test
+  public void verifyInvalid() {
+    var password = "password";
+    var result = passwordHasher.hash(password);
+    assertFalse(passwordHasher.verify(password + "f", result));
   }
 }

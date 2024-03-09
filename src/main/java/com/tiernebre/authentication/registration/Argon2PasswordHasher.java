@@ -1,6 +1,7 @@
 package com.tiernebre.authentication.registration;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import org.bouncycastle.crypto.generators.Argon2BytesGenerator;
 import org.bouncycastle.crypto.params.Argon2Parameters;
 
@@ -26,14 +27,14 @@ public final class Argon2PasswordHasher implements PasswordHasher {
   }
 
   @Override
-  public boolean verify(String givenPassword, String hashedPassword) {
-    return hash(givenPassword).equals(hashedPassword);
+  public boolean verify(String givenPassword, byte[] hashedPassword) {
+    return Arrays.equals(hash(givenPassword), hashedPassword);
   }
 
   @Override
-  public String hash(String password) {
+  public byte[] hash(String password) {
     byte[] result = new byte[hashLength];
     generator.generateBytes(password.getBytes(StandardCharsets.UTF_8), result);
-    return new String(result, StandardCharsets.UTF_8);
+    return result;
   }
 }
