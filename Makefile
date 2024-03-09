@@ -11,12 +11,12 @@ start:
 debug: install
 	ZONE_BLITZ_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=7999 zone-blitz
 
+.PHONY: development-environment
+development-environment: install
+
 .PHONY: install
 install: migrate build
 	cp -r build/install/zone-blitz/. /
-
-.PHONY: development-environment
-development-environment: migrate build
 	
 .PHONY: build
 build:
