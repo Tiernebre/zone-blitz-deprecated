@@ -31,7 +31,7 @@ public final class VavrRegistrationValidatorTest {
         >(
           "null username",
           new CreateRegistrationRequest(null, "password", "password"),
-          __ -> Either.left(List.of("Username is a required field"))
+          __ -> Either.left(List.of("Username is a required field."))
         ),
         new TestCase<
           CreateRegistrationRequest,
