@@ -3,10 +3,12 @@
  */
 package com.tiernebre.database.jooq;
 
+
 import com.tiernebre.database.jooq.tables.Account;
 import com.tiernebre.database.jooq.tables.Player;
 import com.tiernebre.database.jooq.tables.Registration;
 import com.tiernebre.database.jooq.tables.Session;
+
 
 /**
  * Convenience access to all tables in public.
@@ -14,23 +16,23 @@ import com.tiernebre.database.jooq.tables.Session;
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
 
-  /**
-   * The table <code>public.account</code>.
-   */
-  public static final Account ACCOUNT = Account.ACCOUNT;
+    /**
+     * The table <code>public.account</code>.
+     */
+    public static final Account ACCOUNT = Account.ACCOUNT;
 
-  /**
-   * The table <code>public.player</code>.
-   */
-  public static final Player PLAYER = Player.PLAYER;
+    /**
+     * The table <code>public.player</code>.
+     */
+    public static final Player PLAYER = Player.PLAYER;
 
-  /**
-   * The table <code>public.registration</code>.
-   */
-  public static final Registration REGISTRATION = Registration.REGISTRATION;
+    /**
+     * The table <code>public.registration</code>.
+     */
+    public static final Registration REGISTRATION = Registration.REGISTRATION;
 
-  /**
-   * The table <code>public.session</code>.
-   */
-  public static final Session SESSION = Session.SESSION;
+    /**
+     * The table <code>public.session</code>.
+     */
+    public static final Session SESSION = Session.SESSION;
 }
