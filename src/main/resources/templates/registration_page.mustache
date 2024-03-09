@@ -1,10 +1,11 @@
 {{< base_layout}} {{$body}}
-<form>
+<form method="post">
   <label>Username</label>
   <input name="{{usernameFieldName}}" />
   <label>Password</label>
   <input type="password" name="{{passwordFieldName}}" />
   <label>Confirm Password</label>
   <input type="password" name="{{confirmPasswordFieldName}}" />
+  <button>Register</button>
 </form>
 {{/body}} {{/base_layout}}

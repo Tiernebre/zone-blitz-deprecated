@@ -7,8 +7,15 @@ import com.tiernebre.web.templates.RegistrationPage;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.jstach.jstachio.JStachio;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class RegistrationController {
+
+  private final Logger LOG = LoggerFactory.getLogger(
+    RegistrationController.class
+  );
 
   private final RegistrationService service;
 
@@ -33,9 +40,16 @@ public final class RegistrationController {
       )
       .peek(registration -> {
         ctx.status(HttpStatus.CREATED);
+        ctx.redirect("");
+        LOG.debug("Successful registration, redirecting to home page");
       })
       .peekLeft(errors -> {
         ctx.status(HttpStatus.BAD_REQUEST);
+        ctx.redirect("registration");
+        LOG.debug(
+          "Failed registration, got errors ",
+          errors.collect(Collectors.joining("\n"))
+        );
       });
   }
 

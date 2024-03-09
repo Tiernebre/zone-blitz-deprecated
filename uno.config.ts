@@ -1,5 +1,6 @@
 import { defineConfig } from 'unocss'
 import presetUno from '@unocss/preset-uno'
+import { presetForms } from '@julr/unocss-preset-forms'
 
 export default defineConfig({
   content: {
@@ -11,6 +12,7 @@ export default defineConfig({
     }
   },
   presets: [
-    presetUno()
+    presetUno(),
+    presetForms(),
   ],
 })
