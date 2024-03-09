@@ -1,6 +1,7 @@
 package com.tiernebre.authentication.registration;
 
 import com.tiernebre.database.jooq.Tables;
+import io.vavr.control.Option;
 import org.jooq.DSLContext;
 
 public final class JooqRegistrationRepository
@@ -23,5 +24,15 @@ public final class JooqRegistrationRepository
       .values(username, password)
       .returning()
       .fetchSingleInto(Registration.class);
+  }
+
+  @Override
+  public Option<Registration> selectOneByUsername(String username) {
+    return Option.of(
+      dsl.fetchOne(
+        Tables.REGISTRATION,
+        Tables.REGISTRATION.USERNAME.eq(username)
+      )
+    ).map(result -> result.into(Registration.class));
   }
 }
