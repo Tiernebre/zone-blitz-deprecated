@@ -54,6 +54,26 @@ public final class RegistrationAuthenticationStrategyTest {
               service.getOne(request.username(), request.password())
             ).thenReturn(Option.none());
           }
+        ),
+        new TestCase<
+          RegistrationAuthenticationRequest,
+          Either<String, Session>
+        >(
+          "account not found",
+          new RegistrationAuthenticationRequest("username", "password"),
+          __ ->
+            Either.left(
+              "Could not find an associated account for the provided registration."
+            ),
+          (request, expected) -> {
+            var registration = new Registration(1, "username", "password");
+            when(
+              service.getOne(request.username(), request.password())
+            ).thenReturn(Option.of(registration));
+            when(
+              accountService.getForRegistration(registration.id())
+            ).thenReturn(Option.none());
+          }
         )
       ),
       strategy::authenticate
