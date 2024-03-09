@@ -4,6 +4,7 @@ import com.tiernebre.context.DependencyContext;
 import com.tiernebre.web.controllers.FrontPageController;
 import com.tiernebre.web.controllers.HealthController;
 import com.tiernebre.web.controllers.LoginPageController;
+import com.tiernebre.web.controllers.RegistrationPageController;
 import com.tiernebre.web.controllers.authentication.GoogleAuthenticationController;
 import com.tiernebre.web.controllers.authentication.RegistrationController;
 import com.tiernebre.web.routes.api.ApiRoutes;
@@ -31,7 +32,8 @@ public final class RoutesFactory {
         ),
         new HealthRoutes(new HealthController()),
         new RegistrationRoutes(
-          new RegistrationController(authentication.registrationService())
+          new RegistrationController(authentication.registrationService()),
+          new RegistrationPageController()
         )
       ),
       new PageRoutes(
