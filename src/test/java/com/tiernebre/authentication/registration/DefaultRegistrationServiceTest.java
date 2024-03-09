@@ -58,6 +58,24 @@ public final class DefaultRegistrationServiceTest {
           CreateRegistrationRequest,
           Either<Seq<String>, Registration>
         >(
+          "existing username",
+          new CreateRegistrationRequest("username", "password", "password"),
+          __ -> Either.left(List.of("The requested username already exists.")),
+          (request, expected) -> {
+            var username = request.username();
+            var password = request.password();
+            when(validator.parse(request)).thenReturn(
+              Either.right(new RegistrationRequest(username, password))
+            );
+            when(repository.selectOneByUsername(username)).thenReturn(
+              Option.of(new Registration(0, username, password.getBytes()))
+            );
+          }
+        ),
+        new TestCase<
+          CreateRegistrationRequest,
+          Either<Seq<String>, Registration>
+        >(
           "persist error",
           new CreateRegistrationRequest(null, null, null),
           __ ->
@@ -72,6 +90,9 @@ public final class DefaultRegistrationServiceTest {
             var hashedPassword = "hashed".getBytes();
             when(validator.parse(request)).thenReturn(
               Either.right(new RegistrationRequest(username, password))
+            );
+            when(repository.selectOneByUsername(username)).thenReturn(
+              Option.none()
             );
             when(passwordHasher.hash(password)).thenReturn(hashedPassword);
             when(repository.insertOne(username, hashedPassword)).thenReturn(
@@ -99,6 +120,9 @@ public final class DefaultRegistrationServiceTest {
             var hashedPassword = expected.get().password();
             when(validator.parse(request)).thenReturn(
               Either.right(new RegistrationRequest(username, password))
+            );
+            when(repository.selectOneByUsername(username)).thenReturn(
+              Option.none()
             );
             when(passwordHasher.hash(password)).thenReturn(hashedPassword);
             when(repository.insertOne(username, hashedPassword)).thenReturn(
