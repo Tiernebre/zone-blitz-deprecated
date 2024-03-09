@@ -43,6 +43,15 @@ blitz.
 8. **Navigate to https://dev.zoneblitz.app a browser of your choice**. You
    should now see your locally running copy of the zone blitz website.
 
+### Auto Rebuild
+
+If you don't want to run `make` everytime you make a change, you can run a reload script
+by using the following command:
+
+```sh
+make dev
+```
+
 ## Development Philosophy and Direction
 
 If you're curious about _why_ I chose a specific technology or approach to solving a problem, I have documented
