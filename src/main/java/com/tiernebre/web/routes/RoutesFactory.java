@@ -38,7 +38,9 @@ public final class RoutesFactory {
             .configuration()
             .oauthGoogleClientId()
         ),
-        new RegistrationController(authentication.registrationService())
+        new RegistrationRoutes(
+          new RegistrationController(authentication.registrationService())
+        )
       )
     );
   }

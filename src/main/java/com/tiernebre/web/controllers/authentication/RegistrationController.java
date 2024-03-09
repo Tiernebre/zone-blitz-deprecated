@@ -16,7 +16,7 @@ public final class RegistrationController {
     this.service = service;
   }
 
-  public void create(Context ctx) {
+  public void submit(Context ctx) {
     service
       .create(
         new CreateRegistrationRequest(
