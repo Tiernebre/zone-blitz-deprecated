@@ -13,7 +13,7 @@ install: build migrate
 	cp -r build/install/zone-blitz/. /
 
 .PHONY: development-environment
-development-environment: migrate build
+development-environment: build migrate
 	
 .PHONY: build
 build:
@@ -30,7 +30,6 @@ test:
 migrate:
 	$(DBMATE) --wait up
 	gradle jooqCodegen
-	npx prettier --write src/main/java/com/tiernebre/database/jooq/**/*.java
 
 .PHONY: migration
 migration:
