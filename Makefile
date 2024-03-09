@@ -22,6 +22,7 @@ install: migrate build
 build:
 	npm ci
 	npm run build
+	gradle clean
 	gradle installDist
 
 .PHONY: migrate
