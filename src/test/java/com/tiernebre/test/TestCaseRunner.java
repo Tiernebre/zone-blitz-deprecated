@@ -22,8 +22,12 @@ public final class TestCaseRunner {
         caze.mock().accept(caze.input(), output);
       }
       try {
-        assertEquals(output, toTest.apply(caze.input()));
+        var input = caze.input();
+        assertEquals(output, toTest.apply(input));
         LOG.debug(String.format("Test Case \"%s\" PASSED.", name));
+        if (caze.verification() != null) {
+          caze.verification().accept(input, output);
+        }
       } catch (AssertionError e) {
         String message = String.format(
           "Test Case \"%s\" FAILED. %s",

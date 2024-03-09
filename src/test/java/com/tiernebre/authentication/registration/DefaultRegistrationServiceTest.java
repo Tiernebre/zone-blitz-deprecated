@@ -1,8 +1,11 @@
 package com.tiernebre.authentication.registration;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.tiernebre.authentication.account.Account;
 import com.tiernebre.authentication.account.AccountService;
 import com.tiernebre.test.TestCase;
 import com.tiernebre.test.TestCaseRunner;
@@ -69,6 +72,12 @@ public final class DefaultRegistrationServiceTest {
             when(repository.insertOne(username, hashedPassword)).thenReturn(
               expected.get()
             );
+            when(accountService.create(expected.get())).thenReturn(
+              new Account(0, null, null)
+            );
+          },
+          (__, expected) -> {
+            verify(accountService, times(1)).create(expected.get());
           }
         )
       ),
