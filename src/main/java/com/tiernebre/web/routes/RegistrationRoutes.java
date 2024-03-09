@@ -1,5 +1,6 @@
-package com.tiernebre.web.routes.api;
+package com.tiernebre.web.routes;
 
+import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.post;
 
 import com.tiernebre.web.controllers.authentication.RegistrationController;
@@ -15,6 +16,7 @@ public final class RegistrationRoutes implements EndpointGroup {
 
   @Override
   public void addEndpoints() {
-    post("registration", controller::handle);
+    get("registration", controller::page);
+    post("registration", controller::submit);
   }
 }

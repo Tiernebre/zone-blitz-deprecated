@@ -3,8 +3,10 @@ package com.tiernebre.web.controllers.authentication;
 import com.tiernebre.authentication.registration.CreateRegistrationRequest;
 import com.tiernebre.authentication.registration.RegistrationService;
 import com.tiernebre.web.constants.WebConstants;
+import com.tiernebre.web.templates.RegistrationPage;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
+import io.jstach.jstachio.JStachio;
 
 public final class RegistrationController {
 
@@ -14,7 +16,7 @@ public final class RegistrationController {
     this.service = service;
   }
 
-  public void handle(Context ctx) {
+  public void submit(Context ctx) {
     service
       .create(
         new CreateRegistrationRequest(
@@ -35,5 +37,18 @@ public final class RegistrationController {
       .peekLeft(errors -> {
         ctx.status(HttpStatus.BAD_REQUEST);
       });
+  }
+
+  public void page(Context ctx) {
+    var output = new StringBuilder();
+    JStachio.render(
+      new RegistrationPage(
+        WebConstants.Authentication.REGISTRATION_USERNAME_PARAM,
+        WebConstants.Authentication.REGISTRATION_PASSWORD_PARAM,
+        WebConstants.Authentication.REGISTRATION_CONFIRM_PASSWORD_PARAM
+      ),
+      output
+    );
+    ctx.html(output.toString());
   }
 }

@@ -9,7 +9,6 @@ import com.tiernebre.web.controllers.authentication.RegistrationController;
 import com.tiernebre.web.routes.api.ApiRoutes;
 import com.tiernebre.web.routes.api.AuthenticationRoutes;
 import com.tiernebre.web.routes.api.HealthRoutes;
-import com.tiernebre.web.routes.api.RegistrationRoutes;
 import com.tiernebre.web.routes.page.PageRoutes;
 
 public final class RoutesFactory {
@@ -29,10 +28,7 @@ public final class RoutesFactory {
             authentication.googleAuthenticationService()
           )
         ),
-        new HealthRoutes(new HealthController()),
-        new RegistrationRoutes(
-          new RegistrationController(authentication.registrationService())
-        )
+        new HealthRoutes(new HealthController())
       ),
       new PageRoutes(
         new FrontPageController(),
@@ -41,6 +37,9 @@ public final class RoutesFactory {
             .authentication()
             .configuration()
             .oauthGoogleClientId()
+        ),
+        new RegistrationRoutes(
+          new RegistrationController(authentication.registrationService())
         )
       )
     );
