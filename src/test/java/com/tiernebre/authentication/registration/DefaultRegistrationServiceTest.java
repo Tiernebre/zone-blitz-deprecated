@@ -9,9 +9,12 @@ import com.tiernebre.authentication.account.Account;
 import com.tiernebre.authentication.account.AccountService;
 import com.tiernebre.test.TestCase;
 import com.tiernebre.test.TestCaseRunner;
+import io.vavr.Tuple;
+import io.vavr.Tuple2;
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;
+import io.vavr.control.Option;
 import java.util.UUID;
 import org.junit.Test;
 
@@ -82,6 +85,26 @@ public final class DefaultRegistrationServiceTest {
         )
       ),
       service::create
+    );
+  }
+
+  @Test
+  public void getOne() {
+    TestCaseRunner.run(
+      DefaultRegistrationServiceTest.class,
+      List.of(
+        new TestCase<Tuple2<String, String>, Option<Registration>>(
+          "no existing one by username",
+          Tuple.of("username", "password"),
+          __ -> Option.none(),
+          (request, __) -> {
+            when(repository.selectOneByUsername(request._1)).thenReturn(
+              Option.none()
+            );
+          }
+        )
+      ),
+      request -> service.getOne(request._1, request._2)
     );
   }
 }
