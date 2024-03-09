@@ -8,16 +8,13 @@ public final class ApiRoutes implements EndpointGroup {
 
   private final AuthenticationRoutes authenticationRoutes;
   private final HealthRoutes healthRoutes;
-  private final RegistrationRoutes registrationRoutes;
 
   public ApiRoutes(
     AuthenticationRoutes authenticationRoutes,
-    HealthRoutes healthRoutes,
-    RegistrationRoutes registrationRoutes
+    HealthRoutes healthRoutes
   ) {
     this.authenticationRoutes = authenticationRoutes;
     this.healthRoutes = healthRoutes;
-    this.registrationRoutes = registrationRoutes;
   }
 
   @Override
@@ -25,7 +22,6 @@ public final class ApiRoutes implements EndpointGroup {
     path("/api", () -> {
       authenticationRoutes.addEndpoints();
       healthRoutes.addEndpoints();
-      registrationRoutes.addEndpoints();
     });
   }
 }

@@ -23,7 +23,7 @@ public class RegistrationHttpApiTest {
     throws IOException, InterruptedException {
     var response = WebHttpTestUtils.client()
       .send(
-        HttpRequest.newBuilder(WebHttpTestUtils.url("/api/registration"))
+        HttpRequest.newBuilder(WebHttpTestUtils.url("/registration"))
           .header(
             "Content-Type",
             ContentType.APPLICATION_FORM_URLENCODED.toString()
@@ -39,7 +39,7 @@ public class RegistrationHttpApiTest {
   public void POST_registration() throws IOException, InterruptedException {
     var response = WebHttpTestUtils.client()
       .send(
-        HttpRequest.newBuilder(WebHttpTestUtils.url("/api/registration"))
+        HttpRequest.newBuilder(WebHttpTestUtils.url("/registration"))
           .header(
             "Content-Type",
             ContentType.APPLICATION_FORM_URLENCODED.toString()
