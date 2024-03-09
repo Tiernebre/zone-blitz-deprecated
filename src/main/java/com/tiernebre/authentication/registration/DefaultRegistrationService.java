@@ -42,7 +42,10 @@ public final class DefaultRegistrationService implements RegistrationService {
 
   @Override
   public Option<Registration> getOne(String username, String password) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getOne'");
+    return repository
+      .selectOneByUsername(username)
+      .filter(
+        registration -> passwordHasher.verify(password, registration.password())
+      );
   }
 }

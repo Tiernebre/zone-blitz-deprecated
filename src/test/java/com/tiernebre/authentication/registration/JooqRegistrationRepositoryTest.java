@@ -2,6 +2,7 @@ package com.tiernebre.authentication.registration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import com.tiernebre.database.TestJooqDslContextFactory;
 import java.util.UUID;
@@ -22,5 +23,13 @@ public final class JooqRegistrationRepositoryTest {
     assertNotNull(inserted.id());
     assertEquals(username, inserted.username());
     assertEquals(password, inserted.password());
+  }
+
+  @Test
+  public void selectOneByUsername() {
+    var username = UUID.randomUUID().toString();
+    repository.insertOne(username, UUID.randomUUID().toString());
+    var found = repository.selectOneByUsername(username);
+    assertTrue(found.isDefined());
   }
 }
