@@ -6,7 +6,6 @@ import com.microsoft.playwright.Playwright;
 import com.tiernebre.context.DependencyContextFactory;
 import com.tiernebre.web.ServerFactory;
 import io.javalin.Javalin;
-import java.net.URI;
 import java.nio.file.Paths;
 
 public class E2EHttpSuite {
@@ -45,9 +44,7 @@ public class E2EHttpSuite {
     }
   }
 
-  private static URI url(String path) {
-    return URI.create(
-      String.format("http://0.0.0.0:%s%s", SERVER.port(), path)
-    );
+  protected String url(String path) {
+    return String.format("http://0.0.0.0:%s%s", SERVER.port(), path);
   }
 }
