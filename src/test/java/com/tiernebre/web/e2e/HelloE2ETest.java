@@ -1,26 +1,17 @@
 package com.tiernebre.web.e2e;
 
-import com.microsoft.playwright.*;
-import com.tiernebre.web.WebHttpTestUtils;
-import io.javalin.Javalin;
-import java.nio.file.Paths;
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
+import com.tiernebre.web.E2EHttpSuite;
+import java.util.regex.Pattern;
 import org.junit.Test;
 
-public class HelloE2ETest {
-
-  Javalin server = WebHttpTestUtils.startServer();
+public class HelloE2ETest extends E2EHttpSuite {
 
   @Test
   public void hello() {
-    try (Playwright playwright = Playwright.create()) {
-      var options = new BrowserType.LaunchOptions()
-        .setHeadless(true)
-        .setExecutablePath(
-          Paths.get(System.getenv("PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH"))
-        );
-      Browser browser = playwright.chromium().launch(options);
-      Page page = browser.newPage();
-      page.navigate("https://playwright.dev/");
-    }
+    var page = BROWSER.newPage();
+    page.navigate("https://playwright.dev/");
+    assertThat(page).hasTitle(Pattern.compile("Playwright"));
   }
 }
