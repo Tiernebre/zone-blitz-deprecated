@@ -118,3 +118,18 @@ You can run the unit testing suite by just running the following command in your
 ```sh
 make test
 ```
+
+### E2E
+
+E2E testing is done through [Playwright](https://playwright.dev/).
+
+To run the E2E tests locally, all you need to do is run the following command in your
+[development environment](#environment).
+
+```sh
+make e2e
+```
+
+E2E tests are ran differently on CI due to browser compatibility within development containers.
+On CI the Playwright build browsers are installed, whereas on the development environment we use
+the Alpine linux build of Chromium.
