@@ -12,6 +12,7 @@
     "@julr/unocss-preset-forms": "^0.1.0",
     "@playwright/test": "^1.42.1",
     "@prettier/plugin-xml": "^3.2.2",
+    "@types/node": "^20.11.25",
     "@unocss/reset": "^0.58.5",
     "htmx.org": "^1.9.10",
     "husky": "^8.0.3",
