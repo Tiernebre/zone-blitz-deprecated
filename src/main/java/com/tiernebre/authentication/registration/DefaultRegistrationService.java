@@ -31,6 +31,10 @@ public final class DefaultRegistrationService implements RegistrationService {
   ) {
     return validator
       .parse(request)
+      .filterOrElse(
+        this::doesNotExist,
+        __ -> List.of("The requested username already exists.")
+      )
       .flatMap(this::persist)
       .peek(accountService::create);
   }
@@ -53,5 +57,9 @@ public final class DefaultRegistrationService implements RegistrationService {
         __ ->
           List.of("Could not create registration due to an error on our end.")
       );
+  }
+
+  private boolean doesNotExist(RegistrationRequest request) {
+    return repository.selectOneByUsername(request.username()).isEmpty();
   }
 }
