@@ -4,11 +4,10 @@ export default defineConfig({
   testDir: 'e2e',
   use: {
     baseURL: 'https://dev.zoneblitz.app',
-  },
-  projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-  ]
+    headless: true,
+    channel: "/usr/bin/chromium-browser",
+    launchOptions: {
+      executablePath: "/usr/bin/chromium-browser"
+    }
+  }
 });

@@ -4,6 +4,7 @@
     "build:htmx": "cp node_modules/htmx.org/dist/htmx.min.js src/main/resources/assets/htmx.js ",
     "build:css-reset": "cp node_modules/@unocss/reset/tailwind.css src/main/resources/assets/reset.css",
     "build:unocss": "unocss \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css",
+    "e2e": "npx playwright test",
     "format": "prettier --write **/*.{java,xml,md,yml,mustache,sh}",
     "lint": "prettier --check **/*.{java,xml,md,yml,mustache,sh}",
     "prepare": "husky install"
