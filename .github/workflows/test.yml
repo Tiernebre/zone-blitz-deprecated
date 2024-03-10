@@ -62,10 +62,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install E2E browsers
-        run: |
-          npm ci
-          npx playwright install --with-deps
       - name: Run initialize command
         run: .devcontainer/initializeCommand.sh
       - name: Create and start development containers
@@ -73,7 +69,11 @@ jobs:
       - name: Start web server in its development container
         run: docker compose -f .devcontainer/docker-compose.devcontainer.yml exec -T -w /workspace web make &
       - name: Run E2E tests
-        run: make e2e
+        run: |
+          mkcert -install
+          npm ci
+          npx playwright install --with-deps
+          make e2e
 
   verify-codegen:
     name: Verify Generated Code
