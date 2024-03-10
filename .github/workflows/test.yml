@@ -69,13 +69,15 @@ jobs:
         run: docker compose -f .devcontainer/docker-compose.devcontainer.yml up -d
       - name: Start web server in its development container
         run: docker compose -f .devcontainer/docker-compose.devcontainer.yml exec -T -w /workspace web make &
+      - name: Trust self signed SSL certificate
+        run: |
+          mkdir -p $HOME/.pki/nssdb && certutil --empty-password -d $HOME/.pki/nssdb -N
+          certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n dev.zoneblitz.app.cert -i .devcontainer/dev.zoneblitz.app.cert
+          sudo update-ca-certificates --fresh
       - name: Run E2E tests
         run: |
           npm ci
           npx playwright install --with-deps
-          sudo update-ca-certificates
-          mkdir -p $HOME/.pki/nssdb && certutil --empty-password -d $HOME/.pki/nssdb -N
-          certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n dev.zoneblitz.app.cert -i .devcontainer/dev.zoneblitz.app.cert
           make e2e
 
   verify-codegen:
