@@ -1,6 +1,6 @@
 import { defineConfig } from '@playwright/test';
 
-const URL = 'http://0.0.0.0:8000'
+const URL = process.env.ZONE_BLITZ_URL || 'http://0.0.0.0:8000'
 
 export default defineConfig({
   testDir: 'e2e',
