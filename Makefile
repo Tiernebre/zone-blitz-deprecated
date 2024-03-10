@@ -19,8 +19,7 @@ install: migrate build
 	cp -r build/install/zone-blitz/. /
 	
 .PHONY: build
-build:
-	npm ci
+build: node_modules
 	npm run build
 	gradle clean installDist
 
@@ -39,9 +38,12 @@ test:
 	gradle test
 
 .PHONY: e2e
-e2e:
+e2e: node_modules
 	npm run e2e
 
 .PHONY: dev
 dev:
 	.devcontainer/dev.sh
+	
+node_modules:
+	npm ci

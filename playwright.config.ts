@@ -14,6 +14,7 @@ const LOCAL_CONFIG: PlaywrightTestConfig = {
     command: "make",
     url: URL,
   },
+  timeout: 1000,
 };
 
 const CI_CONFIG: PlaywrightTestConfig = {
