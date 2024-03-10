@@ -38,7 +38,7 @@ test:
 	gradle test
 
 .PHONY: e2e
-e2e:
+e2e: node_modules
 	npm run e2e
 
 .PHONY: dev

@@ -1,11 +1,15 @@
 {{< base_layout}} {{$body}}
 <form method="post">
-  <label>Username</label>
-  <input name="{{usernameFieldName}}" />
-  <label>Password</label>
-  <input type="password" name="{{passwordFieldName}}" />
-  <label>Confirm Password</label>
-  <input type="password" name="{{confirmPasswordFieldName}}" />
+  <label for="username">Username</label>
+  <input id="username" name="{{usernameFieldName}}" />
+  <label for="password">Password</label>
+  <input id="password" type="password" name="{{passwordFieldName}}" />
+  <label for="confirm-password">Confirm Password</label>
+  <input
+    id="confirm-password"
+    type="password"
+    name="{{confirmPasswordFieldName}}"
+  />
   <button>Register</button>
 </form>
 {{/body}} {{/base_layout}}
