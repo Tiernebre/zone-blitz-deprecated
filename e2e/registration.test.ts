@@ -1,5 +1,6 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, Page } from "@playwright/test";
 import crypto from "node:crypto";
+import { expect } from "./expect";
 
 const URI = "/registration";
 const PASSWORD = crypto.randomUUID();
@@ -31,12 +32,13 @@ test("requires a username", async ({ page }) => {
   await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByLabel("Confirm Password", { exact: true }).fill(password);
   await page.getByRole("button", { name: /Register/i }).click();
-  expect(
-    await getUsernameInput(page).evaluate(
-      (node) =>
-        node.matches(":invalid") &&
-        node instanceof HTMLInputElement &&
-        node.validationMessage === "Please fill out this field.",
-    ),
-  ).toStrictEqual(true);
+  // expect(
+  //   await getUsernameInput(page).evaluate(
+  //     (node) =>
+  //       node.matches(":invalid") &&
+  //       node instanceof HTMLInputElement &&
+  //       node.validationMessage === "Please fill out this field.",
+  //   ),
+  // ).toStrictEqual(true);
+  expect(getUsernameInput(page)).toBeInvalid();
 });
