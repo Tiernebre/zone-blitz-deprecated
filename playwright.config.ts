@@ -1,9 +1,11 @@
 import { defineConfig } from '@playwright/test';
 
+const URL = 'http://0.0.0.0:8000'
+
 export default defineConfig({
   testDir: 'e2e',
   use: {
-    baseURL: 'http://0.0.0.0:8000',
+    baseURL: URL,
     headless: true,
     channel: "/usr/bin/chromium-browser",
     launchOptions: {
@@ -12,6 +14,6 @@ export default defineConfig({
   },
   webServer: {
     command: 'make',
-    url: 'http://0.0.0.0:8000',
+    url: URL,
   }
 });
