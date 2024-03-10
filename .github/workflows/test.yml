@@ -73,7 +73,7 @@ jobs:
         run: |
           npm ci
           npx playwright install --with-deps
-          update-ca-certificates
+          sudo update-ca-certificates
           mkdir -p $HOME/.pki/nssdb && certutil --empty-password -d $HOME/.pki/nssdb -N
           certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n dev.zoneblitz.app.cert -i .devcontainer/dev.zoneblitz.app.cert
           make e2e
