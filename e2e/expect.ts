@@ -7,12 +7,13 @@ export const expect = baseExpect.extend({
 
     try {
       baseExpect(
-        await locator.evaluate(
-          (node) =>
+        await locator.evaluate((node) => {
+          return (
             node.matches(":invalid") &&
             node instanceof HTMLInputElement &&
-            node.validationMessage === "Please fill out this field.",
-        ),
+            new RegExp(/fill out this field/i).test(node.validationMessage)
+          );
+        }),
       ).toStrictEqual(true);
       pass = true;
     } catch (e: any) {
