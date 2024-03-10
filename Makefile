@@ -13,7 +13,6 @@ debug: install
 
 .PHONY: development-environment
 development-environment: install
-	.devcontainer/install-playwright.sh
 
 .PHONY: install
 install: migrate build
