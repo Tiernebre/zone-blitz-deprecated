@@ -32,8 +32,11 @@ test("requires a username", async ({ page }) => {
   await page.getByLabel("Confirm Password", { exact: true }).fill(password);
   await page.getByRole("button", { name: /Register/i }).click();
   expect(
-    await getUsernameInput(page).evaluate((node: HTMLInputElement) =>
-      node.matches(":invalid"),
+    await getUsernameInput(page).evaluate(
+      (node) =>
+        node.matches(":invalid") &&
+        node instanceof HTMLInputElement &&
+        node.validationMessage === "Please fill out this field.",
     ),
   ).toStrictEqual(true);
 });
