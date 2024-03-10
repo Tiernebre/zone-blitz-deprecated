@@ -35,5 +35,5 @@ test("requires a username", async ({ page }) => {
     await getUsernameInput(page).evaluate((node: HTMLInputElement) =>
       node.matches(":invalid"),
     ),
-  ).toBeTruthy();
+  ).toStrictEqual(true);
 });
