@@ -5,8 +5,8 @@
     "build:css-reset": "cp node_modules/@unocss/reset/tailwind.css src/main/resources/assets/reset.css",
     "build:unocss": "unocss \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css",
     "e2e": "npx playwright test",
-    "format": "prettier --write **/*.{java,xml,md,yml,mustache,sh}",
-    "lint": "prettier --check **/*.{java,xml,md,yml,mustache,sh}",
+    "format": "prettier --write **/*.{java,xml,md,yml,mustache,sh,ts}",
+    "lint": "prettier --check **/*.{java,xml,md,yml,mustache,sh,ts}",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -25,6 +25,6 @@
     "unocss": "^0.58.3"
   },
   "lint-staged": {
-    "*.{java,xml,md,yml,mustache,sh}": "prettier --write"
+    "*.{java,xml,md,yml,mustache,sh,ts}": "prettier --write"
   }
 }
