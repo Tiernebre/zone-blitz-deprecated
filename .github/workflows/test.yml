@@ -70,9 +70,9 @@ jobs:
         run: docker compose -f .devcontainer/docker-compose.devcontainer.yml exec -T -w /workspace web make &
       - name: Run E2E tests
         run: |
-          mkcert -install
           npm ci
           npx playwright install --with-deps
+          mkcert -install
           make e2e
 
   verify-codegen:
