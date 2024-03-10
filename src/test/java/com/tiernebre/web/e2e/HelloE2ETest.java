@@ -2,7 +2,6 @@ package com.tiernebre.web.e2e;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-import com.tiernebre.web.E2EHttpSuite;
 import java.util.regex.Pattern;
 import org.junit.Test;
 

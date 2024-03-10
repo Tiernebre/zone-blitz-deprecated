@@ -1,9 +1,10 @@
-package com.tiernebre.web;
+package com.tiernebre.web.e2e;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Playwright;
 import com.tiernebre.context.DependencyContextFactory;
+import com.tiernebre.web.ServerFactory;
 import io.javalin.Javalin;
 import java.net.URI;
 import java.nio.file.Paths;
