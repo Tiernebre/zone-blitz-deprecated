@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from "@playwright/test";
 
-test('GET /api/health', async ({ request }) => {
+test("GET /api/health", async ({ request }) => {
   expect(await request.get("/api/health")).toBeOK();
-})
+});

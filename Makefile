@@ -37,6 +37,9 @@ migration:
 test:
 	npm run lint
 	gradle test
+
+.PHONY: e2e
+e2e:
 	npm run e2e
 
 .PHONY: dev
