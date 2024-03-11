@@ -1,6 +1,6 @@
 import { test, Page } from "@playwright/test";
 import crypto from "node:crypto";
-import { REQUIRED_VALIDATION_MESSAGE, expect } from "./expect";
+import { VALIDATION_MESSAGES, expect } from "./expect";
 
 const URI = "/registration";
 const PASSWORD = crypto.randomUUID();
@@ -37,7 +37,31 @@ test("requires a username", async ({ page }) => {
   await getPasswordInput(page).fill(PASSWORD);
   await getConfirmPasswordInput(page).fill(PASSWORD);
   await submit(page);
-  await expect(getUsernameInput(page)).toBeInvalid(REQUIRED_VALIDATION_MESSAGE);
+  await expect(getUsernameInput(page)).toBeInvalid(
+    VALIDATION_MESSAGES.REQUIRED,
+  );
   await expect(getPasswordInput(page)).toBeValid();
   await expect(getConfirmPasswordInput(page)).toBeValid();
+});
+
+test("requires a password", async ({ page }) => {
+  await getUsernameInput(page).fill(crypto.randomUUID());
+  await getConfirmPasswordInput(page).fill(PASSWORD);
+  await submit(page);
+  await expect(getUsernameInput(page)).toBeValid();
+  await expect(getPasswordInput(page)).toBeInvalid(
+    VALIDATION_MESSAGES.REQUIRED,
+  );
+  await expect(getConfirmPasswordInput(page)).toBeValid();
+});
+
+test("requires a confirm password", async ({ page }) => {
+  await getUsernameInput(page).fill(crypto.randomUUID());
+  await getPasswordInput(page).fill(PASSWORD);
+  await submit(page);
+  await expect(getUsernameInput(page)).toBeValid();
+  await expect(getPasswordInput(page)).toBeValid();
+  await expect(getConfirmPasswordInput(page)).toBeInvalid(
+    VALIDATION_MESSAGES.REQUIRED,
+  );
 });

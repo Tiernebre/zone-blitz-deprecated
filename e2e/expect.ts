@@ -1,6 +1,8 @@
 import { Locator, expect as baseExpect } from "@playwright/test";
 
-export const REQUIRED_VALIDATION_MESSAGE = /fill out this field/i;
+export const VALIDATION_MESSAGES = Object.freeze({
+  REQUIRED: /fill out this field/i,
+});
 
 export const expect = baseExpect.extend({
   async toBeValid(locator: Locator) {
