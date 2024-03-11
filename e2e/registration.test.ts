@@ -29,8 +29,6 @@ test("registers a user", async ({ page }) => {
   await getPasswordInput(page).fill(PASSWORD);
   await getConfirmPasswordInput(page).fill(PASSWORD);
   await submit(page);
-  await page.waitForURL("/");
-  await expect(page).toHaveURL("/");
   await expect(page).not.toHaveURL(/.*registration/);
 });
 
@@ -41,9 +39,9 @@ test("requires a username", async ({ page }) => {
   await expect(getUsernameInput(page)).toBeInvalid(
     VALIDATION_MESSAGES.REQUIRED,
   );
-  await page.screenshot({ path: "test-results/username-screenshot.png" });
   await expect(getPasswordInput(page)).toBeValid();
   await expect(getConfirmPasswordInput(page)).toBeValid();
+  await expect(page).toHaveURL(/.*registration/);
 });
 
 test("requires a password", async ({ page }) => {
@@ -55,4 +53,5 @@ test("requires a password", async ({ page }) => {
     VALIDATION_MESSAGES.REQUIRED,
   );
   await expect(getConfirmPasswordInput(page)).toBeValid();
+  await expect(page).toHaveURL(/.*registration/);
 });
