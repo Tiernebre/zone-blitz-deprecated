@@ -6,5 +6,6 @@ import io.jstach.jstache.JStache;
 public record RegistrationPage(
   String usernameFieldName,
   String passwordFieldName,
-  String confirmPasswordFieldName
+  String confirmPasswordFieldName,
+  int usernameMaxLength
 ) {}

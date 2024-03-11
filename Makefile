@@ -15,13 +15,12 @@ debug: install
 development-environment: install
 
 .PHONY: install
-install: migrate build
+install: clean migrate build
 	cp -r build/install/zone-blitz/. /
 	
-.PHONY: build
 build: node_modules
 	npm run build
-	gradle clean installDist
+	gradle installDist
 
 .PHONY: migrate
 migrate:
@@ -44,6 +43,10 @@ e2e: node_modules
 .PHONY: dev
 dev:
 	.devcontainer/dev.sh
+	
+.PHONY: clean
+clean:
+	gradle clean
 	
 node_modules:
 	npm ci

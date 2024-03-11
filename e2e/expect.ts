@@ -2,6 +2,7 @@ import { Locator, expect as baseExpect } from "@playwright/test";
 
 export const VALIDATION_MESSAGES = Object.freeze({
   REQUIRED: /fill out this field/i,
+  PATTERN: /match the requested format/i,
 });
 
 export const expect = baseExpect.extend({
