@@ -3,7 +3,7 @@ import crypto from "node:crypto";
 import { VALIDATION_MESSAGES, expect } from "./expect";
 
 const URI = "/registration";
-const PASSWORD = crypto.randomUUID();
+const PASSWORD = crypto.randomUUID().toString();
 
 const getUsernameInput = (page: Page) =>
   page.getByRole("textbox", { name: /Username/i });
@@ -30,7 +30,8 @@ test("registers a user", async ({ page }) => {
   await getConfirmPasswordInput(page).fill(PASSWORD);
   await submit(page);
   await page.waitForURL("/");
-  expect(page.url()).not.toContain("registration");
+  await expect(page).toHaveURL("/");
+  await expect(page).not.toHaveURL(/.*registration/);
 });
 
 test("requires a username", async ({ page }) => {
@@ -45,7 +46,7 @@ test("requires a username", async ({ page }) => {
 });
 
 test("requires a password", async ({ page }) => {
-  await getUsernameInput(page).fill(crypto.randomUUID());
+  await getUsernameInput(page).fill(crypto.randomUUID().toString());
   await getConfirmPasswordInput(page).fill(PASSWORD);
   await submit(page);
   await expect(getUsernameInput(page)).toBeValid();
@@ -56,7 +57,7 @@ test("requires a password", async ({ page }) => {
 });
 
 test("requires a confirm password", async ({ page }) => {
-  await getUsernameInput(page).fill(crypto.randomUUID());
+  await getUsernameInput(page).fill(crypto.randomUUID().toString());
   await getPasswordInput(page).fill(PASSWORD);
   await submit(page);
   await expect(getUsernameInput(page)).toBeValid();

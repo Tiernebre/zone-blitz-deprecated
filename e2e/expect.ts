@@ -6,7 +6,7 @@ export const VALIDATION_MESSAGES = Object.freeze({
 
 export const expect = baseExpect.extend({
   async toBeValid(locator: Locator) {
-    const assertionName = "toBeInvalid";
+    const assertionName = "toBeValid";
     let pass = true;
     let failingMessage: string;
 
@@ -19,7 +19,7 @@ export const expect = baseExpect.extend({
         name: assertionName,
         message: () =>
           "Element is not a valid form interactive element and cannot be valid or invalid.",
-        pass,
+        pass: false,
       };
     }
 
@@ -30,6 +30,7 @@ export const expect = baseExpect.extend({
         ),
       ).toStrictEqual(true);
     } catch (e: any) {
+      pass = false;
       failingMessage = `Element is invalid, expected it to be valid`;
     }
 
@@ -70,6 +71,7 @@ export const expect = baseExpect.extend({
         ),
       ).toMatch(validationMessage);
     } catch (e: any) {
+      pass = false;
       failingMessage = `Element is valid, expected it to be invalid with validation message ${validationMessage}`;
     }
 
