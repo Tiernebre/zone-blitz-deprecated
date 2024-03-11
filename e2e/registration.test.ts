@@ -1,12 +1,18 @@
 import { test, Page } from "@playwright/test";
 import crypto from "node:crypto";
-import { expect } from "./expect";
+import { REQUIRED_VALIDATION_MESSAGE, expect } from "./expect";
 
 const URI = "/registration";
 const PASSWORD = crypto.randomUUID();
 
 const getUsernameInput = (page: Page) =>
   page.getByRole("textbox", { name: /Username/i });
+const getPasswordInput = (page: Page) =>
+  page.getByLabel("Password", { exact: true });
+const getConfirmPasswordInput = (page: Page) =>
+  page.getByLabel("Confirm Password", { exact: true });
+const submit = (page: Page) =>
+  page.getByRole("button", { name: /Register/i }).click();
 
 test.beforeEach(async ({ page }) => {
   await page.goto(URI);
@@ -20,17 +26,18 @@ test("registration page exists", async ({ page }) => {
 
 test("registers a user", async ({ page }) => {
   await getUsernameInput(page).fill(crypto.randomUUID());
-  await page.getByLabel("Password", { exact: true }).fill(PASSWORD);
-  await page.getByLabel("Confirm Password", { exact: true }).fill(PASSWORD);
-  await page.getByRole("button", { name: /Register/i }).click();
+  await getPasswordInput(page).fill(PASSWORD);
+  await getConfirmPasswordInput(page).fill(PASSWORD);
+  await submit(page);
   await page.waitForURL("/");
   expect(page.url()).not.toContain("registration");
 });
 
 test("requires a username", async ({ page }) => {
-  const password = crypto.randomUUID();
-  await page.getByLabel("Password", { exact: true }).fill(password);
-  await page.getByLabel("Confirm Password", { exact: true }).fill(password);
-  await page.getByRole("button", { name: /Register/i }).click();
-  await expect(getUsernameInput(page)).toBeInvalid();
+  await getPasswordInput(page).fill(PASSWORD);
+  await getConfirmPasswordInput(page).fill(PASSWORD);
+  await submit(page);
+  await expect(getUsernameInput(page)).toBeInvalid(REQUIRED_VALIDATION_MESSAGE);
+  await expect(getPasswordInput(page)).toBeValid();
+  await expect(getConfirmPasswordInput(page)).toBeValid();
 });
