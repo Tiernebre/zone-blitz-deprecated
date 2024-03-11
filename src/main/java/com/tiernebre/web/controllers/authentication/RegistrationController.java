@@ -1,5 +1,6 @@
 package com.tiernebre.web.controllers.authentication;
 
+import com.tiernebre.authentication.AuthenticationConstants;
 import com.tiernebre.authentication.registration.CreateRegistrationRequest;
 import com.tiernebre.authentication.registration.RegistrationService;
 import com.tiernebre.web.constants.WebConstants;
@@ -59,7 +60,8 @@ public final class RegistrationController {
       new RegistrationPage(
         WebConstants.Authentication.REGISTRATION_USERNAME_PARAM,
         WebConstants.Authentication.REGISTRATION_PASSWORD_PARAM,
-        WebConstants.Authentication.REGISTRATION_CONFIRM_PASSWORD_PARAM
+        WebConstants.Authentication.REGISTRATION_CONFIRM_PASSWORD_PARAM,
+        AuthenticationConstants.USERNAME_MAXIMUM_LENGTH
       ),
       output
     );

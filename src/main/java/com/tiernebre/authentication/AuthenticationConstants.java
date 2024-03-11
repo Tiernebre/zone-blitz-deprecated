@@ -6,4 +6,6 @@ public class AuthenticationConstants {
     new AuthenticationConfiguration(
       System.getenv("ZONE_BLITZ_OAUTH_GOOGLE_CLIENT_ID")
     );
+
+  public static final int USERNAME_MAXIMUM_LENGTH = 64;
 }

@@ -1,7 +1,12 @@
 {{< base_layout}} {{$body}}
 <form method="post">
   <label for="username">Username</label>
-  <input id="username" name="{{usernameFieldName}}" required />
+  <input
+    id="username"
+    name="{{usernameFieldName}}"
+    required
+    maxlength="{{ usernameMaxLength }}"
+  />
   <label for="password">Password</label>
   <input id="password" type="password" name="{{passwordFieldName}}" required />
   <label for="confirm-password">Confirm Password</label>
