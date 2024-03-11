@@ -44,6 +44,12 @@ test("requires a username", async ({ page }) => {
   await expect(page).toHaveURL(/.*registration/);
 });
 
+test("enforces maximum length on a username", async ({ page }) => {
+  const username = "a".repeat(64);
+  await getUsernameInput(page).fill(username + "b");
+  await expect(getUsernameInput(page)).toHaveValue(username);
+});
+
 test("requires a password", async ({ page }) => {
   await getUsernameInput(page).fill(crypto.randomUUID().toString());
   await getConfirmPasswordInput(page).fill(PASSWORD);
