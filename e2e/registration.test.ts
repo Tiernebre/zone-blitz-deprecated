@@ -55,3 +55,15 @@ test("requires a password", async ({ page }) => {
   await expect(getConfirmPasswordInput(page)).toBeValid();
   await expect(page).toHaveURL(/.*registration/);
 });
+
+test("requires a confirm password", async ({ page }) => {
+  await getUsernameInput(page).fill(crypto.randomUUID().toString());
+  await getPasswordInput(page).fill(PASSWORD);
+  await submit(page);
+  await expect(getUsernameInput(page)).toBeValid();
+  await expect(getPasswordInput(page)).toBeValid();
+  await expect(getConfirmPasswordInput(page)).toBeInvalid(
+    VALIDATION_MESSAGES.REQUIRED,
+  );
+  await expect(page).toHaveURL(/.*registration/);
+});
