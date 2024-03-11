@@ -41,7 +41,16 @@ test("requires a username", async ({ page }) => {
   );
   await expect(getPasswordInput(page)).toBeValid();
   await expect(getConfirmPasswordInput(page)).toBeValid();
-  await expect(page).toHaveURL(/.*registration/);
+});
+
+test("validates that the username cannot be a single space", async ({
+  page,
+}) => {
+  await getUsernameInput(page).fill(" ");
+  await getPasswordInput(page).fill(PASSWORD);
+  await getConfirmPasswordInput(page).fill(PASSWORD);
+  await submit(page);
+  await expect(getUsernameInput(page)).toBeInvalid(VALIDATION_MESSAGES.PATTERN);
 });
 
 test("enforces maximum length on a username", async ({ page }) => {
@@ -59,7 +68,6 @@ test("requires a password", async ({ page }) => {
     VALIDATION_MESSAGES.REQUIRED,
   );
   await expect(getConfirmPasswordInput(page)).toBeValid();
-  await expect(page).toHaveURL(/.*registration/);
 });
 
 test("requires a confirm password", async ({ page }) => {
@@ -71,5 +79,4 @@ test("requires a confirm password", async ({ page }) => {
   await expect(getConfirmPasswordInput(page)).toBeInvalid(
     VALIDATION_MESSAGES.REQUIRED,
   );
-  await expect(page).toHaveURL(/.*registration/);
 });

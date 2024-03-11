@@ -2,11 +2,12 @@
 <form method="post">
   <label for="username">Username</label>
   <input
+    type="text"
     id="username"
     name="{{usernameFieldName}}"
     required
+    pattern="\S(.*\S)?"
     maxlength="{{ usernameMaxLength }}"
-    type="text"
   />
   <label for="password">Password</label>
   <input id="password" type="password" name="{{passwordFieldName}}" required />
