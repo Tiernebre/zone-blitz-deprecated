@@ -11,10 +11,10 @@ const LOCAL_CONFIG: PlaywrightTestConfig = {
     },
   },
   webServer: {
-    command: "make",
+    command: `JAVA_TOOL_OPTIONS="-Dorg.slf4j.simpleLogger.defaultLogLevel=info -Dorg.gradle.native=false -Dorg.jooq.no-logo=true -Dorg.jooq.no-tips=true" make`,
     url: URL,
   },
-  timeout: 1000,
+  fullyParallel: false,
 };
 
 const CI_CONFIG: PlaywrightTestConfig = {
