@@ -203,3 +203,6 @@ gradle-app.setting
 # production configurations
 letsencrypt
 secrets
+
+# playwright results
+test-results
