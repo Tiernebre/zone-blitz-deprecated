@@ -15,18 +15,41 @@ public class VavrValidationUtilsTest {
   @Test
   public void required() {
     var fieldName = "requiredField";
-    TestCaseRunner.run(VavrValidationUtils.class, List.of(
+    TestCaseRunner.run(
+      VavrValidationUtils.class,
+      List.of(
         new TestCase<String, Validation<String, String>>(
-          "null value",
+          "null",
           null,
           __ ->
             Validation.invalid(
               String.format("%s is a required field.", fieldName)
             )
+        ),
+        new TestCase<String, Validation<String, String>>(
+          "empty",
+          "",
+          __ ->
+            Validation.invalid(
+              String.format("%s is a required field.", fieldName)
+            )
+        ),
+        new TestCase<String, Validation<String, String>>(
+          "blank",
+          " ",
+          __ ->
+            Validation.invalid(
+              String.format("%s is a required field.", fieldName)
+            )
+        ),
+        new TestCase<String, Validation<String, String>>(
+          "filled out",
+          "a",
+          input -> Validation.valid(input)
         )
-      ), input -> {
-        return VavrValidationUtils.required(fieldName).apply(input);
-      });
+      ),
+      input -> VavrValidationUtils.required(fieldName).apply(input)
+    );
   }
 
   @Test
