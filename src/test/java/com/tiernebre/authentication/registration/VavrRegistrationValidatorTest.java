@@ -64,7 +64,7 @@ public final class VavrRegistrationValidatorTest {
             Either.left(
               List.of(
                 String.format(
-                  "Username must be less than %s characters.",
+                  "Username cannot be greater than 64 characters long.",
                   AuthenticationConstants.USERNAME_MAXIMUM_LENGTH
                 )
               )
@@ -104,7 +104,10 @@ public final class VavrRegistrationValidatorTest {
             "a".repeat(AuthenticationConstants.PASSWORD_MINIMUM_LENGTH - 1),
             "a".repeat(AuthenticationConstants.PASSWORD_MINIMUM_LENGTH - 1)
           ),
-          __ -> Either.left(List.of("Password must be more than 8 characters."))
+          __ ->
+            Either.left(
+              List.of("Password cannot be lesser than 8 characters long.")
+            )
         ),
         new TestCase<
           CreateRegistrationRequest,
@@ -117,7 +120,9 @@ public final class VavrRegistrationValidatorTest {
             "a".repeat(AuthenticationConstants.PASSWORD_MAXIMUM_LENGTH + 1)
           ),
           __ ->
-            Either.left(List.of("Password must be less than 64 characters."))
+            Either.left(
+              List.of("Password cannot be greater than 64 characters long.")
+            )
         ),
         new TestCase<
           CreateRegistrationRequest,

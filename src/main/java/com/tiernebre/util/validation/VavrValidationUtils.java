@@ -8,29 +8,46 @@ public final class VavrValidationUtils {
 
   public static Validation<String, String> required(
     String value,
-    String errorMessage
+    String fieldName
   ) {
-    return required(errorMessage).apply(value);
+    return required(fieldName).apply(value);
   }
 
   public static Function<String, Validation<String, String>> required(
-    String errorMessage
+    String fieldName
   ) {
-    return validation(value -> StringUtils.isNotBlank(value), errorMessage);
+    return validation(
+      value -> StringUtils.isNotBlank(value),
+      String.format("%s is a required field.", fieldName)
+    );
   }
 
   public static Function<String, Validation<String, String>> maximumLength(
-    int length,
-    String errorMessage
+    String fieldName,
+    int length
   ) {
-    return validation(value -> value.length() <= length, errorMessage);
+    return validation(
+      value -> value.length() <= length,
+      String.format(
+        "%s cannot be greater than %s characters long.",
+        fieldName,
+        length
+      )
+    );
   }
 
   public static Function<String, Validation<String, String>> minimumLength(
-    int length,
-    String errorMessage
+    String fieldName,
+    int length
   ) {
-    return validation(value -> value.length() >= length, errorMessage);
+    return validation(
+      value -> value.length() >= length,
+      String.format(
+        "%s cannot be lesser than %s characters long.",
+        fieldName,
+        length
+      )
+    );
   }
 
   private static Function<String, Validation<String, String>> validation(

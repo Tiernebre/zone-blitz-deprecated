@@ -11,6 +11,9 @@ import io.vavr.control.Validation;
 
 public final class VavrRegistrationValidator implements RegistrationValidator {
 
+  private final String USERNAME_FIELD_NAME = "Username";
+  private final String PASSWORD_FIELD_NAME = "Password";
+
   @Override
   public Either<Seq<String>, RegistrationRequest> parse(
     CreateRegistrationRequest request
@@ -30,14 +33,8 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
   }
 
   private Validation<String, String> validateUsername(String username) {
-    return required(username, "Username is a required field.").flatMap(
-      maximumLength(
-        USERNAME_MAXIMUM_LENGTH,
-        String.format(
-          "Username must be less than %s characters.",
-          USERNAME_MAXIMUM_LENGTH
-        )
-      )
+    return required(username, USERNAME_FIELD_NAME).flatMap(
+      maximumLength(USERNAME_FIELD_NAME, USERNAME_MAXIMUM_LENGTH)
     );
   }
 
@@ -45,26 +42,10 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
     String password,
     String confirmPassword
   ) {
-    return required(password, "Password is a required field.")
-      .flatMap(
-        maximumLength(
-          PASSWORD_MAXIMUM_LENGTH,
-          String.format(
-            "Password must be less than %s characters.",
-            PASSWORD_MAXIMUM_LENGTH
-          )
-        )
-      )
-      .flatMap(
-        minimumLength(
-          PASSWORD_MINIMUM_LENGTH,
-          String.format(
-            "Password must be more than %s characters.",
-            PASSWORD_MINIMUM_LENGTH
-          )
-        )
-      )
-      .flatMap(value -> this.passwordsMatch(value, confirmPassword));
+    return required(password, PASSWORD_FIELD_NAME)
+      .flatMap(maximumLength(PASSWORD_FIELD_NAME, PASSWORD_MAXIMUM_LENGTH))
+      .flatMap(minimumLength(PASSWORD_FIELD_NAME, PASSWORD_MINIMUM_LENGTH))
+      .flatMap(value -> passwordsMatch(value, confirmPassword));
   }
 
   private Validation<String, String> passwordsMatch(
