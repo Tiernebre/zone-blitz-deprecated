@@ -1,5 +1,6 @@
 package com.tiernebre.authentication.registration;
 
+import com.tiernebre.authentication.AuthenticationConstants;
 import com.tiernebre.test.TestCase;
 import com.tiernebre.test.TestCaseRunner;
 import io.vavr.collection.List;
@@ -53,6 +54,26 @@ public final class VavrRegistrationValidatorTest {
           CreateRegistrationRequest,
           Either<Seq<String>, RegistrationRequest>
         >(
+          "too long of a username",
+          new CreateRegistrationRequest(
+            "a".repeat(AuthenticationConstants.USERNAME_MAXIMUM_LENGTH + 1),
+            "password",
+            "password"
+          ),
+          __ ->
+            Either.left(
+              List.of(
+                String.format(
+                  "Username must be less than %s characters.",
+                  AuthenticationConstants.USERNAME_MAXIMUM_LENGTH
+                )
+              )
+            )
+        ),
+        new TestCase<
+          CreateRegistrationRequest,
+          Either<Seq<String>, RegistrationRequest>
+        >(
           "null password",
           new CreateRegistrationRequest("username", null, "password"),
           __ -> Either.left(List.of("Password is a required field."))
@@ -80,11 +101,10 @@ public final class VavrRegistrationValidatorTest {
           "too short of a password",
           new CreateRegistrationRequest(
             "username",
-            "a".repeat(RegistrationConstants.MINIMUM_PASSWORD_LENGTH - 1),
-            "a".repeat(RegistrationConstants.MINIMUM_PASSWORD_LENGTH - 1)
+            "a".repeat(AuthenticationConstants.PASSWORD_MINIMUM_LENGTH - 1),
+            "a".repeat(AuthenticationConstants.PASSWORD_MINIMUM_LENGTH - 1)
           ),
-          __ ->
-            Either.left(List.of("Password must be at least 8 characters long."))
+          __ -> Either.left(List.of("Password must be more than 8 characters."))
         ),
         new TestCase<
           CreateRegistrationRequest,
@@ -93,11 +113,11 @@ public final class VavrRegistrationValidatorTest {
           "too long of a password",
           new CreateRegistrationRequest(
             "username",
-            "a".repeat(RegistrationConstants.MAXIMUM_PASSWORD_LENGTH + 1),
-            "a".repeat(RegistrationConstants.MAXIMUM_PASSWORD_LENGTH + 1)
+            "a".repeat(AuthenticationConstants.PASSWORD_MAXIMUM_LENGTH + 1),
+            "a".repeat(AuthenticationConstants.PASSWORD_MAXIMUM_LENGTH + 1)
           ),
           __ ->
-            Either.left(List.of("Password must be at most 64 characters long."))
+            Either.left(List.of("Password must be less than 64 characters."))
         ),
         new TestCase<
           CreateRegistrationRequest,

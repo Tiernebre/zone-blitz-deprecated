@@ -1,11 +1,13 @@
 package com.tiernebre.authentication.registration;
 
+import static com.tiernebre.authentication.AuthenticationConstants.*;
+import static com.tiernebre.util.validation.VavrValidationUtils.*;
+
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Validation;
-import org.apache.commons.lang3.StringUtils;
 
 public final class VavrRegistrationValidator implements RegistrationValidator {
 
@@ -28,47 +30,41 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
   }
 
   private Validation<String, String> validateUsername(String username) {
-    return StringUtils.isBlank(username)
-      ? Validation.invalid("Username is a required field.")
-      : Validation.valid(username);
+    return required(username, "Username is a required field.").flatMap(
+      maximumLength(
+        USERNAME_MAXIMUM_LENGTH,
+        String.format(
+          "Username must be less than %s characters.",
+          USERNAME_MAXIMUM_LENGTH
+        )
+      )
+    );
   }
 
   private Validation<String, String> validatePassword(
     String password,
     String confirmPassword
   ) {
-    return passwordIsRequired(password)
-      .flatMap(this::passwordIsLongEnough)
-      .flatMap(this::passwordIsShortEnough)
+    return required(password, "Password is a required field.")
+      .flatMap(
+        maximumLength(
+          PASSWORD_MAXIMUM_LENGTH,
+          String.format(
+            "Password must be less than %s characters.",
+            PASSWORD_MAXIMUM_LENGTH
+          )
+        )
+      )
+      .flatMap(
+        minimumLength(
+          PASSWORD_MINIMUM_LENGTH,
+          String.format(
+            "Password must be more than %s characters.",
+            PASSWORD_MINIMUM_LENGTH
+          )
+        )
+      )
       .flatMap(value -> this.passwordsMatch(value, confirmPassword));
-  }
-
-  private Validation<String, String> passwordIsRequired(String password) {
-    return StringUtils.isNotBlank(password)
-      ? Validation.valid(password)
-      : Validation.invalid("Password is a required field.");
-  }
-
-  private Validation<String, String> passwordIsLongEnough(String password) {
-    return password.length() >= RegistrationConstants.MINIMUM_PASSWORD_LENGTH
-      ? Validation.valid(password)
-      : Validation.invalid(
-        String.format(
-          "Password must be at least %s characters long.",
-          RegistrationConstants.MINIMUM_PASSWORD_LENGTH
-        )
-      );
-  }
-
-  private Validation<String, String> passwordIsShortEnough(String password) {
-    return password.length() <= RegistrationConstants.MAXIMUM_PASSWORD_LENGTH
-      ? Validation.valid(password)
-      : Validation.invalid(
-        String.format(
-          "Password must be at most %s characters long.",
-          RegistrationConstants.MAXIMUM_PASSWORD_LENGTH
-        )
-      );
   }
 
   private Validation<String, String> passwordsMatch(
@@ -77,12 +73,7 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
   ) {
     return password.equals(confirmPassword)
       ? Validation.valid(password)
-      : Validation.invalid(
-        String.format(
-          "Confirm password must match password.",
-          RegistrationConstants.MAXIMUM_PASSWORD_LENGTH
-        )
-      );
+      : Validation.invalid("Confirm password must match password.");
   }
 
   @Override
