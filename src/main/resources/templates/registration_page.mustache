@@ -10,13 +10,22 @@
     maxlength="{{ usernameMaxLength }}"
   />
   <label for="password">Password</label>
-  <input id="password" type="password" name="{{passwordFieldName}}" required />
+  <input
+    id="password"
+    type="password"
+    name="{{passwordFieldName}}"
+    required
+    maxlength="{{ passwordMaxLength }}"
+    minlength="{{ passwordMinLength }}"
+  />
   <label for="confirm-password">Confirm Password</label>
   <input
     id="confirm-password"
     type="password"
     name="{{confirmPasswordFieldName}}"
     required
+    maxlength="{{ passwordMaxLength }}"
+    minlength="{{ passwordMinLength }}"
   />
   <button>Register</button>
 </form>
