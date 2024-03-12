@@ -9,14 +9,18 @@ public record RegistrationPage(
   String usernameFieldName,
   String passwordFieldName,
   String confirmPasswordFieldName,
-  int usernameMaxLength
+  int usernameMaxLength,
+  int passwordMaxLength,
+  int passwordMinLength
 ) {
   public RegistrationPage() {
     this(
       WebConstants.Authentication.REGISTRATION_USERNAME_PARAM,
       WebConstants.Authentication.REGISTRATION_PASSWORD_PARAM,
       WebConstants.Authentication.REGISTRATION_CONFIRM_PASSWORD_PARAM,
-      AuthenticationConstants.USERNAME_MAXIMUM_LENGTH
+      AuthenticationConstants.USERNAME_MAXIMUM_LENGTH,
+      AuthenticationConstants.PASSWORD_MAXIMUM_LENGTH,
+      AuthenticationConstants.PASSWORD_MINIMUM_LENGTH
     );
   }
 }
