@@ -44,18 +44,20 @@ public final class RegistrationController {
         LOG.debug("Successful registration, redirecting to home page");
       })
       .peekLeft(errors -> {
-        page(ctx);
         ctx.status(HttpStatus.BAD_REQUEST);
-        LOG.debug(
-          "Failed registration, got errors ",
-          errors.collect(Collectors.joining("\n"))
-        );
+        String error = errors.collect(Collectors.joining("\n"));
+        LOG.debug("Failed registration, got errors %s", error);
+        ctx.html(render(error));
       });
   }
 
   public void page(Context ctx) {
+    ctx.html(render(null));
+  }
+
+  private String render(String error) {
     var output = new StringBuilder();
-    JStachio.render(new RegistrationPage("whoa bro"), output);
-    ctx.html(output.toString());
+    JStachio.render(new RegistrationPage(error), output);
+    return output.toString();
   }
 }
