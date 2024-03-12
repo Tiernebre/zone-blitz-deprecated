@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -32,6 +33,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
@@ -165,6 +167,13 @@ public class Registration extends TableImpl<RegistrationRecord> {
             _account = new AccountPath(this, null, Keys.ACCOUNT__ACCOUNT_REGISTRATION_ID_FKEY.getInverseKey());
 
         return _account;
+    }
+
+    @Override
+    public List<Check<RegistrationRecord>> getChecks() {
+        return Arrays.asList(
+            Internal.createCheck(this, DSL.name("username_length"), "(((char_length(username) <= 64) AND (char_length(username) > 0)))", true)
+        );
     }
 
     @Override
