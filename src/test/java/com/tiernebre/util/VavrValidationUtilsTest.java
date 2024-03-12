@@ -15,32 +15,26 @@ public class VavrValidationUtilsTest {
   @Test
   public void required() {
     var fieldName = "requiredField";
+    Validation<String, String> expectedError = Validation.invalid(
+      String.format("%s is a required field.", fieldName)
+    );
     TestCaseRunner.run(
       VavrValidationUtils.class,
       List.of(
         new TestCase<String, Validation<String, String>>(
           "null",
           null,
-          __ ->
-            Validation.invalid(
-              String.format("%s is a required field.", fieldName)
-            )
+          __ -> expectedError
         ),
         new TestCase<String, Validation<String, String>>(
           "empty",
           "",
-          __ ->
-            Validation.invalid(
-              String.format("%s is a required field.", fieldName)
-            )
+          __ -> expectedError
         ),
         new TestCase<String, Validation<String, String>>(
           "blank",
           " ",
-          __ ->
-            Validation.invalid(
-              String.format("%s is a required field.", fieldName)
-            )
+          __ -> expectedError
         ),
         new TestCase<String, Validation<String, String>>(
           "filled out",
@@ -54,48 +48,69 @@ public class VavrValidationUtilsTest {
 
   @Test
   public void maximumLength() {
-    String expectedErrorMessage = "Expected Error";
-    assertTrue(
-      VavrValidationUtils.maximumLength(1, expectedErrorMessage)
-        .apply("12")
-        .isInvalid()
+    var fieldName = "maximumLengthField";
+    var length = 2;
+    Validation<String, String> expectedError = Validation.invalid(
+      String.format(
+        "%s cannot be greater than %s characters long.",
+        fieldName,
+        length
+      )
     );
-    assertEquals(
-      VavrValidationUtils.maximumLength(1, expectedErrorMessage)
-        .apply("12")
-        .getError(),
-      expectedErrorMessage
-    );
-    assertTrue(
-      VavrValidationUtils.maximumLength(1, expectedErrorMessage)
-        .apply("1")
-        .isValid()
+    TestCaseRunner.run(
+      VavrValidationUtils.class,
+      List.of(
+        new TestCase<String, Validation<String, String>>(
+          "exceeds",
+          "a".repeat(length + 1),
+          __ -> expectedError
+        ),
+        new TestCase<String, Validation<String, String>>(
+          "exact",
+          "a".repeat(length),
+          input -> Validation.valid(input)
+        ),
+        new TestCase<String, Validation<String, String>>(
+          "less",
+          "a".repeat(length - 1),
+          input -> Validation.valid(input)
+        )
+      ),
+      input -> VavrValidationUtils.maximumLength(fieldName, length).apply(input)
     );
   }
 
   @Test
   public void minimumLength() {
-    String expectedErrorMessage = "Expected Error";
-    assertTrue(
-      VavrValidationUtils.minimumLength(2, expectedErrorMessage)
-        .apply("1")
-        .isInvalid()
+    var fieldName = "minimumLengthField";
+    var length = 2;
+    Validation<String, String> expectedError = Validation.invalid(
+      String.format(
+        "%s cannot be lesser than %s characters long.",
+        fieldName,
+        length
+      )
     );
-    assertEquals(
-      VavrValidationUtils.minimumLength(2, expectedErrorMessage)
-        .apply("1")
-        .getError(),
-      expectedErrorMessage
-    );
-    assertTrue(
-      VavrValidationUtils.minimumLength(2, expectedErrorMessage)
-        .apply("12")
-        .isValid()
-    );
-    assertTrue(
-      VavrValidationUtils.minimumLength(2, expectedErrorMessage)
-        .apply("123")
-        .isValid()
+    TestCaseRunner.run(
+      VavrValidationUtils.class,
+      List.of(
+        new TestCase<String, Validation<String, String>>(
+          "exceeds",
+          "a".repeat(length + 1),
+          input -> Validation.valid(input)
+        ),
+        new TestCase<String, Validation<String, String>>(
+          "exact",
+          "a".repeat(length),
+          input -> Validation.valid(input)
+        ),
+        new TestCase<String, Validation<String, String>>(
+          "less",
+          "a".repeat(length - 1),
+          __ -> expectedError
+        )
+      ),
+      input -> VavrValidationUtils.minimumLength(fieldName, length).apply(input)
     );
   }
 }

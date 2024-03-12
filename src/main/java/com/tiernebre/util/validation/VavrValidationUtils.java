@@ -16,17 +16,31 @@ public final class VavrValidationUtils {
   }
 
   public static Function<String, Validation<String, String>> maximumLength(
-    int length,
-    String errorMessage
+    String fieldName,
+    int length
   ) {
-    return validation(value -> value.length() <= length, errorMessage);
+    return validation(
+      value -> value.length() <= length,
+      String.format(
+        "%s cannot be greater than %s characters long.",
+        fieldName,
+        length
+      )
+    );
   }
 
   public static Function<String, Validation<String, String>> minimumLength(
-    int length,
-    String errorMessage
+    String fieldName,
+    int length
   ) {
-    return validation(value -> value.length() >= length, errorMessage);
+    return validation(
+      value -> value.length() >= length,
+      String.format(
+        "%s cannot be lesser than %s characters long.",
+        fieldName,
+        length
+      )
+    );
   }
 
   private static Function<String, Validation<String, String>> validation(
