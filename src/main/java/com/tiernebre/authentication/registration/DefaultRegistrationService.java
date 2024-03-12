@@ -1,9 +1,10 @@
 package com.tiernebre.authentication.registration;
 
 import com.tiernebre.authentication.account.AccountService;
+import com.tiernebre.util.validation.error.ZoneBlitzClientError;
+import com.tiernebre.util.validation.error.ZoneBlitzError;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
-import java.util.stream.Collectors;
 
 public final class DefaultRegistrationService implements RegistrationService {
 
@@ -25,15 +26,14 @@ public final class DefaultRegistrationService implements RegistrationService {
   }
 
   @Override
-  public Either<String, Registration> create(
+  public Either<ZoneBlitzError, Registration> create(
     CreateRegistrationRequest request
   ) {
     return validator
       .parse(request)
-      .mapLeft(errors -> errors.collect(Collectors.joining(",")))
       .filterOrElse(
         this::doesNotExist,
-        __ -> "The requested username already exists."
+        __ -> new ZoneBlitzClientError("The requested username already exists.")
       )
       .flatMap(this::persist)
       .peek(accountService::create);
@@ -48,12 +48,13 @@ public final class DefaultRegistrationService implements RegistrationService {
       );
   }
 
-  private Either<String, Registration> persist(RegistrationRequest request) {
-    return repository
-      .insertOne(request.username(), passwordHasher.hash(request.password()))
-      .mapLeft(
-        __ -> "Could not create registration due to an error on our end."
-      );
+  private Either<ZoneBlitzError, Registration> persist(
+    RegistrationRequest request
+  ) {
+    return repository.insertOne(
+      request.username(),
+      passwordHasher.hash(request.password())
+    );
   }
 
   private boolean doesNotExist(RegistrationRequest request) {

@@ -1,19 +1,15 @@
 package com.tiernebre.authentication.registration;
 
 import com.tiernebre.database.jooq.Tables;
+import com.tiernebre.util.validation.error.ZoneBlitzError;
+import com.tiernebre.util.validation.error.ZoneBlitzServerError;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
 import org.jooq.DSLContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class JooqRegistrationRepository
   implements RegistrationRepository {
-
-  private final Logger LOG = LoggerFactory.getLogger(
-    JooqRegistrationRepository.class
-  );
 
   private final DSLContext dsl;
 
@@ -22,7 +18,7 @@ public final class JooqRegistrationRepository
   }
 
   @Override
-  public Either<Throwable, Registration> insertOne(
+  public Either<ZoneBlitzError, Registration> insertOne(
     String username,
     byte[] password
   ) {
@@ -39,13 +35,7 @@ public final class JooqRegistrationRepository
           .fetchSingleInto(Registration.class)
     )
       .toEither()
-      .peekLeft(
-        error ->
-          LOG.error(
-            "Encountered unhandled error during registration insertion.",
-            error
-          )
-      );
+      .mapLeft(exception -> new ZoneBlitzServerError(exception.getMessage()));
   }
 
   @Override

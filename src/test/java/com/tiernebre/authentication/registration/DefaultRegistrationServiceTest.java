@@ -9,6 +9,10 @@ import com.tiernebre.authentication.account.Account;
 import com.tiernebre.authentication.account.AccountService;
 import com.tiernebre.test.TestCase;
 import com.tiernebre.test.TestCaseRunner;
+import com.tiernebre.util.validation.error.ZoneBlitzClientError;
+import com.tiernebre.util.validation.error.ZoneBlitzError;
+import com.tiernebre.util.validation.error.ZoneBlitzServerError;
+import com.tiernebre.util.validation.error.ZoneBlitzValidationError;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.List;
@@ -40,20 +44,29 @@ public final class DefaultRegistrationServiceTest {
     TestCaseRunner.run(
       DefaultRegistrationServiceTest.class,
       List.of(
-        new TestCase<CreateRegistrationRequest, Either<String, Registration>>(
+        new TestCase<
+          CreateRegistrationRequest,
+          Either<ZoneBlitzError, Registration>
+        >(
           "invalid request",
           new CreateRegistrationRequest(null, null, null),
-          __ -> Either.left("invalid request"),
+          __ -> Either.left(new ZoneBlitzClientError("invalid request")),
           (request, expected) -> {
             when(validator.parse(request)).thenReturn(
-              Either.left(List.of(expected.getLeft()))
+              Either.left(expected.getLeft())
             );
           }
         ),
-        new TestCase<CreateRegistrationRequest, Either<String, Registration>>(
+        new TestCase<
+          CreateRegistrationRequest,
+          Either<ZoneBlitzError, Registration>
+        >(
           "existing username",
           new CreateRegistrationRequest("username", "password", "password"),
-          __ -> Either.left("The requested username already exists."),
+          __ ->
+            Either.left(
+              new ZoneBlitzClientError("The requested username already exists.")
+            ),
           (request, expected) -> {
             var username = request.username();
             var password = request.password();
@@ -65,12 +78,17 @@ public final class DefaultRegistrationServiceTest {
             );
           }
         ),
-        new TestCase<CreateRegistrationRequest, Either<String, Registration>>(
+        new TestCase<
+          CreateRegistrationRequest,
+          Either<ZoneBlitzError, Registration>
+        >(
           "persist error",
           new CreateRegistrationRequest(null, null, null),
           __ ->
             Either.left(
-              "Could not create registration due to an error on our end."
+              new ZoneBlitzServerError(
+                "Could not create registration due to an error on our end."
+              )
             ),
           (request, expected) -> {
             var username = request.username();
@@ -84,11 +102,14 @@ public final class DefaultRegistrationServiceTest {
             );
             when(passwordHasher.hash(password)).thenReturn(hashedPassword);
             when(repository.insertOne(username, hashedPassword)).thenReturn(
-              Either.left(new RuntimeException("Unexpected server error"))
+              expected
             );
           }
         ),
-        new TestCase<CreateRegistrationRequest, Either<String, Registration>>(
+        new TestCase<
+          CreateRegistrationRequest,
+          Either<ZoneBlitzError, Registration>
+        >(
           "happy path returns a created registration",
           new CreateRegistrationRequest("username", "password", "password"),
           request ->
