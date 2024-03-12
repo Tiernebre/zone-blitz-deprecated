@@ -43,9 +43,8 @@ public final class RegistrationController {
         ctx.redirect("/");
         LOG.debug("Successful registration, redirecting to home page");
       })
-      .peekLeft(errors -> {
+      .peekLeft(error -> {
         ctx.status(HttpStatus.BAD_REQUEST);
-        String error = errors.collect(Collectors.joining("\n"));
         LOG.debug("Failed registration, got errors %s", error);
         ctx.html(render(error));
       });

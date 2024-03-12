@@ -1,10 +1,9 @@
 package com.tiernebre.authentication.registration;
 
 import com.tiernebre.authentication.account.AccountService;
-import io.vavr.collection.List;
-import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
+import java.util.stream.Collectors;
 
 public final class DefaultRegistrationService implements RegistrationService {
 
@@ -26,14 +25,15 @@ public final class DefaultRegistrationService implements RegistrationService {
   }
 
   @Override
-  public Either<Seq<String>, Registration> create(
+  public Either<String, Registration> create(
     CreateRegistrationRequest request
   ) {
     return validator
       .parse(request)
+      .mapLeft(errors -> errors.collect(Collectors.joining(",")))
       .filterOrElse(
         this::doesNotExist,
-        __ -> List.of("The requested username already exists.")
+        __ -> "The requested username already exists."
       )
       .flatMap(this::persist)
       .peek(accountService::create);
@@ -48,14 +48,11 @@ public final class DefaultRegistrationService implements RegistrationService {
       );
   }
 
-  private Either<Seq<String>, Registration> persist(
-    RegistrationRequest request
-  ) {
+  private Either<String, Registration> persist(RegistrationRequest request) {
     return repository
       .insertOne(request.username(), passwordHasher.hash(request.password()))
       .mapLeft(
-        __ ->
-          List.of("Could not create registration due to an error on our end.")
+        __ -> "Could not create registration due to an error on our end."
       );
   }
 
