@@ -40,4 +40,51 @@ public class VavrValidationUtilsTest {
       VavrValidationUtils.required("1", expectedErrorMessage).isValid()
     );
   }
+
+  @Test
+  public void maximumLength() {
+    String expectedErrorMessage = "Expected Error";
+    assertTrue(
+      VavrValidationUtils.maximumLength(1, expectedErrorMessage)
+        .apply("12")
+        .isInvalid()
+    );
+    assertEquals(
+      VavrValidationUtils.maximumLength(1, expectedErrorMessage)
+        .apply("12")
+        .getError(),
+      expectedErrorMessage
+    );
+    assertTrue(
+      VavrValidationUtils.maximumLength(1, expectedErrorMessage)
+        .apply("1")
+        .isValid()
+    );
+  }
+
+  @Test
+  public void minimumLength() {
+    String expectedErrorMessage = "Expected Error";
+    assertTrue(
+      VavrValidationUtils.minimumLength(2, expectedErrorMessage)
+        .apply("1")
+        .isInvalid()
+    );
+    assertEquals(
+      VavrValidationUtils.minimumLength(2, expectedErrorMessage)
+        .apply("1")
+        .getError(),
+      expectedErrorMessage
+    );
+    assertTrue(
+      VavrValidationUtils.minimumLength(2, expectedErrorMessage)
+        .apply("12")
+        .isValid()
+    );
+    assertTrue(
+      VavrValidationUtils.minimumLength(2, expectedErrorMessage)
+        .apply("123")
+        .isValid()
+    );
+  }
 }
