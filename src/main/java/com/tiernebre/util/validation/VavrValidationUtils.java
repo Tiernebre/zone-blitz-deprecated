@@ -6,17 +6,13 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class VavrValidationUtils {
 
-  public static Validation<String, String> required(
-    String value,
-    String errorMessage
-  ) {
-    return required(errorMessage).apply(value);
-  }
-
   public static Function<String, Validation<String, String>> required(
-    String errorMessage
+    String fieldName
   ) {
-    return validation(value -> StringUtils.isNotBlank(value), errorMessage);
+    return validation(
+      value -> StringUtils.isNotBlank(value),
+      String.format("%s is a required field.", fieldName)
+    );
   }
 
   public static Function<String, Validation<String, String>> maximumLength(
