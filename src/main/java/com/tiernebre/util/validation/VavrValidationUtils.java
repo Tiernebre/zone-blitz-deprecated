@@ -6,6 +6,13 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class VavrValidationUtils {
 
+  public static Validation<String, String> required(
+    String value,
+    String fieldName
+  ) {
+    return required(fieldName).apply(value);
+  }
+
   public static Function<String, Validation<String, String>> required(
     String fieldName
   ) {

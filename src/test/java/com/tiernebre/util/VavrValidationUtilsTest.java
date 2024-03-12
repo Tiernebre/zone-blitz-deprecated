@@ -1,8 +1,5 @@
 package com.tiernebre.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import com.tiernebre.test.TestCase;
 import com.tiernebre.test.TestCaseRunner;
 import com.tiernebre.util.validation.VavrValidationUtils;
@@ -43,6 +40,40 @@ public class VavrValidationUtilsTest {
         )
       ),
       input -> VavrValidationUtils.required(fieldName).apply(input)
+    );
+  }
+
+  @Test
+  public void curriedRequired() {
+    var fieldName = "requiredField";
+    Validation<String, String> expectedError = Validation.invalid(
+      String.format("%s is a required field.", fieldName)
+    );
+    TestCaseRunner.run(
+      VavrValidationUtils.class,
+      List.of(
+        new TestCase<String, Validation<String, String>>(
+          "null",
+          null,
+          __ -> expectedError
+        ),
+        new TestCase<String, Validation<String, String>>(
+          "empty",
+          "",
+          __ -> expectedError
+        ),
+        new TestCase<String, Validation<String, String>>(
+          "blank",
+          " ",
+          __ -> expectedError
+        ),
+        new TestCase<String, Validation<String, String>>(
+          "filled out",
+          "a",
+          input -> Validation.valid(input)
+        )
+      ),
+      input -> VavrValidationUtils.required(input, fieldName)
     );
   }
 

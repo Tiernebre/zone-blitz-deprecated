@@ -30,14 +30,9 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
   }
 
   private Validation<String, String> validateUsername(String username) {
-    return required(username, "Username is a required field.").flatMap(
-      maximumLength(
-        USERNAME_MAXIMUM_LENGTH,
-        String.format(
-          "Username must be less than %s characters.",
-          USERNAME_MAXIMUM_LENGTH
-        )
-      )
+    var fieldName = "Username";
+    return required(username, fieldName).flatMap(
+      maximumLength(fieldName, USERNAME_MAXIMUM_LENGTH)
     );
   }
 
@@ -45,25 +40,10 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
     String password,
     String confirmPassword
   ) {
-    return required(password, "Password is a required field.")
-      .flatMap(
-        maximumLength(
-          PASSWORD_MAXIMUM_LENGTH,
-          String.format(
-            "Password must be less than %s characters.",
-            PASSWORD_MAXIMUM_LENGTH
-          )
-        )
-      )
-      .flatMap(
-        minimumLength(
-          PASSWORD_MINIMUM_LENGTH,
-          String.format(
-            "Password must be more than %s characters.",
-            PASSWORD_MINIMUM_LENGTH
-          )
-        )
-      )
+    var fieldName = "Password";
+    return required(password, fieldName)
+      .flatMap(maximumLength(fieldName, PASSWORD_MAXIMUM_LENGTH))
+      .flatMap(minimumLength(fieldName, PASSWORD_MINIMUM_LENGTH))
       .flatMap(value -> this.passwordsMatch(value, confirmPassword));
   }
 
