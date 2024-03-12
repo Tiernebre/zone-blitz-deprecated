@@ -44,8 +44,8 @@ public final class RegistrationController {
         LOG.debug("Successful registration, redirecting to home page");
       })
       .peekLeft(errors -> {
+        page(ctx);
         ctx.status(HttpStatus.BAD_REQUEST);
-        ctx.redirect("/registration");
         LOG.debug(
           "Failed registration, got errors ",
           errors.collect(Collectors.joining("\n"))
@@ -55,7 +55,7 @@ public final class RegistrationController {
 
   public void page(Context ctx) {
     var output = new StringBuilder();
-    JStachio.render(new RegistrationPage(), output);
+    JStachio.render(new RegistrationPage("whoa bro"), output);
     ctx.html(output.toString());
   }
 }

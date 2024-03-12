@@ -1,4 +1,6 @@
-{{< base_layout}} {{$body}}
+{{< base_layout}} {{$body}} {{#error}}
+<p>{{error}}</p>
+{{/error}}
 <form method="post">
   <label for="username">Username</label>
   <input
