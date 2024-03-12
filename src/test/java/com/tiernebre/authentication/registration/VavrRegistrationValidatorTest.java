@@ -121,7 +121,7 @@ public final class VavrRegistrationValidatorTest {
           ),
           __ ->
             Either.left(
-              List.of("Password cannot be lesser than 64 characters long.")
+              List.of("Password cannot be greater than 64 characters long.")
             )
         ),
         new TestCase<
