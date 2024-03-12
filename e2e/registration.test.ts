@@ -86,6 +86,24 @@ test("enforces maximum length on a password", async ({ page }) => {
   await expect(getUsernameInput(page)).toHaveValue(password);
 });
 
+test("enforces minimum length on confirm password", async ({ page }) => {
+  await getUsernameInput(page).fill(crypto.randomUUID().toString());
+  await getPasswordInput(page).fill(PASSWORD);
+  await getConfirmPasswordInput(page).fill("a");
+  await submit(page);
+  await expect(getUsernameInput(page)).toBeValid();
+  await expect(getPasswordInput(page)).toBeValid();
+  await expect(getConfirmPasswordInput(page)).toBeInvalid(
+    VALIDATION_MESSAGES.MINLENGTH(8),
+  );
+});
+
+test("enforces maximum length on confirm password", async ({ page }) => {
+  const password = "a".repeat(64);
+  await getConfirmPasswordInput(page).fill(password + "b");
+  await expect(getConfirmPasswordInput(page)).toHaveValue(password);
+});
+
 test("requires a confirm password", async ({ page }) => {
   await getUsernameInput(page).fill(crypto.randomUUID().toString());
   await getPasswordInput(page).fill(PASSWORD);
