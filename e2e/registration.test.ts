@@ -114,3 +114,16 @@ test("requires a confirm password", async ({ page }) => {
     VALIDATION_MESSAGES.REQUIRED,
   );
 });
+
+test("validates that password must match confirm password", async ({
+  page,
+}) => {
+  await getUsernameInput(page).fill(crypto.randomUUID());
+  await getPasswordInput(page).fill(PASSWORD);
+  await getConfirmPasswordInput(page).fill(PASSWORD + "a");
+  await submit(page);
+  await expect(page).toHaveURL(/.*registration/);
+  await expect(
+    page.getByText(/confirm password must match password/i),
+  ).toBeVisible();
+});
