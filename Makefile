@@ -47,6 +47,7 @@ dev:
 .PHONY: clean
 clean:
 	gradle clean
+	rm -fr build
 	
 node_modules:
 	npm ci
