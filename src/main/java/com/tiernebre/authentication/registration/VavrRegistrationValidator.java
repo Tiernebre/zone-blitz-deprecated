@@ -11,6 +11,9 @@ import io.vavr.control.Validation;
 
 public final class VavrRegistrationValidator implements RegistrationValidator {
 
+  private final String USERNAME_FIELD_NAME = "Username";
+  private final String PASSWORD_FIELD_NAME = "Password";
+
   @Override
   public Either<Seq<String>, RegistrationRequest> parse(
     CreateRegistrationRequest request
@@ -30,9 +33,8 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
   }
 
   private Validation<String, String> validateUsername(String username) {
-    var fieldName = "Username";
-    return required(username, fieldName).flatMap(
-      maximumLength(fieldName, USERNAME_MAXIMUM_LENGTH)
+    return required(username, USERNAME_FIELD_NAME).flatMap(
+      maximumLength(USERNAME_FIELD_NAME, USERNAME_MAXIMUM_LENGTH)
     );
   }
 
@@ -40,11 +42,10 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
     String password,
     String confirmPassword
   ) {
-    var fieldName = "Password";
-    return required(password, fieldName)
-      .flatMap(maximumLength(fieldName, PASSWORD_MAXIMUM_LENGTH))
-      .flatMap(minimumLength(fieldName, PASSWORD_MINIMUM_LENGTH))
-      .flatMap(value -> this.passwordsMatch(value, confirmPassword));
+    return required(password, PASSWORD_FIELD_NAME)
+      .flatMap(maximumLength(PASSWORD_FIELD_NAME, PASSWORD_MAXIMUM_LENGTH))
+      .flatMap(minimumLength(PASSWORD_FIELD_NAME, PASSWORD_MINIMUM_LENGTH))
+      .flatMap(value -> passwordsMatch(value, confirmPassword));
   }
 
   private Validation<String, String> passwordsMatch(
