@@ -1,0 +1,20 @@
+{{< base_layout}} {{$body}}
+<header class="container mx-auto py-4 text-center">
+  <a class="text-6 font-bold hover:underline focus:underline" href="/"
+    >Zone Blitz</a
+  >
+</header>
+<main class="flex grow container mx-auto">{{$slot}}{{/slot}}</main>
+<footer class="text-center py-4">
+  <ul>
+    <li>
+      Copyright &copy;2024 by
+      <a
+        class="underline text-blue-600 hover:text-blue-700 focus:text-blue-700"
+        href="https://www.tiernebre.com"
+        >Brendan Tierney</a
+      >
+    </li>
+  </ul>
+</footer>
+{{/body}} {{/base_layout}}

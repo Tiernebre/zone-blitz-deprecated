@@ -1,6 +1,9 @@
 #!/bin/sh
 
+set -e
+
 while true; do
+  rm -fr build
   make clean
   make install
   make start &

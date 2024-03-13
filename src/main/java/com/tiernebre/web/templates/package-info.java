@@ -12,6 +12,11 @@
       name = "interactive_layout",
       path = "partials/interactive_layout"
     ),
+    @io.jstach.jstache.JStachePartial(name = "page", path = "partials/page"),
+    @io.jstach.jstache.JStachePartial(
+      name = "button",
+      path = "components/button"
+    ),
   }
 )
 package com.tiernebre.web.templates;
