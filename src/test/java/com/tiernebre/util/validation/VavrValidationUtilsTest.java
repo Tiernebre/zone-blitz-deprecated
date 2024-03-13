@@ -1,8 +1,7 @@
-package com.tiernebre.util;
+package com.tiernebre.util.validation;
 
 import com.tiernebre.test.TestCase;
 import com.tiernebre.test.TestCaseRunner;
-import com.tiernebre.util.validation.VavrValidationUtils;
 import io.vavr.collection.List;
 import io.vavr.control.Validation;
 import org.junit.Test;

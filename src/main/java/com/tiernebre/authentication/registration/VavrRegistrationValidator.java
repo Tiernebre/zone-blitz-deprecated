@@ -3,6 +3,8 @@ package com.tiernebre.authentication.registration;
 import static com.tiernebre.authentication.AuthenticationConstants.*;
 import static com.tiernebre.util.validation.VavrValidationUtils.*;
 
+import com.tiernebre.util.error.ZoneBlitzError;
+import com.tiernebre.util.error.ZoneBlitzValidationError;
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;
@@ -15,7 +17,7 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
   private final String PASSWORD_FIELD_NAME = "Password";
 
   @Override
-  public Either<Seq<String>, RegistrationRequest> parse(
+  public Either<ZoneBlitzError, RegistrationRequest> parse(
     CreateRegistrationRequest request
   ) {
     return Option.of(request)
@@ -29,7 +31,8 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
             validatePassword(req.password(), req.confirmPassword())
           ).ap(RegistrationRequest::new)
       )
-      .toEither();
+      .toEither()
+      .mapLeft(ZoneBlitzValidationError::new);
   }
 
   private Validation<String, String> validateUsername(String username) {
@@ -58,7 +61,7 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
   }
 
   @Override
-  public Either<Seq<String>, RegistrationAuthenticationRequest> parse(
+  public Either<ZoneBlitzError, RegistrationAuthenticationRequest> parse(
     RegistrationAuthenticationRequest request
   ) {
     // TODO Auto-generated method stub

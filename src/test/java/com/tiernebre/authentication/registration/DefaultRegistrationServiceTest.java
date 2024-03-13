@@ -9,10 +9,12 @@ import com.tiernebre.authentication.account.Account;
 import com.tiernebre.authentication.account.AccountService;
 import com.tiernebre.test.TestCase;
 import com.tiernebre.test.TestCaseRunner;
+import com.tiernebre.util.error.ZoneBlitzClientError;
+import com.tiernebre.util.error.ZoneBlitzError;
+import com.tiernebre.util.error.ZoneBlitzServerError;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.List;
-import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import java.util.UUID;
@@ -43,11 +45,11 @@ public final class DefaultRegistrationServiceTest {
       List.of(
         new TestCase<
           CreateRegistrationRequest,
-          Either<Seq<String>, Registration>
+          Either<ZoneBlitzError, Registration>
         >(
           "invalid request",
           new CreateRegistrationRequest(null, null, null),
-          __ -> Either.left(List.of("invalid request")),
+          __ -> Either.left(new ZoneBlitzClientError("invalid request")),
           (request, expected) -> {
             when(validator.parse(request)).thenReturn(
               Either.left(expected.getLeft())
@@ -56,11 +58,14 @@ public final class DefaultRegistrationServiceTest {
         ),
         new TestCase<
           CreateRegistrationRequest,
-          Either<Seq<String>, Registration>
+          Either<ZoneBlitzError, Registration>
         >(
           "existing username",
           new CreateRegistrationRequest("username", "password", "password"),
-          __ -> Either.left(List.of("The requested username already exists.")),
+          __ ->
+            Either.left(
+              new ZoneBlitzClientError("The requested username already exists.")
+            ),
           (request, expected) -> {
             var username = request.username();
             var password = request.password();
@@ -74,13 +79,13 @@ public final class DefaultRegistrationServiceTest {
         ),
         new TestCase<
           CreateRegistrationRequest,
-          Either<Seq<String>, Registration>
+          Either<ZoneBlitzError, Registration>
         >(
           "persist error",
           new CreateRegistrationRequest(null, null, null),
           __ ->
             Either.left(
-              List.of(
+              new ZoneBlitzServerError(
                 "Could not create registration due to an error on our end."
               )
             ),
@@ -96,13 +101,13 @@ public final class DefaultRegistrationServiceTest {
             );
             when(passwordHasher.hash(password)).thenReturn(hashedPassword);
             when(repository.insertOne(username, hashedPassword)).thenReturn(
-              Either.left(new RuntimeException("Unexpected server error"))
+              expected
             );
           }
         ),
         new TestCase<
           CreateRegistrationRequest,
-          Either<Seq<String>, Registration>
+          Either<ZoneBlitzError, Registration>
         >(
           "happy path returns a created registration",
           new CreateRegistrationRequest("username", "password", "password"),

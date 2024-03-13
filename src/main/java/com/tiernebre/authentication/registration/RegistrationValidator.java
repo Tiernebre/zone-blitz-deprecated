@@ -1,14 +1,14 @@
 package com.tiernebre.authentication.registration;
 
-import io.vavr.collection.Seq;
+import com.tiernebre.util.error.ZoneBlitzError;
 import io.vavr.control.Either;
 
 public interface RegistrationValidator {
-  public Either<Seq<String>, RegistrationRequest> parse(
+  public Either<ZoneBlitzError, RegistrationRequest> parse(
     CreateRegistrationRequest request
   );
 
-  public Either<Seq<String>, RegistrationAuthenticationRequest> parse(
+  public Either<ZoneBlitzError, RegistrationAuthenticationRequest> parse(
     RegistrationAuthenticationRequest request
   );
 }
