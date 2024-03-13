@@ -1,6 +1,6 @@
 {{< page}} {{$head}}
 <script src="https://accounts.google.com/gsi/client" async></script>
-{{/head}} {{$content}}
+{{/head}} {{$slot}}
 <div
   id="g_id_onload"
   data-client_id="{{clientId}}"
@@ -16,4 +16,4 @@
   data-shape="rectangular"
   data-logo_alignment="left"
 ></div>
-{{/content}} {{/page}}
+{{/slot}} {{/page}}

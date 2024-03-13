@@ -1,4 +1,4 @@
-{{< page}} {{$content}} {{#error}}
+{{< page}} {{$slot}} {{#error}}
 <p>{{error}}</p>
 {{/error}}
 <form method="post" class="flex flex-col grow px-4">
@@ -34,4 +34,4 @@
   />
   <button>Register</button>
 </form>
-{{/content}} {{/page}}
+{{/slot}} {{/page}}
