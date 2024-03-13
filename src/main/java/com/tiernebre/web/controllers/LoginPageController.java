@@ -1,6 +1,6 @@
 package com.tiernebre.web.controllers;
 
-import com.tiernebre.web.templates.pages.LoginPage;
+import com.tiernebre.web.templates.Login;
 import io.javalin.http.Context;
 import io.jstach.jstachio.JStachio;
 
@@ -14,7 +14,7 @@ public final class LoginPageController {
 
   public void render(Context ctx) {
     var output = new StringBuilder();
-    JStachio.render(new LoginPage(googleClientId), output);
+    JStachio.render(new Login(googleClientId), output);
     ctx.html(output.toString());
   }
 }
