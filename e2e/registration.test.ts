@@ -127,3 +127,20 @@ test("validates that password must match confirm password", async ({
     page.getByText(/confirm password must match password/i),
   ).toBeVisible();
 });
+
+test("validates that a duplicate username cannot be created", async ({
+  page,
+}) => {
+  const username = crypto.randomUUID();
+  await getUsernameInput(page).fill(username);
+  await getPasswordInput(page).fill(PASSWORD);
+  await getConfirmPasswordInput(page).fill(PASSWORD);
+  await submit(page);
+  await expect(page).not.toHaveURL(/.*registration/);
+  await page.goto(URI);
+  await getUsernameInput(page).fill(username);
+  await getPasswordInput(page).fill(PASSWORD);
+  await getConfirmPasswordInput(page).fill(PASSWORD);
+  await submit(page);
+  await expect(page.getByText(/username already exists/i)).toBeVisible();
+});

@@ -33,7 +33,10 @@ public final class DefaultRegistrationService implements RegistrationService {
       .parse(request)
       .filterOrElse(
         this::doesNotExist,
-        __ -> new ZoneBlitzClientError("The requested username already exists.")
+        __ ->
+          new ZoneBlitzClientError(
+            "The requested username already exists. Please specify a different username."
+          )
       )
       .flatMap(this::persist)
       .peek(accountService::create);
