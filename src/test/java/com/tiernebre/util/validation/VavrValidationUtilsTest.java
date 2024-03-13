@@ -1,4 +1,4 @@
-package com.tiernebre.util;
+package com.tiernebre.util.validation;
 
 import com.tiernebre.test.TestCase;
 import com.tiernebre.test.TestCaseRunner;
