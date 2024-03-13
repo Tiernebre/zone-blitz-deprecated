@@ -1,6 +1,6 @@
 package com.tiernebre.web.controllers;
 
-import com.tiernebre.web.templates.LoginPage;
+import com.tiernebre.web.templates.pages.LoginPage;
 import io.javalin.http.Context;
 import io.jstach.jstachio.JStachio;
 

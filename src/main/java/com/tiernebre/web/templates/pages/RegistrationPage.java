@@ -1,10 +1,10 @@
-package com.tiernebre.web.templates;
+package com.tiernebre.web.templates.pages;
 
 import com.tiernebre.authentication.AuthenticationConstants;
 import com.tiernebre.web.constants.WebConstants;
 import io.jstach.jstache.JStache;
 
-@JStache(path = "registration_page")
+@JStache(path = "registration")
 public record RegistrationPage(
   String usernameFieldName,
   String passwordFieldName,
