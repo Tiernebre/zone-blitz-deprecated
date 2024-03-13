@@ -32,6 +32,6 @@
     maxlength="{{ passwordMaxLength }}"
     minlength="{{ passwordMinLength }}"
   />
-  <button>Register</button>
+  {{< button}} {{$slot}} Register {{/slot}} {{/button}}
 </form>
 {{/slot}} {{/page}}
