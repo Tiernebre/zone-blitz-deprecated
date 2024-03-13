@@ -7,7 +7,6 @@ import com.tiernebre.web.templates.RegistrationPage;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.jstach.jstachio.JStachio;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

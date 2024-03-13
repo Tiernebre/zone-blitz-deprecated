@@ -12,7 +12,6 @@ import com.tiernebre.test.TestCaseRunner;
 import com.tiernebre.util.error.ZoneBlitzClientError;
 import com.tiernebre.util.error.ZoneBlitzError;
 import com.tiernebre.util.error.ZoneBlitzServerError;
-import com.tiernebre.util.error.ZoneBlitzValidationError;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.List;
