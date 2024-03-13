@@ -1,29 +1,10 @@
-{{< base_layout}} {{$body}}
-<header class="container mx-auto py-4">
-  <a class="text-6 font-bold hover:underline focus:underline" href="/"
-    >Zone Blitz</a
-  >
-</header>
-<main class="flex grow container mx-auto">
-  <section class="flex flex-col grow text-center justify-center">
-    <h1 class="text-8 font-bold">Zone Blitz</h1>
-    <p class="text-4">
-      A free (as in freedom <span class="font-italic">and</span> beer) and open
-      source american football general manager simulator, built entirely with
-      and served on web technologies!
-    </p>
-  </section>
-</main>
-<footer class="text-center py-4">
-  <ul>
-    <li>
-      Copyright &copy;2024 by
-      <a
-        class="underline text-blue-600 hover:text-blue-700 focus:text-blue-700"
-        href="https://www.tiernebre.com"
-        >Brendan Tierney</a
-      >
-    </li>
-  </ul>
-</footer>
-{{/body}} {{/base_layout}}
+{{< page}} {{$content}}
+<section class="flex flex-col grow text-center justify-center">
+  <h1 class="text-8 font-bold">Zone Blitz</h1>
+  <p class="text-4">
+    A free (as in freedom <span class="font-italic">and</span> beer) and open
+    source american football general manager simulator, built entirely with and
+    served on web technologies!
+  </p>
+</section>
+{{/content}} {{/page}}
