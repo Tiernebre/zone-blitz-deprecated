@@ -64,7 +64,9 @@ public final class DefaultRegistrationServiceTest {
           new CreateRegistrationRequest("username", "password", "password"),
           __ ->
             Either.left(
-              new ZoneBlitzClientError("The requested username already exists.")
+              new ZoneBlitzClientError(
+                "The requested username already exists. Please specify a different username."
+              )
             ),
           (request, expected) -> {
             var username = request.username();
