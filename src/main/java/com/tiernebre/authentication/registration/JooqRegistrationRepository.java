@@ -1,8 +1,8 @@
 package com.tiernebre.authentication.registration;
 
 import com.tiernebre.database.jooq.Tables;
-import com.tiernebre.util.validation.error.ZoneBlitzError;
-import com.tiernebre.util.validation.error.ZoneBlitzServerError;
+import com.tiernebre.util.error.ZoneBlitzError;
+import com.tiernebre.util.error.ZoneBlitzServerError;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;

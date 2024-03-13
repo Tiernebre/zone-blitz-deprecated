@@ -3,8 +3,8 @@ package com.tiernebre.authentication.registration;
 import static com.tiernebre.authentication.AuthenticationConstants.*;
 import static com.tiernebre.util.validation.VavrValidationUtils.*;
 
-import com.tiernebre.util.validation.error.ZoneBlitzError;
-import com.tiernebre.util.validation.error.ZoneBlitzValidationError;
+import com.tiernebre.util.error.ZoneBlitzError;
+import com.tiernebre.util.error.ZoneBlitzValidationError;
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;

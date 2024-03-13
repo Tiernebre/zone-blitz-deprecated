@@ -1,4 +1,4 @@
-package com.tiernebre.util.validation.error;
+package com.tiernebre.util.error;
 
 public interface ZoneBlitzError {
   /**

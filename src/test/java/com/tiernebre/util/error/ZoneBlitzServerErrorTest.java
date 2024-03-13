@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.tiernebre.util.validation.error.ZoneBlitzServerError;
+import com.tiernebre.util.error.ZoneBlitzServerError;
 import org.junit.Test;
 
 public class ZoneBlitzServerErrorTest {

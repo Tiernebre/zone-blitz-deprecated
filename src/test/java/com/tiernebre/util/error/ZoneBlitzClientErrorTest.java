@@ -3,7 +3,7 @@ package com.tiernebre.util.error;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.tiernebre.util.validation.error.ZoneBlitzClientError;
+import com.tiernebre.util.error.ZoneBlitzClientError;
 import org.junit.Test;
 
 public class ZoneBlitzClientErrorTest {

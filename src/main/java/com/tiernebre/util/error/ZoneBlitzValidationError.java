@@ -1,4 +1,4 @@
-package com.tiernebre.util.validation.error;
+package com.tiernebre.util.error;
 
 import io.vavr.collection.Seq;
 import java.util.stream.Collectors;

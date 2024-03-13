@@ -1,8 +1,8 @@
 package com.tiernebre.authentication.registration;
 
 import com.tiernebre.authentication.account.AccountService;
-import com.tiernebre.util.validation.error.ZoneBlitzClientError;
-import com.tiernebre.util.validation.error.ZoneBlitzError;
+import com.tiernebre.util.error.ZoneBlitzClientError;
+import com.tiernebre.util.error.ZoneBlitzError;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 
