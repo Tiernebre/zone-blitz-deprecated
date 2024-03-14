@@ -51,13 +51,13 @@ public final class VavrValidationUtils {
     );
   }
 
-  public static <T extends Object> Function<
+  public static <T> Function<
     Tuple2<T, T>,
     Validation<String, Tuple2<T, T>>
   > matches(String valueFieldName, String otherValueFieldName) {
     return validation(
       value -> value._1.equals(value._2),
-      String.format("%s must match %s", valueFieldName, otherValueFieldName)
+      String.format("%s must match %s.", valueFieldName, otherValueFieldName)
     );
   }
 

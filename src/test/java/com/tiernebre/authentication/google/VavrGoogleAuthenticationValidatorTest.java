@@ -2,6 +2,7 @@ package com.tiernebre.authentication.google;
 
 import static org.junit.Assert.assertEquals;
 
+import com.tiernebre.util.error.ZoneBlitzServerError;
 import io.vavr.control.Either;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ public final class VavrGoogleAuthenticationValidatorTest {
   private final record Case(
     String name,
     GoogleAuthenticationRequest request,
-    Either<String, String> expected
+    Either<ZoneBlitzServerError, String> expected
   ) {}
 
   @Test
@@ -22,32 +23,56 @@ public final class VavrGoogleAuthenticationValidatorTest {
       new Case(
         "Null request",
         null,
-        Either.left("Google Authentication Request received was null.")
+        Either.left(
+          new ZoneBlitzServerError(
+            "Google Authentication Request received was null."
+          )
+        )
       ),
       new Case(
         "No Body CSRF Token",
         new GoogleAuthenticationRequest("creds", null, "csrf"),
-        Either.left("Google CSRF token received was an empty string.")
+        Either.left(
+          new ZoneBlitzServerError(
+            "Google Body CSRF token is a required field."
+          )
+        )
       ),
       new Case(
         "No Cookie CSRF Token",
         new GoogleAuthenticationRequest("creds", "csrf", null),
-        Either.left("Google CSRF token received was an empty string.")
+        Either.left(
+          new ZoneBlitzServerError(
+            "Google Cookie CSRF token is a required field."
+          )
+        )
       ),
       new Case(
         "No Body and Cookie CSRF Token",
         new GoogleAuthenticationRequest("creds", null, null),
-        Either.left("Google CSRF token received was an empty string.")
+        Either.left(
+          new ZoneBlitzServerError(
+            "Google Cookie CSRF token is a required field. Google Body CSRF token is a required field."
+          )
+        )
       ),
       new Case(
         "Body and Cookie CSRF Tokens are not equal",
         new GoogleAuthenticationRequest("creds", "body", "cookie"),
-        Either.left("Google CSRF tokens do not match each other.")
+        Either.left(
+          new ZoneBlitzServerError(
+            "Google Cookie CSRF token must match Google Body CSRF token."
+          )
+        )
       ),
       new Case(
         "No Credential",
         new GoogleAuthenticationRequest(null, "csrf", "csrf"),
-        Either.left("Google Credential received was an empty string.")
+        Either.left(
+          new ZoneBlitzServerError(
+            "Google Credential token is a required field."
+          )
+        )
       ),
       new Case(
         "Valid request",
