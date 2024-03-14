@@ -1,18 +1,22 @@
 package com.tiernebre.authentication.google;
 
+import com.tiernebre.util.error.ZoneBlitzServerError;
+import com.tiernebre.util.validation.VavrValidationUtils;
+import io.javalin.validation.Validator;
+import io.vavr.Tuple2;
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Validation;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
 
 public class VavrGoogleAuthenticationValidator
   implements GoogleAuthenticationValidator {
 
   @Override
-  public Either<String, String> parseCredential(
+  public Either<ZoneBlitzServerError, String> parseCredential(
     GoogleAuthenticationRequest request
   ) {
     return Option.of(request)
@@ -22,7 +26,10 @@ public class VavrGoogleAuthenticationValidator
         )
       )
       .flatMap(req -> this.validateNonNull(req))
-      .mapError(errors -> errors.collect(Collectors.joining("\n")))
+      .mapError(
+        errors ->
+          new ZoneBlitzServerError(errors.collect(Collectors.joining("\n")))
+      )
       .toEither();
   }
 
@@ -36,29 +43,24 @@ public class VavrGoogleAuthenticationValidator
   }
 
   private Validation<String, String> validateCredential(String credential) {
-    return StringUtils.isBlank(credential)
-      ? Validation.invalid("Google Credential received was an empty string.")
-      : Validation.valid(credential);
+    return VavrValidationUtils.required(credential, "Google Credential Token");
   }
 
   private Validation<String, String> validateCsrfTokens(
     String cookieCsrfToken,
     String bodyCsrfToken
   ) {
-    return Validation.<String, String>valid(cookieCsrfToken)
-      .flatMap(
-        token ->
-          StringUtils.isNoneBlank(token, bodyCsrfToken)
-            ? Validation.valid(token)
-            : Validation.invalid(
-              "Google CSRF token received was an empty string."
-            )
-      )
-      .flatMap(
-        token ->
-          token.equals(bodyCsrfToken)
-            ? Validation.valid(token)
+    return Validation.combine(
+      VavrValidationUtils.required(cookieCsrfToken, "Google Cookie CSRF token"),
+      VavrValidationUtils.required(bodyCsrfToken, "Google Body CSRF token")
+    )
+      .ap((cookie, body) -> new Tuple2<>(cookie, body))
+      .map(
+        tokens ->
+          tokens._1.equals(tokens._2)
+            ? Validation.valid(tokens._1)
             : Validation.invalid("Google CSRF tokens do not match each other.")
-      );
+      )
+      .mapError(errors -> errors.collect(Collectors.joining(", ")));
   }
 }

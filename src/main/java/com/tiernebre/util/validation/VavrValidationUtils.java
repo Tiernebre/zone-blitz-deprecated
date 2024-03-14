@@ -1,5 +1,6 @@
 package com.tiernebre.util.validation;
 
+import io.vavr.Tuple2;
 import io.vavr.control.Validation;
 import java.util.function.Function;
 import org.apache.commons.lang3.StringUtils;
@@ -50,8 +51,18 @@ public final class VavrValidationUtils {
     );
   }
 
-  private static Function<String, Validation<String, String>> validation(
-    Function<String, Boolean> predicate,
+  public static <T extends Object> Function<
+    Tuple2<T, T>,
+    Validation<String, Tuple2<T, T>>
+  > matches(String valueFieldName, String otherValueFieldName) {
+    return validation(
+      value -> value._1.equals(value._2),
+      String.format("%s must match %s", valueFieldName, otherValueFieldName)
+    );
+  }
+
+  private static <T> Function<T, Validation<String, T>> validation(
+    Function<T, Boolean> predicate,
     String errorMessage
   ) {
     return value ->
