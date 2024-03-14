@@ -1,5 +1,6 @@
 package com.tiernebre.authentication.google;
 
+import com.tiernebre.util.error.ZoneBlitzError;
 import io.vavr.control.Either;
 
 public interface GoogleAuthenticationValidator {
@@ -10,7 +11,7 @@ public interface GoogleAuthenticationValidator {
    * @param request The authentication request from Google.
    * @return Either the validation error or a valid credential token string.
    */
-  public Either<String, String> parseCredential(
+  public Either<ZoneBlitzError, String> parseCredential(
     GoogleAuthenticationRequest request
   );
 }

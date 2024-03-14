@@ -1,18 +1,23 @@
 package com.tiernebre.authentication.google;
 
+import static com.tiernebre.util.validation.VavrValidationUtils.matches;
+
+import com.tiernebre.util.error.ZoneBlitzError;
+import com.tiernebre.util.error.ZoneBlitzServerError;
+import com.tiernebre.util.validation.VavrValidationUtils;
+import io.vavr.Tuple2;
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Validation;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
 
 public class VavrGoogleAuthenticationValidator
   implements GoogleAuthenticationValidator {
 
   @Override
-  public Either<String, String> parseCredential(
+  public Either<ZoneBlitzError, String> parseCredential(
     GoogleAuthenticationRequest request
   ) {
     return Option.of(request)
@@ -21,12 +26,17 @@ public class VavrGoogleAuthenticationValidator
           "Google Authentication Request received was null."
         )
       )
-      .flatMap(req -> this.validateNonNull(req))
-      .mapError(errors -> errors.collect(Collectors.joining("\n")))
+      .flatMap(req -> validateNonNull(req))
+      .mapError(
+        errors ->
+          (ZoneBlitzError) new ZoneBlitzServerError(
+            errors.collect(Collectors.joining(", "))
+          )
+      )
       .toEither();
   }
 
-  public Validation<Seq<String>, String> validateNonNull(
+  private Validation<Seq<String>, String> validateNonNull(
     GoogleAuthenticationRequest request
   ) {
     return Validation.combine(
@@ -36,29 +46,21 @@ public class VavrGoogleAuthenticationValidator
   }
 
   private Validation<String, String> validateCredential(String credential) {
-    return StringUtils.isBlank(credential)
-      ? Validation.invalid("Google Credential received was an empty string.")
-      : Validation.valid(credential);
+    return VavrValidationUtils.required(credential, "Google Credential token");
   }
 
-  private Validation<String, String> validateCsrfTokens(
+  private Validation<String, Tuple2<String, String>> validateCsrfTokens(
     String cookieCsrfToken,
     String bodyCsrfToken
   ) {
-    return Validation.<String, String>valid(cookieCsrfToken)
-      .flatMap(
-        token ->
-          StringUtils.isNoneBlank(token, bodyCsrfToken)
-            ? Validation.valid(token)
-            : Validation.invalid(
-              "Google CSRF token received was an empty string."
-            )
-      )
-      .flatMap(
-        token ->
-          token.equals(bodyCsrfToken)
-            ? Validation.valid(token)
-            : Validation.invalid("Google CSRF tokens do not match each other.")
-      );
+    var cookieFieldName = "Google Cookie CSRF token";
+    var bodyFieldName = "Google Body CSRF token";
+    return Validation.combine(
+      VavrValidationUtils.required(cookieCsrfToken, cookieFieldName),
+      VavrValidationUtils.required(bodyCsrfToken, bodyFieldName)
+    )
+      .ap((cookie, body) -> new Tuple2<String, String>(cookie, body))
+      .mapError(errors -> errors.collect(Collectors.joining(" ")))
+      .flatMap(matches(cookieFieldName, bodyFieldName));
   }
 }

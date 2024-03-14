@@ -11,6 +11,8 @@ import com.tiernebre.authentication.account.Account;
 import com.tiernebre.authentication.account.AccountService;
 import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionService;
+import com.tiernebre.util.error.ZoneBlitzError;
+import com.tiernebre.util.error.ZoneBlitzServerError;
 import io.vavr.control.Either;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -39,7 +41,7 @@ public final class GoogleAuthenticationStrategyTest {
   private final record Case(
     String name,
     GoogleAuthenticationRequest request,
-    Either<String, Session> expected,
+    Either<ZoneBlitzError, Session> expected,
     Consumer<GoogleAuthenticationRequest> mock
   ) {}
 
@@ -50,16 +52,20 @@ public final class GoogleAuthenticationStrategyTest {
           "creds",
           "csrf",
           "csrf"
-        ), Either.left("Invalid request"), request -> {
+        ), Either.left(
+          new ZoneBlitzServerError("Invalid request")
+        ), request -> {
           when(validator.parseCredential(request)).thenReturn(
-            Either.left("Invalid request")
+            Either.left(new ZoneBlitzServerError("Invalid request"))
           );
         }),
       new Case(
         "Google token verifier returns null",
         new GoogleAuthenticationRequest("creds", "csrf", "csrf"),
         Either.left(
-          "Could not verify and parse given Google authentication credential."
+          new ZoneBlitzServerError(
+            "Could not verify and parse given Google authentication credential."
+          )
         ),
         request -> {
           when(validator.parseCredential(request)).thenReturn(
@@ -74,7 +80,9 @@ public final class GoogleAuthenticationStrategyTest {
           "creds",
           "csrf",
           "csrf"
-        ), Either.left("Get account error"), request -> {
+        ), Either.left(
+          new ZoneBlitzServerError("Get account error")
+        ), request -> {
           when(validator.parseCredential(request)).thenReturn(
             Either.right(request.credential())
           );
@@ -84,7 +92,7 @@ public final class GoogleAuthenticationStrategyTest {
           when(payload.getSubject()).thenReturn(accountId);
           when(token.getPayload()).thenReturn(payload);
           when(accountService.getForGoogleAccount(accountId)).thenReturn(
-            Either.left("Get account error")
+            Either.left(new ZoneBlitzServerError("Get account error"))
           );
           try {
             when(verifier.verify(request.credential())).thenReturn(token);

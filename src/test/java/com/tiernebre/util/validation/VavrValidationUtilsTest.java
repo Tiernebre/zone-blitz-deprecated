@@ -2,6 +2,7 @@ package com.tiernebre.util.validation;
 
 import com.tiernebre.test.TestCase;
 import com.tiernebre.test.TestCaseRunner;
+import io.vavr.Tuple2;
 import io.vavr.collection.List;
 import io.vavr.control.Validation;
 import org.junit.Test;
@@ -141,6 +142,35 @@ public class VavrValidationUtilsTest {
         )
       ),
       input -> VavrValidationUtils.minimumLength(fieldName, length).apply(input)
+    );
+  }
+
+  @Test
+  public void matches() {
+    var fieldName = "fieldA";
+    var otherFieldName = "fieldB";
+    TestCaseRunner.run(
+      VavrValidationUtils.class,
+      List.of(
+        new TestCase<
+          Tuple2<Object, Object>,
+          Validation<String, Tuple2<Object, Object>>
+        >(
+          "not a match",
+          new Tuple2<Object, Object>("A", "B"),
+          input -> Validation.invalid("fieldA must match fieldB.")
+        ),
+        new TestCase<
+          Tuple2<Object, Object>,
+          Validation<String, Tuple2<Object, Object>>
+        >(
+          "match",
+          new Tuple2<Object, Object>("A", "A"),
+          input -> Validation.valid(input)
+        )
+      ),
+      input ->
+        VavrValidationUtils.matches(fieldName, otherFieldName).apply(input)
     );
   }
 }

@@ -9,6 +9,9 @@ import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionService;
 import com.tiernebre.test.TestCase;
 import com.tiernebre.test.TestCaseRunner;
+import com.tiernebre.util.error.ZoneBlitzClientError;
+import com.tiernebre.util.error.ZoneBlitzError;
+import com.tiernebre.util.error.ZoneBlitzServerError;
 import io.vavr.collection.List;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
@@ -34,22 +37,28 @@ public final class RegistrationAuthenticationStrategyTest {
       List.of(
         new TestCase<
           RegistrationAuthenticationRequest,
-          Either<String, Session>
+          Either<ZoneBlitzError, Session>
         >(
           "null request",
           null,
           __ ->
-            Either.left("Given registration authentication request was null.")
+            Either.left(
+              new ZoneBlitzClientError(
+                "Given registration authentication request was null."
+              )
+            )
         ),
         new TestCase<
           RegistrationAuthenticationRequest,
-          Either<String, Session>
+          Either<ZoneBlitzError, Session>
         >(
           "registration not found",
           new RegistrationAuthenticationRequest("username", "password"),
           __ ->
             Either.left(
-              "Could not find a registration with the given username and password."
+              new ZoneBlitzClientError(
+                "Could not find a registration with the given username and password."
+              )
             ),
           (request, expected) -> {
             when(
@@ -59,13 +68,15 @@ public final class RegistrationAuthenticationStrategyTest {
         ),
         new TestCase<
           RegistrationAuthenticationRequest,
-          Either<String, Session>
+          Either<ZoneBlitzError, Session>
         >(
           "account not found",
           new RegistrationAuthenticationRequest("username", "password"),
           __ ->
             Either.left(
-              "Could not find an associated account for the provided registration."
+              new ZoneBlitzServerError(
+                "Could not find an associated account for the provided registration."
+              )
             ),
           (request, expected) -> {
             var registration = new Registration(
@@ -83,7 +94,7 @@ public final class RegistrationAuthenticationStrategyTest {
         ),
         new TestCase<
           RegistrationAuthenticationRequest,
-          Either<String, Session>
+          Either<ZoneBlitzError, Session>
         >(
           "happy path created session for a valid registration",
           new RegistrationAuthenticationRequest("username", "password"),
