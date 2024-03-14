@@ -33,7 +33,7 @@ public class VavrGoogleAuthenticationValidator
       .toEither();
   }
 
-  public Validation<Seq<String>, String> validateNonNull(
+  private Validation<Seq<String>, String> validateNonNull(
     GoogleAuthenticationRequest request
   ) {
     return Validation.combine(
