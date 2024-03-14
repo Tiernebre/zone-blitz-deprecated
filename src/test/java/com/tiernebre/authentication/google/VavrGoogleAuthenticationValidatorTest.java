@@ -2,6 +2,7 @@ package com.tiernebre.authentication.google;
 
 import com.tiernebre.test.TestCase;
 import com.tiernebre.test.TestCaseRunner;
+import com.tiernebre.util.error.ZoneBlitzError;
 import com.tiernebre.util.error.ZoneBlitzServerError;
 import io.vavr.collection.List;
 import io.vavr.control.Either;
@@ -19,7 +20,7 @@ public final class VavrGoogleAuthenticationValidatorTest {
       List.of(
         new TestCase<
           GoogleAuthenticationRequest,
-          Either<ZoneBlitzServerError, String>
+          Either<ZoneBlitzError, String>
         >(
           "Null request",
           null,
@@ -32,7 +33,7 @@ public final class VavrGoogleAuthenticationValidatorTest {
         ),
         new TestCase<
           GoogleAuthenticationRequest,
-          Either<ZoneBlitzServerError, String>
+          Either<ZoneBlitzError, String>
         >(
           "No Body CSRF Token",
           new GoogleAuthenticationRequest("creds", null, "csrf"),
@@ -45,7 +46,7 @@ public final class VavrGoogleAuthenticationValidatorTest {
         ),
         new TestCase<
           GoogleAuthenticationRequest,
-          Either<ZoneBlitzServerError, String>
+          Either<ZoneBlitzError, String>
         >(
           "No Cookie CSRF Token",
           new GoogleAuthenticationRequest("creds", "csrf", null),
@@ -58,7 +59,7 @@ public final class VavrGoogleAuthenticationValidatorTest {
         ),
         new TestCase<
           GoogleAuthenticationRequest,
-          Either<ZoneBlitzServerError, String>
+          Either<ZoneBlitzError, String>
         >(
           "No Body and Cookie CSRF Token",
           new GoogleAuthenticationRequest("creds", null, null),
@@ -71,7 +72,7 @@ public final class VavrGoogleAuthenticationValidatorTest {
         ),
         new TestCase<
           GoogleAuthenticationRequest,
-          Either<ZoneBlitzServerError, String>
+          Either<ZoneBlitzError, String>
         >(
           "Body and Cookie CSRF Tokens are not equal",
           new GoogleAuthenticationRequest("creds", "body", "cookie"),
@@ -84,7 +85,7 @@ public final class VavrGoogleAuthenticationValidatorTest {
         ),
         new TestCase<
           GoogleAuthenticationRequest,
-          Either<ZoneBlitzServerError, String>
+          Either<ZoneBlitzError, String>
         >(
           "No Credential",
           new GoogleAuthenticationRequest(null, "csrf", "csrf"),
@@ -97,7 +98,7 @@ public final class VavrGoogleAuthenticationValidatorTest {
         ),
         new TestCase<
           GoogleAuthenticationRequest,
-          Either<ZoneBlitzServerError, String>
+          Either<ZoneBlitzError, String>
         >(
           "Valid request",
           new GoogleAuthenticationRequest("credential", "csrf", "csrf"),

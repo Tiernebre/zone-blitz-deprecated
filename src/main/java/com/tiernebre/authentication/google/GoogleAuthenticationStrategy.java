@@ -7,8 +7,10 @@ import com.tiernebre.authentication.AuthenticationStrategy;
 import com.tiernebre.authentication.account.AccountService;
 import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionService;
+import com.tiernebre.util.error.ZoneBlitzError;
+import com.tiernebre.util.error.ZoneBlitzServerError;
 import io.vavr.control.Either;
-import io.vavr.control.Option;
+import io.vavr.control.Try;
 
 public final class GoogleAuthenticationStrategy
   implements AuthenticationStrategy<GoogleAuthenticationRequest> {
@@ -31,7 +33,7 @@ public final class GoogleAuthenticationStrategy
   }
 
   @Override
-  public Either<String, Session> authenticate(
+  public Either<ZoneBlitzError, Session> authenticate(
     GoogleAuthenticationRequest request
   ) {
     return validator
@@ -43,15 +45,15 @@ public final class GoogleAuthenticationStrategy
       .map(sessionService::create);
   }
 
-  private Either<String, GoogleIdToken> verifyAndParseCredential(
+  private Either<ZoneBlitzError, GoogleIdToken> verifyAndParseCredential(
     String credential
   ) {
-    return Option.of(credential)
-      .toTry()
-      .mapTry(verifier::verify)
+    return Try.of(() -> verifier.verify(credential))
       .filter(token -> token != null)
       .toEither(
-        "Could not verify and parse given Google authentication credential."
+        new ZoneBlitzServerError(
+          "Could not verify and parse given Google authentication credential."
+        )
       );
   }
 }

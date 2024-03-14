@@ -1,6 +1,8 @@
 package com.tiernebre.authentication.account;
 
 import com.tiernebre.authentication.registration.Registration;
+import com.tiernebre.util.error.ZoneBlitzError;
+import com.tiernebre.util.error.ZoneBlitzServerError;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 
@@ -13,9 +15,15 @@ public final class DefaultAccountService implements AccountService {
   }
 
   @Override
-  public Either<String, Account> getForGoogleAccount(String googleAccountId) {
+  public Either<ZoneBlitzError, Account> getForGoogleAccount(
+    String googleAccountId
+  ) {
     return Option.of(googleAccountId)
-      .toEither("Given Google account id is null.")
+      .toEither(
+        (ZoneBlitzError) new ZoneBlitzServerError(
+          "Given Google account id is null."
+        )
+      )
       .map(this::selectOrCreateByGoogleAccountId);
   }
 

@@ -2,6 +2,7 @@ package com.tiernebre.authentication.google;
 
 import static com.tiernebre.util.validation.VavrValidationUtils.matches;
 
+import com.tiernebre.util.error.ZoneBlitzError;
 import com.tiernebre.util.error.ZoneBlitzServerError;
 import com.tiernebre.util.validation.VavrValidationUtils;
 import io.vavr.Tuple2;
@@ -16,7 +17,7 @@ public class VavrGoogleAuthenticationValidator
   implements GoogleAuthenticationValidator {
 
   @Override
-  public Either<ZoneBlitzServerError, String> parseCredential(
+  public Either<ZoneBlitzError, String> parseCredential(
     GoogleAuthenticationRequest request
   ) {
     return Option.of(request)
@@ -28,7 +29,9 @@ public class VavrGoogleAuthenticationValidator
       .flatMap(req -> validateNonNull(req))
       .mapError(
         errors ->
-          new ZoneBlitzServerError(errors.collect(Collectors.joining(", ")))
+          (ZoneBlitzError) new ZoneBlitzServerError(
+            errors.collect(Collectors.joining(", "))
+          )
       )
       .toEither();
   }

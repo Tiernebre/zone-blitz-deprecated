@@ -1,6 +1,7 @@
 package com.tiernebre.authentication;
 
 import com.tiernebre.authentication.session.Session;
+import com.tiernebre.util.error.ZoneBlitzError;
 import io.vavr.control.Either;
 
 /**
@@ -14,7 +15,7 @@ public interface AuthenticationStrategy<T> {
    * an error message String will be returned.
    *
    * @param request The user provided request to authenticate.
-   * @return Either an error message string if invalid, or a new session if valid.
+   * @return Either an error if invalid, or a new session if valid.
    */
-  public Either<String, Session> authenticate(T request);
+  public Either<ZoneBlitzError, Session> authenticate(T request);
 }

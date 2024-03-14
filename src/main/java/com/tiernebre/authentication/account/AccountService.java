@@ -1,6 +1,7 @@
 package com.tiernebre.authentication.account;
 
 import com.tiernebre.authentication.registration.Registration;
+import com.tiernebre.util.error.ZoneBlitzError;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 
@@ -14,7 +15,9 @@ public interface AccountService {
    * @param googleAccountId The associated Google account id.
    * @return An error message if an error occurred, or the existing / created account.
    */
-  public Either<String, Account> getForGoogleAccount(String googleAccountId);
+  public Either<ZoneBlitzError, Account> getForGoogleAccount(
+    String googleAccountId
+  );
 
   /**
    * Will get an existing Account by an associated registration id.
