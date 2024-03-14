@@ -1,6 +1,5 @@
 package com.tiernebre.authentication.google;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -20,7 +19,6 @@ import io.vavr.control.Either;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.UUID;
-import java.util.function.Consumer;
 import org.junit.Test;
 
 public final class GoogleAuthenticationStrategyTest {
@@ -59,6 +57,79 @@ public final class GoogleAuthenticationStrategyTest {
             when(validator.parseCredential(request)).thenReturn(
               Either.left(new ZoneBlitzServerError("Invalid request"))
             );
+          }
+        ),
+        new TestCase<
+          GoogleAuthenticationRequest,
+          Either<ZoneBlitzError, Session>
+        >(
+          "Token verifier returns null",
+          new GoogleAuthenticationRequest("creds", "csrf", "csrf"),
+          __ ->
+            Either.left(
+              new ZoneBlitzServerError(
+                "Could not verify and parse given Google authentication credential."
+              )
+            ),
+          (request, __) -> {
+            when(validator.parseCredential(request)).thenReturn(
+              Either.right(request.credential())
+            );
+            try {
+              when(verifier.verify(request.credential())).thenReturn(null);
+            } catch (Exception e) {}
+          }
+        ),
+        new TestCase<
+          GoogleAuthenticationRequest,
+          Either<ZoneBlitzError, Session>
+        >(
+          "Getting account had an error",
+          new GoogleAuthenticationRequest("creds", "csrf", "csrf"),
+          __ -> Either.left(new ZoneBlitzServerError("Get account error")),
+          (request, __) -> {
+            when(validator.parseCredential(request)).thenReturn(
+              Either.right(request.credential())
+            );
+            var token = mock(GoogleIdToken.class);
+            var payload = mock(Payload.class);
+            var accountId = "accountId";
+            when(payload.getSubject()).thenReturn(accountId);
+            when(token.getPayload()).thenReturn(payload);
+            when(accountService.getForGoogleAccount(accountId)).thenReturn(
+              Either.left(new ZoneBlitzServerError("Get account error"))
+            );
+            try {
+              when(verifier.verify(request.credential())).thenReturn(token);
+            } catch (Exception e) {}
+          }
+        ),
+        new TestCase<
+          GoogleAuthenticationRequest,
+          Either<ZoneBlitzError, Session>
+        >(
+          "Happy path valid request and created session",
+          new GoogleAuthenticationRequest("creds", "csrf", "csrf"),
+          __ -> Either.right(new Session(new UUID(0, 0), 1L)),
+          (request, expected) -> {
+            when(validator.parseCredential(request)).thenReturn(
+              Either.right(request.credential())
+            );
+            var token = mock(GoogleIdToken.class);
+            var payload = mock(Payload.class);
+            var accountId = "accountId";
+            var expectedAccount = new Account(1L, 1L, accountId);
+            when(payload.getSubject()).thenReturn(accountId);
+            when(token.getPayload()).thenReturn(payload);
+            when(accountService.getForGoogleAccount(accountId)).thenReturn(
+              Either.right(expectedAccount)
+            );
+            when(sessionService.create(expectedAccount)).thenReturn(
+              expected.get()
+            );
+            try {
+              when(verifier.verify(request.credential())).thenReturn(token);
+            } catch (Exception e) {}
           }
         )
       ),
