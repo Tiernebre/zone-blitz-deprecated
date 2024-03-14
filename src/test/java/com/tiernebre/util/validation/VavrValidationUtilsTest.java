@@ -158,7 +158,7 @@ public class VavrValidationUtilsTest {
         >(
           "not a match",
           new Tuple2<Object, Object>("A", "B"),
-          input -> Validation.invalid("fieldA must match fieldB")
+          input -> Validation.invalid("fieldA must match fieldB.")
         ),
         new TestCase<
           Tuple2<Object, Object>,
