@@ -27,11 +27,9 @@ public class VavrGoogleAuthenticationValidator
         )
       )
       .flatMap(req -> validateNonNull(req))
-      .mapError(
+      .<ZoneBlitzError>mapError(
         errors ->
-          (ZoneBlitzError) new ZoneBlitzServerError(
-            errors.collect(Collectors.joining(", "))
-          )
+          new ZoneBlitzServerError(errors.collect(Collectors.joining(", ")))
       )
       .toEither();
   }

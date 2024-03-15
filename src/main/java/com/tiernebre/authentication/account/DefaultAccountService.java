@@ -19,10 +19,8 @@ public final class DefaultAccountService implements AccountService {
     String googleAccountId
   ) {
     return Option.of(googleAccountId)
-      .toEither(
-        (ZoneBlitzError) new ZoneBlitzServerError(
-          "Given Google account id is null."
-        )
+      .<ZoneBlitzError>toEither(
+        new ZoneBlitzServerError("Given Google account id is null.")
       )
       .map(this::selectOrCreateByGoogleAccountId);
   }
