@@ -124,7 +124,7 @@ test("validates that password must match confirm password", async ({
   await submit(page);
   await expect(page).toHaveURL(/.*registration/);
   await expect(
-    page.getByText(/confirm password must match password/i),
+    page.getByText(/password must match confirm password/i),
   ).toBeVisible();
 });
 
