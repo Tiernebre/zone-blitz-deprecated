@@ -1,7 +1,10 @@
-{{< page}} {{$slot}} {{#error}}
-<p>{{error}}</p>
-{{/error}}
+{{< page}} {{$slot}}
 <h1 class="text-center text-8 font-bold mt-4 mb-6">Register</h1>
+{{#error}}
+<p class="bg-red-200 text-black border-1 border-red-400 mx-4 text-center p-2">
+  {{error}}
+</p>
+{{/error}}
 <form method="post" class="flex flex-col grow px-4">
   <label for="username">Username</label>
   <input
