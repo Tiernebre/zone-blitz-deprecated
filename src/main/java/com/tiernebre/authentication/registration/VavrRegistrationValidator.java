@@ -5,6 +5,7 @@ import static com.tiernebre.util.validation.VavrValidationUtils.*;
 
 import com.tiernebre.util.error.ZoneBlitzError;
 import com.tiernebre.util.error.ZoneBlitzValidationError;
+import io.vavr.Tuple2;
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;
@@ -48,16 +49,9 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
     return required(password, PASSWORD_FIELD_NAME)
       .flatMap(maximumLength(PASSWORD_FIELD_NAME, PASSWORD_MAXIMUM_LENGTH))
       .flatMap(minimumLength(PASSWORD_FIELD_NAME, PASSWORD_MINIMUM_LENGTH))
-      .flatMap(value -> passwordsMatch(value, confirmPassword));
-  }
-
-  private Validation<String, String> passwordsMatch(
-    String password,
-    String confirmPassword
-  ) {
-    return password.equals(confirmPassword)
-      ? Validation.valid(password)
-      : Validation.invalid("Confirm password must match password.");
+      .map(value -> new Tuple2<>(value, confirmPassword))
+      .flatMap(matches(PASSWORD_FIELD_NAME, "Confirm Password"))
+      .map(passwords -> passwords._1);
   }
 
   @Override

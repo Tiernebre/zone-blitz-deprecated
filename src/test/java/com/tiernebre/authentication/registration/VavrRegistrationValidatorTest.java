@@ -175,7 +175,7 @@ public final class VavrRegistrationValidatorTest {
           __ ->
             Either.left(
               new ZoneBlitzValidationError(
-                List.of("Confirm password must match password.")
+                List.of("Password must match Confirm Password.")
               )
             )
         ),

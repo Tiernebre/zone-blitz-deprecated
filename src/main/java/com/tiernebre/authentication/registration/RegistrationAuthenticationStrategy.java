@@ -33,8 +33,8 @@ public class RegistrationAuthenticationStrategy
     RegistrationAuthenticationRequest request
   ) {
     return Option.of(request)
-      .toEither(
-        (ZoneBlitzError) new ZoneBlitzClientError(
+      .<ZoneBlitzError>toEither(
+        new ZoneBlitzClientError(
           "Given registration authentication request was null."
         )
       )
@@ -48,8 +48,8 @@ public class RegistrationAuthenticationStrategy
   ) {
     return service
       .getOne(request.username(), request.password())
-      .toEither(
-        (ZoneBlitzError) new ZoneBlitzClientError(
+      .<ZoneBlitzError>toEither(
+        new ZoneBlitzClientError(
           "Could not find a registration with the given username and password."
         )
       );
@@ -60,8 +60,8 @@ public class RegistrationAuthenticationStrategy
   ) {
     return accountService
       .getForRegistration(registration.id())
-      .toEither(
-        (ZoneBlitzError) new ZoneBlitzServerError(
+      .<ZoneBlitzError>toEither(
+        new ZoneBlitzServerError(
           "Could not find an associated account for the provided registration."
         )
       );
