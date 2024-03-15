@@ -3,6 +3,7 @@
 set -e
 
 while true; do
+  trap 'kill -9 $(pgrep -f "java -classpath")' SIGINT SIGTERM EXIT
   rm -fr build
   make clean
   make install
