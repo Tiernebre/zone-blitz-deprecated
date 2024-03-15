@@ -4,13 +4,18 @@ import io.javalin.Javalin;
 
 public final class Middlewares {
 
-  private final SessionMiddleware authenticationMiddleware;
+  private final SessionMiddleware sessionMiddleware;
+  private final SecurityMiddleware securityMiddleware;
 
-  public Middlewares(SessionMiddleware authenticationMiddleware) {
-    this.authenticationMiddleware = authenticationMiddleware;
+  public Middlewares(
+    SessionMiddleware authenticationMiddleware,
+    SecurityMiddleware securityMiddleware
+  ) {
+    this.sessionMiddleware = authenticationMiddleware;
+    this.securityMiddleware = securityMiddleware;
   }
 
   public Javalin register(Javalin app) {
-    return app.before(authenticationMiddleware);
+    return app.before(sessionMiddleware).after(securityMiddleware);
   }
 }
