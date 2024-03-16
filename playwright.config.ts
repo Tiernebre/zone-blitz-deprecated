@@ -1,6 +1,6 @@
 import { PlaywrightTestConfig, defineConfig, devices } from "@playwright/test";
 
-const URL = process.env.ZONE_BLITZ_URL || "http://0.0.0.0:8000";
+const URL = process.env.CI ? process.env.ZONE_BLITZ_URL : "http://0.0.0.0:8000";
 
 const LOCAL_CONFIG: PlaywrightTestConfig = {
   use: {
