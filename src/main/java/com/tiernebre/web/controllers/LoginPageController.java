@@ -15,7 +15,13 @@ public final class LoginPageController {
 
   public void render(Context ctx) {
     var output = new StringBuilder();
-    JStachio.render(new Login(googleClientId), output);
+    JStachio.render(
+      new Login(
+        googleClientId,
+        String.format("%s/api/authenticate", WebConstants.URL)
+      ),
+      output
+    );
     ctx.header(
       WebConstants.CONTENT_SECURITY_POLICY_HEADER_NAME,
       String.format(
