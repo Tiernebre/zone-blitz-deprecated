@@ -38,7 +38,8 @@ public final class RoutesFactory {
           dependencyContext
             .authentication()
             .configuration()
-            .oauthGoogleClientId()
+            .oauthGoogleClientId(),
+          helper
         ),
         new RegistrationRoutes(
           new RegistrationController(authentication.registrationService())
