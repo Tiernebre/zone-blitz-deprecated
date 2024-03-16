@@ -2,7 +2,6 @@ package com.tiernebre.web.controllers.authentication;
 
 import com.tiernebre.authentication.registration.CreateRegistrationRequest;
 import com.tiernebre.authentication.registration.RegistrationService;
-import com.tiernebre.web.constants.WebConstants;
 import com.tiernebre.web.templates.Registration;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
@@ -26,9 +25,9 @@ public final class RegistrationController {
     service
       .create(
         new CreateRegistrationRequest(
-          ctx.formParam(WebConstants.Authentication.USERNAME_PARAM),
-          ctx.formParam(WebConstants.Authentication.PASSWORD_PARAM),
-          ctx.formParam(WebConstants.Authentication.CONFIRM_PASSWORD_PARAM)
+          ctx.formParam(Constants.USERNAME_PARAM),
+          ctx.formParam(Constants.PASSWORD_PARAM),
+          ctx.formParam(Constants.CONFIRM_PASSWORD_PARAM)
         )
       )
       .peek(registration -> {
@@ -52,7 +51,7 @@ public final class RegistrationController {
     JStachio.render(
       new Registration(
         Constants.AUTHENTICATION_FORM,
-        WebConstants.Authentication.CONFIRM_PASSWORD_PARAM,
+        Constants.CONFIRM_PASSWORD_PARAM,
         error
       ),
       output

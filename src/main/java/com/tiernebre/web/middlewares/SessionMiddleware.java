@@ -18,14 +18,11 @@ public final class SessionMiddleware implements Handler {
 
   @Override
   public void handle(@NotNull Context ctx) throws Exception {
-    Option.of(ctx.cookie(WebConstants.Authentication.SESSION_COOKIE_TOKEN_NAME))
+    Option.of(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME))
       .map(UUID::fromString)
       .flatMap(sessionService::get)
       .peek(session -> {
-        ctx.attribute(
-          WebConstants.Authentication.JAVALIN_SESSION_ATTRIBUTE,
-          session
-        );
+        ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE, session);
       });
   }
 }
