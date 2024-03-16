@@ -8,7 +8,7 @@ public class SecurityMiddleware implements Handler {
 
   @Override
   public void handle(@NotNull Context ctx) throws Exception {
-    if (ctx.headerMap().containsKey("Content-Security-Policy")) {
+    if (!ctx.res().containsHeader("Content-Security-Policy")) {
       ctx.header("Content-Security-Policy", "default-src 'self'");
     }
   }
