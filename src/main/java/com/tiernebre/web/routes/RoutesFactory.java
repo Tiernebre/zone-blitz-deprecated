@@ -3,8 +3,8 @@ package com.tiernebre.web.routes;
 import com.tiernebre.context.DependencyContext;
 import com.tiernebre.web.controllers.FrontPageController;
 import com.tiernebre.web.controllers.HealthController;
-import com.tiernebre.web.controllers.LoginPageController;
 import com.tiernebre.web.controllers.authentication.GoogleAuthenticationController;
+import com.tiernebre.web.controllers.authentication.LoginController;
 import com.tiernebre.web.controllers.authentication.RegistrationController;
 import com.tiernebre.web.routes.api.ApiRoutes;
 import com.tiernebre.web.routes.api.AuthenticationRoutes;
@@ -32,7 +32,7 @@ public final class RoutesFactory {
       ),
       new PageRoutes(
         new FrontPageController(),
-        new LoginPageController(
+        new LoginController(
           dependencyContext
             .authentication()
             .configuration()

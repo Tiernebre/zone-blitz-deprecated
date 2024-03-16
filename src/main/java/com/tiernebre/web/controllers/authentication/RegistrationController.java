@@ -26,15 +26,9 @@ public final class RegistrationController {
     service
       .create(
         new CreateRegistrationRequest(
-          ctx.formParam(
-            WebConstants.Authentication.REGISTRATION_USERNAME_PARAM
-          ),
-          ctx.formParam(
-            WebConstants.Authentication.REGISTRATION_PASSWORD_PARAM
-          ),
-          ctx.formParam(
-            WebConstants.Authentication.REGISTRATION_CONFIRM_PASSWORD_PARAM
-          )
+          ctx.formParam(WebConstants.Authentication.USERNAME_PARAM),
+          ctx.formParam(WebConstants.Authentication.PASSWORD_PARAM),
+          ctx.formParam(WebConstants.Authentication.CONFIRM_PASSWORD_PARAM)
         )
       )
       .peek(registration -> {
@@ -55,7 +49,14 @@ public final class RegistrationController {
 
   private String render(String error) {
     var output = new StringBuilder();
-    JStachio.render(new Registration(error), output);
+    JStachio.render(
+      new Registration(
+        Constants.AUTHENTICATION_FORM,
+        WebConstants.Authentication.CONFIRM_PASSWORD_PARAM,
+        error
+      ),
+      output
+    );
     return output.toString();
   }
 }
