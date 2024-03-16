@@ -1,19 +1,23 @@
 {{< page}} {{$head}}
 <script src="{{ googleScriptSrc }}" async></script>
 {{/head}} {{$slot}}
-<div
-  id="g_id_onload"
-  data-client_id="{{clientId}}"
-  data-login_uri="{{loginUri}}"
-  data-auto_prompt="false"
-></div>
-<div
-  class="g_id_signin"
-  data-type="standard"
-  data-size="large"
-  data-theme="outline"
-  data-text="sign_in_with"
-  data-shape="rectangular"
-  data-logo_alignment="left"
-></div>
+<h1 class="text-center text-8 font-bold mt-4 mb-2">Login</h1>
+<form method="post" class="flex flex-col grow px-4 mt-2">
+  {{>authentication_form}}
+  <div
+    id="g_id_onload"
+    data-client_id="{{clientId}}"
+    data-login_uri="{{loginUri}}"
+    data-auto_prompt="false"
+  ></div>
+  <div
+    class="g_id_signin"
+    data-type="standard"
+    data-size="large"
+    data-theme="outline"
+    data-text="sign_in_with"
+    data-shape="rectangular"
+    data-logo_alignment="left"
+  ></div>
+</form>
 {{/slot}} {{/page}}

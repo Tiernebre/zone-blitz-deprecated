@@ -17,6 +17,14 @@
       name = "button",
       path = "components/button"
     ),
+    @io.jstach.jstache.JStachePartial(
+      name = "button_link",
+      path = "components/button_link"
+    ),
+    @io.jstach.jstache.JStachePartial(
+      name = "authentication_form",
+      path = "partials/authentication_form"
+    ),
   }
 )
 package com.tiernebre.web.templates;

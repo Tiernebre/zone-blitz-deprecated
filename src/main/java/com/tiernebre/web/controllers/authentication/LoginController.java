@@ -1,15 +1,15 @@
-package com.tiernebre.web.controllers;
+package com.tiernebre.web.controllers.authentication;
 
 import com.tiernebre.web.constants.WebConstants;
 import com.tiernebre.web.templates.Login;
 import io.javalin.http.Context;
 import io.jstach.jstachio.JStachio;
 
-public final class LoginPageController {
+public final class LoginController {
 
   private final String googleClientId;
 
-  public LoginPageController(String googleClientId) {
+  public LoginController(String googleClientId) {
     this.googleClientId = googleClientId;
   }
 
@@ -22,7 +22,8 @@ public final class LoginPageController {
         String.format(
           "%s/gsi/client",
           WebConstants.Authentication.GOOGLE_ACCOUNTS_URL
-        )
+        ),
+        Constants.AUTHENTICATION_FORM
       ),
       output
     );

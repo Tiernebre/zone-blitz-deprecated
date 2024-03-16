@@ -6,26 +6,7 @@
 </p>
 {{/error}}
 <form method="post" class="flex flex-col grow px-4 mt-2">
-  <label for="username">Username</label>
-  <input
-    type="text"
-    class="mb-4"
-    id="username"
-    name="{{ usernameFieldName }}"
-    required
-    pattern="\S(.*\S)?"
-    maxlength="{{ usernameMaxLength }}"
-  />
-  <label for="password">Password</label>
-  <input
-    id="password"
-    class="mb-4"
-    type="password"
-    name="{{ passwordFieldName }}"
-    required
-    maxlength="{{ passwordMaxLength }}"
-    minlength="{{ passwordMinLength }}"
-  />
+  {{>authentication_form}}
   <label for="confirm-password">Confirm Password</label>
   <input
     id="confirm-password"
@@ -33,9 +14,9 @@
     type="password"
     name="{{confirmPasswordFieldName}}"
     required
-    maxlength="{{ passwordMaxLength }}"
-    minlength="{{ passwordMinLength }}"
+    maxlength="{{ form.passwordMaxLength }}"
+    minlength="{{ form.passwordMinLength }}"
   />
-  {{< button}} {{$slot}}Register{{/slot}} {{/button}}
+  {{< button}} {{$text}}Register{{/text}} {{/button}}
 </form>
 {{/slot}} {{/page}}
