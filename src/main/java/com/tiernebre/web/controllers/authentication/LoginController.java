@@ -1,30 +1,31 @@
 package com.tiernebre.web.controllers.authentication;
 
 import com.tiernebre.web.constants.WebConstants;
+import com.tiernebre.web.controllers.ControllerHelper;
 import com.tiernebre.web.templates.Login;
 import io.javalin.http.Context;
-import io.jstach.jstachio.JStachio;
+import java.io.IOException;
 
 public final class LoginController {
 
   private final String googleClientId;
+  private final ControllerHelper helper;
 
-  public LoginController(String googleClientId) {
+  public LoginController(String googleClientId, ControllerHelper helper) {
     this.googleClientId = googleClientId;
+    this.helper = helper;
   }
 
-  public void render(Context ctx) {
-    var output = new StringBuilder();
-    JStachio.render(
+  public void render(Context ctx) throws IOException {
+    helper.template(
+      ctx,
       new Login(
         googleClientId,
         String.format("%s/api/authenticate", WebConstants.URL),
         String.format("%s/gsi/client", Constants.GOOGLE_ACCOUNTS_URL),
         Constants.SHARED_AUTHENTICATION_FORM
-      ),
-      output
+      )
     );
-    ctx.html(output.toString());
     ctx.header(
       WebConstants.CONTENT_SECURITY_POLICY_HEADER_NAME,
       String.format(

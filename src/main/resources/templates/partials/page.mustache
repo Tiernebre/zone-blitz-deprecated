@@ -1,27 +1,34 @@
-{{< base_layout}} {{$body}}
-<header class="p-2 border-b-1 border-neutral-200">
-  <div class="flex justify-between items-center container mx-auto">
-    <a class="text-6 font-bold hover:underline focus:underline" href="/"
-      >Zone Blitz</a
-    >
-    <div class="flex space-x-2">
-      {{< button_link}} {{$href}}/login{{/href}}
-      {{$text}}Login{{/text}}{{/button_link}} {{< button_link}}
-      {{$href}}/registration{{/href}} {{$text}}Register{{/text}}{{/button_link}}
-    </div>
-  </div>
-</header>
-<main class="flex flex-col grow container mx-auto">{{$slot}}{{/slot}}</main>
-<footer class="text-center py-2 border-t-1 border-neutral-200">
-  <ul>
-    <li>
-      Copyright &copy;2024 by
-      <a
-        class="underline text-blue-700 hover:text-blue-800 focus:text-blue-800"
-        href="https://www.tiernebre.com"
-        >Brendan Tierney</a
+{{< base_layout}} 
+  {{$body}}
+  <header class="p-2 border-b-1 border-neutral-200">
+    <div class="flex justify-between items-center container mx-auto">
+      <a class="text-6 font-bold hover:underline focus:underline" href="/"
+        >Zone Blitz</a
       >
-    </li>
-  </ul>
-</footer>
-{{/body}} {{/base_layout}}
+      {{^@context.loggedIn}}
+        <div class="flex space-x-2">
+          {{< button_link}} {{$href}}/login{{/href}}
+          {{$text}}Login{{/text}}{{/button_link}} {{< button_link}}
+          {{$href}}/registration{{/href}} {{$text}}Register{{/text}}{{/button_link}}
+        </div>
+      {{/@context.loggedIn}} 
+      {{#@context.loggedIn}}
+        <form>{{< button}} {{$text}}Logout{{/text}} {{/button}}</form>
+      {{/@context.loggedIn}}
+    </div>
+  </header>
+  <main class="flex flex-col grow container mx-auto">{{$slot}}{{/slot}}</main>
+  <footer class="text-center py-2 border-t-1 border-neutral-200">
+    <ul>
+      <li>
+        Copyright &copy;2024 by
+        <a
+          class="underline text-blue-700 hover:text-blue-800 focus:text-blue-800"
+          href="https://www.tiernebre.com"
+          >Brendan Tierney</a
+        >
+      </li>
+    </ul>
+  </footer>
+  {{/body}} 
+{{/base_layout}}
