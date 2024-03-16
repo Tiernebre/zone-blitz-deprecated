@@ -1,6 +1,6 @@
 FROM alpine:3.19
 
-RUN apk add openjdk21 fish make git openssh-client nodejs npm inotify-tools gradle bash chromium
+RUN apk add openjdk21 fish make git openssh-client nodejs npm inotify-tools gradle bash chromium bind-tools
 
 ADD https://github.com/amacneil/dbmate/releases/latest/download/dbmate-linux-amd64 /usr/bin/dbmate
 RUN chmod +x /usr/bin/dbmate
