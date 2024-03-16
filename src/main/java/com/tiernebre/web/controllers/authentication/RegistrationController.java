@@ -25,9 +25,9 @@ public final class RegistrationController {
     service
       .create(
         new CreateRegistrationRequest(
-          ctx.formParam(Constants.USERNAME_PARAM),
-          ctx.formParam(Constants.PASSWORD_PARAM),
-          ctx.formParam(Constants.CONFIRM_PASSWORD_PARAM)
+          ctx.formParam(Constants.USERNAME_PARAMETER),
+          ctx.formParam(Constants.PASSWORD_PARAMETER),
+          ctx.formParam(Constants.CONFIRM_PASSWORD_PARAMETER)
         )
       )
       .peek(registration -> {
@@ -50,8 +50,8 @@ public final class RegistrationController {
     var output = new StringBuilder();
     JStachio.render(
       new Registration(
-        Constants.AUTHENTICATION_FORM,
-        Constants.CONFIRM_PASSWORD_PARAM,
+        Constants.SHARED_AUTHENTICATION_FORM,
+        Constants.CONFIRM_PASSWORD_PARAMETER,
         error
       ),
       output

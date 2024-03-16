@@ -20,7 +20,7 @@ public final class LoginController {
         googleClientId,
         String.format("%s/api/authenticate", WebConstants.URL),
         String.format("%s/gsi/client", Constants.GOOGLE_ACCOUNTS_URL),
-        Constants.AUTHENTICATION_FORM
+        Constants.SHARED_AUTHENTICATION_FORM
       ),
       output
     );
