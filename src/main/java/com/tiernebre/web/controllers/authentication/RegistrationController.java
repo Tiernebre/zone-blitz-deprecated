@@ -1,6 +1,8 @@
 package com.tiernebre.web.controllers.authentication;
 
 import com.tiernebre.authentication.registration.CreateRegistrationRequest;
+import com.tiernebre.authentication.registration.RegistrationAuthenticationRequest;
+import com.tiernebre.authentication.registration.RegistrationAuthenticationStrategy;
 import com.tiernebre.authentication.registration.RegistrationService;
 import com.tiernebre.web.templates.Registration;
 import io.javalin.http.Context;
@@ -16,23 +18,39 @@ public final class RegistrationController {
   );
 
   private final RegistrationService service;
+  private final RegistrationAuthenticationStrategy authenticationStrategy;
+  private final SessionRegister sessionRegister;
 
-  public RegistrationController(RegistrationService service) {
+  public RegistrationController(
+    RegistrationService service,
+    RegistrationAuthenticationStrategy authenticationStrategy,
+    SessionRegister sessionRegister
+  ) {
     this.service = service;
+    this.authenticationStrategy = authenticationStrategy;
+    this.sessionRegister = sessionRegister;
   }
 
   public void submit(Context ctx) {
+    var password = ctx.formParam(Constants.PASSWORD_PARAMETER);
     service
       .create(
         new CreateRegistrationRequest(
           ctx.formParam(Constants.USERNAME_PARAMETER),
-          ctx.formParam(Constants.PASSWORD_PARAMETER),
+          password,
           ctx.formParam(Constants.CONFIRM_PASSWORD_PARAMETER)
         )
       )
-      .peek(registration -> {
-        ctx.status(HttpStatus.CREATED);
-        ctx.redirect("/");
+      .map(
+        registration ->
+          new RegistrationAuthenticationRequest(
+            registration.username(),
+            password
+          )
+      )
+      .flatMap(authenticationStrategy::authenticate)
+      .peek(session -> {
+        sessionRegister.register(ctx, session);
         LOG.debug("Successful registration, redirecting to home page");
       })
       .peekLeft(error -> {
