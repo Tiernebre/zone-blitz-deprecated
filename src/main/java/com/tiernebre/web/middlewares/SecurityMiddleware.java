@@ -8,9 +8,8 @@ public class SecurityMiddleware implements Handler {
 
   @Override
   public void handle(@NotNull Context ctx) throws Exception {
-    ctx.header(
-      "Content-Security-Policy",
-      "default-src 'self' https://accounts.google.com/gsi/client"
-    );
+    if (ctx.headerMap().containsKey("Content-Security-Policy")) {
+      ctx.header("Content-Security-Policy", "default-src 'self'");
+    }
   }
 }

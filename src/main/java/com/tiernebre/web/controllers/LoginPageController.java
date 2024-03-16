@@ -15,6 +15,10 @@ public final class LoginPageController {
   public void render(Context ctx) {
     var output = new StringBuilder();
     JStachio.render(new Login(googleClientId), output);
+    ctx.header(
+      "Content-Security-Policy",
+      "default-src https://dev.zoneblitz.app https://zoneblitz.app https://accounts.google.com; style-src 'self' https://accounts.google.com 'unsafe-inline'"
+    );
     ctx.html(output.toString());
   }
 }
