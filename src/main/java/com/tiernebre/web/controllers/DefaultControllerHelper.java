@@ -17,12 +17,9 @@ import java.util.Map;
 public final class DefaultControllerHelper implements ControllerHelper {
 
   @Override
-  public void renderHtml(Context ctx, Object model) throws IOException {
-    Map<String, String> contextAttributes = new HashMap<>();
-    session(ctx)
-      .map(Session::accountId)
-      .map(accountId -> Long.toString(accountId))
-      .peek(accountId -> contextAttributes.put("accountId", accountId));
+  public void template(Context ctx, Object model) throws IOException {
+    Map<String, Boolean> contextAttributes = new HashMap<>();
+    session(ctx).peek(__ -> contextAttributes.put("loggedIn", true));
     ContextJStachio.of(JStachio.of()).execute(
       model,
       ContextNode.of(contextAttributes::get),

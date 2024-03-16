@@ -17,7 +17,7 @@ public final class LoginController {
   }
 
   public void render(Context ctx) throws IOException {
-    helper.renderHtml(
+    helper.template(
       ctx,
       new Login(
         googleClientId,
