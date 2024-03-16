@@ -17,6 +17,10 @@
       name = "button",
       path = "components/button"
     ),
+    @io.jstach.jstache.JStachePartial(
+      name = "button_link",
+      path = "components/button_link"
+    ),
   }
 )
 package com.tiernebre.web.templates;
