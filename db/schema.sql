@@ -92,7 +92,8 @@ ALTER SEQUENCE public.player_id_seq OWNED BY public.player.id;
 CREATE TABLE public.registration (
     id bigint NOT NULL,
     username text NOT NULL,
-    password text NOT NULL
+    password bytea NOT NULL,
+    CONSTRAINT username_length CHECK (((char_length(username) <= 64) AND (char_length(username) > 0)))
 );
 
 
@@ -249,4 +250,6 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20240303182432'),
     ('20240307092022'),
     ('20240307103926'),
-    ('20240307104439');
+    ('20240307104439'),
+    ('20240309154051'),
+    ('20240312140543');
