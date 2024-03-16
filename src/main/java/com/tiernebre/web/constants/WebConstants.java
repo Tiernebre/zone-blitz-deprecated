@@ -2,7 +2,6 @@ package com.tiernebre.web.constants;
 
 public final class WebConstants {
 
-  public static final String DOMAIN = System.getenv("ZONE_BLITZ_DOMAIN");
   public static final String URL = System.getenv("ZONE_BLITZ_URL");
   public static final String CONTENT_SECURITY_POLICY = System.getenv(
     "ZONE_BLITZ_CONTENT_SECURITY_POLICY"
