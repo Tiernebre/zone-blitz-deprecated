@@ -18,5 +18,7 @@ public final class WebConstants {
     public static final String REGISTRATION_CONFIRM_PASSWORD_PARAM =
       "confirmPassword";
     public static final String SESSION_COOKIE_TOKEN_NAME = "zb_session_id";
+    public static final String GOOGLE_ACCOUNTS_URL =
+      "https://accounts.google.com";
   }
 }

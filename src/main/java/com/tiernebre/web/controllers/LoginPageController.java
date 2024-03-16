@@ -18,17 +18,22 @@ public final class LoginPageController {
     JStachio.render(
       new Login(
         googleClientId,
-        String.format("%s/api/authenticate", WebConstants.URL)
+        String.format("%s/api/authenticate", WebConstants.URL),
+        String.format(
+          "%s/gsi/client",
+          WebConstants.Authentication.GOOGLE_ACCOUNTS_URL
+        )
       ),
       output
     );
+    ctx.html(output.toString());
     ctx.header(
       WebConstants.CONTENT_SECURITY_POLICY_HEADER_NAME,
       String.format(
-        "%s https://accounts.google.com; style-src 'self' https://accounts.google.com 'unsafe-inline'",
-        WebConstants.CONTENT_SECURITY_POLICY
+        "%1$s %2$s; style-src 'self' %2$s 'unsafe-inline'",
+        WebConstants.CONTENT_SECURITY_POLICY,
+        WebConstants.Authentication.GOOGLE_ACCOUNTS_URL
       )
     );
-    ctx.html(output.toString());
   }
 }
