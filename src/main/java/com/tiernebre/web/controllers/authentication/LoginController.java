@@ -19,11 +19,8 @@ public final class LoginController {
       new Login(
         googleClientId,
         String.format("%s/api/authenticate", WebConstants.URL),
-        String.format(
-          "%s/gsi/client",
-          WebConstants.Authentication.GOOGLE_ACCOUNTS_URL
-        ),
-        Constants.AUTHENTICATION_FORM
+        String.format("%s/gsi/client", Constants.GOOGLE_ACCOUNTS_URL),
+        Constants.SHARED_AUTHENTICATION_FORM
       ),
       output
     );
@@ -33,7 +30,7 @@ public final class LoginController {
       String.format(
         "%1$s %2$s; style-src 'self' %2$s 'unsafe-inline'",
         WebConstants.CONTENT_SECURITY_POLICY,
-        WebConstants.Authentication.GOOGLE_ACCOUNTS_URL
+        Constants.GOOGLE_ACCOUNTS_URL
       )
     );
   }

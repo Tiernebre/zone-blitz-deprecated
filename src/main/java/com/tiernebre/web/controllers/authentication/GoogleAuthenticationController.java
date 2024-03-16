@@ -39,7 +39,7 @@ public final class GoogleAuthenticationController
       )
       .peek(session -> {
         Cookie sessionCookie = new Cookie(
-          WebConstants.Authentication.SESSION_COOKIE_TOKEN_NAME,
+          WebConstants.SESSION_COOKIE_TOKEN_NAME,
           session.id().toString()
         );
         sessionCookie.setHttpOnly(true);
