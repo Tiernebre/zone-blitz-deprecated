@@ -6,7 +6,6 @@ apk add bind-tools
 DOMAIN=proxy
 IP=$(dig +short $DOMAIN)
 HOST_ENTRY="$IP $ZONE_BLITZ_DOMAIN"
-NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/dev.zoneblitz.app.cert
 
 if grep -q "$ZONE_BLITZ_DOMAIN" /etc/hosts; then
   echo "$ZONE_BLITZ_DOMAIN already exists in /etc/hosts. Skipping."
