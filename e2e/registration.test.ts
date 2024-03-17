@@ -1,6 +1,11 @@
 import { test, Page } from "@playwright/test";
 import crypto from "node:crypto";
 import { VALIDATION_MESSAGES, expect } from "./expect";
+import {
+  getHeaderLoginButton,
+  getHeaderLogoutButton,
+  getHeaderRegisterButton,
+} from "./common";
 
 const URI = "/registration";
 const PASSWORD = crypto.randomUUID().toString();
@@ -30,6 +35,9 @@ test("registers a user", async ({ page }) => {
   await getConfirmPasswordInput(page).fill(PASSWORD);
   await submit(page);
   await expect(page).not.toHaveURL(/.*registration/);
+  await expect(getHeaderLogoutButton(page)).toBeVisible();
+  await expect(getHeaderLoginButton(page)).not.toBeVisible();
+  await expect(getHeaderRegisterButton(page)).not.toBeVisible();
 });
 
 test("requires a username", async ({ page }) => {
