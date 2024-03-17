@@ -1,6 +1,6 @@
 import { PlaywrightTestConfig, defineConfig, devices } from "@playwright/test";
 
-const URL = process.env.CI ? process.env.ZONE_BLITZ_URL : "http://0.0.0.0:8000";
+const URL = process.env.ZONE_BLITZ_URL;
 
 const LOCAL_CONFIG: PlaywrightTestConfig = {
   use: {
@@ -8,11 +8,14 @@ const LOCAL_CONFIG: PlaywrightTestConfig = {
     channel: "/usr/bin/chromium-browser",
     launchOptions: {
       executablePath: "/usr/bin/chromium-browser",
+      args: ["--allow-insecure-localhost"],
     },
+    ignoreHTTPSErrors: true,
   },
   webServer: {
     command: `JAVA_TOOL_OPTIONS="-Dorg.slf4j.simpleLogger.defaultLogLevel=info -Dorg.gradle.native=false -Dorg.jooq.no-logo=true -Dorg.jooq.no-tips=true" make`,
     url: URL,
+    ignoreHTTPSErrors: true,
   },
   fullyParallel: false,
 };
