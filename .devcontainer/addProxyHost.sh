@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "🌐 Adding dev.zoneblitz.app proxy route to hosts file."
+echo "🌐 Adding $ZONE_BLITZ_DOMAIN proxy route to hosts file."
 apk add bind-tools
 
 DOMAIN=proxy
