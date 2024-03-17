@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "🌐 Adding dev.zoneblitz.app proxy route to hosts file."
+apk add bind-tools
+
 DOMAIN=proxy
 IP=$(dig +short $DOMAIN)
 HOST_ENTRY="$IP $ZONE_BLITZ_DOMAIN"
@@ -11,7 +14,3 @@ else
   echo "${HOST_ENTRY}" | tee -a /etc/hosts > /dev/null
   echo "Added ${HOST_ENTRY} to /etc/hosts"
 fi
-
-echo "Adding certification to trusted store."
-cp .devcontainer/certs/dev.zoneblitz.app.cert /usr/local/share/ca-certificates/dev.zoneblitz.app.cert
-update-ca-certificates
