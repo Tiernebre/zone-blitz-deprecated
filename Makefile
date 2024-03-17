@@ -1,4 +1,5 @@
-DBMATE=dbmate -e ZONE_BLITZ_POSTGRES_URL
+DBMATE="dbmate -e ZONE_BLITZ_POSTGRES_URL"
+FILES_TO_FORMAT="**/*.{java,xml,md,yml,mustache,sh,ts}"
 
 .PHONY: run
 run: install start
@@ -20,6 +21,9 @@ install: clean migrate build
 	cp -r build/install/zone-blitz/. /
 	
 build: node_modules
+	cp node_modules/htmx.org/dist/htmx.min.js src/main/resources/assets/htmx.js 
+	cp node_modules/@unocss/reset/tailwind.css src/main/resources/assets/reset.css
+	npx unocss \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css
 	npm run build
 	gradle installDist
 
@@ -34,17 +38,17 @@ migration:
 
 .PHONY: test
 test:
-	npm run lint
+	npx prettier --check $(FILES_TO_FORMAT)
 	gradle test
 
 .PHONY: e2e
 e2e: node_modules
-	npm run e2e
+	npx playwright test
 
 .PHONY: dev
 dev:
 	.devcontainer/dev.sh
-	
+
 .PHONY: clean
 clean:
 	gradle clean
@@ -52,3 +56,10 @@ clean:
 	
 node_modules:
 	npm ci
+	
+.PHONY: fmt
+fmt: format
+
+.PHONY: format
+format:
+	npx prettier --write $(FILES_TO_FORMAT)
