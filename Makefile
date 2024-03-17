@@ -54,12 +54,12 @@ clean:
 	gradle clean
 	rm -fr build
 	
-node_modules:
-	npm ci
-	
 .PHONY: fmt
 fmt: format
 
 .PHONY: format
-format:
+format: node_modules
 	npx prettier --write $(FILES_TO_FORMAT)
+	
+node_modules:
+	npm ci
