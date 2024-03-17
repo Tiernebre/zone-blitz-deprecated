@@ -11,10 +11,7 @@
   },
   "containerEnv": {
     "JAVA_TOOL_OPTIONS": "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug -Dorg.gradle.native=false -Dorg.jooq.no-logo=true -Dorg.jooq.no-tips=true",
-    "SHELL": "/usr/bin/fish",
-    "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1",
-    "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH": "/usr/bin/chromium-browser",
-    "PLAYWRIGHT_NODEJS_PATH": "/usr/bin/node"
+    "SHELL": "/usr/bin/fish"
   },
   "customizations": {
     "vscode": {

@@ -1,12 +1,5 @@
 {
   "scripts": {
-    "build": "npm run build:htmx && npm run build:css-reset && npm run build:unocss",
-    "build:htmx": "cp node_modules/htmx.org/dist/htmx.min.js src/main/resources/assets/htmx.js ",
-    "build:css-reset": "cp node_modules/@unocss/reset/tailwind.css src/main/resources/assets/reset.css",
-    "build:unocss": "unocss \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css",
-    "e2e": "npx playwright test",
-    "format": "prettier --write **/*.{java,xml,md,yml,mustache,sh,ts}",
-    "lint": "prettier --check **/*.{java,xml,md,yml,mustache,sh,ts}",
     "prepare": "husky install"
   },
   "dependencies": {
