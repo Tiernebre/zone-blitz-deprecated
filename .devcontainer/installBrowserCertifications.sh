@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "🔐 Adding and trusting the local proxy self signed certificates.\n"
+echo "🔐 Adding and trusting the local proxy self signed certificates."
 apk add nss-tools
 
 CERT=.devcontainer/certs/dev.zoneblitz.app.cert
