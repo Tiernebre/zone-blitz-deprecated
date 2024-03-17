@@ -14,7 +14,6 @@ debug: install
 .PHONY: development-environment
 development-environment: install
 	.devcontainer/addProxyHost.sh
-	.devcontainer/installBrowserCertifications.sh
 
 .PHONY: install
 install: clean migrate build
