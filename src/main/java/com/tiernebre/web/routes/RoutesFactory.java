@@ -4,6 +4,7 @@ import com.tiernebre.context.DependencyContext;
 import com.tiernebre.web.controllers.DefaultControllerHelper;
 import com.tiernebre.web.controllers.HealthController;
 import com.tiernebre.web.controllers.IndexController;
+import com.tiernebre.web.controllers.authentication.CookieSessionRegister;
 import com.tiernebre.web.controllers.authentication.GoogleAuthenticationController;
 import com.tiernebre.web.controllers.authentication.LoginController;
 import com.tiernebre.web.controllers.authentication.RegistrationController;
@@ -22,12 +23,14 @@ public final class RoutesFactory {
 
   public Routes create() {
     var helper = new DefaultControllerHelper();
+    var sessionRegister = new CookieSessionRegister();
     var authentication = dependencyContext.authentication();
     return new Routes(
       new ApiRoutes(
         new AuthenticationRoutes(
           new GoogleAuthenticationController(
-            authentication.googleAuthenticationService()
+            authentication.googleAuthenticationStrategy(),
+            sessionRegister
           )
         ),
         new HealthRoutes(new HealthController())
@@ -42,7 +45,11 @@ public final class RoutesFactory {
           helper
         ),
         new RegistrationRoutes(
-          new RegistrationController(authentication.registrationService())
+          new RegistrationController(
+            authentication.registrationService(),
+            authentication.registrationAuthenticationStrategy(),
+            sessionRegister
+          )
         )
       )
     );

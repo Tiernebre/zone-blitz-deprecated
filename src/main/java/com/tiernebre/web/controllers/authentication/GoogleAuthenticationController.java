@@ -2,11 +2,8 @@ package com.tiernebre.web.controllers.authentication;
 
 import com.tiernebre.authentication.google.GoogleAuthenticationRequest;
 import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
-import com.tiernebre.web.constants.WebConstants;
 import io.javalin.http.Context;
-import io.javalin.http.Cookie;
 import io.javalin.http.HttpStatus;
-import io.javalin.http.SameSite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,38 +16,32 @@ public final class GoogleAuthenticationController
   private static final String CREDENTIAL_FIELD_NAME = "credential";
   private static final String CSRF_TOKEN_FIELD_NAME = "g_csrf_token";
   private static final String GOOGLE_STATE_FIELD_NAME = "g_state";
+
   private final GoogleAuthenticationStrategy authenticationStrategy;
+  private final SessionRegister sessionRegister;
 
   public GoogleAuthenticationController(
-    GoogleAuthenticationStrategy authenticationService
+    GoogleAuthenticationStrategy authenticationService,
+    SessionRegister sessionRegister
   ) {
     this.authenticationStrategy = authenticationService;
+    this.sessionRegister = sessionRegister;
   }
 
   @Override
-  public void handle(Context context) {
+  public void handle(Context ctx) {
     authenticationStrategy
       .authenticate(
         new GoogleAuthenticationRequest(
-          context.formParam(CREDENTIAL_FIELD_NAME),
-          context.formParam(CSRF_TOKEN_FIELD_NAME),
-          context.cookie(CSRF_TOKEN_FIELD_NAME)
+          ctx.formParam(CREDENTIAL_FIELD_NAME),
+          ctx.formParam(CSRF_TOKEN_FIELD_NAME),
+          ctx.cookie(CSRF_TOKEN_FIELD_NAME)
         )
       )
       .peek(session -> {
-        Cookie sessionCookie = new Cookie(
-          WebConstants.SESSION_COOKIE_TOKEN_NAME,
-          session.id().toString()
-        );
-        sessionCookie.setHttpOnly(true);
-        sessionCookie.setSecure(true);
-        sessionCookie.setPath("/");
-        sessionCookie.setSameSite(SameSite.STRICT);
-        context.cookie(sessionCookie);
-        context.cookie(CSRF_TOKEN_FIELD_NAME, "", 0);
-        context.cookie(GOOGLE_STATE_FIELD_NAME, "", 0);
-        context.status(HttpStatus.CREATED);
-        context.redirect("/");
+        sessionRegister.register(ctx, session);
+        ctx.cookie(CSRF_TOKEN_FIELD_NAME, "", 0);
+        ctx.cookie(GOOGLE_STATE_FIELD_NAME, "", 0);
         LOG.debug(
           String.format(
             "Created valid Google authentication session for accountId=%s",
@@ -63,8 +54,8 @@ public final class GoogleAuthenticationController
           "Could not create Google authentication session due to error=%s" +
           error
         );
-        context.status(HttpStatus.BAD_REQUEST);
-        context.redirect("/login");
+        ctx.status(HttpStatus.BAD_REQUEST);
+        ctx.redirect("/login");
       });
   }
 }

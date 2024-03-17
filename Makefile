@@ -13,6 +13,7 @@ debug: install
 
 .PHONY: development-environment
 development-environment: install
+	.devcontainer/addProxyHost.sh
 
 .PHONY: install
 install: clean migrate build
