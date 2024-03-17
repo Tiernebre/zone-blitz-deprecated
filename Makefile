@@ -1,5 +1,5 @@
-DBMATE="dbmate -e ZONE_BLITZ_POSTGRES_URL"
-FILES_TO_FORMAT="**/*.{java,xml,md,yml,mustache,sh,ts}"
+DBMATE=dbmate -e ZONE_BLITZ_POSTGRES_URL
+FILES_TO_FORMAT=**/*.{java,xml,md,yml,mustache,sh,ts}
 
 .PHONY: run
 run: install start
@@ -24,7 +24,6 @@ build: node_modules
 	cp node_modules/htmx.org/dist/htmx.min.js src/main/resources/assets/htmx.js 
 	cp node_modules/@unocss/reset/tailwind.css src/main/resources/assets/reset.css
 	npx unocss \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css
-	npm run build
 	gradle installDist
 
 .PHONY: migrate
