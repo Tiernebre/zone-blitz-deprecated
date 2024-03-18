@@ -5,10 +5,11 @@ import com.tiernebre.web.controllers.DefaultControllerHelper;
 import com.tiernebre.web.controllers.HealthController;
 import com.tiernebre.web.controllers.IndexController;
 import com.tiernebre.web.controllers.authentication.CookieSessionRegister;
-import com.tiernebre.web.controllers.authentication.GoogleAuthenticationController;
+import com.tiernebre.web.controllers.authentication.LoginController;
 import com.tiernebre.web.controllers.authentication.RegistrationController;
 import com.tiernebre.web.routes.api.ApiRoutes;
 import com.tiernebre.web.routes.api.HealthRoutes;
+import org.apache.commons.logging.LogConfigurationException;
 
 public final class RoutesFactory {
 
@@ -33,12 +34,7 @@ public final class RoutesFactory {
             sessionRegister
           )
         ),
-        new LoginRoutes(
-          new GoogleAuthenticationController(
-            authentication.googleAuthenticationStrategy(),
-            sessionRegister
-          )
-        )
+        new LoginRoutes(new LoginController(helper))
       )
     );
   }

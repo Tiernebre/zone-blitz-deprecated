@@ -10,7 +10,7 @@ public final class LoginController {
 
   private final ControllerHelper helper;
 
-  public LoginController(String googleClientId, ControllerHelper helper) {
+  public LoginController(ControllerHelper helper) {
     this.helper = helper;
   }
 
