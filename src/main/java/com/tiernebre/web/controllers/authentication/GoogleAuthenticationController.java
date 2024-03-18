@@ -13,9 +13,6 @@ public final class GoogleAuthenticationController
   private static final Logger LOG = LoggerFactory.getLogger(
     GoogleAuthenticationController.class
   );
-  private static final String CREDENTIAL_FIELD_NAME = "credential";
-  private static final String CSRF_TOKEN_FIELD_NAME = "g_csrf_token";
-  private static final String GOOGLE_STATE_FIELD_NAME = "g_state";
 
   private final GoogleAuthenticationStrategy authenticationStrategy;
   private final SessionRegister sessionRegister;
@@ -33,15 +30,15 @@ public final class GoogleAuthenticationController
     authenticationStrategy
       .authenticate(
         new GoogleAuthenticationRequest(
-          ctx.formParam(CREDENTIAL_FIELD_NAME),
-          ctx.formParam(CSRF_TOKEN_FIELD_NAME),
-          ctx.cookie(CSRF_TOKEN_FIELD_NAME)
+          ctx.formParam(Constants.GOOGLE_CREDENTIAL_FIELD_NAME),
+          ctx.formParam(Constants.GOOGLE_CSRF_TOKEN_FIELD_NAME),
+          ctx.cookie(Constants.GOOGLE_CSRF_TOKEN_FIELD_NAME)
         )
       )
       .peek(session -> {
         sessionRegister.register(ctx, session);
-        ctx.cookie(CSRF_TOKEN_FIELD_NAME, "", 0);
-        ctx.cookie(GOOGLE_STATE_FIELD_NAME, "", 0);
+        ctx.cookie(Constants.GOOGLE_CSRF_TOKEN_FIELD_NAME, "", 0);
+        ctx.cookie(Constants.GOOGLE_STATE_FIELD_NAME, "", 0);
         LOG.debug(
           String.format(
             "Created valid Google authentication session for accountId=%s",

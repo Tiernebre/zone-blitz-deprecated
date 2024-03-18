@@ -1,7 +1,5 @@
 package com.tiernebre.web.controllers.authentication;
 
-import io.javalin.http.Context;
+import io.javalin.http.Handler;
 
-public interface AuthenticationController {
-  public void handle(Context context);
-}
+public interface AuthenticationController extends Handler {}
