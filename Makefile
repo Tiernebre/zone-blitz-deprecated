@@ -42,7 +42,7 @@ test:
 
 .PHONY: e2e
 e2e: node_modules
-	npx playwright test
+	npx playwright test $(TEST)
 
 .PHONY: dev
 dev:

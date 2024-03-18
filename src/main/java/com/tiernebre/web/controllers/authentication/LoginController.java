@@ -4,7 +4,6 @@ import com.tiernebre.authentication.google.GoogleAuthenticationRequest;
 import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import com.tiernebre.authentication.registration.RegistrationAuthenticationRequest;
 import com.tiernebre.authentication.registration.RegistrationAuthenticationStrategy;
-import com.tiernebre.util.error.ZoneBlitzError;
 import com.tiernebre.web.constants.WebConstants;
 import com.tiernebre.web.controllers.ControllerHelper;
 import com.tiernebre.web.templates.Login;
@@ -57,9 +56,11 @@ public final class LoginController {
       }).orElseRun(error -> {
         try {
           ctx.status(HttpStatus.BAD_REQUEST);
-          page(ctx, error);
-          LOG.debug("Failed login, got error %s", error);
-        } catch (Exception e) {}
+          page(ctx, error.publicMessage());
+          LOG.debug("Failed login, got error {}", error);
+        } catch (Exception e) {
+          ctx.status(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
       });
   }
 
@@ -67,14 +68,15 @@ public final class LoginController {
     page(ctx, null);
   }
 
-  private void page(Context ctx, ZoneBlitzError error) throws IOException {
+  private void page(Context ctx, String error) throws IOException {
     helper.template(
       ctx,
       new Login(
         Constants.GOOGLE_CLIENT_ID,
         String.format("%s/authenticate", WebConstants.URL),
         String.format("%s/gsi/client", Constants.GOOGLE_ACCOUNTS_URL),
-        Constants.SHARED_AUTHENTICATION_FORM
+        Constants.SHARED_AUTHENTICATION_FORM,
+        error
       )
     );
     ctx.header(

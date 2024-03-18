@@ -7,5 +7,6 @@ public record Login(
   String clientId,
   String loginUri,
   String googleScriptSrc,
-  AuthenticationForm form
+  AuthenticationForm form,
+  String error
 ) {}

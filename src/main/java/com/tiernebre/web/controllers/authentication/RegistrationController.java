@@ -55,7 +55,7 @@ public final class RegistrationController {
       })
       .peekLeft(error -> {
         ctx.status(HttpStatus.BAD_REQUEST);
-        LOG.debug("Failed registration, got error %s", error);
+        LOG.debug("Failed registration, got error {}", error);
         ctx.html(render(error.publicMessage()));
       });
   }

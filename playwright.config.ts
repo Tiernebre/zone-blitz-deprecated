@@ -13,7 +13,7 @@ const LOCAL_CONFIG: PlaywrightTestConfig = {
     ignoreHTTPSErrors: true,
   },
   webServer: {
-    command: `JAVA_TOOL_OPTIONS="-Dorg.slf4j.simpleLogger.defaultLogLevel=info -Dorg.gradle.native=false -Dorg.jooq.no-logo=true -Dorg.jooq.no-tips=true" make`,
+    command: `JAVA_TOOL_OPTIONS="-Dorg.slf4j.simpleLogger.defaultLogLevel=debug -Dorg.gradle.native=false -Dorg.jooq.no-logo=true -Dorg.jooq.no-tips=true" make`,
     url: URL,
     ignoreHTTPSErrors: true,
   },
