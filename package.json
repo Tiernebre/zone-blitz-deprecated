@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build:styles": "unocss \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css"
   },
   "dependencies": {
     "@julr/unocss-preset-forms": "^0.1.0",

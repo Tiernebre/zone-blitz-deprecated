@@ -1,11 +1,7 @@
 import { test, Page } from "@playwright/test";
 import crypto from "node:crypto";
 import { VALIDATION_MESSAGES, expect } from "./expect";
-import {
-  getHeaderLoginButton,
-  getHeaderLogoutButton,
-  getHeaderRegisterButton,
-} from "./common";
+import { expectToBeLoggedIn } from "./common";
 
 const URI = "/registration";
 const PASSWORD = crypto.randomUUID().toString();
@@ -30,14 +26,12 @@ test("registration page exists", async ({ page }) => {
 });
 
 test("registers a user", async ({ page }) => {
-  await getUsernameInput(page).fill(crypto.randomUUID());
+  await getUsernameInput(page).fill(crypto.randomUUID().toString());
   await getPasswordInput(page).fill(PASSWORD);
   await getConfirmPasswordInput(page).fill(PASSWORD);
   await submit(page);
   await expect(page).not.toHaveURL(/.*registration/);
-  await expect(getHeaderLogoutButton(page)).toBeVisible();
-  await expect(getHeaderLoginButton(page)).not.toBeVisible();
-  await expect(getHeaderRegisterButton(page)).not.toBeVisible();
+  await expectToBeLoggedIn(page);
 });
 
 test("requires a username", async ({ page }) => {

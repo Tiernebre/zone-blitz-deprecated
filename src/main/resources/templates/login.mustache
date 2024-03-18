@@ -9,6 +9,7 @@
 {{/error}}
 <form method="post" class="flex flex-col grow px-4 mt-2">
   {{>authentication_form}}
+  {{< button}} {{$text}}Login{{/text}} {{/button}}
   <div
     id="g_id_onload"
     data-client_id="{{clientId}}"

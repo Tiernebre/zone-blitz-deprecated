@@ -7,6 +7,8 @@ import io.javalin.apibuilder.EndpointGroup;
 
 public final class LoginRoutes implements EndpointGroup {
 
+  private final String URI = "login";
+
   private final LoginController controller;
 
   public LoginRoutes(LoginController controller) {
@@ -15,6 +17,7 @@ public final class LoginRoutes implements EndpointGroup {
 
   @Override
   public void addEndpoints() {
-    get("login", controller::render);
+    get(URI, controller::render);
+    post(URI, controller::handle);
   }
 }

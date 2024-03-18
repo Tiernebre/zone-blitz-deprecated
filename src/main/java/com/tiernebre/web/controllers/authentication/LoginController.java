@@ -37,7 +37,7 @@ public final class LoginController {
   }
 
   public void handle(Context ctx) {
-    (StringUtils.isBlank(Constants.GOOGLE_CSRF_TOKEN_FIELD_NAME)
+    (StringUtils.isBlank(ctx.cookie(Constants.GOOGLE_CSRF_TOKEN_FIELD_NAME))
         ? registrationAuthenticationStrategy.authenticate(
           new RegistrationAuthenticationRequest(
             ctx.formParam(Constants.USERNAME_PARAMETER),
