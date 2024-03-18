@@ -19,7 +19,7 @@ public final class LoginController {
       ctx,
       new Login(
         Constants.GOOGLE_CLIENT_ID,
-        String.format("%s/api/authenticate", WebConstants.URL),
+        String.format("%s/authenticate", WebConstants.URL),
         String.format("%s/gsi/client", Constants.GOOGLE_ACCOUNTS_URL),
         Constants.SHARED_AUTHENTICATION_FORM
       )
