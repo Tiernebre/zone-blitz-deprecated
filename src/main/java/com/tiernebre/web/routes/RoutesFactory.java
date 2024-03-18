@@ -33,7 +33,14 @@ public final class RoutesFactory {
             sessionRegister
           )
         ),
-        new LoginRoutes(new LoginController(helper))
+        new LoginRoutes(
+          new LoginController(
+            helper,
+            authentication.googleAuthenticationStrategy(),
+            authentication.registrationAuthenticationStrategy(),
+            sessionRegister
+          )
+        )
       )
     );
   }
