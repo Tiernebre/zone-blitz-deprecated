@@ -1,6 +1,5 @@
 package com.tiernebre.authentication.registration;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import org.bouncycastle.crypto.generators.Argon2BytesGenerator;
 import org.bouncycastle.crypto.params.Argon2Parameters;
@@ -9,7 +8,7 @@ public final class Argon2PasswordHasher implements PasswordHasher {
 
   private final int iterations = 2;
   private final int memoryLimitAsKB = 19923;
-  private final int parallelism = 1;
+  private final int parallelism = 5;
   private final int hashLength = 32;
 
   private final Argon2BytesGenerator generator;
@@ -34,7 +33,7 @@ public final class Argon2PasswordHasher implements PasswordHasher {
   @Override
   public byte[] hash(String password) {
     byte[] result = new byte[hashLength];
-    generator.generateBytes(password.getBytes(StandardCharsets.UTF_8), result);
+    generator.generateBytes(password.toCharArray(), result);
     return result;
   }
 }
