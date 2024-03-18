@@ -8,11 +8,9 @@ import java.io.IOException;
 
 public final class LoginController {
 
-  private final String googleClientId;
   private final ControllerHelper helper;
 
   public LoginController(String googleClientId, ControllerHelper helper) {
-    this.googleClientId = googleClientId;
     this.helper = helper;
   }
 
@@ -20,7 +18,7 @@ public final class LoginController {
     helper.template(
       ctx,
       new Login(
-        googleClientId,
+        Constants.GOOGLE_CLIENT_ID,
         String.format("%s/api/authenticate", WebConstants.URL),
         String.format("%s/gsi/client", Constants.GOOGLE_ACCOUNTS_URL),
         Constants.SHARED_AUTHENTICATION_FORM
