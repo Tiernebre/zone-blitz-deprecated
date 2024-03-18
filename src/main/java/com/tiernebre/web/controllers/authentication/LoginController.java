@@ -1,18 +1,23 @@
 package com.tiernebre.web.controllers.authentication;
 
-import com.tiernebre.authentication.AuthenticationStrategy;
 import com.tiernebre.authentication.google.GoogleAuthenticationRequest;
 import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import com.tiernebre.authentication.registration.RegistrationAuthenticationRequest;
 import com.tiernebre.authentication.registration.RegistrationAuthenticationStrategy;
+import com.tiernebre.util.error.ZoneBlitzError;
 import com.tiernebre.web.constants.WebConstants;
 import com.tiernebre.web.controllers.ControllerHelper;
 import com.tiernebre.web.templates.Login;
 import io.javalin.http.Context;
+import io.javalin.http.HttpStatus;
 import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class LoginController {
+
+  private final Logger LOG = LoggerFactory.getLogger(LoginController.class);
 
   private final ControllerHelper helper;
   private final GoogleAuthenticationStrategy googleAuthenticationStrategy;
@@ -48,10 +53,21 @@ public final class LoginController {
           )
         )).peek(session -> {
         sessionRegister.register(ctx, session);
+        LOG.debug("Successful login, redirecting to home page");
+      }).orElseRun(error -> {
+        try {
+          ctx.status(HttpStatus.BAD_REQUEST);
+          page(ctx, error);
+          LOG.debug("Failed login, got error %s", error);
+        } catch (Exception e) {}
       });
   }
 
   public void render(Context ctx) throws IOException {
+    page(ctx, null);
+  }
+
+  private void page(Context ctx, ZoneBlitzError error) throws IOException {
     helper.template(
       ctx,
       new Login(
