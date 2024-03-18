@@ -9,7 +9,6 @@ import com.tiernebre.web.controllers.authentication.LoginController;
 import com.tiernebre.web.controllers.authentication.RegistrationController;
 import com.tiernebre.web.routes.api.ApiRoutes;
 import com.tiernebre.web.routes.api.HealthRoutes;
-import org.apache.commons.logging.LogConfigurationException;
 
 public final class RoutesFactory {
 
