@@ -1,10 +1,10 @@
 package com.tiernebre.authentication.registration;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import org.junit.Test;
 
 public final class Argon2PasswordHasherTest {
@@ -16,7 +16,7 @@ public final class Argon2PasswordHasherTest {
     var password = "password";
     var result = passwordHasher.hash(password);
     assertNotNull(result);
-    assertFalse(Arrays.equals(password.getBytes(), result));
+    assertNotEquals(password, result);
   }
 
   @Test
