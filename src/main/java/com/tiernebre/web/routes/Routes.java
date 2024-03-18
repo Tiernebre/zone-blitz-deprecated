@@ -1,7 +1,6 @@
 package com.tiernebre.web.routes;
 
 import com.tiernebre.web.routes.api.ApiRoutes;
-import com.tiernebre.web.routes.page.PageRoutes;
 import io.javalin.apibuilder.EndpointGroup;
 
 public final class Routes implements EndpointGroup {
