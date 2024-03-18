@@ -21,7 +21,6 @@ test.beforeAll(async ({ request }) => {
     },
     data: `username=${USERNAME}&password=${PASSWORD}&confirmPassword=${PASSWORD}`,
   });
-  console.log((await response.body()).toString());
   expect(response.status()).toStrictEqual(200);
 });
 

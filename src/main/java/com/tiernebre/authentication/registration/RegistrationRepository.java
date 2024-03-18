@@ -7,7 +7,7 @@ import io.vavr.control.Option;
 public interface RegistrationRepository {
   Either<ZoneBlitzError, Registration> insertOne(
     String username,
-    byte[] password
+    String password
   );
   Option<Registration> selectOneByUsername(String username);
 }
