@@ -51,6 +51,7 @@ public final class RegistrationController {
       .flatMap(authenticationStrategy::authenticate)
       .peek(session -> {
         sessionRegister.register(ctx, session);
+        ctx.redirect("/");
         LOG.debug("Successful registration, redirecting to home page");
       })
       .peekLeft(error -> {

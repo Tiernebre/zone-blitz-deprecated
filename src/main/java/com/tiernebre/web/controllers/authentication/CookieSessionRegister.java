@@ -16,7 +16,6 @@ public class CookieSessionRegister implements SessionRegister {
     );
     secureCookie(sessionCookie);
     ctx.cookie(sessionCookie);
-    ctx.redirect("/");
   }
 
   @Override

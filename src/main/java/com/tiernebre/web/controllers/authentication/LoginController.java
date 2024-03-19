@@ -52,6 +52,7 @@ public final class LoginController {
           )
         )).peek(session -> {
         sessionRegister.register(ctx, session);
+        ctx.redirect("/");
         LOG.debug("Successful login, redirecting to home page");
       }).orElseRun(error -> {
         try {
