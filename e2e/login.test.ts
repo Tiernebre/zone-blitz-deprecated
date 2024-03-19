@@ -1,7 +1,6 @@
 import { Page, test } from "@playwright/test";
 import crypto from "node:crypto";
 import { VALIDATION_MESSAGES, expect } from "./expect";
-import { expectToBeLoggedIn, expectToBeLoggedOut } from "./common";
 
 const URI = "/login";
 const USERNAME = `LOGIN-${crypto.randomUUID().toString()}`;
@@ -44,7 +43,7 @@ test("logs the user in", async ({ page }) => {
   await getPasswordInput(page).fill(PASSWORD);
   await submit(page);
   await expect(page).not.toHaveURL(/login/i);
-  await expectToBeLoggedIn(page);
+  await expect(page).toBeLoggedIn();
 });
 
 test("validates that the username is required", async ({ page }) => {
@@ -54,12 +53,14 @@ test("validates that the username is required", async ({ page }) => {
   await expect(getUsernameInput(page)).toBeInvalid(
     VALIDATION_MESSAGES.REQUIRED,
   );
+  await expect(page).toBeLoggedOut();
 });
 
 test("enforces maximum length on a username", async ({ page }) => {
   const username = "a".repeat(64);
   await getUsernameInput(page).fill(username + "b");
   await expect(getUsernameInput(page)).toHaveValue(username);
+  await expect(page).toBeLoggedOut();
 });
 
 test("validates that the password is required", async ({ page }) => {
@@ -69,6 +70,7 @@ test("validates that the password is required", async ({ page }) => {
   await expect(getPasswordInput(page)).toBeInvalid(
     VALIDATION_MESSAGES.REQUIRED,
   );
+  await expect(page).toBeLoggedOut();
 });
 
 test("enforces minimum length on a password", async ({ page }) => {
@@ -79,12 +81,14 @@ test("enforces minimum length on a password", async ({ page }) => {
   await expect(getPasswordInput(page)).toBeInvalid(
     VALIDATION_MESSAGES.MINLENGTH(8),
   );
+  await expect(page).toBeLoggedOut();
 });
 
 test("enforces maximum length on a password", async ({ page }) => {
   const password = "a".repeat(64);
   await getPasswordInput(page).fill(password + "b");
   await expect(getPasswordInput(page)).toHaveValue(password);
+  await expect(page).toBeLoggedOut();
 });
 
 test("does not login for a username that does not exist", async ({ page }) => {
@@ -93,6 +97,7 @@ test("does not login for a username that does not exist", async ({ page }) => {
   await submit(page);
   await expect(page).toHaveURL(/login/i);
   await expect(getNoUserExistsError(page)).toBeVisible();
+  await expect(page).toBeLoggedOut();
 });
 
 test("does not login for a password that does not exist", async ({ page }) => {
@@ -101,4 +106,5 @@ test("does not login for a password that does not exist", async ({ page }) => {
   await submit(page);
   await expect(page).toHaveURL(/login/i);
   await expect(getNoUserExistsError(page)).toBeVisible();
+  await expect(page).toBeLoggedOut();
 });
