@@ -79,11 +79,7 @@ public final class RegistrationAuthenticationStrategyTest {
               )
             ),
           (request, expected) -> {
-            var registration = new Registration(
-              1,
-              "username",
-              "password".getBytes()
-            );
+            var registration = new Registration(1, "username", "password");
             when(
               service.getOne(request.username(), request.password())
             ).thenReturn(Option.of(registration));
@@ -100,11 +96,7 @@ public final class RegistrationAuthenticationStrategyTest {
           new RegistrationAuthenticationRequest("username", "password"),
           __ -> Either.right(new Session(UUID.randomUUID(), 1)),
           (request, expected) -> {
-            var registration = new Registration(
-              1,
-              "username",
-              "password".getBytes()
-            );
+            var registration = new Registration(1, "username", "password");
             var account = new Account(1, registration.id(), null);
             when(
               service.getOne(request.username(), request.password())

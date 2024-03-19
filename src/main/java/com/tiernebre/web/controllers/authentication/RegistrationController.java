@@ -33,6 +33,11 @@ public final class RegistrationController {
 
   public void submit(Context ctx) {
     var password = ctx.formParam(Constants.PASSWORD_PARAMETER);
+    LOG.info(
+      "Creating registration for {} {}",
+      ctx.formParam(Constants.USERNAME_PARAMETER),
+      ctx.formParam(Constants.CONFIRM_PASSWORD_PARAMETER)
+    );
     service
       .create(
         new CreateRegistrationRequest(
@@ -48,6 +53,9 @@ public final class RegistrationController {
             password
           )
       )
+      .peek(request -> {
+        LOG.info("Got request {}", request);
+      })
       .flatMap(authenticationStrategy::authenticate)
       .peek(session -> {
         sessionRegister.register(ctx, session);
@@ -55,7 +63,7 @@ public final class RegistrationController {
       })
       .peekLeft(error -> {
         ctx.status(HttpStatus.BAD_REQUEST);
-        LOG.debug("Failed registration, got errors %s", error);
+        LOG.debug("Failed registration, got error {}", error);
         ctx.html(render(error.publicMessage()));
       });
   }

@@ -6,7 +6,7 @@ public interface PasswordHasher {
    * @param password Provided plaintext unhashed password.
    * @return A hashed version of the password.
    */
-  public byte[] hash(String password);
+  public String hash(String password);
 
   /**
    * Verifies that a given password matches a hashed password.
@@ -14,5 +14,5 @@ public interface PasswordHasher {
    * @param hashedPassword The hashed password to check against.
    * @return true if the passwords are equal, false if they do not match.
    */
-  public boolean verify(String givenPassword, byte[] hashedPassword);
+  public boolean verify(String givenPassword, String hashedPassword);
 }

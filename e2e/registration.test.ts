@@ -1,14 +1,11 @@
 import { test, Page } from "@playwright/test";
 import crypto from "node:crypto";
 import { VALIDATION_MESSAGES, expect } from "./expect";
-import {
-  getHeaderLoginButton,
-  getHeaderLogoutButton,
-  getHeaderRegisterButton,
-} from "./common";
+import { expectToBeLoggedIn } from "./common";
 
 const URI = "/registration";
-const PASSWORD = crypto.randomUUID().toString();
+const USERNAME = `REGISTER-${crypto.randomUUID().toString()}`;
+const PASSWORD = `REGISTER-${crypto.randomUUID().toString()}`;
 
 const getUsernameInput = (page: Page) =>
   page.getByRole("textbox", { name: /Username/i });
@@ -30,14 +27,13 @@ test("registration page exists", async ({ page }) => {
 });
 
 test("registers a user", async ({ page }) => {
-  await getUsernameInput(page).fill(crypto.randomUUID());
+  await getUsernameInput(page).fill(USERNAME);
   await getPasswordInput(page).fill(PASSWORD);
   await getConfirmPasswordInput(page).fill(PASSWORD);
   await submit(page);
+  await page.screenshot({ path: "test-results/register.png" });
   await expect(page).not.toHaveURL(/.*registration/);
-  await expect(getHeaderLogoutButton(page)).toBeVisible();
-  await expect(getHeaderLoginButton(page)).not.toBeVisible();
-  await expect(getHeaderRegisterButton(page)).not.toBeVisible();
+  await expectToBeLoggedIn(page);
 });
 
 test("requires a username", async ({ page }) => {
@@ -139,7 +135,7 @@ test("validates that password must match confirm password", async ({
 test("validates that a duplicate username cannot be created", async ({
   page,
 }) => {
-  const username = crypto.randomUUID();
+  const username = `D-${USERNAME}`;
   await getUsernameInput(page).fill(username);
   await getPasswordInput(page).fill(PASSWORD);
   await getConfirmPasswordInput(page).fill(PASSWORD);

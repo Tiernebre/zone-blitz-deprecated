@@ -23,7 +23,7 @@ install: clean migrate build
 build: node_modules
 	cp node_modules/htmx.org/dist/htmx.min.js src/main/resources/assets/htmx.js 
 	cp node_modules/@unocss/reset/tailwind.css src/main/resources/assets/reset.css
-	npx unocss \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css
+	npm run build:styles
 	gradle installDist
 
 .PHONY: migrate
@@ -42,7 +42,7 @@ test:
 
 .PHONY: e2e
 e2e: node_modules
-	npx playwright test
+	npx playwright test $(TEST)
 
 .PHONY: dev
 dev:

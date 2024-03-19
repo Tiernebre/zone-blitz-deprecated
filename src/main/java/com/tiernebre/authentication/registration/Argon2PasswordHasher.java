@@ -1,40 +1,22 @@
 package com.tiernebre.authentication.registration;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import org.bouncycastle.crypto.generators.Argon2BytesGenerator;
-import org.bouncycastle.crypto.params.Argon2Parameters;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
 public final class Argon2PasswordHasher implements PasswordHasher {
 
-  private final int iterations = 2;
-  private final int memoryLimitAsKB = 19923;
-  private final int parallelism = 1;
-  private final int hashLength = 32;
-
-  private final Argon2BytesGenerator generator;
+  private final Argon2PasswordEncoder encoder;
 
   public Argon2PasswordHasher() {
-    generator = new Argon2BytesGenerator();
-    generator.init(
-      new Argon2Parameters.Builder(Argon2Parameters.ARGON2_id)
-        .withVersion(Argon2Parameters.ARGON2_VERSION_13)
-        .withIterations(iterations)
-        .withMemoryAsKB(memoryLimitAsKB)
-        .withParallelism(parallelism)
-        .build()
-    );
+    encoder = new Argon2PasswordEncoder(16, 32, 1, 60000, 10);
   }
 
   @Override
-  public boolean verify(String givenPassword, byte[] hashedPassword) {
-    return Arrays.equals(hash(givenPassword), hashedPassword);
+  public boolean verify(String givenPassword, String hashedPassword) {
+    return encoder.matches(givenPassword, hashedPassword);
   }
 
   @Override
-  public byte[] hash(String password) {
-    byte[] result = new byte[hashLength];
-    generator.generateBytes(password.getBytes(StandardCharsets.UTF_8), result);
-    return result;
+  public String hash(String password) {
+    return encoder.encode(password);
   }
 }

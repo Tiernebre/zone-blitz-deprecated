@@ -1,32 +1,30 @@
-package com.tiernebre.web.routes.page;
+package com.tiernebre.web.routes;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 import com.tiernebre.web.controllers.IndexController;
-import com.tiernebre.web.controllers.authentication.LoginController;
-import com.tiernebre.web.routes.RegistrationRoutes;
 import io.javalin.apibuilder.EndpointGroup;
 
 public class PageRoutes implements EndpointGroup {
 
   private final IndexController indexController;
-  private final LoginController loginController;
   private final RegistrationRoutes registrationRoutes;
+  private final LoginRoutes loginRoutes;
 
   public PageRoutes(
     IndexController frontPageController,
-    LoginController loginPageController,
-    RegistrationRoutes registrationRoutes
+    RegistrationRoutes registrationRoutes,
+    LoginRoutes loginRoutes
   ) {
     this.indexController = frontPageController;
-    this.loginController = loginPageController;
     this.registrationRoutes = registrationRoutes;
+    this.loginRoutes = loginRoutes;
   }
 
   @Override
   public void addEndpoints() {
     get("", indexController::render);
-    get("login", loginController::render);
-    this.registrationRoutes.addEndpoints();
+    registrationRoutes.addEndpoints();
+    loginRoutes.addEndpoints();
   }
 }

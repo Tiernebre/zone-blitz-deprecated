@@ -20,7 +20,7 @@ public final class JooqRegistrationRepository
   @Override
   public Either<ZoneBlitzError, Registration> insertOne(
     String username,
-    byte[] password
+    String password
   ) {
     return Try.of(
       () ->

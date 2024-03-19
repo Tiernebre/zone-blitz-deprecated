@@ -75,7 +75,7 @@ public final class DefaultRegistrationServiceTest {
               Either.right(new RegistrationRequest(username, password))
             );
             when(repository.selectOneByUsername(username)).thenReturn(
-              Option.of(new Registration(0, username, password.getBytes()))
+              Option.of(new Registration(0, username, password))
             );
           }
         ),
@@ -94,7 +94,7 @@ public final class DefaultRegistrationServiceTest {
           (request, expected) -> {
             var username = request.username();
             var password = request.password();
-            var hashedPassword = "hashed".getBytes();
+            var hashedPassword = "hashed";
             when(validator.parse(request)).thenReturn(
               Either.right(new RegistrationRequest(username, password))
             );
@@ -118,7 +118,7 @@ public final class DefaultRegistrationServiceTest {
               new Registration(
                 0,
                 request.username(),
-                UUID.randomUUID().toString().getBytes()
+                UUID.randomUUID().toString()
               )
             ),
           (request, expected) -> {
@@ -171,7 +171,7 @@ public final class DefaultRegistrationServiceTest {
             var registration = new Registration(
               1,
               request._1,
-              UUID.randomUUID().toString().getBytes()
+              UUID.randomUUID().toString()
             );
             when(repository.selectOneByUsername(request._1)).thenReturn(
               Option.of(registration)
@@ -186,11 +186,7 @@ public final class DefaultRegistrationServiceTest {
           Tuple.of("username", "password"),
           request ->
             Option.of(
-              new Registration(
-                1,
-                request._1,
-                UUID.randomUUID().toString().getBytes()
-              )
+              new Registration(1, request._1, UUID.randomUUID().toString())
             ),
           (request, expected) -> {
             var registration = expected.get();
