@@ -1,6 +1,6 @@
 import { Page, test } from "@playwright/test";
 import crypto from "node:crypto";
-import { expect } from "./expect";
+import { VALIDATION_MESSAGES, expect } from "./expect";
 import { expectToBeLoggedIn } from "./common";
 
 const URI = "/login";
@@ -38,7 +38,24 @@ test("logs the user in", async ({ page }) => {
   await getUsernameInput(page).fill(USERNAME);
   await getPasswordInput(page).fill(PASSWORD);
   await submit(page);
-  await page.screenshot({ path: "test-results/login.png" });
   await expect(page).not.toHaveURL(/login/i);
   await expectToBeLoggedIn(page);
+});
+
+test("validates that the username is required", async ({ page }) => {
+  await getPasswordInput(page).fill(PASSWORD);
+  await submit(page);
+  await expect(page).toHaveURL(/login/i);
+  await expect(getUsernameInput(page)).toBeInvalid(
+    VALIDATION_MESSAGES.REQUIRED,
+  );
+});
+
+test("validates that the password is required", async ({ page }) => {
+  await getUsernameInput(page).fill(USERNAME);
+  await submit(page);
+  await expect(page).toHaveURL(/login/i);
+  await expect(getPasswordInput(page)).toBeInvalid(
+    VALIDATION_MESSAGES.REQUIRED,
+  );
 });
