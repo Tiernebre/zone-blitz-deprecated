@@ -1,10 +1,17 @@
-import { Locator, expect as baseExpect } from "@playwright/test";
+import { Locator, Page, expect as baseExpect } from "@playwright/test";
 
 export const VALIDATION_MESSAGES = Object.freeze({
   REQUIRED: /fill out this field/i,
   PATTERN: /match the requested format/i,
   MINLENGTH: (length: number) => new RegExp(`${length} characters`, "i"),
 });
+
+const getHeaderLoginButton = (page: Page) =>
+  page.locator("header").getByRole("link", { name: /login/i });
+const getHeaderRegisterButton = (page: Page) =>
+  page.locator("header").getByRole("link", { name: /register/i });
+const getHeaderLogoutButton = (page: Page) =>
+  page.locator("header").getByRole("button", { name: /logout/i });
 
 export const expect = baseExpect.extend({
   async toBeValid(locator: Locator) {
@@ -81,6 +88,38 @@ export const expect = baseExpect.extend({
       name: assertionName,
       message: pass ? () => "Element was invalid." : () => failingMessage,
       pass,
+    };
+  },
+  async toBeLoggedIn(page: Page) {
+    let pass;
+    try {
+      await expect(getHeaderLogoutButton(page)).toBeVisible();
+      await expect(getHeaderLoginButton(page)).not.toBeVisible();
+      await expect(getHeaderRegisterButton(page)).not.toBeVisible();
+      pass = true;
+    } catch (error) {
+      pass = false;
+    }
+    return {
+      name: "toBeLoggedIn",
+      pass,
+      message: pass ? () => "User was logged in" : () => "User was logged out",
+    };
+  },
+  async toBeLoggedOut(page: Page) {
+    let pass;
+    try {
+      await expect(getHeaderLogoutButton(page)).not.toBeVisible();
+      await expect(getHeaderLoginButton(page)).toBeVisible();
+      await expect(getHeaderRegisterButton(page)).toBeVisible();
+      pass = true;
+    } catch (error) {
+      pass = false;
+    }
+    return {
+      name: "toBeLoggedIn",
+      pass,
+      message: pass ? () => "User was logged out" : () => "User was logged in",
     };
   },
 });
