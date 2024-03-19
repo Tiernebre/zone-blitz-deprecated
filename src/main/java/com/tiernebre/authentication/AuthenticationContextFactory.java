@@ -5,7 +5,6 @@ import com.tiernebre.authentication.account.JooqAccountRepository;
 import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import com.tiernebre.authentication.google.GoogleIdTokenVerifierFactory;
 import com.tiernebre.authentication.google.VavrGoogleAuthenticationValidator;
-import com.tiernebre.authentication.registration.Argon2PasswordHasher;
 import com.tiernebre.authentication.registration.DefaultRegistrationService;
 import com.tiernebre.authentication.registration.JooqRegistrationRepository;
 import com.tiernebre.authentication.registration.RegistrationAuthenticationStrategy;
@@ -16,6 +15,7 @@ import com.tiernebre.database.DatabaseConnectionError;
 import com.tiernebre.database.DatabaseContext;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
 public final class AuthenticationContextFactory {
 
@@ -36,7 +36,7 @@ public final class AuthenticationContextFactory {
     );
     var registrationService = new DefaultRegistrationService(
       new JooqRegistrationRepository(dsl),
-      new Argon2PasswordHasher(),
+      new Argon2PasswordEncoder(16, 32, 1, 60000, 10),
       accountService,
       new VavrRegistrationValidator()
     );

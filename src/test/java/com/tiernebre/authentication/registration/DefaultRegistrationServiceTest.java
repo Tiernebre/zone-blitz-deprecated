@@ -19,13 +19,14 @@ import io.vavr.control.Either;
 import io.vavr.control.Option;
 import java.util.UUID;
 import org.junit.Test;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public final class DefaultRegistrationServiceTest {
 
   private final RegistrationRepository repository = mock(
     RegistrationRepository.class
   );
-  private final PasswordHasher passwordHasher = mock(PasswordHasher.class);
+  private final PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
   private final AccountService accountService = mock(AccountService.class);
   private final RegistrationValidator validator = mock(
     RegistrationValidator.class
@@ -33,7 +34,7 @@ public final class DefaultRegistrationServiceTest {
 
   private final RegistrationService service = new DefaultRegistrationService(
     repository,
-    passwordHasher,
+    passwordEncoder,
     accountService,
     validator
   );
@@ -101,7 +102,7 @@ public final class DefaultRegistrationServiceTest {
             when(repository.selectOneByUsername(username)).thenReturn(
               Option.none()
             );
-            when(passwordHasher.hash(password)).thenReturn(hashedPassword);
+            when(passwordEncoder.encode(password)).thenReturn(hashedPassword);
             when(repository.insertOne(username, hashedPassword)).thenReturn(
               expected
             );
@@ -131,7 +132,7 @@ public final class DefaultRegistrationServiceTest {
             when(repository.selectOneByUsername(username)).thenReturn(
               Option.none()
             );
-            when(passwordHasher.hash(password)).thenReturn(hashedPassword);
+            when(passwordEncoder.encode(password)).thenReturn(hashedPassword);
             when(repository.insertOne(username, hashedPassword)).thenReturn(
               Either.right(expected.get())
             );
@@ -177,7 +178,7 @@ public final class DefaultRegistrationServiceTest {
               Option.of(registration)
             );
             when(
-              passwordHasher.verify(request._2, registration.password())
+              passwordEncoder.matches(request._2, registration.password())
             ).thenReturn(false);
           }
         ),
@@ -194,7 +195,7 @@ public final class DefaultRegistrationServiceTest {
               expected
             );
             when(
-              passwordHasher.verify(request._2, registration.password())
+              passwordEncoder.matches(request._2, registration.password())
             ).thenReturn(true);
           }
         )

@@ -5,22 +5,23 @@ import com.tiernebre.util.error.ZoneBlitzClientError;
 import com.tiernebre.util.error.ZoneBlitzError;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public final class DefaultRegistrationService implements RegistrationService {
 
   private final RegistrationRepository repository;
-  private final PasswordHasher passwordHasher;
+  private final PasswordEncoder passwordEncoder;
   private final AccountService accountService;
   private final RegistrationValidator validator;
 
   public DefaultRegistrationService(
     RegistrationRepository repository,
-    PasswordHasher passwordHasher,
+    PasswordEncoder passwordEncoder,
     AccountService accountService,
     RegistrationValidator validator
   ) {
     this.repository = repository;
-    this.passwordHasher = passwordHasher;
+    this.passwordEncoder = passwordEncoder;
     this.accountService = accountService;
     this.validator = validator;
   }
@@ -47,7 +48,8 @@ public final class DefaultRegistrationService implements RegistrationService {
     return repository
       .selectOneByUsername(username)
       .filter(
-        registration -> passwordHasher.verify(password, registration.password())
+        registration ->
+          passwordEncoder.matches(password, registration.password())
       );
   }
 
@@ -56,7 +58,7 @@ public final class DefaultRegistrationService implements RegistrationService {
   ) {
     return repository.insertOne(
       request.username(),
-      passwordHasher.hash(request.password())
+      passwordEncoder.encode(request.password())
     );
   }
 
