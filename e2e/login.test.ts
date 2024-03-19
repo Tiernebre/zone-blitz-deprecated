@@ -59,3 +59,19 @@ test("validates that the password is required", async ({ page }) => {
     VALIDATION_MESSAGES.REQUIRED,
   );
 });
+
+test("enforces minimum length on a password", async ({ page }) => {
+  await getUsernameInput(page).fill(crypto.randomUUID().toString());
+  await getPasswordInput(page).fill("a");
+  await submit(page);
+  await expect(getUsernameInput(page)).toBeValid();
+  await expect(getPasswordInput(page)).toBeInvalid(
+    VALIDATION_MESSAGES.MINLENGTH(8),
+  );
+});
+
+test("enforces maximum length on a password", async ({ page }) => {
+  const password = "a".repeat(64);
+  await getPasswordInput(page).fill(password + "b");
+  await expect(getPasswordInput(page)).toHaveValue(password);
+});

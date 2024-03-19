@@ -86,8 +86,8 @@ test("enforces minimum length on a password", async ({ page }) => {
 
 test("enforces maximum length on a password", async ({ page }) => {
   const password = "a".repeat(64);
-  await getUsernameInput(page).fill(password + "b");
-  await expect(getUsernameInput(page)).toHaveValue(password);
+  await getPasswordInput(page).fill(password + "b");
+  await expect(getPasswordInput(page)).toHaveValue(password);
 });
 
 test("enforces minimum length on confirm password", async ({ page }) => {
