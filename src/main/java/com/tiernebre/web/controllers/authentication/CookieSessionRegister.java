@@ -23,7 +23,7 @@ public class CookieSessionRegister implements SessionRegister {
   public void delete(Context ctx, Session session) {
     Cookie deletedSessionCookie = new Cookie(
       WebConstants.SESSION_COOKIE_TOKEN_NAME,
-      null
+      ""
     );
     deletedSessionCookie.setMaxAge(-1);
     ctx.cookie(deletedSessionCookie);
