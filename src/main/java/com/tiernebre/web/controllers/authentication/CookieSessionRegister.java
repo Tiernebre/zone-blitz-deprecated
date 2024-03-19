@@ -14,11 +14,26 @@ public class CookieSessionRegister implements SessionRegister {
       WebConstants.SESSION_COOKIE_TOKEN_NAME,
       session.id().toString()
     );
-    sessionCookie.setHttpOnly(true);
-    sessionCookie.setSecure(true);
-    sessionCookie.setPath("/");
-    sessionCookie.setSameSite(SameSite.STRICT);
+    secureCookie(sessionCookie);
     ctx.cookie(sessionCookie);
     ctx.redirect("/");
+  }
+
+  @Override
+  public void delete(Context ctx, Session session) {
+    Cookie deletedSessionCookie = new Cookie(
+      WebConstants.SESSION_COOKIE_TOKEN_NAME,
+      null
+    );
+    deletedSessionCookie.setMaxAge(-1);
+    ctx.cookie(deletedSessionCookie);
+    ctx.redirect("/");
+  }
+
+  private void secureCookie(Cookie cookie) {
+    cookie.setHttpOnly(true);
+    cookie.setSecure(true);
+    cookie.setPath("/");
+    cookie.setSameSite(SameSite.STRICT);
   }
 }
