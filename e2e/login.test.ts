@@ -51,6 +51,12 @@ test("validates that the username is required", async ({ page }) => {
   );
 });
 
+test("enforces maximum length on a username", async ({ page }) => {
+  const username = "a".repeat(64);
+  await getUsernameInput(page).fill(username + "b");
+  await expect(getUsernameInput(page)).toHaveValue(username);
+});
+
 test("validates that the password is required", async ({ page }) => {
   await getUsernameInput(page).fill(USERNAME);
   await submit(page);
