@@ -12,4 +12,13 @@ public interface SessionRegister {
    * @param session The session to register.
    */
   public void register(Context ctx, Session session);
+
+  /**
+   * Deletes a given session. Used for scenarios where the user wants to
+   * log out of their session.
+   *
+   * @param ctx Javalin context
+   * @param session The session to delete.
+   */
+  public void delete(Context ctx, Session session);
 }

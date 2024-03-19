@@ -1,23 +1,22 @@
-import { test, Page } from "@playwright/test";
+import { test } from "@playwright/test";
 import crypto from "node:crypto";
 import { VALIDATION_MESSAGES, expect } from "./expect";
+import { registrationQueries } from "./helpers";
 
 const URI = "/registration";
 const USERNAME = `REGISTER-${crypto.randomUUID().toString()}`;
 const PASSWORD = `REGISTER-${crypto.randomUUID().toString()}`;
 
-const getUsernameInput = (page: Page) =>
-  page.getByRole("textbox", { name: /Username/i });
-const getPasswordInput = (page: Page) =>
-  page.getByLabel("Password", { exact: true });
-const getConfirmPasswordInput = (page: Page) =>
-  page.getByLabel("Confirm Password", { exact: true });
-const submit = (page: Page) =>
-  page.getByRole("button", { name: /Register/i }).click();
-
 test.beforeEach(async ({ page }) => {
   await page.goto(URI);
 });
+
+const {
+  getUsernameInput,
+  getPasswordInput,
+  getConfirmPasswordInput,
+  clickRegisterButton: submit,
+} = registrationQueries;
 
 test("registration page exists", async ({ page }) => {
   const registrationsPage = await page.goto(URI);
@@ -30,7 +29,6 @@ test("registers a user", async ({ page }) => {
   await getPasswordInput(page).fill(PASSWORD);
   await getConfirmPasswordInput(page).fill(PASSWORD);
   await submit(page);
-  await page.screenshot({ path: "test-results/register.png" });
   await expect(page).not.toHaveURL(/.*registration/);
   await expect(page).toBeLoggedIn();
 });

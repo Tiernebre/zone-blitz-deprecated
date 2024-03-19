@@ -13,7 +13,7 @@
         </div>
       {{/@context.loggedIn}} 
       {{#@context.loggedIn}}
-        <form>{{< button}} {{$text}}Logout{{/text}} {{/button}}</form>
+        <form method="post" action="/logout">{{< button}} {{$text}}Logout{{/text}} {{/button}}</form>
       {{/@context.loggedIn}}
     </div>
   </header>
