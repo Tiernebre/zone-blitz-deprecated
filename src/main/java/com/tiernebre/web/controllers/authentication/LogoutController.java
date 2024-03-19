@@ -23,5 +23,6 @@ public final class LogoutController implements Handler {
   public void handle(@NotNull Context ctx) throws Exception {
     helper.session(ctx).peek(session -> sessionRegister.delete(ctx, session));
     ctx.status(HttpStatus.OK);
+    ctx.redirect("/");
   }
 }

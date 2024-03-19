@@ -25,9 +25,8 @@ public class CookieSessionRegister implements SessionRegister {
       WebConstants.SESSION_COOKIE_TOKEN_NAME,
       ""
     );
-    deletedSessionCookie.setMaxAge(-1);
+    deletedSessionCookie.setMaxAge(0);
     ctx.cookie(deletedSessionCookie);
-    ctx.redirect("/");
   }
 
   private void secureCookie(Cookie cookie) {
