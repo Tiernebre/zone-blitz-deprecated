@@ -48,11 +48,11 @@ public class RegistrationAuthenticationStrategy
   ) {
     return service
       .getOne(request.username(), request.password())
-      .<ZoneBlitzError>toEither(() -> {
-        return new ZoneBlitzClientError(
+      .<ZoneBlitzError>toEither(
+        new ZoneBlitzClientError(
           "Could not find a registration with the given username and password."
-        );
-      });
+        )
+      );
   }
 
   private Either<ZoneBlitzError, Account> getAccount(

@@ -13,3 +13,9 @@ export const expectToBeLoggedIn = async (page: Page) => {
   await expect(getHeaderLoginButton(page)).not.toBeVisible();
   await expect(getHeaderRegisterButton(page)).not.toBeVisible();
 };
+
+export const expectToBeLoggedOut = async (page: Page) => {
+  await expect(getHeaderLogoutButton(page)).not.toBeVisible();
+  await expect(getHeaderLoginButton(page)).toBeVisible();
+  await expect(getHeaderRegisterButton(page)).toBeVisible();
+};
