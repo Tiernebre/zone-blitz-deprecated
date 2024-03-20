@@ -19,12 +19,12 @@ public final class RegistrationController {
 
   private final RegistrationService service;
   private final RegistrationAuthenticationStrategy authenticationStrategy;
-  private final SessionRegister sessionRegister;
+  private final SessionRegistry sessionRegister;
 
   public RegistrationController(
     RegistrationService service,
     RegistrationAuthenticationStrategy authenticationStrategy,
-    SessionRegister sessionRegister
+    SessionRegistry sessionRegister
   ) {
     this.service = service;
     this.authenticationStrategy = authenticationStrategy;

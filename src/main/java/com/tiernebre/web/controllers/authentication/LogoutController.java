@@ -8,11 +8,11 @@ import org.jetbrains.annotations.NotNull;
 
 public final class LogoutController implements Handler {
 
-  private final SessionRegister sessionRegister;
+  private final SessionRegistry sessionRegister;
   private final ControllerHelper helper;
 
   public LogoutController(
-    SessionRegister sessionRegister,
+    SessionRegistry sessionRegister,
     ControllerHelper helper
   ) {
     this.sessionRegister = sessionRegister;

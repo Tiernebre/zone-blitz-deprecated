@@ -5,5 +5,6 @@ import com.tiernebre.database.DatabaseContext;
 
 public record DependencyContext(
   DatabaseContext database,
-  AuthenticationContext authentication
+  AuthenticationContext authentication,
+  WebDependencyContext web
 ) {}

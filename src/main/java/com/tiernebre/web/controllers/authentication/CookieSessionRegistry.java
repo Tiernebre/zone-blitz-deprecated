@@ -1,12 +1,21 @@
 package com.tiernebre.web.controllers.authentication;
 
 import com.tiernebre.authentication.session.Session;
+import com.tiernebre.authentication.session.SessionService;
 import com.tiernebre.web.constants.WebConstants;
 import io.javalin.http.Context;
 import io.javalin.http.Cookie;
 import io.javalin.http.SameSite;
+import io.vavr.control.Option;
+import java.util.UUID;
 
-public class CookieSessionRegister implements SessionRegister {
+public final class CookieSessionRegistry implements SessionRegistry {
+
+  private final SessionService service;
+
+  public CookieSessionRegistry(SessionService service) {
+    this.service = service;
+  }
 
   @Override
   public void register(Context ctx, Session session) {
@@ -33,5 +42,17 @@ public class CookieSessionRegister implements SessionRegister {
     cookie.setSecure(true);
     cookie.setPath("/");
     cookie.setSameSite(SameSite.STRICT);
+  }
+
+  @Override
+  public void parse(Context ctx) {
+    Option.of(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME))
+      .toTry()
+      .mapTry(token -> UUID.fromString(token))
+      .toOption()
+      .flatMap(service::get)
+      .peek(session -> {
+        ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE, session);
+      });
   }
 }

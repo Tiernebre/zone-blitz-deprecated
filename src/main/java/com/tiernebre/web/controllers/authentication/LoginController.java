@@ -21,13 +21,13 @@ public final class LoginController {
   private final ControllerHelper helper;
   private final GoogleAuthenticationStrategy googleAuthenticationStrategy;
   private final RegistrationAuthenticationStrategy registrationAuthenticationStrategy;
-  private final SessionRegister sessionRegister;
+  private final SessionRegistry sessionRegister;
 
   public LoginController(
     ControllerHelper helper,
     GoogleAuthenticationStrategy googleAuthenticationStrategy,
     RegistrationAuthenticationStrategy registrationAuthenticationStrategy,
-    SessionRegister sessionRegister
+    SessionRegistry sessionRegister
   ) {
     this.helper = helper;
     this.googleAuthenticationStrategy = googleAuthenticationStrategy;

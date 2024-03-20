@@ -14,6 +14,10 @@ public final class DependencyContextFactory {
     var authenticationContext = new AuthenticationContextFactory(
       databaseContext
     ).create();
-    return new DependencyContext(databaseContext, authenticationContext);
+    return new DependencyContext(
+      databaseContext,
+      authenticationContext,
+      new WebDependencyContextFactory(authenticationContext).create()
+    );
   }
 }
