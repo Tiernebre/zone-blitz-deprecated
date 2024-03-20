@@ -65,6 +65,7 @@ public final class CookieSessionRegistryTest {
     when(service.delete(session.id())).thenReturn(Option.of(session));
     registry.delete(ctx, session);
     verify(ctx).cookie(expectedCookie);
+    verify(service, times(1)).delete(session.id());
   }
 
   @Test
