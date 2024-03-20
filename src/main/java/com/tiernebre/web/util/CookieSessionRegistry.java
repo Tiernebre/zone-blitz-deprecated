@@ -31,7 +31,10 @@ public final class CookieSessionRegistry implements SessionRegistry {
     );
     secureCookie(sessionCookie);
     ctx.cookie(sessionCookie);
-    LOG.debug("Registered a cookie based session for accountId={}");
+    LOG.debug(
+      "Registered cookie based session for accountId={}",
+      session.accountId()
+    );
   }
 
   @Override
@@ -54,7 +57,7 @@ public final class CookieSessionRegistry implements SessionRegistry {
       .peek(deletedSession -> {
         LOG.debug(
           "Deleted cookie based session tied to accountId={}.",
-          deletedSession
+          deletedSession.accountId()
         );
       })
       .onEmpty(() -> {

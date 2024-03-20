@@ -69,6 +69,20 @@ public final class CookieSessionRegistryTest {
   }
 
   @Test
+  public void deleteEmpty() {
+    var ctx = mock(Context.class);
+    var expectedCookie = new Cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME, "");
+    expectedCookie.setHttpOnly(true);
+    expectedCookie.setSecure(true);
+    expectedCookie.setPath("/");
+    expectedCookie.setSameSite(SameSite.STRICT);
+    expectedCookie.setMaxAge(0);
+    registry.delete(ctx, null);
+    verify(ctx).cookie(expectedCookie);
+    verify(service, times(0)).delete(any());
+  }
+
+  @Test
   public void parse() {
     TestCaseRunner.run(CookieSessionRegistryTest.class, List.of(
         new TestCase<Context, Void>(
