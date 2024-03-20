@@ -32,7 +32,17 @@ public final class JooqSessionRepositoryTest {
     var session = repository.insertOne(accountId);
     assertEquals(accountId, session.accountId());
     assertNotNull(session.id());
-    assertEquals(-1, LocalDateTime.now().compareTo(session.expiresAt()));
+    assertEquals(
+      -1,
+      LocalDateTime.now()
+        .plusMinutes(59)
+        .plusSeconds(59)
+        .compareTo(session.expiresAt())
+    );
+    assertEquals(
+      1,
+      LocalDateTime.now().plusMinutes(60).compareTo(session.expiresAt())
+    );
   }
 
   @Test
