@@ -18,6 +18,7 @@ import io.vavr.collection.List;
 import io.vavr.control.Either;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import org.junit.Test;
 
@@ -110,7 +111,8 @@ public final class GoogleAuthenticationStrategyTest {
         >(
           "Happy path valid request and created session",
           new GoogleAuthenticationRequest("creds", "csrf", "csrf"),
-          __ -> Either.right(new Session(new UUID(0, 0), 1L)),
+          __ ->
+            Either.right(new Session(new UUID(0, 0), 1L, LocalDateTime.now())),
           (request, expected) -> {
             when(validator.parseCredential(request)).thenReturn(
               Either.right(request.credential())
