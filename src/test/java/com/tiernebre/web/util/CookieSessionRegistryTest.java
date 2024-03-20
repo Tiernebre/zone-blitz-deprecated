@@ -62,6 +62,7 @@ public final class CookieSessionRegistryTest {
     expectedCookie.setPath("/");
     expectedCookie.setSameSite(SameSite.STRICT);
     expectedCookie.setMaxAge(0);
+    when(service.delete(session.id())).thenReturn(Option.of(session));
     registry.delete(ctx, session);
     verify(ctx).cookie(expectedCookie);
   }
