@@ -6,6 +6,7 @@ package com.tiernebre.database.jooq.tables.records;
 
 import com.tiernebre.database.jooq.tables.Session;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.jooq.Record1;
@@ -48,6 +49,20 @@ public class SessionRecord extends UpdatableRecordImpl<SessionRecord> {
         return (Long) get(1);
     }
 
+    /**
+     * Setter for <code>public.session.expires_at</code>.
+     */
+    public void setExpiresAt(LocalDateTime value) {
+        set(2, value);
+    }
+
+    /**
+     * Getter for <code>public.session.expires_at</code>.
+     */
+    public LocalDateTime getExpiresAt() {
+        return (LocalDateTime) get(2);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -71,11 +86,12 @@ public class SessionRecord extends UpdatableRecordImpl<SessionRecord> {
     /**
      * Create a detached, initialised SessionRecord
      */
-    public SessionRecord(UUID id, Long accountId) {
+    public SessionRecord(UUID id, Long accountId, LocalDateTime expiresAt) {
         super(Session.SESSION);
 
         setId(id);
         setAccountId(accountId);
+        setExpiresAt(expiresAt);
         resetChangedOnNotNull();
     }
 }
