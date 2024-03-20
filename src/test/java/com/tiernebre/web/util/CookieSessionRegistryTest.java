@@ -16,6 +16,7 @@ import io.javalin.http.Context;
 import io.javalin.http.Cookie;
 import io.javalin.http.SameSite;
 import io.vavr.collection.List;
+import io.vavr.control.Option;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.junit.Test;
@@ -71,6 +72,58 @@ public final class CookieSessionRegistryTest {
             verify(ctx, times(0)).attribute(
               eq(WebConstants.JAVALIN_SESSION_ATTRIBUTE),
               any()
+            );
+          }
+        ),
+        new TestCase<Context, Void>(
+          "empty token",
+          mock(Context.class),
+          __ -> null,
+          (ctx, __) -> {
+            when(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME)).thenReturn(
+              ""
+            );
+          },
+          (ctx, __) -> {
+            verify(ctx, times(0)).attribute(
+              eq(WebConstants.JAVALIN_SESSION_ATTRIBUTE),
+              any()
+            );
+          }
+        ),
+        new TestCase<Context, Void>(
+          "non UUID token",
+          mock(Context.class),
+          __ -> null,
+          (ctx, __) -> {
+            when(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME)).thenReturn(
+              "a"
+            );
+          },
+          (ctx, __) -> {
+            verify(ctx, times(0)).attribute(
+              eq(WebConstants.JAVALIN_SESSION_ATTRIBUTE),
+              any()
+            );
+          }
+        ),
+        new TestCase<Context, Void>(
+          "valid token",
+          mock(Context.class),
+          __ -> null,
+          (ctx, __) -> {
+            var token = UUID.randomUUID();
+            when(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME)).thenReturn(
+              token.toString()
+            );
+            when(service.get(token)).thenReturn(
+              Option.of(new Session(token, 0, null))
+            );
+          },
+          (ctx, __) -> {
+            verify(ctx, times(1)).attribute(
+              eq(WebConstants.JAVALIN_SESSION_ATTRIBUTE),
+              any(Session.class)
             );
           }
         )
