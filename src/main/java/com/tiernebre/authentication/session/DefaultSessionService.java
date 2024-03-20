@@ -23,7 +23,7 @@ public final class DefaultSessionService implements SessionService {
   }
 
   @Override
-  public void delete(UUID id) {
-    repository.deleteOne(id);
+  public Option<Session> delete(UUID id) {
+    return repository.deleteOne(id);
   }
 }

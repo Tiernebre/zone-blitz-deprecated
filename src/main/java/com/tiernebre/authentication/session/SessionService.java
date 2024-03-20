@@ -22,5 +22,5 @@ public interface SessionService {
    *
    * @param id The id or "token" of the session to delete
    */
-  public void delete(UUID id);
+  public Option<Session> delete(UUID id);
 }
