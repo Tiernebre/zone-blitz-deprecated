@@ -15,6 +15,7 @@ import com.tiernebre.util.error.ZoneBlitzServerError;
 import io.vavr.collection.List;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import org.junit.Test;
 
@@ -94,7 +95,10 @@ public final class RegistrationAuthenticationStrategyTest {
         >(
           "happy path created session for a valid registration",
           new RegistrationAuthenticationRequest("username", "password"),
-          __ -> Either.right(new Session(UUID.randomUUID(), 1)),
+          __ ->
+            Either.right(
+              new Session(UUID.randomUUID(), 1, LocalDateTime.now())
+            ),
           (request, expected) -> {
             var registration = new Registration(1, "username", "password");
             var account = new Account(1, registration.id(), null);

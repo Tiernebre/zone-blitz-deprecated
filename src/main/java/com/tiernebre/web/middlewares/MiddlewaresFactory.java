@@ -12,9 +12,7 @@ public final class MiddlewaresFactory {
 
   public Middlewares create() {
     return new Middlewares(
-      new SessionMiddleware(
-        dependencyContext.authentication().sessionService()
-      ),
+      new SessionMiddleware(dependencyContext.web().sessionRegistry()),
       new SecurityMiddleware()
     );
   }

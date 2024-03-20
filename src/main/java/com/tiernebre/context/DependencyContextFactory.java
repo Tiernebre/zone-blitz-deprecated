@@ -3,6 +3,7 @@ package com.tiernebre.context;
 import com.tiernebre.authentication.AuthenticationContextFactory;
 import com.tiernebre.database.DatabaseConnectionError;
 import com.tiernebre.database.DatabaseContextFactory;
+import com.tiernebre.web.WebContextFactory;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
@@ -14,6 +15,10 @@ public final class DependencyContextFactory {
     var authenticationContext = new AuthenticationContextFactory(
       databaseContext
     ).create();
-    return new DependencyContext(databaseContext, authenticationContext);
+    return new DependencyContext(
+      databaseContext,
+      authenticationContext,
+      new WebContextFactory(authenticationContext).create()
+    );
   }
 }

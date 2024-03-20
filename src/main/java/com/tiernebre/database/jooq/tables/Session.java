@@ -9,6 +9,7 @@ import com.tiernebre.database.jooq.Public;
 import com.tiernebre.database.jooq.tables.Account.AccountPath;
 import com.tiernebre.database.jooq.tables.records.SessionRecord;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -66,6 +67,11 @@ public class Session extends TableImpl<SessionRecord> {
      * The column <code>public.session.account_id</code>.
      */
     public final TableField<SessionRecord, Long> ACCOUNT_ID = createField(DSL.name("account_id"), SQLDataType.BIGINT.nullable(false), this, "");
+
+    /**
+     * The column <code>public.session.expires_at</code>.
+     */
+    public final TableField<SessionRecord, LocalDateTime> EXPIRES_AT = createField(DSL.name("expires_at"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("(now() + '01:00:00'::interval)"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Session(Name alias, Table<SessionRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

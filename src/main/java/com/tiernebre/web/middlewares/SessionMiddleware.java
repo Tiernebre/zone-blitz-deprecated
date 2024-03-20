@@ -1,28 +1,20 @@
 package com.tiernebre.web.middlewares;
 
-import com.tiernebre.authentication.session.SessionService;
-import com.tiernebre.web.constants.WebConstants;
+import com.tiernebre.web.util.SessionRegistry;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
-import io.vavr.control.Option;
-import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
 
 public final class SessionMiddleware implements Handler {
 
-  private final SessionService sessionService;
+  private final SessionRegistry registry;
 
-  public SessionMiddleware(SessionService sessionService) {
-    this.sessionService = sessionService;
+  public SessionMiddleware(SessionRegistry registry) {
+    this.registry = registry;
   }
 
   @Override
   public void handle(@NotNull Context ctx) throws Exception {
-    Option.of(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME))
-      .map(UUID::fromString)
-      .flatMap(sessionService::get)
-      .peek(session -> {
-        ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE, session);
-      });
+    registry.parse(ctx);
   }
 }

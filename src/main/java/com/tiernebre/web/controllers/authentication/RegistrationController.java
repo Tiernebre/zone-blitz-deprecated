@@ -5,6 +5,7 @@ import com.tiernebre.authentication.registration.RegistrationAuthenticationReque
 import com.tiernebre.authentication.registration.RegistrationAuthenticationStrategy;
 import com.tiernebre.authentication.registration.RegistrationService;
 import com.tiernebre.web.templates.Registration;
+import com.tiernebre.web.util.SessionRegistry;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.jstach.jstachio.JStachio;
@@ -19,12 +20,12 @@ public final class RegistrationController {
 
   private final RegistrationService service;
   private final RegistrationAuthenticationStrategy authenticationStrategy;
-  private final SessionRegister sessionRegister;
+  private final SessionRegistry sessionRegister;
 
   public RegistrationController(
     RegistrationService service,
     RegistrationAuthenticationStrategy authenticationStrategy,
-    SessionRegister sessionRegister
+    SessionRegistry sessionRegister
   ) {
     this.service = service;
     this.authenticationStrategy = authenticationStrategy;
