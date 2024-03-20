@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 import com.tiernebre.authentication.account.AccountRepository;
 import com.tiernebre.authentication.account.JooqAccountRepository;
 import com.tiernebre.database.TestJooqDslContextFactory;
+import com.tiernebre.database.jooq.Tables;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import org.jooq.DSLContext;
 import org.junit.Test;
@@ -44,5 +46,18 @@ public final class JooqSessionRepositoryTest {
   @Test
   public void selectOneCanReturnEmpty() {
     assertTrue(repository.selectOne(UUID.randomUUID()).isEmpty());
+  }
+
+  @Test
+  public void selectOneReturnsEmptyForExpiredSession() {
+    var existingSession = repository.insertOne(
+      accountRepository.insertOne(UUID.randomUUID().toString(), null).id()
+    );
+    dsl
+      .update(Tables.SESSION)
+      .set(Tables.SESSION.EXPIRES_AT, LocalDateTime.of(1, 1, 1, 1, 1))
+      .where(Tables.SESSION.ID.eq(existingSession.id()))
+      .execute();
+    assertTrue(repository.selectOne(existingSession.id()).isEmpty());
   }
 }
