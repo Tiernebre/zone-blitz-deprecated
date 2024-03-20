@@ -29,7 +29,12 @@ public final class CookieSessionRegistryTest {
   @Test
   public void register() {
     var ctx = mock(Context.class);
-    var session = new Session(UUID.randomUUID(), 1L, LocalDateTime.now());
+    var session = new Session(
+      UUID.randomUUID(),
+      1L,
+      LocalDateTime.now(),
+      false
+    );
     var expectedCookie = new Cookie(
       WebConstants.SESSION_COOKIE_TOKEN_NAME,
       session.id().toString()
@@ -45,15 +50,36 @@ public final class CookieSessionRegistryTest {
   @Test
   public void delete() {
     var ctx = mock(Context.class);
-    var session = new Session(UUID.randomUUID(), 1L, LocalDateTime.now());
+    var session = new Session(
+      UUID.randomUUID(),
+      1L,
+      LocalDateTime.now(),
+      false
+    );
     var expectedCookie = new Cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME, "");
     expectedCookie.setHttpOnly(true);
     expectedCookie.setSecure(true);
     expectedCookie.setPath("/");
     expectedCookie.setSameSite(SameSite.STRICT);
     expectedCookie.setMaxAge(0);
+    when(service.delete(session.id())).thenReturn(Option.of(session));
     registry.delete(ctx, session);
     verify(ctx).cookie(expectedCookie);
+    verify(service, times(1)).delete(session.id());
+  }
+
+  @Test
+  public void deleteEmpty() {
+    var ctx = mock(Context.class);
+    var expectedCookie = new Cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME, "");
+    expectedCookie.setHttpOnly(true);
+    expectedCookie.setSecure(true);
+    expectedCookie.setPath("/");
+    expectedCookie.setSameSite(SameSite.STRICT);
+    expectedCookie.setMaxAge(0);
+    registry.delete(ctx, null);
+    verify(ctx).cookie(expectedCookie);
+    verify(service, times(0)).delete(any());
   }
 
   @Test
@@ -117,7 +143,7 @@ public final class CookieSessionRegistryTest {
               token.toString()
             );
             when(service.get(token)).thenReturn(
-              Option.of(new Session(token, 0, null))
+              Option.of(new Session(token, 0, null, false))
             );
           },
           (ctx, __) -> {

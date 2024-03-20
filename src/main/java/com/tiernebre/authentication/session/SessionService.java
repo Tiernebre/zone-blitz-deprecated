@@ -16,4 +16,11 @@ public interface SessionService {
    * @return The found session, empty if it could not be found.
    */
   public Option<Session> get(UUID id);
+
+  /**
+   * Deletes a session by its given id.
+   *
+   * @param id The id or "token" of the session to delete
+   */
+  public Option<Session> delete(UUID id);
 }

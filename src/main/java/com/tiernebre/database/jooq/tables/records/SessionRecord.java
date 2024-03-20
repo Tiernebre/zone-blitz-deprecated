@@ -63,6 +63,20 @@ public class SessionRecord extends UpdatableRecordImpl<SessionRecord> {
         return (LocalDateTime) get(2);
     }
 
+    /**
+     * Setter for <code>public.session.revoked</code>.
+     */
+    public void setRevoked(Boolean value) {
+        set(3, value);
+    }
+
+    /**
+     * Getter for <code>public.session.revoked</code>.
+     */
+    public Boolean getRevoked() {
+        return (Boolean) get(3);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -86,12 +100,13 @@ public class SessionRecord extends UpdatableRecordImpl<SessionRecord> {
     /**
      * Create a detached, initialised SessionRecord
      */
-    public SessionRecord(UUID id, Long accountId, LocalDateTime expiresAt) {
+    public SessionRecord(UUID id, Long accountId, LocalDateTime expiresAt, Boolean revoked) {
         super(Session.SESSION);
 
         setId(id);
         setAccountId(accountId);
         setExpiresAt(expiresAt);
+        setRevoked(revoked);
         resetChangedOnNotNull();
     }
 }

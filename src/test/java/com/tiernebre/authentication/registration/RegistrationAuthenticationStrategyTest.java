@@ -97,7 +97,7 @@ public final class RegistrationAuthenticationStrategyTest {
           new RegistrationAuthenticationRequest("username", "password"),
           __ ->
             Either.right(
-              new Session(UUID.randomUUID(), 1, LocalDateTime.now())
+              new Session(UUID.randomUUID(), 1, LocalDateTime.now(), false)
             ),
           (request, expected) -> {
             var registration = new Registration(1, "username", "password");

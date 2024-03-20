@@ -112,7 +112,9 @@ public final class GoogleAuthenticationStrategyTest {
           "Happy path valid request and created session",
           new GoogleAuthenticationRequest("creds", "csrf", "csrf"),
           __ ->
-            Either.right(new Session(new UUID(0, 0), 1L, LocalDateTime.now())),
+            Either.right(
+              new Session(new UUID(0, 0), 1L, LocalDateTime.now(), false)
+            ),
           (request, expected) -> {
             when(validator.parseCredential(request)).thenReturn(
               Either.right(request.credential())

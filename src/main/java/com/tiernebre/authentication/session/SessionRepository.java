@@ -12,4 +12,11 @@ public interface SessionRepository {
    * @return A session if it exists, otherwise an empty option.
    */
   public Option<Session> selectOne(UUID id);
+
+  /**
+   * Deletes a given session within the data store.
+   * @param session The session to delete
+   * @return The deleted session if it exists, otherwise an empty option.
+   */
+  public Option<Session> deleteOne(UUID id);
 }
