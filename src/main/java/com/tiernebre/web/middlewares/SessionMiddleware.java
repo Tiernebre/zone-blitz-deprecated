@@ -1,6 +1,6 @@
 package com.tiernebre.web.middlewares;
 
-import com.tiernebre.web.controllers.authentication.SessionRegistry;
+import com.tiernebre.web.util.SessionRegistry;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import org.jetbrains.annotations.NotNull;

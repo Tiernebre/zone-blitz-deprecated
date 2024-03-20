@@ -7,6 +7,7 @@ import com.tiernebre.authentication.registration.RegistrationAuthenticationStrat
 import com.tiernebre.web.constants.WebConstants;
 import com.tiernebre.web.controllers.ControllerHelper;
 import com.tiernebre.web.templates.Login;
+import com.tiernebre.web.util.SessionRegistry;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import java.io.IOException;

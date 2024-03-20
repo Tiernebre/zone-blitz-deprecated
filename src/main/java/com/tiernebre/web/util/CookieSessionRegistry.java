@@ -1,4 +1,4 @@
-package com.tiernebre.web.controllers.authentication;
+package com.tiernebre.web.util;
 
 import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionService;

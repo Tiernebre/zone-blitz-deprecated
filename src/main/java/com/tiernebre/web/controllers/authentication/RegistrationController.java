@@ -5,6 +5,7 @@ import com.tiernebre.authentication.registration.RegistrationAuthenticationReque
 import com.tiernebre.authentication.registration.RegistrationAuthenticationStrategy;
 import com.tiernebre.authentication.registration.RegistrationService;
 import com.tiernebre.web.templates.Registration;
+import com.tiernebre.web.util.SessionRegistry;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.jstach.jstachio.JStachio;

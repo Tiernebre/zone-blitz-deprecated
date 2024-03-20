@@ -1,7 +1,7 @@
 package com.tiernebre.context;
 
 import com.tiernebre.authentication.AuthenticationContext;
-import com.tiernebre.web.controllers.authentication.CookieSessionRegistry;
+import com.tiernebre.web.util.CookieSessionRegistry;
 
 public final class WebDependencyContextFactory {
 

@@ -1,6 +1,7 @@
 package com.tiernebre.web.controllers.authentication;
 
 import com.tiernebre.web.controllers.ControllerHelper;
+import com.tiernebre.web.util.SessionRegistry;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import io.javalin.http.HttpStatus;
