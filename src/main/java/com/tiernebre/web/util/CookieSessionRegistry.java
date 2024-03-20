@@ -34,14 +34,8 @@ public final class CookieSessionRegistry implements SessionRegistry {
       ""
     );
     deletedSessionCookie.setMaxAge(0);
+    secureCookie(deletedSessionCookie);
     ctx.cookie(deletedSessionCookie);
-  }
-
-  private void secureCookie(Cookie cookie) {
-    cookie.setHttpOnly(true);
-    cookie.setSecure(true);
-    cookie.setPath("/");
-    cookie.setSameSite(SameSite.STRICT);
   }
 
   @Override
@@ -54,5 +48,12 @@ public final class CookieSessionRegistry implements SessionRegistry {
       .peek(session -> {
         ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE, session);
       });
+  }
+
+  private void secureCookie(Cookie cookie) {
+    cookie.setHttpOnly(true);
+    cookie.setSecure(true);
+    cookie.setPath("/");
+    cookie.setSameSite(SameSite.STRICT);
   }
 }
