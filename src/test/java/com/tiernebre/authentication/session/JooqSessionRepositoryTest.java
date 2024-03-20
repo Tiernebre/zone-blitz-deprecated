@@ -32,6 +32,7 @@ public final class JooqSessionRepositoryTest {
     var session = repository.insertOne(accountId);
     assertEquals(accountId, session.accountId());
     assertNotNull(session.id());
+    assertEquals(-1, LocalDateTime.now().compareTo(session.expiresAt()));
   }
 
   @Test
@@ -55,7 +56,10 @@ public final class JooqSessionRepositoryTest {
     );
     dsl
       .update(Tables.SESSION)
-      .set(Tables.SESSION.EXPIRES_AT, LocalDateTime.of(1, 1, 1, 1, 1))
+      .set(
+        Tables.SESSION.EXPIRES_AT,
+        existingSession.expiresAt().minusHours(1).minusSeconds(1)
+      )
       .where(Tables.SESSION.ID.eq(existingSession.id()))
       .execute();
     assertTrue(repository.selectOne(existingSession.id()).isEmpty());
