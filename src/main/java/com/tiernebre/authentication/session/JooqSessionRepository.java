@@ -45,7 +45,8 @@ public final class JooqSessionRepository implements SessionRepository {
       dsl.fetchOne(
         Tables.SESSION,
         Tables.SESSION.ID.eq(id),
-        Tables.SESSION.EXPIRES_AT.greaterOrEqual(LocalDateTime.now())
+        Tables.SESSION.EXPIRES_AT.greaterOrEqual(LocalDateTime.now()),
+        Tables.SESSION.REVOKED.eq(false)
       )
     );
   }

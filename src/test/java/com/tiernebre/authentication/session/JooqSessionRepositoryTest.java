@@ -77,6 +77,19 @@ public final class JooqSessionRepositoryTest {
   }
 
   @Test
+  public void selectOneReturnsEmptyForRevokedSession() {
+    var existingSession = repository.insertOne(
+      accountRepository.insertOne(UUID.randomUUID().toString(), null).id()
+    );
+    dsl
+      .update(Tables.SESSION)
+      .set(Tables.SESSION.REVOKED, true)
+      .where(Tables.SESSION.ID.eq(existingSession.id()))
+      .execute();
+    assertTrue(repository.selectOne(existingSession.id()).isEmpty());
+  }
+
+  @Test
   public void deleteOne() {
     var existingSession = repository.insertOne(
       accountRepository.insertOne(UUID.randomUUID().toString(), null).id()
@@ -85,9 +98,11 @@ public final class JooqSessionRepositoryTest {
     var deletedSession = repository.deleteOne(existingSession.id());
     assertTrue(deletedSession.isDefined());
     assertTrue(deletedSession.get().revoked());
-    var updatedSession = repository.selectOne(existingSession.id());
-    assertTrue(updatedSession.isDefined());
-    assertTrue(updatedSession.get().revoked());
+    var updatedSession = dsl.fetchOne(
+      Tables.SESSION,
+      Tables.SESSION.ID.eq(existingSession.id())
+    );
+    assertTrue(updatedSession.getRevoked());
   }
 
   @Test
