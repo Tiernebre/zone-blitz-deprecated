@@ -21,4 +21,9 @@ public final class DefaultSessionService implements SessionService {
   public Option<Session> get(UUID id) {
     return repository.selectOne(id);
   }
+
+  @Override
+  public void delete(UUID id) {
+    repository.deleteOne(id);
+  }
 }

@@ -30,4 +30,13 @@ public interface SessionRegistry {
    * @param ctx Javalin context to parse.
    */
   public void parse(Context ctx);
+
+  /**
+   * Refreshes a session so that the user gets a new session and stays logged in. Useful for if the user is actively
+   * using Zone Blitz and doesn't want to be logged out randomly during their session.
+   *
+   * @param ctx Javalin context to parse.
+   * @param session The session to refresh.
+   */
+  public void refresh(Context ctx, Session session);
 }

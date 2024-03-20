@@ -50,6 +50,12 @@ public final class CookieSessionRegistry implements SessionRegistry {
       });
   }
 
+  @Override
+  public void refresh(Context ctx, Session session) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'refresh'");
+  }
+
   private void secureCookie(Cookie cookie) {
     cookie.setHttpOnly(true);
     cookie.setSecure(true);

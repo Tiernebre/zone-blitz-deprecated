@@ -29,7 +29,12 @@ public final class CookieSessionRegistryTest {
   @Test
   public void register() {
     var ctx = mock(Context.class);
-    var session = new Session(UUID.randomUUID(), 1L, LocalDateTime.now());
+    var session = new Session(
+      UUID.randomUUID(),
+      1L,
+      LocalDateTime.now(),
+      false
+    );
     var expectedCookie = new Cookie(
       WebConstants.SESSION_COOKIE_TOKEN_NAME,
       session.id().toString()
@@ -45,7 +50,12 @@ public final class CookieSessionRegistryTest {
   @Test
   public void delete() {
     var ctx = mock(Context.class);
-    var session = new Session(UUID.randomUUID(), 1L, LocalDateTime.now());
+    var session = new Session(
+      UUID.randomUUID(),
+      1L,
+      LocalDateTime.now(),
+      false
+    );
     var expectedCookie = new Cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME, "");
     expectedCookie.setHttpOnly(true);
     expectedCookie.setSecure(true);
@@ -117,7 +127,7 @@ public final class CookieSessionRegistryTest {
               token.toString()
             );
             when(service.get(token)).thenReturn(
-              Option.of(new Session(token, 0, null))
+              Option.of(new Session(token, 0, null, false))
             );
           },
           (ctx, __) -> {

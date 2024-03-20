@@ -1,6 +1,7 @@
 package com.tiernebre.authentication.session;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -73,5 +74,25 @@ public final class JooqSessionRepositoryTest {
       .where(Tables.SESSION.ID.eq(existingSession.id()))
       .execute();
     assertTrue(repository.selectOne(existingSession.id()).isEmpty());
+  }
+
+  @Test
+  public void deleteOne() {
+    var existingSession = repository.insertOne(
+      accountRepository.insertOne(UUID.randomUUID().toString(), null).id()
+    );
+    assertFalse(existingSession.revoked());
+    var deletedSession = repository.deleteOne(existingSession.id());
+    assertTrue(deletedSession.isDefined());
+    assertTrue(deletedSession.get().revoked());
+    var updatedSession = repository.selectOne(existingSession.id());
+    assertTrue(updatedSession.isDefined());
+    assertTrue(updatedSession.get().revoked());
+  }
+
+  @Test
+  public void deleteOneForNonExistent() {
+    var deletedSession = repository.deleteOne(UUID.randomUUID());
+    assertTrue(deletedSession.isEmpty());
   }
 }

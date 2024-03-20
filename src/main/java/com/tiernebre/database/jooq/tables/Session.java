@@ -73,6 +73,11 @@ public class Session extends TableImpl<SessionRecord> {
      */
     public final TableField<SessionRecord, LocalDateTime> EXPIRES_AT = createField(DSL.name("expires_at"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("(now() + '01:00:00'::interval)"), SQLDataType.LOCALDATETIME)), this, "");
 
+    /**
+     * The column <code>public.session.revoked</code>.
+     */
+    public final TableField<SessionRecord, Boolean> REVOKED = createField(DSL.name("revoked"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("false"), SQLDataType.BOOLEAN)), this, "");
+
     private Session(Name alias, Table<SessionRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }
