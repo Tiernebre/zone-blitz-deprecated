@@ -1,20 +1,18 @@
-package com.tiernebre.context;
+package com.tiernebre.web;
 
 import com.tiernebre.authentication.AuthenticationContext;
 import com.tiernebre.web.util.CookieSessionRegistry;
 
-public final class WebDependencyContextFactory {
+public final class WebContextFactory {
 
   private final AuthenticationContext authenticationContext;
 
-  public WebDependencyContextFactory(
-    AuthenticationContext authenticationContext
-  ) {
+  public WebContextFactory(AuthenticationContext authenticationContext) {
     this.authenticationContext = authenticationContext;
   }
 
-  public WebDependencyContext create() {
-    return new WebDependencyContext(
+  public WebContext create() {
+    return new WebContext(
       new CookieSessionRegistry(authenticationContext.sessionService())
     );
   }
