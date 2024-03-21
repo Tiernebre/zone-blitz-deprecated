@@ -15,7 +15,7 @@ public final class MiddlewaresFactory {
     return new Middlewares(
       new SessionParserMiddleware(web.sessionRegistry()),
       new SecurityMiddleware(),
-      new SessionRefresherMiddleware(web.helper(), web.sessionRegistry())
+      new SessionRefresherMiddleware(web.sessionRegistry())
     );
   }
 }

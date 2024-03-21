@@ -1,5 +1,7 @@
 package com.tiernebre.web.constants;
 
+import java.time.Duration;
+
 public final class WebConstants {
 
   public static final String URL = System.getenv("ZONE_BLITZ_URL");
@@ -10,4 +12,5 @@ public final class WebConstants {
     "Content-Security-Policy";
   public static final String JAVALIN_SESSION_ATTRIBUTE = "SESSION";
   public static final String SESSION_COOKIE_TOKEN_NAME = "zb_session_id";
+  public static final Duration SESSION_REFRESH_WINDOW = Duration.ofMinutes(10);
 }

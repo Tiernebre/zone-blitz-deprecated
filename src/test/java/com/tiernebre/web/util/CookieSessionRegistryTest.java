@@ -88,11 +88,29 @@ public final class CookieSessionRegistryTest {
 
   @Test
   public void parse() {
-    TestCaseRunner.run(CookieSessionRegistryTest.class, List.of(
-        new TestCase<Context, Void>(
+    TestCaseRunner.run(
+      CookieSessionRegistryTest.class,
+      List.of(
+        new TestCase<Context, Option<Session>>(
+          "already set session",
+          mock(Context.class),
+          __ -> Option.of(new Session(UUID.randomUUID(), 0, null, false)),
+          (ctx, session) -> {
+            when(
+              ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE)
+            ).thenReturn(session.get());
+          },
+          (ctx, __) -> {
+            verify(ctx, times(0)).attribute(
+              eq(WebConstants.JAVALIN_SESSION_ATTRIBUTE),
+              any()
+            );
+          }
+        ),
+        new TestCase<Context, Option<Session>>(
           "null token",
           mock(Context.class),
-          __ -> null,
+          __ -> Option.none(),
           (ctx, __) -> {
             when(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME)).thenReturn(
               null
@@ -105,10 +123,10 @@ public final class CookieSessionRegistryTest {
             );
           }
         ),
-        new TestCase<Context, Void>(
+        new TestCase<Context, Option<Session>>(
           "empty token",
           mock(Context.class),
-          __ -> null,
+          __ -> Option.none(),
           (ctx, __) -> {
             when(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME)).thenReturn(
               ""
@@ -121,10 +139,10 @@ public final class CookieSessionRegistryTest {
             );
           }
         ),
-        new TestCase<Context, Void>(
+        new TestCase<Context, Option<Session>>(
           "non UUID token",
           mock(Context.class),
-          __ -> null,
+          __ -> Option.none(),
           (ctx, __) -> {
             when(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME)).thenReturn(
               "a"
@@ -137,18 +155,16 @@ public final class CookieSessionRegistryTest {
             );
           }
         ),
-        new TestCase<Context, Void>(
+        new TestCase<Context, Option<Session>>(
           "valid token",
           mock(Context.class),
-          __ -> null,
-          (ctx, __) -> {
+          __ -> Option.of(new Session(UUID.randomUUID(), 0, null, false)),
+          (ctx, session) -> {
             var token = UUID.randomUUID();
             when(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME)).thenReturn(
               token.toString()
             );
-            when(service.get(token)).thenReturn(
-              Option.of(new Session(token, 0, null, false))
-            );
+            when(service.get(token)).thenReturn(session);
           },
           (ctx, __) -> {
             verify(ctx, times(1)).attribute(
@@ -157,9 +173,8 @@ public final class CookieSessionRegistryTest {
             );
           }
         )
-      ), context -> {
-        registry.parse(context);
-        return null;
-      });
+      ),
+      context -> registry.parse(context)
+    );
   }
 }
