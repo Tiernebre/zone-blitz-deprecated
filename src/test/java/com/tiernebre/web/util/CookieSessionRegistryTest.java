@@ -177,4 +177,104 @@ public final class CookieSessionRegistryTest {
       context -> registry.parse(context)
     );
   }
+
+  @Test
+  public void refresh() {
+    TestCaseRunner.run(
+      CookieSessionRegistryTest.class,
+      List.of(
+        new TestCase<Context, Option<Session>>(
+          "no previous session and no token",
+          mock(Context.class),
+          __ -> Option.none(),
+          (ctx, session) -> {
+            when(
+              ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE)
+            ).thenReturn(null);
+            when(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME)).thenReturn(
+              null
+            );
+          },
+          (ctx, __) -> {
+            verify(ctx, times(0)).attribute(
+              eq(WebConstants.JAVALIN_SESSION_ATTRIBUTE),
+              any()
+            );
+          }
+        ),
+        new TestCase<Context, Option<Session>>(
+          "refreshes a given token",
+          mock(Context.class),
+          __ ->
+            Option.of(
+              new Session(
+                UUID.randomUUID(),
+                0,
+                LocalDateTime.now().plusMinutes(10),
+                false
+              )
+            ),
+          (ctx, newSession) -> {
+            var previousSession = new Session(
+              UUID.randomUUID(),
+              newSession.get().accountId(),
+              LocalDateTime.now().plusMinutes(1),
+              false
+            );
+            when(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME)).thenReturn(
+              previousSession.id().toString()
+            );
+            when(service.get(previousSession.id())).thenReturn(
+              Option.of(previousSession)
+            );
+            when(service.create(eq(previousSession.accountId()))).thenReturn(
+              newSession.get()
+            );
+          },
+          (ctx, __) -> {
+            verify(ctx, times(1)).attribute(
+              eq(WebConstants.JAVALIN_SESSION_ATTRIBUTE),
+              any(Session.class)
+            );
+            verify(service, times(1)).delete(any(UUID.class));
+          }
+        ),
+        new TestCase<Context, Option<Session>>(
+          "refreshes a given session",
+          mock(Context.class),
+          __ ->
+            Option.of(
+              new Session(
+                UUID.randomUUID(),
+                0,
+                LocalDateTime.now().plusMinutes(10),
+                false
+              )
+            ),
+          (ctx, newSession) -> {
+            var previousSession = new Session(
+              UUID.randomUUID(),
+              newSession.get().accountId(),
+              LocalDateTime.now().plusMinutes(1),
+              false
+            );
+            when(
+              ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE)
+            ).thenReturn(previousSession);
+            when(service.create(eq(previousSession.accountId()))).thenReturn(
+              newSession.get()
+            );
+          },
+          (ctx, __) -> {
+            verify(ctx, times(1)).attribute(
+              eq(WebConstants.JAVALIN_SESSION_ATTRIBUTE),
+              any(Session.class)
+            );
+            verify(service, times(1)).delete(any(UUID.class));
+          }
+        )
+      ),
+      context -> registry.refresh(context)
+    );
+  }
 }

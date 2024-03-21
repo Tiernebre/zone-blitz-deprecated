@@ -31,16 +31,20 @@ public final class CookieSessionRegistry implements SessionRegistry {
   }
 
   @Override
-  public void refresh(Context ctx) {
-    parse(ctx).peek(session -> {
+  public Option<Session> refresh(Context ctx) {
+    return parse(ctx).map(session -> {
       var now = LocalDateTime.now(clock);
       var expiresAt = session.expiresAt();
       if (
         now.isBefore(expiresAt) &&
         now.isAfter(expiresAt.minus(WebConstants.SESSION_REFRESH_WINDOW))
       ) {
-        register(ctx, service.create(session.accountId()));
+        var newSession = service.create(session.accountId());
+        register(ctx, newSession);
         service.delete(session.id());
+        return newSession;
+      } else {
+        return session;
       }
     });
   }

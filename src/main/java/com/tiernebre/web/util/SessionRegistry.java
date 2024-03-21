@@ -29,6 +29,7 @@ public interface SessionRegistry {
    * middlewares to consume.
    *
    * @param ctx Javalin context to parse.
+   * @return The parsed session.
    */
   public Option<Session> parse(Context ctx);
 
@@ -37,6 +38,7 @@ public interface SessionRegistry {
    * using Zone Blitz and doesn't want to be logged out randomly during their session.
    *
    * @param ctx Javalin context to parse.
+   * @return The newly refreshed session.
    */
-  public void refresh(Context ctx);
+  public Option<Session> refresh(Context ctx);
 }
