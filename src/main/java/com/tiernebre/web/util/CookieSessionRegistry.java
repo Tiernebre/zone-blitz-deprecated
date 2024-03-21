@@ -7,6 +7,9 @@ import io.javalin.http.Context;
 import io.javalin.http.Cookie;
 import io.javalin.http.SameSite;
 import io.vavr.control.Option;
+import java.time.Clock;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +21,11 @@ public final class CookieSessionRegistry implements SessionRegistry {
   );
 
   private final SessionService service;
+  private final Clock clock;
 
-  public CookieSessionRegistry(SessionService service) {
+  public CookieSessionRegistry(SessionService service, Clock clock) {
     this.service = service;
+    this.clock = clock;
   }
 
   @Override
@@ -30,6 +35,12 @@ public final class CookieSessionRegistry implements SessionRegistry {
       session.id().toString()
     );
     secureCookie(sessionCookie);
+    sessionCookie.setMaxAge(
+      (int) Duration.between(
+        LocalDateTime.now(clock),
+        session.expiresAt()
+      ).getSeconds()
+    );
     ctx.cookie(sessionCookie);
     LOG.debug(
       "Registered cookie based session for accountId={}",

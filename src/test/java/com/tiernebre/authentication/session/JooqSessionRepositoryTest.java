@@ -9,7 +9,10 @@ import com.tiernebre.authentication.account.AccountRepository;
 import com.tiernebre.authentication.account.JooqAccountRepository;
 import com.tiernebre.database.TestJooqDslContextFactory;
 import com.tiernebre.database.jooq.Tables;
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.UUID;
 import org.jooq.DSLContext;
 import org.junit.Test;
@@ -18,8 +21,13 @@ public final class JooqSessionRepositoryTest {
 
   private final DSLContext dsl =
     TestJooqDslContextFactory.createTestDSLContext();
+  private final Clock clock = Clock.fixed(
+    Instant.now(),
+    ZoneId.systemDefault()
+  );
   private final JooqSessionRepository repository = new JooqSessionRepository(
-    dsl
+    dsl,
+    clock
   );
   private final AccountRepository accountRepository = new JooqAccountRepository(
     dsl
