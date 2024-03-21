@@ -14,7 +14,8 @@ public final class DependencyContextFactory {
     var utilityContext = new UtilityContextFactory().create();
     var databaseContext = new DatabaseContextFactory().create();
     var authenticationContext = new AuthenticationContextFactory(
-      databaseContext
+      databaseContext,
+      utilityContext
     ).create();
     return new DependencyContext(
       databaseContext,
