@@ -38,18 +38,24 @@ public final class LoginController {
   }
 
   public void handle(Context ctx) {
-    (StringUtils.isBlank(ctx.cookie(Constants.GOOGLE_CSRF_TOKEN_FIELD_NAME))
+    (StringUtils.isBlank(
+          ctx.cookie(AuthenticationWebConstants.GOOGLE_CSRF_TOKEN_FIELD_NAME)
+        )
         ? registrationAuthenticationStrategy.authenticate(
           new RegistrationAuthenticationRequest(
-            ctx.formParam(Constants.USERNAME_PARAMETER),
-            ctx.formParam(Constants.PASSWORD_PARAMETER)
+            ctx.formParam(AuthenticationWebConstants.USERNAME_PARAMETER),
+            ctx.formParam(AuthenticationWebConstants.PASSWORD_PARAMETER)
           )
         )
         : googleAuthenticationStrategy.authenticate(
           new GoogleAuthenticationRequest(
-            ctx.formParam(Constants.GOOGLE_CREDENTIAL_FIELD_NAME),
-            ctx.formParam(Constants.GOOGLE_CSRF_TOKEN_FIELD_NAME),
-            ctx.cookie(Constants.GOOGLE_CSRF_TOKEN_FIELD_NAME)
+            ctx.formParam(
+              AuthenticationWebConstants.GOOGLE_CREDENTIAL_FIELD_NAME
+            ),
+            ctx.formParam(
+              AuthenticationWebConstants.GOOGLE_CSRF_TOKEN_FIELD_NAME
+            ),
+            ctx.cookie(AuthenticationWebConstants.GOOGLE_CSRF_TOKEN_FIELD_NAME)
           )
         )).peek(session -> {
         sessionRegister.register(ctx, session);
@@ -74,10 +80,13 @@ public final class LoginController {
     helper.template(
       ctx,
       new Login(
-        Constants.GOOGLE_CLIENT_ID,
-        String.format("%s/authenticate", WebConstants.URL),
-        String.format("%s/gsi/client", Constants.GOOGLE_ACCOUNTS_URL),
-        Constants.SHARED_AUTHENTICATION_FORM,
+        AuthenticationWebConstants.GOOGLE_CLIENT_ID,
+        String.format("%s/login", WebConstants.URL),
+        String.format(
+          "%s/gsi/client",
+          AuthenticationWebConstants.GOOGLE_ACCOUNTS_URL
+        ),
+        AuthenticationWebConstants.SHARED_AUTHENTICATION_FORM,
         error
       )
     );
@@ -86,7 +95,7 @@ public final class LoginController {
       String.format(
         "%1$s %2$s; style-src 'self' %2$s 'unsafe-inline'",
         WebConstants.CONTENT_SECURITY_POLICY,
-        Constants.GOOGLE_ACCOUNTS_URL
+        AuthenticationWebConstants.GOOGLE_ACCOUNTS_URL
       )
     );
   }

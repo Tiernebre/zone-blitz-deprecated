@@ -33,13 +33,13 @@ public final class RegistrationController {
   }
 
   public void submit(Context ctx) {
-    var password = ctx.formParam(Constants.PASSWORD_PARAMETER);
+    var password = ctx.formParam(AuthenticationWebConstants.PASSWORD_PARAMETER);
     service
       .create(
         new CreateRegistrationRequest(
-          ctx.formParam(Constants.USERNAME_PARAMETER),
+          ctx.formParam(AuthenticationWebConstants.USERNAME_PARAMETER),
           password,
-          ctx.formParam(Constants.CONFIRM_PASSWORD_PARAMETER)
+          ctx.formParam(AuthenticationWebConstants.CONFIRM_PASSWORD_PARAMETER)
         )
       )
       .map(
@@ -70,8 +70,8 @@ public final class RegistrationController {
     var output = new StringBuilder();
     JStachio.render(
       new Registration(
-        Constants.SHARED_AUTHENTICATION_FORM,
-        Constants.CONFIRM_PASSWORD_PARAMETER,
+        AuthenticationWebConstants.SHARED_AUTHENTICATION_FORM,
+        AuthenticationWebConstants.CONFIRM_PASSWORD_PARAMETER,
         error
       ),
       output

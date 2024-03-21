@@ -3,7 +3,7 @@ package com.tiernebre.web.controllers.authentication;
 import com.tiernebre.authentication.AuthenticationConstants;
 import com.tiernebre.web.templates.AuthenticationForm;
 
-final class Constants {
+public final class AuthenticationWebConstants {
 
   static final String USERNAME_PARAMETER = "username";
   static final String PASSWORD_PARAMETER = "password";
@@ -22,6 +22,6 @@ final class Constants {
     "ZONE_BLITZ_OAUTH_GOOGLE_CLIENT_ID"
   );
   static final String GOOGLE_CREDENTIAL_FIELD_NAME = "credential";
-  static final String GOOGLE_CSRF_TOKEN_FIELD_NAME = "g_csrf_token";
-  static final String GOOGLE_STATE_FIELD_NAME = "g_state";
+  public static final String GOOGLE_CSRF_TOKEN_FIELD_NAME = "g_csrf_token";
+  public static final String GOOGLE_STATE_FIELD_NAME = "g_state";
 }

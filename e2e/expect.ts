@@ -113,7 +113,8 @@ export const expect = baseExpect.extend({
       const sessionCookie = await getSessionCookie(context);
       expect(sessionCookie).toBeTruthy();
       expect(sessionCookie!.httpOnly).toBeTruthy();
-      expect(sessionCookie!.sameSite).toBeTruthy();
+      expect(sessionCookie!.sameSite).toStrictEqual("Strict");
+      expect(sessionCookie!.domain).toStrictEqual("dev.zoneblitz.app");
       expect(sessionCookie!.secure).toBeTruthy();
       expect(sessionCookie!.value).toBeTruthy();
       pass = true;
