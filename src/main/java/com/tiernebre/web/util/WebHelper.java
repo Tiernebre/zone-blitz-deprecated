@@ -1,11 +1,11 @@
-package com.tiernebre.web.controllers;
+package com.tiernebre.web.util;
 
 import com.tiernebre.authentication.session.Session;
 import io.javalin.http.Context;
 import io.vavr.control.Option;
 import java.io.IOException;
 
-public interface ControllerHelper {
+public interface WebHelper {
   /**
    * Returns the loaded upstream Session fetched from the SessionMiddleware.
    *

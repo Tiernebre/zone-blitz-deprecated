@@ -1,4 +1,4 @@
-package com.tiernebre.web.controllers;
+package com.tiernebre.web.util;
 
 import com.tiernebre.authentication.session.Session;
 import com.tiernebre.web.constants.WebConstants;
@@ -14,7 +14,7 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class DefaultControllerHelper implements ControllerHelper {
+public final class DefaultWebHelper implements WebHelper {
 
   @Override
   public void template(Context ctx, Object model) throws IOException {

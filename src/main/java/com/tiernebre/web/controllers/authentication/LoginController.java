@@ -5,9 +5,9 @@ import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import com.tiernebre.authentication.registration.RegistrationAuthenticationRequest;
 import com.tiernebre.authentication.registration.RegistrationAuthenticationStrategy;
 import com.tiernebre.web.constants.WebConstants;
-import com.tiernebre.web.controllers.ControllerHelper;
 import com.tiernebre.web.templates.Login;
 import com.tiernebre.web.util.SessionRegistry;
+import com.tiernebre.web.util.WebHelper;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import java.io.IOException;
@@ -19,13 +19,13 @@ public final class LoginController {
 
   private final Logger LOG = LoggerFactory.getLogger(LoginController.class);
 
-  private final ControllerHelper helper;
+  private final WebHelper helper;
   private final GoogleAuthenticationStrategy googleAuthenticationStrategy;
   private final RegistrationAuthenticationStrategy registrationAuthenticationStrategy;
   private final SessionRegistry sessionRegister;
 
   public LoginController(
-    ControllerHelper helper,
+    WebHelper helper,
     GoogleAuthenticationStrategy googleAuthenticationStrategy,
     RegistrationAuthenticationStrategy registrationAuthenticationStrategy,
     SessionRegistry sessionRegister

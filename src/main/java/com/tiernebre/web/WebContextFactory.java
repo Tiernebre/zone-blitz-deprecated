@@ -3,6 +3,7 @@ package com.tiernebre.web;
 import com.tiernebre.authentication.AuthenticationContext;
 import com.tiernebre.context.UtilityContext;
 import com.tiernebre.web.util.CookieSessionRegistry;
+import com.tiernebre.web.util.DefaultWebHelper;
 
 public final class WebContextFactory {
 
@@ -22,7 +23,8 @@ public final class WebContextFactory {
       new CookieSessionRegistry(
         authenticationContext.sessionService(),
         utilityContext.clock()
-      )
+      ),
+      new DefaultWebHelper()
     );
   }
 }
