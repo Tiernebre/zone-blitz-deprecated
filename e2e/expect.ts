@@ -117,6 +117,7 @@ export const expect = baseExpect.extend({
       expect(sessionCookie!.domain).toStrictEqual("dev.zoneblitz.app");
       expect(sessionCookie!.secure).toBeTruthy();
       expect(sessionCookie!.value).toBeTruthy();
+      expect(sessionCookie!.expires).toBeTruthy();
       pass = true;
     } catch (error) {
       pass = false;
