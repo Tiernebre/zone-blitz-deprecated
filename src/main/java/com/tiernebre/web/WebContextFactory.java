@@ -19,12 +19,13 @@ public final class WebContextFactory {
   }
 
   public WebContext create() {
+    var sessionRegistry = new CookieSessionRegistry(
+      authenticationContext.sessionService(),
+      utilityContext.clock()
+    );
     return new WebContext(
-      new CookieSessionRegistry(
-        authenticationContext.sessionService(),
-        utilityContext.clock()
-      ),
-      new DefaultWebHelper()
+      sessionRegistry,
+      new DefaultWebHelper(sessionRegistry)
     );
   }
 }

@@ -1,7 +1,6 @@
 package com.tiernebre.web.util;
 
 import com.tiernebre.authentication.session.Session;
-import com.tiernebre.web.constants.WebConstants;
 import io.javalin.http.ContentType;
 import io.javalin.http.Context;
 import io.jstach.jstachio.JStachio;
@@ -15,6 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class DefaultWebHelper implements WebHelper {
+
+  private final SessionRegistry sessionRegistry;
+
+  public DefaultWebHelper(SessionRegistry sessionRegistry) {
+    this.sessionRegistry = sessionRegistry;
+  }
 
   @Override
   public void template(Context ctx, Object model) throws IOException {
@@ -30,6 +35,6 @@ public final class DefaultWebHelper implements WebHelper {
 
   @Override
   public Option<Session> session(Context ctx) {
-    return Option.of(ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE));
+    return sessionRegistry.parse(ctx);
   }
 }
