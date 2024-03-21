@@ -114,6 +114,7 @@ export const expect = baseExpect.extend({
       expect(sessionCookie).toBeTruthy();
       expect(sessionCookie!.httpOnly).toBeTruthy();
       expect(sessionCookie!.sameSite).toBeTruthy();
+      expect(sessionCookie!.secure).toBeTruthy();
       expect(sessionCookie!.value).toBeTruthy();
       pass = true;
     } catch (error) {
