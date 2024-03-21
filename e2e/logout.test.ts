@@ -1,16 +1,13 @@
-import test, { Page } from "playwright/test";
+import test from "playwright/test";
 import crypto from "node:crypto";
-import { register } from "./helpers";
+import { logout, register } from "./helpers";
 import { expect } from "./expect";
 
-const getLogoutButton = (page: Page) =>
-  page.getByRole("button", { name: /logout/i });
-
-test("logs a user out", async ({ page }) => {
+test("logs a user out", async ({ context, page }) => {
   const username = `LOGOUT-${crypto.randomUUID().toString()}`;
   const password = `LOGOUT-${crypto.randomUUID().toString()}`;
   await register(page, username, password);
-  await expect(page).toBeLoggedIn();
-  await getLogoutButton(page).click();
-  await expect(page).toBeLoggedOut();
+  await expect({ context, page }).toBeLoggedIn();
+  await logout(page);
+  await expect({ context, page }).toBeLoggedOut();
 });

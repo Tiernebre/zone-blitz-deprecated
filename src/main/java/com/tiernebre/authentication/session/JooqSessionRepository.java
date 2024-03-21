@@ -3,6 +3,7 @@ package com.tiernebre.authentication.session;
 import com.tiernebre.database.jooq.Tables;
 import com.tiernebre.database.jooq.tables.records.SessionRecord;
 import io.vavr.control.Option;
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.jooq.DSLContext;
@@ -10,9 +11,11 @@ import org.jooq.DSLContext;
 public final class JooqSessionRepository implements SessionRepository {
 
   private final DSLContext dsl;
+  private final Clock clock;
 
-  public JooqSessionRepository(DSLContext dsl) {
+  public JooqSessionRepository(DSLContext dsl, Clock clock) {
     this.dsl = dsl;
+    this.clock = clock;
   }
 
   @Override
@@ -45,7 +48,7 @@ public final class JooqSessionRepository implements SessionRepository {
       dsl.fetchOne(
         Tables.SESSION,
         Tables.SESSION.ID.eq(id),
-        Tables.SESSION.EXPIRES_AT.greaterOrEqual(LocalDateTime.now()),
+        Tables.SESSION.EXPIRES_AT.greaterOrEqual(LocalDateTime.now(clock)),
         Tables.SESSION.REVOKED.eq(false)
       )
     );

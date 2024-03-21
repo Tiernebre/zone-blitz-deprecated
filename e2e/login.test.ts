@@ -38,42 +38,42 @@ test("renders the login page", async ({ page }) => {
   expect(loginPage!.status()).toStrictEqual(200);
 });
 
-test("logs the user in", async ({ page }) => {
+test("logs the user in", async ({ context, page }) => {
   await getUsernameInput(page).fill(USERNAME);
   await getPasswordInput(page).fill(PASSWORD);
   await submit(page);
   await expect(page).not.toHaveURL(/login/i);
-  await expect(page).toBeLoggedIn();
+  await expect({ context, page }).toBeLoggedIn();
 });
 
-test("validates that the username is required", async ({ page }) => {
+test("validates that the username is required", async ({ context, page }) => {
   await getPasswordInput(page).fill(PASSWORD);
   await submit(page);
   await expect(page).toHaveURL(/login/i);
   await expect(getUsernameInput(page)).toBeInvalid(
     VALIDATION_MESSAGES.REQUIRED,
   );
-  await expect(page).toBeLoggedOut();
+  await expect({ context, page }).toBeLoggedOut();
 });
 
-test("enforces maximum length on a username", async ({ page }) => {
+test("enforces maximum length on a username", async ({ context, page }) => {
   const username = "a".repeat(64);
   await getUsernameInput(page).fill(username + "b");
   await expect(getUsernameInput(page)).toHaveValue(username);
-  await expect(page).toBeLoggedOut();
+  await expect({ context, page }).toBeLoggedOut();
 });
 
-test("validates that the password is required", async ({ page }) => {
+test("validates that the password is required", async ({ context, page }) => {
   await getUsernameInput(page).fill(USERNAME);
   await submit(page);
   await expect(page).toHaveURL(/login/i);
   await expect(getPasswordInput(page)).toBeInvalid(
     VALIDATION_MESSAGES.REQUIRED,
   );
-  await expect(page).toBeLoggedOut();
+  await expect({ context, page }).toBeLoggedOut();
 });
 
-test("enforces minimum length on a password", async ({ page }) => {
+test("enforces minimum length on a password", async ({ context, page }) => {
   await getUsernameInput(page).fill(crypto.randomUUID().toString());
   await getPasswordInput(page).fill("a");
   await submit(page);
@@ -81,30 +81,36 @@ test("enforces minimum length on a password", async ({ page }) => {
   await expect(getPasswordInput(page)).toBeInvalid(
     VALIDATION_MESSAGES.MINLENGTH(8),
   );
-  await expect(page).toBeLoggedOut();
+  await expect({ context, page }).toBeLoggedOut();
 });
 
-test("enforces maximum length on a password", async ({ page }) => {
+test("enforces maximum length on a password", async ({ context, page }) => {
   const password = "a".repeat(64);
   await getPasswordInput(page).fill(password + "b");
   await expect(getPasswordInput(page)).toHaveValue(password);
-  await expect(page).toBeLoggedOut();
+  await expect({ context, page }).toBeLoggedOut();
 });
 
-test("does not login for a username that does not exist", async ({ page }) => {
+test("does not login for a username that does not exist", async ({
+  context,
+  page,
+}) => {
   await getUsernameInput(page).fill("doesnotexist");
   await getPasswordInput(page).fill(PASSWORD);
   await submit(page);
   await expect(page).toHaveURL(/login/i);
   await expect(getNoUserExistsError(page)).toBeVisible();
-  await expect(page).toBeLoggedOut();
+  await expect({ context, page }).toBeLoggedOut();
 });
 
-test("does not login for a password that does not exist", async ({ page }) => {
+test("does not login for a password that does not exist", async ({
+  context,
+  page,
+}) => {
   await getUsernameInput(page).fill(USERNAME);
   await getPasswordInput(page).fill("notthecorrectpassword");
   await submit(page);
   await expect(page).toHaveURL(/login/i);
   await expect(getNoUserExistsError(page)).toBeVisible();
-  await expect(page).toBeLoggedOut();
+  await expect({ context, page }).toBeLoggedOut();
 });

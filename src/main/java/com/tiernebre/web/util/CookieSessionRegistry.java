@@ -3,10 +3,15 @@ package com.tiernebre.web.util;
 import com.tiernebre.authentication.session.Session;
 import com.tiernebre.authentication.session.SessionService;
 import com.tiernebre.web.constants.WebConstants;
+import com.tiernebre.web.controllers.authentication.AuthenticationWebConstants;
 import io.javalin.http.Context;
 import io.javalin.http.Cookie;
 import io.javalin.http.SameSite;
+import io.vavr.collection.List;
 import io.vavr.control.Option;
+import java.time.Clock;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +23,11 @@ public final class CookieSessionRegistry implements SessionRegistry {
   );
 
   private final SessionService service;
+  private final Clock clock;
 
-  public CookieSessionRegistry(SessionService service) {
+  public CookieSessionRegistry(SessionService service, Clock clock) {
     this.service = service;
+    this.clock = clock;
   }
 
   @Override
@@ -30,7 +37,14 @@ public final class CookieSessionRegistry implements SessionRegistry {
       session.id().toString()
     );
     secureCookie(sessionCookie);
+    sessionCookie.setMaxAge(
+      (int) Duration.between(
+        LocalDateTime.now(clock),
+        session.expiresAt()
+      ).getSeconds()
+    );
     ctx.cookie(sessionCookie);
+    deleteThirdPartyCookies(ctx);
     LOG.debug(
       "Registered cookie based session for accountId={}",
       session.accountId()
@@ -39,13 +53,8 @@ public final class CookieSessionRegistry implements SessionRegistry {
 
   @Override
   public void delete(Context ctx, Session session) {
-    Cookie deletedSessionCookie = new Cookie(
-      WebConstants.SESSION_COOKIE_TOKEN_NAME,
-      ""
-    );
-    deletedSessionCookie.setMaxAge(0);
-    secureCookie(deletedSessionCookie);
-    ctx.cookie(deletedSessionCookie);
+    deleteCookie(ctx, WebConstants.SESSION_COOKIE_TOKEN_NAME, true);
+    deleteThirdPartyCookies(ctx);
     Option.of(session)
       .onEmpty(() -> {
         LOG.debug(
@@ -94,5 +103,23 @@ public final class CookieSessionRegistry implements SessionRegistry {
     cookie.setSecure(true);
     cookie.setPath("/");
     cookie.setSameSite(SameSite.STRICT);
+  }
+
+  private void deleteThirdPartyCookies(Context ctx) {
+    List.of(
+      AuthenticationWebConstants.GOOGLE_CSRF_TOKEN_FIELD_NAME,
+      AuthenticationWebConstants.GOOGLE_STATE_FIELD_NAME
+    ).forEach(name -> this.deleteCookie(ctx, name));
+  }
+
+  private void deleteCookie(Context ctx, String name) {
+    deleteCookie(ctx, name, false);
+  }
+
+  private void deleteCookie(Context ctx, String name, boolean secure) {
+    Cookie deletedCookie = new Cookie(name, "");
+    deletedCookie.setMaxAge(0);
+    if (secure) secureCookie(deletedCookie);
+    ctx.cookie(deletedCookie);
   }
 }

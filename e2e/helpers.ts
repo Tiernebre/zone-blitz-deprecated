@@ -12,6 +12,11 @@ export const registrationQueries = {
     page.getByRole("button", { name: /Register/i }).click(),
 };
 
+export const logoutQueries = {
+  getLogoutButton: (page: Page) =>
+    page.getByRole("button", { name: /logout/i }),
+};
+
 export const register = async (
   page: Page,
   username: string,
@@ -24,3 +29,6 @@ export const register = async (
   await registrationQueries.clickRegisterButton(page);
   await expect(page).toHaveURL("/");
 };
+
+export const logout = async (page: Page) =>
+  logoutQueries.getLogoutButton(page).click();

@@ -11,14 +11,16 @@ public final class DependencyContextFactory {
 
   public DependencyContext create()
     throws DatabaseConnectionError, GeneralSecurityException, IOException {
+    var utilityContext = new UtilityContextFactory().create();
     var databaseContext = new DatabaseContextFactory().create();
     var authenticationContext = new AuthenticationContextFactory(
-      databaseContext
+      databaseContext,
+      utilityContext
     ).create();
     return new DependencyContext(
       databaseContext,
       authenticationContext,
-      new WebContextFactory(authenticationContext).create()
+      new WebContextFactory(authenticationContext, utilityContext).create()
     );
   }
 }

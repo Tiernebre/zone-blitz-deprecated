@@ -17,24 +17,25 @@ import io.javalin.http.Cookie;
 import io.javalin.http.SameSite;
 import io.vavr.collection.List;
 import io.vavr.control.Option;
+import java.time.Clock;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.UUID;
 import org.junit.Test;
 
 public final class CookieSessionRegistryTest {
 
   SessionService service = mock(SessionService.class);
-  SessionRegistry registry = new CookieSessionRegistry(service);
+  Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
+  SessionRegistry registry = new CookieSessionRegistry(service, clock);
 
   @Test
   public void register() {
     var ctx = mock(Context.class);
-    var session = new Session(
-      UUID.randomUUID(),
-      1L,
-      LocalDateTime.now(),
-      false
-    );
+    var now = LocalDateTime.now(clock);
+    var session = new Session(UUID.randomUUID(), 1L, now.plusHours(1), false);
     var expectedCookie = new Cookie(
       WebConstants.SESSION_COOKIE_TOKEN_NAME,
       session.id().toString()
@@ -43,6 +44,9 @@ public final class CookieSessionRegistryTest {
     expectedCookie.setSecure(true);
     expectedCookie.setPath("/");
     expectedCookie.setSameSite(SameSite.STRICT);
+    expectedCookie.setMaxAge(
+      (int) Duration.between(now, session.expiresAt()).getSeconds()
+    );
     registry.register(ctx, session);
     verify(ctx).cookie(expectedCookie);
   }

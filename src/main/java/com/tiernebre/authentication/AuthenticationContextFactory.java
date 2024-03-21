@@ -11,6 +11,7 @@ import com.tiernebre.authentication.registration.RegistrationAuthenticationStrat
 import com.tiernebre.authentication.registration.VavrRegistrationValidator;
 import com.tiernebre.authentication.session.DefaultSessionService;
 import com.tiernebre.authentication.session.JooqSessionRepository;
+import com.tiernebre.context.UtilityContext;
 import com.tiernebre.database.DatabaseConnectionError;
 import com.tiernebre.database.DatabaseContext;
 import java.io.IOException;
@@ -20,16 +21,21 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 public final class AuthenticationContextFactory {
 
   private final DatabaseContext databaseContext;
+  private final UtilityContext utilityContext;
 
-  public AuthenticationContextFactory(DatabaseContext databaseContext) {
+  public AuthenticationContextFactory(
+    DatabaseContext databaseContext,
+    UtilityContext utilityContext
+  ) {
     this.databaseContext = databaseContext;
+    this.utilityContext = utilityContext;
   }
 
   public AuthenticationContext create()
     throws GeneralSecurityException, IOException, DatabaseConnectionError {
     var dsl = databaseContext.dslContext();
     var sessionService = new DefaultSessionService(
-      new JooqSessionRepository(dsl)
+      new JooqSessionRepository(dsl, utilityContext.clock())
     );
     var accountService = new DefaultAccountService(
       new JooqAccountRepository(dsl)
