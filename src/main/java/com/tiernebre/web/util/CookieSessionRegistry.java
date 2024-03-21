@@ -53,7 +53,7 @@ public final class CookieSessionRegistry implements SessionRegistry {
 
   @Override
   public void delete(Context ctx, Session session) {
-    deleteCookie(ctx, WebConstants.SESSION_COOKIE_TOKEN_NAME);
+    deleteCookie(ctx, WebConstants.SESSION_COOKIE_TOKEN_NAME, true);
     deleteThirdPartyCookies(ctx);
     Option.of(session)
       .onEmpty(() -> {
@@ -113,8 +113,13 @@ public final class CookieSessionRegistry implements SessionRegistry {
   }
 
   private void deleteCookie(Context ctx, String name) {
+    deleteCookie(ctx, name, false);
+  }
+
+  private void deleteCookie(Context ctx, String name, boolean secure) {
     Cookie deletedCookie = new Cookie(name, "");
     deletedCookie.setMaxAge(0);
+    if (secure) secureCookie(deletedCookie);
     ctx.cookie(deletedCookie);
   }
 }
