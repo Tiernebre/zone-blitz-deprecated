@@ -297,6 +297,29 @@ public final class CookieSessionRegistryTest {
           }
         ),
         new TestCase<Context, Option<Session>>(
+          "does not refresh if after the window",
+          mock(Context.class),
+          __ ->
+            Option.of(
+              new Session(
+                UUID.randomUUID(),
+                0,
+                LocalDateTime.now(clock).minusSeconds(1),
+                false
+              )
+            ),
+          (ctx, session) -> {
+            when(
+              ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE)
+            ).thenReturn(session.get());
+          },
+          (ctx, __) -> {
+            verify(service, times(0)).delete(any());
+            reset(ctx);
+            reset(service);
+          }
+        ),
+        new TestCase<Context, Option<Session>>(
           "refreshes if in the window",
           mock(Context.class),
           __ ->
