@@ -16,7 +16,7 @@ public final class RegistrationRoutes implements EndpointGroup {
 
   @Override
   public void addEndpoints() {
-    get("registration", controller::page);
+    get("registration", controller::render);
     post("registration", controller::submit);
   }
 }
