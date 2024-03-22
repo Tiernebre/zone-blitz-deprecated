@@ -19,6 +19,6 @@
     "unocss": "^0.58.3"
   },
   "lint-staged": {
-    "*.{java,xml,md,yml,mustache,sh,ts}": "prettier --write"
+    "*.{java,xml,md,yml,mustache,sh,ts,js,css}": "prettier --write"
   }
 }

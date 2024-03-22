@@ -8,6 +8,6 @@ while true; do
   make clean
   make install
   make start &
-  inotifywait -r -e modify src/main/java/com/tiernebre src/main/resources/templates
+  inotifywait -r -e modify src/main/java/com/tiernebre src/main/resources/templates src/main/resources/assets/scripts
   kill -9 $(pgrep -f "java -classpath")
 done
