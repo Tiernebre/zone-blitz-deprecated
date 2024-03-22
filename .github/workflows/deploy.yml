@@ -40,10 +40,7 @@ jobs:
             docker compose up -d --wait
             docker system prune --all --force
       - name: Verify deployment was successful
-        uses: jtalk/url-health-check-action@v4
-        with:
-          url: ${{ env.ZONE_BLITZ_WEB_URL }}/api/health
-          max-attempts: 1
+        run: curl --retry 15 --retry-delay 1 --retry-all-errors -fv ${{ env.ZONE_BLITZ_WEB_URL }}/api/health
 
   lighthouse-tests:
     name: Lighthouse Tests
