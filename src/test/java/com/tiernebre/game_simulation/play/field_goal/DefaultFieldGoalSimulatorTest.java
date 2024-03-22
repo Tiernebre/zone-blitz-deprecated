@@ -6,7 +6,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.tiernebre.game_simulation.play.field_goal.DefaultFieldGoalSimulator;
 import com.tiernebre.game_simulation.play.field_goal.accuracy.FieldGoalAccuracyCalculator;
 import com.tiernebre.game_simulation.play.field_goal.blocked.BlockedByCalculator;
 import com.tiernebre.game_simulation.play.field_goal.blocked.BlockedFieldGoalResult;

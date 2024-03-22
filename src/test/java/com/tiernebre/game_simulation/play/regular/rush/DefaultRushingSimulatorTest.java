@@ -9,9 +9,6 @@ import com.tiernebre.game_simulation.dto.personnel.RegularPlayDefensivePersonnel
 import com.tiernebre.game_simulation.dto.personnel.RegularPlayOffensivePersonnel;
 import com.tiernebre.game_simulation.play.regular.RegularPlaySimulatorMockFactory;
 import com.tiernebre.game_simulation.play.regular.defense.TackledByCalculator;
-import com.tiernebre.game_simulation.play.regular.rush.DefaultRushingSimulator;
-import com.tiernebre.game_simulation.play.regular.rush.RushResult;
-import com.tiernebre.game_simulation.play.regular.rush.RushingYardageCalculator;
 import com.tiernebre.game_simulation.play.regular.turnover.FumbleCalculator;
 import com.tiernebre.game_simulation.play.regular.turnover.FumbleResult;
 import org.junit.jupiter.api.Test;

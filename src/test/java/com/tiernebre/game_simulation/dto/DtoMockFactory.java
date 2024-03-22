@@ -1,9 +1,5 @@
 package com.tiernebre.game_simulation.dto;
 
-import com.tiernebre.game_simulation.dto.Player;
-import com.tiernebre.game_simulation.dto.PlayerAttributes;
-import com.tiernebre.game_simulation.dto.Team;
-
 public class DtoMockFactory {
 
   public static Team team() {

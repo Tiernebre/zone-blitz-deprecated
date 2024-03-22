@@ -9,9 +9,6 @@ import com.tiernebre.game_simulation.dto.personnel.RegularPlayDefensivePersonnel
 import com.tiernebre.game_simulation.dto.personnel.RegularPlayOffensivePersonnel;
 import com.tiernebre.game_simulation.play.regular.RegularPlaySimulatorMockFactory;
 import com.tiernebre.game_simulation.play.regular.defense.TackledByCalculator;
-import com.tiernebre.game_simulation.play.regular.pass.DefaultPassingSimulator;
-import com.tiernebre.game_simulation.play.regular.pass.PassResult;
-import com.tiernebre.game_simulation.play.regular.pass.PassingYardageCalculator;
 import com.tiernebre.game_simulation.play.regular.pass.completion.CompletedPassCalculator;
 import com.tiernebre.game_simulation.play.regular.pass.interception.InterceptionCalculator;
 import com.tiernebre.game_simulation.play.regular.pass.interception.InterceptionResult;

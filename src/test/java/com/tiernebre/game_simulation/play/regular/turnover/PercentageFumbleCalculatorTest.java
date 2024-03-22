@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.tiernebre.game_simulation.dto.DtoMockFactory;
 import com.tiernebre.game_simulation.play.regular.RegularPlaySimulatorMockFactory;
-import com.tiernebre.game_simulation.play.regular.turnover.PercentageFumbleCalculator;
 import com.tiernebre.game_simulation.util.PercentageCalculator;
 import java.util.Random;
 import org.junit.jupiter.api.Test;
