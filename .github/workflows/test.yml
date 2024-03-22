@@ -57,6 +57,8 @@ jobs:
           ${{ env.CURL }}/favicon.ico
       - name: Audit web page performance and quality
         uses: treosh/lighthouse-ci-action@v11
+        env:
+          ZONE_BLITZ_URL: http://localhost
         with:
           urls: |
             ${{ env.ZONE_BLITZ_URL }}
