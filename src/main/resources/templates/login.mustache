@@ -1,6 +1,6 @@
 {{< page}} {{$head}}
 <script src="{{ googleScriptSrc }}" async></script>
-<script src="scripts/interactive.js" async></script>
+<script src="scripts/show-javascript-elements.js" async></script>
 {{/head}} {{$slot}}
 <h1 class="text-center text-8 font-bold mt-4 mb-2">Login</h1>
 {{#error}}
@@ -11,15 +11,17 @@
 <form method="post" class="flex flex-col grow px-4 mt-2">
   {{>authentication_form}}
   {{< button}} {{$text}}Login{{/text}} {{/button}}
-  <div class="js-only">
+  <div class="js-only pt-4">
+    <hr class="mb-4" />
     <div
       id="g_id_onload"
+      class="w-full"
       data-client_id="{{clientId}}"
       data-login_uri="{{loginUri}}"
       data-auto_prompt="false"
     ></div>
     <div
-      class="g_id_signin"
+      class="g_id_signin w-full [&>*]:w-full"
       data-type="standard"
       data-size="large"
       data-theme="outline"
