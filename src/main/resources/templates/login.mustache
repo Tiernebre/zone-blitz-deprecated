@@ -2,33 +2,35 @@
 <script src="{{ googleScriptSrc }}" async></script>
 <script src="scripts/show-javascript-elements.js" async></script>
 {{/head}} {{$slot}}
-<h1 class="text-center text-8 font-bold mt-4 mb-2">Login</h1>
-{{#error}}
-<p class="bg-red-200 text-black border-1 border-red-400 mx-4 text-center p-2">
-  {{error}}
-</p>
-{{/error}}
-<form method="post" class="flex flex-col grow px-4 mt-2">
-  {{>authentication_form}}
-  {{< button}} {{$text}}Login{{/text}} {{/button}}
-  <div class="js-only pt-4">
-    <hr class="mb-4" />
-    <div
-      id="g_id_onload"
-      class="w-full"
-      data-client_id="{{clientId}}"
-      data-login_uri="{{loginUri}}"
-      data-auto_prompt="false"
-    ></div>
-    <div
-      class="g_id_signin w-full [&>*]:w-full [&>*]:flex [&>*]:justify-center"
-      data-type="standard"
-      data-size="large"
-      data-theme="outline"
-      data-text="sign_in_with"
-      data-shape="rectangular"
-      data-logo_alignment="left"
-    ></div>
-  </div>
-</form>
+<section class="flex flex-col grow items-center md:px-80 md:items-start">
+  <h1 class="text-center text-8 font-bold mt-4 mx-4 mb-2 md:text-left">Login</h1>
+  {{#error}}
+  <p class="bg-red-200 text-black border-1 border-red-400 mx-4 text-center p-2">
+    {{error}}
+  </p>
+  {{/error}}
+  <form method="post" class="flex flex-col grow px-4 mt-2 w-full">
+    {{>authentication_form}}
+    {{< button}} {{$text}}Login{{/text}} {{/button}}
+    <div class="js-only pt-4">
+      <hr class="mb-4" />
+      <div
+        id="g_id_onload"
+        class="w-full"
+        data-client_id="{{clientId}}"
+        data-login_uri="{{loginUri}}"
+        data-auto_prompt="false"
+      ></div>
+      <div
+        class="g_id_signin w-full [&>*]:w-full [&>*]:flex [&>*]:justify-center md:[&>*]:justify-start"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-logo_alignment="left"
+      ></div>
+    </div>
+  </form>
+</section>
 {{/slot}} {{/page}}
