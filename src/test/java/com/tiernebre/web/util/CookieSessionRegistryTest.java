@@ -3,6 +3,7 @@ package com.tiernebre.web.util;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -196,10 +197,13 @@ public final class CookieSessionRegistryTest {
             );
           },
           (ctx, __) -> {
-            verify(ctx, times(0)).attribute(
-              eq(WebConstants.JAVALIN_SESSION_ATTRIBUTE),
+            verify(ctx, times(0)).cookie(
+              eq(WebConstants.SESSION_COOKIE_TOKEN_NAME),
               any()
             );
+            verify(service, times(0)).delete(any());
+            reset(ctx);
+            reset(service);
           }
         ),
         new TestCase<Context, Option<Session>>(
@@ -232,11 +236,9 @@ public final class CookieSessionRegistryTest {
             );
           },
           (ctx, __) -> {
-            verify(ctx, times(1)).attribute(
-              eq(WebConstants.JAVALIN_SESSION_ATTRIBUTE),
-              any(Session.class)
-            );
-            verify(service, times(1)).delete(any(UUID.class));
+            verify(service, times(1)).delete(any());
+            reset(ctx);
+            reset(service);
           }
         ),
         new TestCase<Context, Option<Session>>(
@@ -266,11 +268,9 @@ public final class CookieSessionRegistryTest {
             );
           },
           (ctx, __) -> {
-            verify(ctx, times(1)).attribute(
-              eq(WebConstants.JAVALIN_SESSION_ATTRIBUTE),
-              any(Session.class)
-            );
-            verify(service, times(1)).delete(any(UUID.class));
+            verify(service, times(1)).delete(any());
+            reset(ctx);
+            reset(service);
           }
         )
       ),
