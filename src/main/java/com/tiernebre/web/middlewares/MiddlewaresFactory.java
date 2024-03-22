@@ -11,9 +11,11 @@ public final class MiddlewaresFactory {
   }
 
   public Middlewares create() {
+    var web = dependencyContext.web();
     return new Middlewares(
-      new SessionMiddleware(dependencyContext.web().sessionRegistry()),
-      new SecurityMiddleware()
+      new SessionParserMiddleware(web.sessionRegistry()),
+      new SecurityMiddleware(),
+      new SessionRefresherMiddleware(web.sessionRegistry())
     );
   }
 }

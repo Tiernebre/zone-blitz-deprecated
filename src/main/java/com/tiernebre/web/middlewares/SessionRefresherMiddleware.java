@@ -5,16 +5,16 @@ import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import org.jetbrains.annotations.NotNull;
 
-public final class SessionMiddleware implements Handler {
+public final class SessionRefresherMiddleware implements Handler {
 
   private final SessionRegistry registry;
 
-  public SessionMiddleware(SessionRegistry registry) {
+  public SessionRefresherMiddleware(SessionRegistry registry) {
     this.registry = registry;
   }
 
   @Override
   public void handle(@NotNull Context ctx) throws Exception {
-    registry.parse(ctx);
+    registry.refresh(ctx);
   }
 }

@@ -1,7 +1,7 @@
 package com.tiernebre.web.controllers.authentication;
 
-import com.tiernebre.web.controllers.ControllerHelper;
 import com.tiernebre.web.util.SessionRegistry;
+import com.tiernebre.web.util.WebHelper;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import io.javalin.http.HttpStatus;
@@ -10,12 +10,9 @@ import org.jetbrains.annotations.NotNull;
 public final class LogoutController implements Handler {
 
   private final SessionRegistry sessionRegister;
-  private final ControllerHelper helper;
+  private final WebHelper helper;
 
-  public LogoutController(
-    SessionRegistry sessionRegister,
-    ControllerHelper helper
-  ) {
+  public LogoutController(SessionRegistry sessionRegister, WebHelper helper) {
     this.sessionRegister = sessionRegister;
     this.helper = helper;
   }

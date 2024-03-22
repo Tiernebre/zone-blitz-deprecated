@@ -12,6 +12,12 @@ public interface SessionService {
   public Session create(Account account);
 
   /**
+   * @param account The account id to create a session for.
+   * @return The created session.
+   */
+  public Session create(long accountId);
+
+  /**
    * @param id The id or "token" of the session to get
    * @return The found session, empty if it could not be found.
    */

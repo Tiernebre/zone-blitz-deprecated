@@ -1,7 +1,6 @@
 package com.tiernebre.web.routes;
 
 import com.tiernebre.context.DependencyContext;
-import com.tiernebre.web.controllers.DefaultControllerHelper;
 import com.tiernebre.web.controllers.HealthController;
 import com.tiernebre.web.controllers.IndexController;
 import com.tiernebre.web.controllers.authentication.LoginController;
@@ -19,13 +18,12 @@ public final class RoutesFactory {
   }
 
   public Routes create() {
-    var helper = new DefaultControllerHelper();
     var authentication = dependencyContext.authentication();
     var web = dependencyContext.web();
     return new Routes(
       new ApiRoutes(new HealthRoutes(new HealthController())),
       new PageRoutes(
-        new IndexController(helper),
+        new IndexController(web.helper()),
         new RegistrationRoutes(
           new RegistrationController(
             authentication.registrationService(),
@@ -35,13 +33,15 @@ public final class RoutesFactory {
         ),
         new LoginRoutes(
           new LoginController(
-            helper,
+            web.helper(),
             authentication.googleAuthenticationStrategy(),
             authentication.registrationAuthenticationStrategy(),
             web.sessionRegistry()
           )
         ),
-        new LogoutRoutes(new LogoutController(web.sessionRegistry(), helper))
+        new LogoutRoutes(
+          new LogoutController(web.sessionRegistry(), web.helper())
+        )
       )
     );
   }

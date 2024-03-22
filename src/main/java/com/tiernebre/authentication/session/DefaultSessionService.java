@@ -14,7 +14,12 @@ public final class DefaultSessionService implements SessionService {
 
   @Override
   public Session create(Account account) {
-    return repository.insertOne(account.id());
+    return create(account.id());
+  }
+
+  @Override
+  public Session create(long accountId) {
+    return repository.insertOne(accountId);
   }
 
   @Override

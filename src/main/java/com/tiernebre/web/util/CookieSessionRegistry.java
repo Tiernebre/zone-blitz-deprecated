@@ -31,6 +31,25 @@ public final class CookieSessionRegistry implements SessionRegistry {
   }
 
   @Override
+  public Option<Session> refresh(Context ctx) {
+    return parse(ctx).map(session -> {
+      var now = LocalDateTime.now(clock);
+      var expiresAt = session.expiresAt();
+      if (
+        now.isBefore(expiresAt) &&
+        now.isAfter(expiresAt.minus(WebConstants.SESSION_REFRESH_WINDOW))
+      ) {
+        var newSession = service.create(session.accountId());
+        register(ctx, newSession);
+        service.delete(session.id());
+        return newSession;
+      } else {
+        return session;
+      }
+    });
+  }
+
+  @Override
   public void register(Context ctx, Session session) {
     Cookie sessionCookie = new Cookie(
       WebConstants.SESSION_COOKIE_TOKEN_NAME,
@@ -77,25 +96,23 @@ public final class CookieSessionRegistry implements SessionRegistry {
   }
 
   @Override
-  public void parse(Context ctx) {
-    Option.of(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME))
-      .toTry()
-      .mapTry(token -> UUID.fromString(token))
-      .toOption()
-      .flatMap(service::get)
-      .peek(session -> {
-        ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE, session);
-        LOG.debug(
-          "Parsed given cookie session token for accountId={}",
-          session.accountId()
-        );
-      });
-  }
-
-  @Override
-  public void refresh(Context ctx, Session session) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'refresh'");
+  public Option<Session> parse(Context ctx) {
+    return Option.of(
+      (Session) ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE)
+    ).orElse(
+      Option.of(ctx.cookie(WebConstants.SESSION_COOKIE_TOKEN_NAME))
+        .toTry()
+        .mapTry(token -> UUID.fromString(token))
+        .toOption()
+        .flatMap(service::get)
+        .peek(session -> {
+          ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE, session);
+          LOG.debug(
+            "Parsed given cookie session token for accountId={}",
+            session.accountId()
+          );
+        })
+    );
   }
 
   private void secureCookie(Cookie cookie) {

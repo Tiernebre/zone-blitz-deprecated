@@ -2,6 +2,7 @@ package com.tiernebre.web.util;
 
 import com.tiernebre.authentication.session.Session;
 import io.javalin.http.Context;
+import io.vavr.control.Option;
 
 public interface SessionRegistry {
   /**
@@ -28,15 +29,16 @@ public interface SessionRegistry {
    * middlewares to consume.
    *
    * @param ctx Javalin context to parse.
+   * @return The parsed session.
    */
-  public void parse(Context ctx);
+  public Option<Session> parse(Context ctx);
 
   /**
    * Refreshes a session so that the user gets a new session and stays logged in. Useful for if the user is actively
    * using Zone Blitz and doesn't want to be logged out randomly during their session.
    *
    * @param ctx Javalin context to parse.
-   * @param session The session to refresh.
+   * @return The newly refreshed session.
    */
-  public void refresh(Context ctx, Session session);
+  public Option<Session> refresh(Context ctx);
 }
