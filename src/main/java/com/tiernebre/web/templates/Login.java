@@ -6,5 +6,6 @@ import io.jstach.jstache.JStache;
 public record Login(
   GoogleSignOnButtonConfiguration google,
   AuthenticationForm form,
-  String error
+  String error,
+  String passwordAutocomplete
 ) {}

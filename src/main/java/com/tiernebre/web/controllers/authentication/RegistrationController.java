@@ -79,7 +79,8 @@ public final class RegistrationController {
         AuthenticationWebConstants.SHARED_AUTHENTICATION_FORM,
         AuthenticationWebConstants.CONFIRM_PASSWORD_PARAMETER,
         error,
-        AuthenticationWebConstants.GOOGLE_SIGN_ON_BUTTON_CONFIGURATION
+        AuthenticationWebConstants.GOOGLE_SIGN_ON_BUTTON_CONFIGURATION,
+        "new-password"
       )
     );
     AuthenticationWebControllerHelper.allowGoogleScript(ctx);

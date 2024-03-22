@@ -22,6 +22,7 @@
           required
           maxlength="{{ form.passwordMaxLength }}"
           minlength="{{ form.passwordMinLength }}"
+          autocomplete="new-password"
         />
         {{< button}} {{$text}}Register{{/text}} {{/button}}
         {{>google_sign_on_button}}

@@ -81,7 +81,8 @@ public final class LoginController {
       new Login(
         AuthenticationWebConstants.GOOGLE_SIGN_ON_BUTTON_CONFIGURATION,
         AuthenticationWebConstants.SHARED_AUTHENTICATION_FORM,
-        error
+        error,
+        "current-password"
       )
     );
     AuthenticationWebControllerHelper.allowGoogleScript(ctx);

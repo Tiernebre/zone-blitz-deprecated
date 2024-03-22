@@ -7,5 +7,6 @@ public record Registration(
   AuthenticationForm form,
   String confirmPasswordFieldName,
   String error,
-  GoogleSignOnButtonConfiguration google
+  GoogleSignOnButtonConfiguration google,
+  String passwordAutocomplete
 ) {}
