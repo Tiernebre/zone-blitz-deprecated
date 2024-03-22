@@ -64,6 +64,7 @@ public final class RegistrationController {
 
   public void page(Context ctx) {
     ctx.html(render(null));
+    AuthenticationWebControllerHelper.allowGoogleScript(ctx);
   }
 
   private String render(String error) {
@@ -72,7 +73,8 @@ public final class RegistrationController {
       new Registration(
         AuthenticationWebConstants.SHARED_AUTHENTICATION_FORM,
         AuthenticationWebConstants.CONFIRM_PASSWORD_PARAMETER,
-        error
+        error,
+        AuthenticationWebConstants.GOOGLE_SIGN_ON_BUTTON_CONFIGURATION
       ),
       output
     );

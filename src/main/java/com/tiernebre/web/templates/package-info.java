@@ -25,6 +25,10 @@
       name = "authentication_form",
       path = "partials/authentication_form"
     ),
+    @io.jstach.jstache.JStachePartial(
+      name = "google_sign_on_button",
+      path = "partials/google_sign_on_button"
+    ),
   }
 )
 package com.tiernebre.web.templates;
