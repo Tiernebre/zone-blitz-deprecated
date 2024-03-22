@@ -1,5 +1,5 @@
 DBMATE=dbmate -e ZONE_BLITZ_POSTGRES_URL
-FILES_TO_FORMAT=**/*.{java,xml,md,yml,mustache,sh,ts}
+FILES_TO_FORMAT=**/*.{java,xml,md,yml,mustache,sh,ts,js,css}
 
 .PHONY: run
 run: install start
