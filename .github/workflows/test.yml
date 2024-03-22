@@ -27,7 +27,6 @@ jobs:
     env:
       ZONE_BLITZ_WEB_DOCKER_IMAGE: brendantierney/zone-blitz:staging
       ZONE_BLITZ_DOMAIN: localhost
-      ZONE_BLITZ_URL: https://localhost
       CURL: curl --retry 15 --retry-delay 1 --retry-all-errors -fkv https://localhost
     steps:
       - name: Checkout
@@ -47,6 +46,7 @@ jobs:
           ZONE_BLITZ_POSTGRES_PASSWORD: e2e_staging_test
           ZONE_BLITZ_POSTGRES_NAME: zone_blitz
           ZONE_BLITZ_POSTGRES_HOST: database:5432/zone_blitz
+          ZONE_BLITZ_URL: https://localhost
           ZONE_BLITZ_CONTENT_SECURITY_POLICY: default-src https://localhost
         continue-on-error: true
         run: docker compose up -d --wait
