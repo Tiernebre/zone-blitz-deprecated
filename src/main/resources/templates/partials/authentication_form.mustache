@@ -7,6 +7,7 @@
   required
   pattern="\S(.*\S)?"
   maxlength="{{ form.usernameMaxLength }}"
+  autocomplete="username"
 />
 <label for="password">Password</label>
 <input
@@ -17,4 +18,5 @@
   required
   maxlength="{{ form.passwordMaxLength }}"
   minlength="{{ form.passwordMinLength }}"
+  autocomplete="{{ passwordAutocomplete }}"
 />

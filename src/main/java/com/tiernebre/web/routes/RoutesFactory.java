@@ -20,6 +20,7 @@ public final class RoutesFactory {
   public Routes create() {
     var authentication = dependencyContext.authentication();
     var web = dependencyContext.web();
+    var helper = web.helper();
     return new Routes(
       new ApiRoutes(new HealthRoutes(new HealthController())),
       new PageRoutes(
@@ -28,12 +29,13 @@ public final class RoutesFactory {
           new RegistrationController(
             authentication.registrationService(),
             authentication.registrationAuthenticationStrategy(),
-            web.sessionRegistry()
+            web.sessionRegistry(),
+            helper
           )
         ),
         new LoginRoutes(
           new LoginController(
-            web.helper(),
+            helper,
             authentication.googleAuthenticationStrategy(),
             authentication.registrationAuthenticationStrategy(),
             web.sessionRegistry()

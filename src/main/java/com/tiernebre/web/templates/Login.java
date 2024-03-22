@@ -4,9 +4,8 @@ import io.jstach.jstache.JStache;
 
 @JStache(path = "login")
 public record Login(
-  String clientId,
-  String loginUri,
-  String googleScriptSrc,
+  GoogleSignOnButtonConfiguration google,
   AuthenticationForm form,
-  String error
+  String error,
+  String passwordAutocomplete
 ) {}

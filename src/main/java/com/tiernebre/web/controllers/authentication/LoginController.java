@@ -4,7 +4,6 @@ import com.tiernebre.authentication.google.GoogleAuthenticationRequest;
 import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import com.tiernebre.authentication.registration.RegistrationAuthenticationRequest;
 import com.tiernebre.authentication.registration.RegistrationAuthenticationStrategy;
-import com.tiernebre.web.constants.WebConstants;
 import com.tiernebre.web.templates.Login;
 import com.tiernebre.web.util.SessionRegistry;
 import com.tiernebre.web.util.WebHelper;
@@ -80,23 +79,12 @@ public final class LoginController {
     helper.template(
       ctx,
       new Login(
-        AuthenticationWebConstants.GOOGLE_CLIENT_ID,
-        String.format("%s/login", WebConstants.URL),
-        String.format(
-          "%s/gsi/client",
-          AuthenticationWebConstants.GOOGLE_ACCOUNTS_URL
-        ),
+        AuthenticationWebConstants.GOOGLE_SIGN_ON_BUTTON_CONFIGURATION,
         AuthenticationWebConstants.SHARED_AUTHENTICATION_FORM,
-        error
+        error,
+        "current-password"
       )
     );
-    ctx.header(
-      WebConstants.CONTENT_SECURITY_POLICY_HEADER_NAME,
-      String.format(
-        "%1$s %2$s; style-src 'self' %2$s 'unsafe-inline'",
-        WebConstants.CONTENT_SECURITY_POLICY,
-        AuthenticationWebConstants.GOOGLE_ACCOUNTS_URL
-      )
-    );
+    AuthenticationWebControllerHelper.allowGoogleScript(ctx);
   }
 }
