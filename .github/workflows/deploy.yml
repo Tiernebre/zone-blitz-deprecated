@@ -6,6 +6,7 @@ on:
 
 env:
   ZONE_BLITZ_WEB_DOCKER_IMAGE: brendantierney/zone-blitz:latest
+  ZONE_BLITZ_WEB_URL: https://zoneblitz.app
 
 jobs:
   deploy:
@@ -41,5 +42,22 @@ jobs:
       - name: Verify deployment was successful
         uses: jtalk/url-health-check-action@v4
         with:
-          url: https://zoneblitz.app/api/health
+          url: ${{ env.ZONE_BLITZ_WEB_URL }}/api/health
           max-attempts: 1
+
+  lighthouse-tests:
+    name: Lighthouse Tests
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Audit web page performance and quality
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            ${{ env.ZONE_BLITZ_WEB_URL }}
+            ${{ env.ZONE_BLITZ_WEB_URL }}/login
+            ${{ env.ZONE_BLITZ_WEB_URL }}/registration
+          configPath: "./.lighthouserc.json"
+          runs: 5

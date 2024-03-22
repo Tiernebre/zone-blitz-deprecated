@@ -55,17 +55,6 @@ jobs:
           ${{ env.CURL }}
           ${{ env.CURL }}/api/health
           ${{ env.CURL }}/favicon.ico
-      - name: Audit web page performance and quality
-        uses: treosh/lighthouse-ci-action@v11
-        env:
-          ZONE_BLITZ_URL: http://localhost
-        with:
-          urls: |
-            ${{ env.ZONE_BLITZ_URL }}
-            ${{ env.ZONE_BLITZ_URL }}/login
-            ${{ env.ZONE_BLITZ_URL }}/registration
-          configPath: "./.lighthouserc.json"
-          runs: 5
 
   e2e-tests:
     name: E2E Tests
