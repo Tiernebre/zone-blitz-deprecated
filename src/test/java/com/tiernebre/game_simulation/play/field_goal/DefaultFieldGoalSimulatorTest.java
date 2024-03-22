@@ -1,7 +1,7 @@
 package com.tiernebre.game_simulation.play.field_goal;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -13,7 +13,7 @@ import com.tiernebre.game_simulation.play.field_goal.blocked.BlockedFieldGoalRes
 import com.tiernebre.game_simulation.play.field_goal.blocked.FieldGoalBlockCalculator;
 import com.tiernebre.game_simulation.play.field_goal.distance.FieldGoalDistanceCalculator;
 import com.tiernebre.game_simulation.play.field_goal.result.FieldGoalAttemptResult;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DefaultFieldGoalSimulatorTest {
 

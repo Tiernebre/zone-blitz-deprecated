@@ -1,10 +1,10 @@
 package com.tiernebre.game_simulation.game.state.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.tiernebre.game_simulation.dto.game.Side;
 import com.tiernebre.game_simulation.game.state.util.SideUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SideUtilsTest {
 

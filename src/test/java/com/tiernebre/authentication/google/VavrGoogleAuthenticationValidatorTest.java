@@ -6,7 +6,7 @@ import com.tiernebre.util.error.ZoneBlitzError;
 import com.tiernebre.util.error.ZoneBlitzServerError;
 import io.vavr.collection.List;
 import io.vavr.control.Either;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public final class VavrGoogleAuthenticationValidatorTest {
 

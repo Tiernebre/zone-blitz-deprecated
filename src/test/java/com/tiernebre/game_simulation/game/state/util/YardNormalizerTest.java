@@ -1,6 +1,6 @@
 package com.tiernebre.game_simulation.game.state.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -8,7 +8,7 @@ import com.tiernebre.game_simulation.dto.game.Direction;
 import com.tiernebre.game_simulation.dto.game.Drive;
 import com.tiernebre.game_simulation.dto.game.GameState;
 import com.tiernebre.game_simulation.game.state.util.YardNormalizer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class YardNormalizerTest {
 

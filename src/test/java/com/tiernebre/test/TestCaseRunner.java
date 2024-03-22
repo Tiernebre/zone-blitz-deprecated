@@ -1,6 +1,6 @@
 package com.tiernebre.test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.vavr.collection.Seq;
 import java.util.function.Function;

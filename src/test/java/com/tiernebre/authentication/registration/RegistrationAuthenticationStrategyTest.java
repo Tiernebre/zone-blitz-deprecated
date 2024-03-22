@@ -17,7 +17,7 @@ import io.vavr.control.Either;
 import io.vavr.control.Option;
 import java.time.LocalDateTime;
 import java.util.UUID;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public final class RegistrationAuthenticationStrategyTest {
 

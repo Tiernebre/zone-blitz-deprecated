@@ -1,6 +1,6 @@
 package com.tiernebre.game_simulation.game.state.handlers.turnover;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.tiernebre.game_simulation.EngineConstants;
 import com.tiernebre.game_simulation.dto.game.Direction;
@@ -9,7 +9,7 @@ import com.tiernebre.game_simulation.dto.game.Drive;
 import com.tiernebre.game_simulation.game.GameMockFactory;
 import com.tiernebre.game_simulation.game.state.handlers.turnover.DefaultTurnoverHandler;
 import com.tiernebre.game_simulation.game.state.util.SideUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DefaultTurnoverHandlerTest {
 

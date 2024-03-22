@@ -1,6 +1,6 @@
 package com.tiernebre.game_simulation.play.field_goal.distance;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.tiernebre.game_simulation.EngineConstants;
 import com.tiernebre.game_simulation.dto.DtoMockFactory;
@@ -8,7 +8,7 @@ import com.tiernebre.game_simulation.play.field_goal.FieldGoalConstants;
 import com.tiernebre.game_simulation.play.field_goal.distance.DistributionFieldGoalDistanceCalculator;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.random.JDKRandomGenerator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DistributionFieldGoalDistanceCalculatorTest {
 
