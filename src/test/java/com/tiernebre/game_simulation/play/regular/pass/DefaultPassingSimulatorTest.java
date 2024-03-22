@@ -1,7 +1,7 @@
 package com.tiernebre.game_simulation.play.regular.pass;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -15,7 +15,7 @@ import com.tiernebre.game_simulation.play.regular.pass.PassingYardageCalculator;
 import com.tiernebre.game_simulation.play.regular.pass.completion.CompletedPassCalculator;
 import com.tiernebre.game_simulation.play.regular.pass.interception.InterceptionCalculator;
 import com.tiernebre.game_simulation.play.regular.pass.interception.InterceptionResult;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public class DefaultPassingSimulatorTest {

@@ -5,7 +5,7 @@ import com.tiernebre.test.TestCaseRunner;
 import io.vavr.Tuple2;
 import io.vavr.collection.List;
 import io.vavr.control.Validation;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class VavrValidationUtilsTest {
 

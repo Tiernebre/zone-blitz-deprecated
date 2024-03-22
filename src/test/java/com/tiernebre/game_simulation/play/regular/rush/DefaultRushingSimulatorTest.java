@@ -1,7 +1,7 @@
 package com.tiernebre.game_simulation.play.regular.rush;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -14,7 +14,7 @@ import com.tiernebre.game_simulation.play.regular.rush.RushResult;
 import com.tiernebre.game_simulation.play.regular.rush.RushingYardageCalculator;
 import com.tiernebre.game_simulation.play.regular.turnover.FumbleCalculator;
 import com.tiernebre.game_simulation.play.regular.turnover.FumbleResult;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public class DefaultRushingSimulatorTest {

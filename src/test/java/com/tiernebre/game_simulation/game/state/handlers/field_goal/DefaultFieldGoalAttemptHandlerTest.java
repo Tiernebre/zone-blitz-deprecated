@@ -1,6 +1,6 @@
 package com.tiernebre.game_simulation.game.state.handlers.field_goal;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -14,7 +14,7 @@ import com.tiernebre.game_simulation.game.GameMockFactory;
 import com.tiernebre.game_simulation.game.state.handlers.scoring.ScoringPlayHandler;
 import com.tiernebre.game_simulation.game.state.handlers.turnover.TurnoverHandler;
 import com.tiernebre.game_simulation.play.PlayResultMockFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public final class DefaultFieldGoalAttemptHandlerTest {
 

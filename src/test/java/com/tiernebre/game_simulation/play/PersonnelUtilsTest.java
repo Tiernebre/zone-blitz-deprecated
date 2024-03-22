@@ -1,12 +1,12 @@
 package com.tiernebre.game_simulation.play;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.tiernebre.game_simulation.EngineConstants;
 import com.tiernebre.game_simulation.dto.DtoMockFactory;
 import com.tiernebre.game_simulation.dto.Player;
 import com.tiernebre.game_simulation.play.regular.RegularPlayPersonnelUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PersonnelUtilsTest {
 

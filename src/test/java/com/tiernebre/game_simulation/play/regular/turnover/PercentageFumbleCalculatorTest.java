@@ -1,14 +1,14 @@
 package com.tiernebre.game_simulation.play.regular.turnover;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.tiernebre.game_simulation.dto.DtoMockFactory;
 import com.tiernebre.game_simulation.play.regular.RegularPlaySimulatorMockFactory;
 import com.tiernebre.game_simulation.play.regular.turnover.PercentageFumbleCalculator;
 import com.tiernebre.game_simulation.util.PercentageCalculator;
 import java.util.Random;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PercentageFumbleCalculatorTest {
 

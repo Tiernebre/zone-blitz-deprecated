@@ -1,7 +1,7 @@
 package com.tiernebre.game_simulation.game.state.util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -9,7 +9,7 @@ import com.tiernebre.game_simulation.dto.game.Direction;
 import com.tiernebre.game_simulation.dto.game.Drive;
 import com.tiernebre.game_simulation.dto.game.GameState;
 import com.tiernebre.game_simulation.game.state.util.DirectionUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DirectionUtilsTest {
 

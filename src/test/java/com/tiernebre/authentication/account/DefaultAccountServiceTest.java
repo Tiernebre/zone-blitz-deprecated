@@ -10,7 +10,7 @@ import com.tiernebre.util.error.ZoneBlitzServerError;
 import io.vavr.collection.List;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DefaultAccountServiceTest {
 

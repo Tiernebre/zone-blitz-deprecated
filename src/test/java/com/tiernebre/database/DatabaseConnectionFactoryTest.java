@@ -1,10 +1,11 @@
 package com.tiernebre.database;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.SQLException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public final class DatabaseConnectionFactoryTest {
 
@@ -19,15 +20,17 @@ public final class DatabaseConnectionFactoryTest {
     assertEquals(1, result.findColumn("test"));
   }
 
-  @Test(expected = DatabaseConnectionError.class)
+  @Test
   public void failsFastIfConnectionInvalid()
     throws SQLException, DatabaseConnectionError {
-    new DatabaseConnectionFactory(
-      new DatabaseConfiguration(
-        "notauser",
-        "notapassword",
-        "jdbc:postgresql://0.0.0.0:5432/not_a_db"
-      )
-    ).create();
+    assertThrows(DatabaseConnectionError.class, () -> {
+      new DatabaseConnectionFactory(
+        new DatabaseConfiguration(
+          "notauser",
+          "notapassword",
+          "jdbc:postgresql://0.0.0.0:5432/not_a_db"
+        )
+      ).create();
+    });
   }
 }
