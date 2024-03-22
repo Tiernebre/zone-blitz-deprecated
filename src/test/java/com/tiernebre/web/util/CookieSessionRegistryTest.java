@@ -272,6 +272,61 @@ public final class CookieSessionRegistryTest {
             reset(ctx);
             reset(service);
           }
+        ),
+        new TestCase<Context, Option<Session>>(
+          "does not refresh if before the window",
+          mock(Context.class),
+          __ ->
+            Option.of(
+              new Session(
+                UUID.randomUUID(),
+                0,
+                LocalDateTime.now(clock).plusMinutes(10).plusSeconds(1),
+                false
+              )
+            ),
+          (ctx, session) -> {
+            when(
+              ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE)
+            ).thenReturn(session.get());
+          },
+          (ctx, __) -> {
+            verify(service, times(0)).delete(any());
+            reset(ctx);
+            reset(service);
+          }
+        ),
+        new TestCase<Context, Option<Session>>(
+          "refreshes if in the window",
+          mock(Context.class),
+          __ ->
+            Option.of(
+              new Session(
+                UUID.randomUUID(),
+                0,
+                LocalDateTime.now(clock).plusMinutes(60),
+                false
+              )
+            ),
+          (ctx, session) -> {
+            var previousSession = new Session(
+              UUID.randomUUID(),
+              session.get().accountId(),
+              LocalDateTime.now().plusMinutes(9).plusSeconds(59),
+              false
+            );
+            when(
+              ctx.attribute(WebConstants.JAVALIN_SESSION_ATTRIBUTE)
+            ).thenReturn(previousSession);
+            when(service.create(eq(previousSession.accountId()))).thenReturn(
+              session.get()
+            );
+          },
+          (ctx, __) -> {
+            verify(service, times(1)).delete(any());
+            reset(ctx);
+            reset(service);
+          }
         )
       ),
       context -> registry.refresh(context)
