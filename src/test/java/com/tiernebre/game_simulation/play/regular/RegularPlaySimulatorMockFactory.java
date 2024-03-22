@@ -5,8 +5,6 @@ import com.tiernebre.game_simulation.dto.DtoMockFactory;
 import com.tiernebre.game_simulation.dto.Player;
 import com.tiernebre.game_simulation.dto.personnel.RegularPlayDefensivePersonnel;
 import com.tiernebre.game_simulation.dto.personnel.RegularPlayOffensivePersonnel;
-import com.tiernebre.game_simulation.play.regular.RegularPlayOffensiveDecision;
-import com.tiernebre.game_simulation.play.regular.RegularPlaySimulatorArguments;
 
 public final class RegularPlaySimulatorMockFactory {
 

@@ -7,7 +7,6 @@ import com.tiernebre.game_simulation.dto.game.Direction;
 import com.tiernebre.game_simulation.dto.game.Down;
 import com.tiernebre.game_simulation.dto.game.Drive;
 import com.tiernebre.game_simulation.game.GameMockFactory;
-import com.tiernebre.game_simulation.game.state.handlers.turnover.DefaultTurnoverHandler;
 import com.tiernebre.game_simulation.game.state.util.SideUtils;
 import org.junit.jupiter.api.Test;
 

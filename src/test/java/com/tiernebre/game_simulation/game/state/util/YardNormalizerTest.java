@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 import com.tiernebre.game_simulation.dto.game.Direction;
 import com.tiernebre.game_simulation.dto.game.Drive;
 import com.tiernebre.game_simulation.dto.game.GameState;
-import com.tiernebre.game_simulation.game.state.util.YardNormalizer;
 import org.junit.jupiter.api.Test;
 
 public class YardNormalizerTest {

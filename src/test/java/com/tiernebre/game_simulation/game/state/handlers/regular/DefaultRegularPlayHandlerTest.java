@@ -11,7 +11,6 @@ import com.tiernebre.game_simulation.dto.game.Down;
 import com.tiernebre.game_simulation.dto.game.Drive;
 import com.tiernebre.game_simulation.dto.game.Score;
 import com.tiernebre.game_simulation.game.GameMockFactory;
-import com.tiernebre.game_simulation.game.state.handlers.regular.DefaultRegularPlayHandler;
 import com.tiernebre.game_simulation.game.state.handlers.scoring.ScoringPlayHandler;
 import com.tiernebre.game_simulation.game.state.handlers.turnover.TurnoverHandler;
 import com.tiernebre.game_simulation.play.PlayResultMockFactory;
