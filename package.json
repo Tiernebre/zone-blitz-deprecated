@@ -4,6 +4,7 @@
     "build:styles": "unocss \"src/main/resources/templates/**/*.mustache\" -o src/main/resources/assets/styles.css"
   },
   "dependencies": {
+    "@axe-core/playwright": "^4.8.5",
     "@julr/unocss-preset-forms": "^0.1.0",
     "@playwright/test": "^1.42.1",
     "@prettier/plugin-xml": "^3.2.2",

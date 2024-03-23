@@ -32,10 +32,14 @@ test.beforeEach(async ({ page }) => {
   await page.goto(URI);
 });
 
-test("renders the login page", async ({ page }) => {
+test("renders", async ({ page }) => {
   const loginPage = await page.goto(URI);
   expect(loginPage).not.toBeNull();
   expect(loginPage!.status()).toStrictEqual(200);
+});
+
+test("is accessible", async ({ page }) => {
+  await expect(page).toBeAccessible();
 });
 
 test("logs the user in", async ({ context, page }) => {

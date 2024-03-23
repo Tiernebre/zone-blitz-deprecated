@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import {
   BrowserContext,
   Locator,
@@ -150,6 +151,23 @@ export const expect = baseExpect.extend({
       name: "toBeLoggedIn",
       pass,
       message: pass ? () => "User was logged out" : () => "User was logged in",
+    };
+  },
+  async toBeAccessible(page: Page) {
+    let pass;
+    try {
+      const { violations } = await new AxeBuilder({ page }).analyze();
+      expect(violations).toHaveLength(0);
+      pass = true;
+    } catch (error) {
+      pass = false;
+    }
+    return {
+      name: "toBeAccessible",
+      pass,
+      message: pass
+        ? () => "Page was accessible"
+        : () => "Page was not accessible",
     };
   },
 });
