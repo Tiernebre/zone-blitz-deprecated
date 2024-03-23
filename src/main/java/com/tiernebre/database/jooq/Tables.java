@@ -5,6 +5,7 @@ package com.tiernebre.database.jooq;
 
 
 import com.tiernebre.database.jooq.tables.Account;
+import com.tiernebre.database.jooq.tables.League;
 import com.tiernebre.database.jooq.tables.Player;
 import com.tiernebre.database.jooq.tables.Registration;
 import com.tiernebre.database.jooq.tables.Session;
@@ -20,6 +21,11 @@ public class Tables {
      * The table <code>public.account</code>.
      */
     public static final Account ACCOUNT = Account.ACCOUNT;
+
+    /**
+     * The table <code>public.league</code>.
+     */
+    public static final League LEAGUE = League.LEAGUE;
 
     /**
      * The table <code>public.player</code>.

@@ -6,6 +6,7 @@ package com.tiernebre.database.jooq.tables;
 
 import com.tiernebre.database.jooq.Keys;
 import com.tiernebre.database.jooq.Public;
+import com.tiernebre.database.jooq.tables.League.LeaguePath;
 import com.tiernebre.database.jooq.tables.Registration.RegistrationPath;
 import com.tiernebre.database.jooq.tables.Session.SessionPath;
 import com.tiernebre.database.jooq.tables.records.AccountRecord;
@@ -170,6 +171,19 @@ public class Account extends TableImpl<AccountRecord> {
             _registration = new RegistrationPath(this, Keys.ACCOUNT__ACCOUNT_REGISTRATION_ID_FKEY, null);
 
         return _registration;
+    }
+
+    private transient LeaguePath _league;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.league</code>
+     * table
+     */
+    public LeaguePath league() {
+        if (_league == null)
+            _league = new LeaguePath(this, null, Keys.LEAGUE__LEAGUE_ACCOUNT_ID_FKEY.getInverseKey());
+
+        return _league;
     }
 
     private transient SessionPath _session;
