@@ -1,5 +1,6 @@
 package com.tiernebre.league_management.league;
 
+import com.tiernebre.database.jooq.Tables;
 import com.tiernebre.util.pagination.PageRequest;
 import java.util.Collection;
 import org.jooq.DSLContext;
@@ -14,8 +15,11 @@ public final class JooqLeagueRepository implements LeagueRepository {
 
   @Override
   public League insertOne(InsertLeagueRequest request) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'createOne'");
+    return dsl
+      .insertInto(Tables.LEAGUE, Tables.LEAGUE.ACCOUNT_ID, Tables.LEAGUE.NAME)
+      .values(request.accountId(), request.userRequest().name())
+      .returning()
+      .fetchSingleInto(League.class);
   }
 
   @Override
