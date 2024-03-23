@@ -57,7 +57,7 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       .collect(Collectors.toList());
     var selected = repository.selectForAccount(
       accountId,
-      new PageRequest(2, null)
+      new PageRequest(expected.size(), null)
     );
     assertEquals(expected, selected);
   }
