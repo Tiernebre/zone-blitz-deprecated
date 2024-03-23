@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.tiernebre.database.TestJooqDslContextFactory;
+import com.tiernebre.database.TestDatabaseContextFactory;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ public final class JooqRegistrationRepositoryTest {
 
   private final RegistrationRepository repository =
     new JooqRegistrationRepository(
-      TestJooqDslContextFactory.createTestDSLContext()
+      TestDatabaseContextFactory.createTestDSLContext()
     );
 
   @Test
