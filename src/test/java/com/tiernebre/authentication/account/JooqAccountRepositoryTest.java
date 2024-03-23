@@ -6,16 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.tiernebre.database.TestJooqDslContextFactory;
+import com.tiernebre.database.JooqDatabaseTest;
 import java.util.UUID;
-import org.jooq.DSLContext;
 import org.junit.jupiter.api.Test;
 
-public class JooqAccountRepositoryTest {
+public class JooqAccountRepositoryTest extends JooqDatabaseTest {
 
-  private final DSLContext dsl =
-    TestJooqDslContextFactory.createTestDSLContext();
-  private final AccountRepository repository = new JooqAccountRepository(dsl);
+  private final AccountRepository repository = context.accountRepository();
 
   @Test
   public void insertOne() {

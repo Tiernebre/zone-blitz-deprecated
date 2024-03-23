@@ -6,21 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.tiernebre.authentication.account.AccountRepository;
-import com.tiernebre.authentication.account.JooqAccountRepository;
-import com.tiernebre.database.TestJooqDslContextFactory;
+import com.tiernebre.database.JooqDatabaseTest;
 import com.tiernebre.database.jooq.Tables;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.UUID;
-import org.jooq.DSLContext;
 import org.junit.jupiter.api.Test;
 
-public final class JooqSessionRepositoryTest {
+public final class JooqSessionRepositoryTest extends JooqDatabaseTest {
 
-  private final DSLContext dsl =
-    TestJooqDslContextFactory.createTestDSLContext();
   private final Clock clock = Clock.fixed(
     Instant.now(),
     ZoneId.systemDefault()
@@ -29,9 +25,8 @@ public final class JooqSessionRepositoryTest {
     dsl,
     clock
   );
-  private final AccountRepository accountRepository = new JooqAccountRepository(
-    dsl
-  );
+  private final AccountRepository accountRepository =
+    context.accountRepository();
 
   @Test
   public void insertOne() {
@@ -106,10 +101,9 @@ public final class JooqSessionRepositoryTest {
     var deletedSession = repository.deleteOne(existingSession.id());
     assertTrue(deletedSession.isDefined());
     assertTrue(deletedSession.get().revoked());
-    var updatedSession = dsl.fetchOne(
-      Tables.SESSION,
-      Tables.SESSION.ID.eq(existingSession.id())
-    );
+    var updatedSession = context
+      .dsl()
+      .fetchOne(Tables.SESSION, Tables.SESSION.ID.eq(existingSession.id()));
     assertTrue(updatedSession.getRevoked());
   }
 
