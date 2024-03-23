@@ -27,12 +27,13 @@ public final class Base64CursorMapperTest {
 
   @Test
   public void mapsEmptyStrings() {
+    var expected = -1L;
     TestCaseRunner.run(
       Base64CursorMapperTest.class,
       List.of(
-        new TestCase<String, Long>("null", null, __ -> 0L),
-        new TestCase<String, Long>("empty", "", __ -> 0L),
-        new TestCase<String, Long>("blank", " ", __ -> 0L)
+        new TestCase<String, Long>("null", null, __ -> expected),
+        new TestCase<String, Long>("empty", "", __ -> expected),
+        new TestCase<String, Long>("blank", " ", __ -> expected)
       ),
       base64CursorMapper::cursorToId
     );

@@ -7,12 +7,16 @@ import com.tiernebre.database.JooqDatabaseTest;
 import com.tiernebre.database.jooq.Tables;
 import com.tiernebre.util.pagination.PageRequest;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 
 public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
 
-  private final LeagueRepository repository = new JooqLeagueRepository(dsl);
+  private final LeagueRepository repository = new JooqLeagueRepository(
+    dsl,
+    cursorMapper
+  );
 
   @Test
   public void insertOne() {
@@ -40,20 +44,21 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       .accountRepository()
       .insertOne(UUID.randomUUID().toString(), null)
       .id();
-    var leagues = IntStream.range(0, 2)
+    var expected = IntStream.range(0, 2)
       .boxed()
       .map(__ -> {
         var league = dsl.newRecord(Tables.LEAGUE);
         league.setAccountId(accountId);
         league.setName(UUID.randomUUID().toString());
         league.store();
-        return league;
-      });
+        league.refresh();
+        return league.into(League.class);
+      })
+      .collect(Collectors.toList());
     var selected = repository.selectForAccount(
       accountId,
       new PageRequest(2, null)
     );
-    var expected = leagues.map(league -> league.into(League.class));
     assertEquals(expected, selected);
   }
 }

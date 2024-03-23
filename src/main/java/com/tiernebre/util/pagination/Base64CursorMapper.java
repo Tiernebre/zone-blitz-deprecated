@@ -28,6 +28,6 @@ public final class Base64CursorMapper implements CursorMapper {
         validCursor ->
           Long.parseLong(new String(decoder.decode(validCursor)), 2)
       )
-      .getOrElse(0L);
+      .getOrElse(-1L);
   }
 }
