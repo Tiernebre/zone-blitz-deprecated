@@ -11,7 +11,7 @@ public final class JooqLeagueRepository implements LeagueRepository {
   }
 
   @Override
-  public League createOne(CreateLeagueRequest request) {
+  public League insertOne(CreateLeagueRequest request) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'createOne'");
   }
