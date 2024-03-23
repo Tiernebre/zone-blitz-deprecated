@@ -1,5 +1,7 @@
 package com.tiernebre.league_management.league;
 
+import com.tiernebre.util.pagination.PageRequest;
+import java.util.Collection;
 import org.jooq.DSLContext;
 
 public final class JooqLeagueRepository implements LeagueRepository {
@@ -14,5 +16,16 @@ public final class JooqLeagueRepository implements LeagueRepository {
   public League insertOne(InsertLeagueRequest request) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'createOne'");
+  }
+
+  @Override
+  public Collection<League> selectForAccount(
+    long accountId,
+    PageRequest request
+  ) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException(
+      "Unimplemented method 'selectForAccount'"
+    );
   }
 }
