@@ -1,7 +1,9 @@
 package com.tiernebre.util.pagination;
 
+import io.vavr.control.Option;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
+import org.apache.commons.lang3.StringUtils;
 
 public final class Base64CursorMapper implements CursorMapper {
 
@@ -20,6 +22,12 @@ public final class Base64CursorMapper implements CursorMapper {
 
   @Override
   public long cursorToId(String cursor) {
-    return Long.parseLong(new String(decoder.decode(cursor)), 2);
+    return Option.of(cursor)
+      .filter(StringUtils::isNotBlank)
+      .map(
+        validCursor ->
+          Long.parseLong(new String(decoder.decode(validCursor)), 2)
+      )
+      .getOrElse(0L);
   }
 }
