@@ -7,7 +7,7 @@ const URI = "/registration";
 const USERNAME = `REGISTER-${crypto.randomUUID().toString()}`;
 const PASSWORD = `REGISTER-${crypto.randomUUID().toString()}`;
 
-test.beforeEach(async ({ context, page }) => {
+test.beforeEach(async ({ page }) => {
   await page.goto(URI);
 });
 
@@ -18,10 +18,14 @@ const {
   clickRegisterButton: submit,
 } = registrationQueries;
 
-test("registration page exists", async ({ context, page }) => {
+test("renders", async ({ page }) => {
   const registrationsPage = await page.goto(URI);
   expect(registrationsPage).not.toBeNull();
   expect(registrationsPage!.status()).toStrictEqual(200);
+});
+
+test("is accessible", async ({ page }) => {
+  await expect(page).toBeAccessible();
 });
 
 test("registers a user", async ({ context, page }) => {
