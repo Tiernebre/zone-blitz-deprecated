@@ -27,9 +27,11 @@ public final class JooqLeagueRepository implements LeagueRepository {
     long accountId,
     PageRequest request
   ) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException(
-      "Unimplemented method 'selectForAccount'"
-    );
+    return dsl
+      .select(Tables.LEAGUE.asterisk())
+      .from(Tables.LEAGUE)
+      .where(Tables.LEAGUE.ID.greaterThan(request.after()))
+      .orderBy(Tables.LEAGUE.ID, Tables.LEAGUE.ID.desc())
+      .fetchInto(League.class);
   }
 }
