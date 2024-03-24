@@ -51,7 +51,6 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
         league.setAccountId(accountId);
         league.setName(UUID.randomUUID().toString());
         league.store();
-        league.refresh();
         return league.into(League.class);
       })
       .collect(Collectors.toList());
