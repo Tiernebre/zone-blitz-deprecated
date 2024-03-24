@@ -26,6 +26,15 @@ public final class Base64CursorMapperTest {
   }
 
   @Test
+  public void mapsIdentifiables() {
+    var identifiable = new IdentifiableImpl(1L);
+    String cursor = base64CursorMapper.toCursor(identifiable);
+    assertNotEquals(Long.toString(identifiable.id()), cursor);
+    long mappedBack = base64CursorMapper.cursorToId(cursor);
+    assertEquals(identifiable.id(), mappedBack);
+  }
+
+  @Test
   public void mapsEmptyStrings() {
     var expected = -1L;
     TestCaseRunner.run(

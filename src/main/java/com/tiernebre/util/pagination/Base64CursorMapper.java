@@ -16,6 +16,11 @@ public final class Base64CursorMapper implements CursorMapper {
   }
 
   @Override
+  public String toCursor(Identifiable node) {
+    return idToCursor(node.id());
+  }
+
+  @Override
   public String idToCursor(long id) {
     return encoder.encodeToString(Long.toBinaryString(id).getBytes());
   }
