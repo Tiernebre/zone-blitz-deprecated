@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -31,6 +32,17 @@ public final class PageMapperTest {
     );
 
     var gotten = pageMapper.map(nodes);
+    assertEquals(expected, gotten);
+  }
+
+  @Test
+  public void mapEmpty() {
+    var expected = new Page<Identifiable>(
+      Collections.emptyList(),
+      new PageInfo(null, false)
+    );
+
+    var gotten = pageMapper.map(Collections.emptyList());
     assertEquals(expected, gotten);
   }
 }
