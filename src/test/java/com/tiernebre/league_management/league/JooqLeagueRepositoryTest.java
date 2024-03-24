@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.tiernebre.database.JooqDatabaseTest;
-import com.tiernebre.database.RepositoryCollection;
 import com.tiernebre.database.jooq.Tables;
 import com.tiernebre.util.pagination.PageRequest;
 import java.util.Collections;
@@ -17,7 +16,7 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
 
   private final LeagueRepository repository = new JooqLeagueRepository(
     dsl,
-    cursorMapper
+    paginationStrategy
   );
 
   @Test
@@ -60,7 +59,7 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       accountId,
       new PageRequest(expected.size(), null)
     );
-    assertEquals(new RepositoryCollection<>(expected, false), selected);
+    assertEquals(expected, selected.edges());
   }
 
   @Test
@@ -70,7 +69,7 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       .insertOne(UUID.randomUUID().toString(), null)
       .id();
     var sliceSize = 5;
-    var expected = IntStream.range(0, sliceSize + 1)
+    IntStream.range(0, sliceSize + 1)
       .boxed()
       .map(__ -> {
         var league = dsl.newRecord(Tables.LEAGUE);
@@ -85,8 +84,7 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       accountId,
       new PageRequest(sliceSize, null)
     );
-    assertEquals(sliceSize, selected.collection().size());
-    assertEquals(new RepositoryCollection<>(expected, false), selected);
+    assertEquals(sliceSize, selected.edges().size());
   }
 
   @Test
@@ -110,13 +108,10 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       accountId,
       new PageRequest(10, cursor)
     );
-    assertEquals(6, selected.collection().size());
+    assertEquals(6, selected.edges().size());
     assertEquals(
-      new RepositoryCollection<>(
-        expected.stream().skip(4).collect(Collectors.toList()),
-        false
-      ),
-      selected
+      expected.stream().skip(4).collect(Collectors.toList()),
+      selected.edges()
     );
   }
 
@@ -126,9 +121,6 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       Long.MAX_VALUE,
       new PageRequest(10, null)
     );
-    assertEquals(
-      new RepositoryCollection<League>(Collections.emptyList(), false),
-      selected
-    );
+    assertEquals(Collections.emptyList(), selected.edges());
   }
 }

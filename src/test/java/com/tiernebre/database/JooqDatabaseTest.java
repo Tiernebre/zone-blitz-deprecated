@@ -14,4 +14,6 @@ public abstract class JooqDatabaseTest {
     Base64.getEncoder(),
     Base64.getDecoder()
   );
+  protected static final JooqRepositoryPaginationStrategy paginationStrategy =
+    new JooqRepositoryPaginationStrategy(dsl, cursorMapper);
 }

@@ -1,19 +1,22 @@
 package com.tiernebre.league_management.league;
 
-import com.tiernebre.database.RepositoryCollection;
+import com.tiernebre.database.JooqRepositoryPaginationStrategy;
 import com.tiernebre.database.jooq.Tables;
-import com.tiernebre.util.pagination.CursorMapper;
+import com.tiernebre.util.pagination.Page;
 import com.tiernebre.util.pagination.PageRequest;
 import org.jooq.DSLContext;
 
 public final class JooqLeagueRepository implements LeagueRepository {
 
   private final DSLContext dsl;
-  private final CursorMapper cursorMapper;
+  private final JooqRepositoryPaginationStrategy paginationStrategy;
 
-  public JooqLeagueRepository(DSLContext dsl, CursorMapper cursorMapper) {
+  public JooqLeagueRepository(
+    DSLContext dsl,
+    JooqRepositoryPaginationStrategy paginationStrategy
+  ) {
     this.dsl = dsl;
-    this.cursorMapper = cursorMapper;
+    this.paginationStrategy = paginationStrategy;
   }
 
   @Override
@@ -26,20 +29,12 @@ public final class JooqLeagueRepository implements LeagueRepository {
   }
 
   @Override
-  public RepositoryCollection<League> selectForAccount(
-    long accountId,
-    PageRequest request
-  ) {
-    var results = dsl
-      .select()
-      .from(Tables.LEAGUE)
-      .where(
-        Tables.LEAGUE.ID.greaterThan(cursorMapper.cursorToId(request.after()))
-      )
-      .and(Tables.LEAGUE.ACCOUNT_ID.eq(accountId))
-      .orderBy(Tables.LEAGUE.ID, Tables.LEAGUE.ID.desc())
-      .limit(request.first())
-      .fetchInto(League.class);
-    return new RepositoryCollection<League>(results, false);
+  public Page<League> selectForAccount(long accountId, PageRequest request) {
+    return paginationStrategy.seek(
+      Tables.LEAGUE,
+      Tables.LEAGUE.ID,
+      request,
+      League.class
+    );
   }
 }
