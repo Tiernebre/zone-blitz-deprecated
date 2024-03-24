@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import com.tiernebre.database.JooqDatabaseTest;
 import com.tiernebre.database.jooq.Tables;
 import com.tiernebre.util.pagination.PageRequest;
+import java.util.Collections;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -59,5 +60,14 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       new PageRequest(expected.size(), null)
     );
     assertEquals(expected, selected);
+  }
+
+  @Test
+  public void selectForAccountThatDoesNotExist() {
+    var selected = repository.selectForAccount(
+      Long.MAX_VALUE,
+      new PageRequest(10, null)
+    );
+    assertEquals(Collections.emptyList(), selected);
   }
 }
