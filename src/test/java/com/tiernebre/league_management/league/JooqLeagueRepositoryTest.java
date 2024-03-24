@@ -89,6 +89,34 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
   }
 
   @Test
+  public void selectForAccountHandlesCursor() {
+    var accountId = context
+      .accountRepository()
+      .insertOne(UUID.randomUUID().toString(), null)
+      .id();
+    var expected = IntStream.range(0, 10)
+      .boxed()
+      .map(__ -> {
+        var league = dsl.newRecord(Tables.LEAGUE);
+        league.setAccountId(accountId);
+        league.setName(UUID.randomUUID().toString());
+        league.store();
+        return league.into(League.class);
+      })
+      .collect(Collectors.toList());
+    var cursor = cursorMapper.idToCursor(expected.get(3).id());
+    var selected = repository.selectForAccount(
+      accountId,
+      new PageRequest(10, cursor)
+    );
+    assertEquals(6, selected.size());
+    assertEquals(
+      expected.stream().skip(4).collect(Collectors.toList()),
+      selected
+    );
+  }
+
+  @Test
   public void selectForAccountThatDoesNotExist() {
     var selected = repository.selectForAccount(
       Long.MAX_VALUE,
