@@ -21,6 +21,6 @@ public final class PageMapper {
   }
 
   private <T extends Identifiable> PageEdge<T> mapNode(T node) {
-    return new PageEdge<T>(node, cursorMapper.idToCursor(node.id()));
+    return new PageEdge<T>(node, cursorMapper.toCursor(node));
   }
 }
