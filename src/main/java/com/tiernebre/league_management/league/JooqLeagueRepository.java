@@ -1,9 +1,9 @@
 package com.tiernebre.league_management.league;
 
+import com.tiernebre.database.RepositoryCollection;
 import com.tiernebre.database.jooq.Tables;
 import com.tiernebre.util.pagination.CursorMapper;
 import com.tiernebre.util.pagination.PageRequest;
-import java.util.Collection;
 import org.jooq.DSLContext;
 
 public final class JooqLeagueRepository implements LeagueRepository {
@@ -26,11 +26,11 @@ public final class JooqLeagueRepository implements LeagueRepository {
   }
 
   @Override
-  public Collection<League> selectForAccount(
+  public RepositoryCollection<League> selectForAccount(
     long accountId,
     PageRequest request
   ) {
-    return dsl
+    var results = dsl
       .select()
       .from(Tables.LEAGUE)
       .where(
@@ -40,5 +40,6 @@ public final class JooqLeagueRepository implements LeagueRepository {
       .orderBy(Tables.LEAGUE.ID, Tables.LEAGUE.ID.desc())
       .limit(request.first())
       .fetchInto(League.class);
+    return new RepositoryCollection<League>(results, false);
   }
 }
