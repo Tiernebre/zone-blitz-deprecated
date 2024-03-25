@@ -21,7 +21,7 @@ public final class VavrLeagueValidator implements LeagueValidator {
       .flatMap(this::validateName)
       .map(UserLeagueRequest::new)
       .toEither()
-      .mapLeft(error -> new ZoneBlitzValidationError(error));
+      .mapLeft(ZoneBlitzValidationError::new);
   }
 
   private Validation<String, String> validateName(String name) {
