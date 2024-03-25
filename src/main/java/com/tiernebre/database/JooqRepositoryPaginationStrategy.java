@@ -64,10 +64,14 @@ public final class JooqRepositoryPaginationStrategy {
       .stream()
       .map(node -> new PageEdge<>(node, cursorMapper.toCursor(node)))
       .collect(Collectors.toUnmodifiableList());
+    var limitedEdges = edges
+      .stream()
+      .limit(request.first())
+      .collect(Collectors.toList());
     return new Page<>(
-      edges.stream().limit(request.first()).collect(Collectors.toList()),
+      limitedEdges,
       new PageInfo(
-        Try.of(() -> edges.getLast())
+        Try.of(() -> limitedEdges.getLast())
           .map(PageEdge::cursor)
           .toOption()
           .getOrNull(),

@@ -32,6 +32,68 @@ public class JooqRepositoryPaginationStrategyTest extends JooqDatabaseTest {
     );
   }
 
+  @Test
+  public void seekAfterCursor() {
+    var first = 3;
+    var edges = seedRowsAsEdges(first);
+    var cursor = edges.getFirst().cursor();
+    assertEquals(
+      new Page<>(
+        edges.stream().skip(1).collect(Collectors.toUnmodifiableList()),
+        new PageInfo(edges.getLast().cursor(), false)
+      ),
+      paginationStrategy.seek(
+        Tables.REGISTRATION,
+        Tables.REGISTRATION.ID,
+        new PageRequest(first, cursor),
+        Registration.class
+      )
+    );
+  }
+
+  @Test
+  public void seekHasNextPage() {
+    var first = 3;
+    var edges = seedRowsAsEdges(first + 1);
+    var limitedEdges = edges
+      .stream()
+      .limit(first)
+      .collect(Collectors.toUnmodifiableList());
+    assertEquals(
+      new Page<>(
+        limitedEdges,
+        new PageInfo(limitedEdges.getLast().cursor(), true)
+      ),
+      paginationStrategy.seek(
+        Tables.REGISTRATION,
+        Tables.REGISTRATION.ID,
+        new PageRequest(first, null),
+        Registration.class
+      )
+    );
+  }
+
+  @Test
+  public void seekCanPaginate() {
+    var edges = seedRowsAsEdges(20);
+    var pageSize = 10;
+    var firstSeekedPage = paginationStrategy.seek(
+      Tables.REGISTRATION,
+      Tables.REGISTRATION.ID,
+      new PageRequest(pageSize, null),
+      Registration.class
+    );
+    var expectedFirstEdges = edges
+      .stream()
+      .limit(pageSize)
+      .collect(Collectors.toUnmodifiableList());
+    var expectedFirstPage = new Page<>(
+      expectedFirstEdges,
+      new PageInfo(expectedFirstEdges.getLast().cursor(), true)
+    );
+    assertEquals(expectedFirstPage, firstSeekedPage);
+  }
+
   private List<PageEdge<Registration>> seedRowsAsEdges(int size) {
     return seedRows(size)
       .stream()
