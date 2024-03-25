@@ -4,7 +4,7 @@ import com.tiernebre.database.JooqRepositoryPaginationStrategy;
 import com.tiernebre.database.jooq.Tables;
 import com.tiernebre.util.pagination.Page;
 import com.tiernebre.util.pagination.PageRequest;
-import java.util.List;
+import java.util.Collections;
 import org.jooq.DSLContext;
 
 public final class JooqLeagueRepository implements LeagueRepository {
@@ -36,7 +36,7 @@ public final class JooqLeagueRepository implements LeagueRepository {
       Tables.LEAGUE.ID,
       request,
       League.class,
-      List.of(Tables.LEAGUE.ACCOUNT_ID.eq(accountId))
+      Collections.singleton(Tables.LEAGUE.ACCOUNT_ID.eq(accountId))
     );
   }
 }
