@@ -10,6 +10,7 @@ import io.vavr.control.Try;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.jooq.Condition;
@@ -80,7 +81,9 @@ public final class JooqRepositoryPaginationStrategy {
           Collections.singleton(
             field.greaterThan(cursorMapper.cursorToId(request.after()))
           ).stream(),
-          conditions.stream()
+          Optional.ofNullable(conditions)
+            .orElse(Collections.emptyList())
+            .stream()
         ).collect(Collectors.toUnmodifiableList())
       )
       .orderBy(field, field.desc())
