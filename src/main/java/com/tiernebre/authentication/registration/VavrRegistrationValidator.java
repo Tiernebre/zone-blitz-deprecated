@@ -1,13 +1,18 @@
 package com.tiernebre.authentication.registration;
 
-import static com.tiernebre.authentication.AuthenticationConstants.*;
-import static com.tiernebre.util.validation.VavrValidationUtils.*;
+import static com.tiernebre.authentication.AuthenticationConstants.PASSWORD_MAXIMUM_LENGTH;
+import static com.tiernebre.authentication.AuthenticationConstants.PASSWORD_MINIMUM_LENGTH;
+import static com.tiernebre.authentication.AuthenticationConstants.USERNAME_MAXIMUM_LENGTH;
+import static com.tiernebre.util.validation.VavrValidationUtils.matches;
+import static com.tiernebre.util.validation.VavrValidationUtils.maximumLength;
+import static com.tiernebre.util.validation.VavrValidationUtils.minimumLength;
+import static com.tiernebre.util.validation.VavrValidationUtils.required;
 
 import com.tiernebre.util.error.ZoneBlitzError;
 import com.tiernebre.util.error.ZoneBlitzValidationError;
 import io.vavr.Tuple2;
-import io.vavr.collection.List;
 import io.vavr.collection.Seq;
+import io.vavr.collection.Vector;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Validation;
@@ -23,7 +28,7 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
   ) {
     return Option.of(request)
       .toValidation(
-        (Seq<String>) List.of("Create registration request is null.")
+        Seq.narrow(Vector.of("Create registration request is null."))
       )
       .flatMap(
         req ->
