@@ -62,6 +62,27 @@ public final class VavrLeagueValidatorTest {
             Either.left(
               new ZoneBlitzValidationError("Name is a required field.")
             )
+        ),
+        new TestCase<
+          UserLeagueRequest,
+          Either<ZoneBlitzError, UserLeagueRequest>
+        >(
+          "long name",
+          new UserLeagueRequest("a".repeat(65)),
+          __ ->
+            Either.left(
+              new ZoneBlitzValidationError(
+                "Name cannot be greater than 64 characters long."
+              )
+            )
+        ),
+        new TestCase<
+          UserLeagueRequest,
+          Either<ZoneBlitzError, UserLeagueRequest>
+        >(
+          "valid request",
+          new UserLeagueRequest("league"),
+          input -> Either.right(input)
         )
       ),
       validator::validateUserRequest
