@@ -31,6 +31,18 @@ public final class JooqRepositoryPaginationStrategy {
     this.cursorMapper = cursorMapper;
   }
 
+  /**
+   * Cursor based pagination utility function that works with given jOOQ table
+   * and field data.
+   *
+   * @param <R> The jOOQ Record to paginate over.
+   * @param <T> The DTO to map jOOQ records to.
+   * @param table The table to paginate over.
+   * @param field The table field that maps to the cursor being paginated over. Most likely the primary key id.
+   * @param request Pagination request data.
+   * @param fetchInto Mapping class for the jOOQ record.
+   * @return A Page of the found mapped jOOQ records.
+   */
   public <R extends Record, T extends Identifiable> Page<T> seek(
     Table<R> table,
     TableField<R, Long> field,
@@ -40,6 +52,19 @@ public final class JooqRepositoryPaginationStrategy {
     return seek(table, field, request, fetchInto, Collections.emptyList());
   }
 
+  /**
+   * Cursor based pagination utility function that works with given jOOQ table
+   * and field data.
+   *
+   * @param <R> The jOOQ Record to paginate over.
+   * @param <T> The DTO to map jOOQ records to.
+   * @param table The table to paginate over.
+   * @param field The table field that maps to the cursor being paginated over. Most likely the primary key id.
+   * @param request Pagination request data.
+   * @param fetchInto Mapping class for the jOOQ record.
+   * @param conditions Specific conditions to add onto the `WHERE` clause of the pagination.
+   * @return A Page of the found mapped jOOQ records.
+   */
   public <R extends Record, T extends Identifiable> Page<T> seek(
     Table<R> table,
     TableField<R, Long> field,
