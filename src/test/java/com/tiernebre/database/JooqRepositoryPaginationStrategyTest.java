@@ -92,6 +92,21 @@ public class JooqRepositoryPaginationStrategyTest extends JooqDatabaseTest {
       new PageInfo(expectedFirstEdges.getLast().cursor(), true)
     );
     assertEquals(expectedFirstPage, firstSeekedPage);
+    var secondSeekedPage = paginationStrategy.seek(
+      Tables.REGISTRATION,
+      Tables.REGISTRATION.ID,
+      new PageRequest(pageSize, firstSeekedPage.info().endCursor()),
+      Registration.class
+    );
+    var expectedSecondEdges = edges
+      .stream()
+      .skip(pageSize)
+      .collect(Collectors.toUnmodifiableList());
+    var expectedSecondPage = new Page<>(
+      expectedSecondEdges,
+      new PageInfo(expectedSecondEdges.getLast().cursor(), false)
+    );
+    assertEquals(expectedSecondPage, secondSeekedPage);
   }
 
   private List<PageEdge<Registration>> seedRowsAsEdges(int size) {
