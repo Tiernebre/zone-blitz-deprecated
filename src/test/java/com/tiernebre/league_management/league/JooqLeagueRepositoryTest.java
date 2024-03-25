@@ -108,6 +108,29 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
     assertEquals(Collections.emptyList(), selected.edges());
   }
 
+  @Test
+  public void selectForAccountOnlyReturnsResultsForGivenAccount() {
+    var accountId = context
+      .accountRepository()
+      .insertOne(UUID.randomUUID().toString(), null)
+      .id();
+    var leagues = seedLeagues(2, accountId);
+    var otherAccountId = context
+      .accountRepository()
+      .insertOne(UUID.randomUUID().toString(), null)
+      .id();
+    seedLeagues(2, otherAccountId);
+    var expected = new Page<League>(
+      leagues,
+      new PageInfo(leagues.getLast().cursor(), false)
+    );
+    var selected = repository.selectForAccount(
+      accountId,
+      new PageRequest(leagues.size(), null)
+    );
+    assertEquals(expected, selected);
+  }
+
   private List<PageEdge<League>> seedLeagues(int size, long accountId) {
     return IntStream.range(0, size)
       .boxed()
