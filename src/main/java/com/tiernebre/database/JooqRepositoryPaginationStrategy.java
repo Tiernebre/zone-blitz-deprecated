@@ -81,7 +81,7 @@ public final class JooqRepositoryPaginationStrategy {
             field.greaterThan(cursorMapper.cursorToId(request.after()))
           ).stream(),
           conditions.stream()
-        ).collect(Collectors.toList())
+        ).collect(Collectors.toUnmodifiableList())
       )
       .orderBy(field, field.desc())
       .limit(request.first() + 1)
@@ -92,7 +92,7 @@ public final class JooqRepositoryPaginationStrategy {
     var limitedEdges = edges
       .stream()
       .limit(request.first())
-      .collect(Collectors.toList());
+      .collect(Collectors.toUnmodifiableList());
     return new Page<>(
       limitedEdges,
       new PageInfo(

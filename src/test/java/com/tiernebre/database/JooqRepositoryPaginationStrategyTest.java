@@ -123,6 +123,27 @@ public class JooqRepositoryPaginationStrategyTest extends JooqDatabaseTest {
     );
   }
 
+  @Test
+  public void seekWithCustomConditions() {
+    var first = 2;
+    var edges = seedRowsAsEdges(first);
+    var expectedEdge = edges.getFirst();
+    var firstUsername = expectedEdge.node().username();
+    assertEquals(
+      new Page<>(
+        List.of(expectedEdge),
+        new PageInfo(expectedEdge.cursor(), false)
+      ),
+      paginationStrategy.seek(
+        Tables.REGISTRATION,
+        Tables.REGISTRATION.ID,
+        new PageRequest(first, null),
+        Registration.class,
+        List.of(Tables.REGISTRATION.USERNAME.eq(firstUsername))
+      )
+    );
+  }
+
   private List<PageEdge<Registration>> seedRowsAsEdges(int size) {
     return seedRows(size)
       .stream()

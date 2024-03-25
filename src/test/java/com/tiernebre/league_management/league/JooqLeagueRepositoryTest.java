@@ -86,6 +86,6 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
         var mapped = league.into(League.class);
         return new PageEdge<League>(mapped, cursorMapper.toCursor(mapped));
       })
-      .collect(Collectors.toList());
+      .collect(Collectors.toUnmodifiableList());
   }
 }
