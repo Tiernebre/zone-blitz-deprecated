@@ -9,6 +9,7 @@ import com.tiernebre.util.pagination.PageEdge;
 import com.tiernebre.util.pagination.PageInfo;
 import com.tiernebre.util.pagination.PageRequest;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -107,6 +108,19 @@ public class JooqRepositoryPaginationStrategyTest extends JooqDatabaseTest {
       new PageInfo(expectedSecondEdges.getLast().cursor(), false)
     );
     assertEquals(expectedSecondPage, secondSeekedPage);
+  }
+
+  @Test
+  public void seekEmpty() {
+    assertEquals(
+      new Page<>(Collections.emptyList(), new PageInfo(null, false)),
+      paginationStrategy.seek(
+        Tables.REGISTRATION,
+        Tables.REGISTRATION.ID,
+        new PageRequest(20, null),
+        Registration.class
+      )
+    );
   }
 
   private List<PageEdge<Registration>> seedRowsAsEdges(int size) {
