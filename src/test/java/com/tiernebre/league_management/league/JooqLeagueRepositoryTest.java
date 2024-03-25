@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.tiernebre.database.JooqDatabaseTest;
 import com.tiernebre.database.jooq.Tables;
+import com.tiernebre.util.pagination.PageEdge;
 import com.tiernebre.util.pagination.PageRequest;
 import java.util.Collections;
 import java.util.UUID;
@@ -111,7 +112,7 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
     assertEquals(6, selected.edges().size());
     assertEquals(
       expected.stream().skip(4).collect(Collectors.toList()),
-      selected.edges()
+      selected.edges().stream().map(PageEdge::node).collect(Collectors.toList())
     );
   }
 
