@@ -5,9 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.tiernebre.database.JooqDatabaseTest;
 import com.tiernebre.database.jooq.Tables;
+import com.tiernebre.util.pagination.Page;
 import com.tiernebre.util.pagination.PageEdge;
+import com.tiernebre.util.pagination.PageInfo;
 import com.tiernebre.util.pagination.PageRequest;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -46,21 +49,16 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       .accountRepository()
       .insertOne(UUID.randomUUID().toString(), null)
       .id();
-    var expected = IntStream.range(0, 2)
-      .boxed()
-      .map(__ -> {
-        var league = dsl.newRecord(Tables.LEAGUE);
-        league.setAccountId(accountId);
-        league.setName(UUID.randomUUID().toString());
-        league.store();
-        return league.into(League.class);
-      })
-      .collect(Collectors.toList());
+    var leagues = seedLeagues(2, accountId);
+    var expected = new Page<League>(
+      leagues,
+      new PageInfo(leagues.getLast().cursor(), false)
+    );
     var selected = repository.selectForAccount(
       accountId,
-      new PageRequest(expected.size(), null)
+      new PageRequest(leagues.size(), null)
     );
-    assertEquals(expected, selected.edges());
+    assertEquals(expected, selected);
   }
 
   @Test
@@ -70,22 +68,16 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       .insertOne(UUID.randomUUID().toString(), null)
       .id();
     var sliceSize = 5;
-    IntStream.range(0, sliceSize + 1)
-      .boxed()
-      .map(__ -> {
-        var league = dsl.newRecord(Tables.LEAGUE);
-        league.setAccountId(accountId);
-        league.setName(UUID.randomUUID().toString());
-        league.store();
-        return league.into(League.class);
-      })
-      .limit(sliceSize)
-      .collect(Collectors.toList());
+    var leagues = seedLeagues(sliceSize + 1, accountId);
+    var expected = new Page<League>(
+      leagues.stream().limit(sliceSize).collect(Collectors.toList()),
+      new PageInfo(leagues.getLast().cursor(), true)
+    );
     var selected = repository.selectForAccount(
       accountId,
       new PageRequest(sliceSize, null)
     );
-    assertEquals(sliceSize, selected.edges().size());
+    assertEquals(expected, selected);
   }
 
   @Test
@@ -94,26 +86,17 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       .accountRepository()
       .insertOne(UUID.randomUUID().toString(), null)
       .id();
-    var expected = IntStream.range(0, 10)
-      .boxed()
-      .map(__ -> {
-        var league = dsl.newRecord(Tables.LEAGUE);
-        league.setAccountId(accountId);
-        league.setName(UUID.randomUUID().toString());
-        league.store();
-        return league.into(League.class);
-      })
-      .collect(Collectors.toList());
-    var cursor = cursorMapper.idToCursor(expected.get(3).id());
+    var leagues = seedLeagues(10, accountId);
+    var expected = new Page<League>(
+      leagues.stream().skip(4).collect(Collectors.toList()),
+      new PageInfo(leagues.getLast().cursor(), false)
+    );
+    var cursor = leagues.get(3).cursor();
     var selected = repository.selectForAccount(
       accountId,
       new PageRequest(10, cursor)
     );
-    assertEquals(6, selected.edges().size());
-    assertEquals(
-      expected.stream().skip(4).collect(Collectors.toList()),
-      selected.edges().stream().map(PageEdge::node).collect(Collectors.toList())
-    );
+    assertEquals(expected, selected);
   }
 
   @Test
@@ -123,5 +106,19 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       new PageRequest(10, null)
     );
     assertEquals(Collections.emptyList(), selected.edges());
+  }
+
+  private List<PageEdge<League>> seedLeagues(int size, long accountId) {
+    return IntStream.range(0, size)
+      .boxed()
+      .map(__ -> {
+        var league = dsl.newRecord(Tables.LEAGUE);
+        league.setAccountId(accountId);
+        league.setName(UUID.randomUUID().toString());
+        league.store();
+        var mapped = league.into(League.class);
+        return new PageEdge<League>(mapped, cursorMapper.toCursor(mapped));
+      })
+      .collect(Collectors.toList());
   }
 }

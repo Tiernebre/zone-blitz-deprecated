@@ -62,7 +62,7 @@ public final class JooqRepositoryPaginationStrategy {
           .map(PageEdge::cursor)
           .toOption()
           .getOrNull(),
-        edges.size() < request.first()
+        edges.size() > request.first()
       )
     );
   }
