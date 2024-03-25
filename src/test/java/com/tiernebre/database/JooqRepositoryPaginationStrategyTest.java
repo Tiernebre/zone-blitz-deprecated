@@ -21,17 +21,15 @@ public class JooqRepositoryPaginationStrategyTest extends JooqDatabaseTest {
   public void seek() {
     var first = 2;
     var edges = seedRowsAsEdges(first);
-    var expected = new Page<>(
-      edges,
-      new PageInfo(edges.getLast().cursor(), false)
+    assertEquals(
+      new Page<>(edges, new PageInfo(edges.getLast().cursor(), false)),
+      paginationStrategy.seek(
+        Tables.REGISTRATION,
+        Tables.REGISTRATION.ID,
+        new PageRequest(first, null),
+        Registration.class
+      )
     );
-    var seeked = paginationStrategy.seek(
-      Tables.REGISTRATION,
-      Tables.REGISTRATION.ID,
-      new PageRequest(first, null),
-      Registration.class
-    );
-    assertEquals(expected, seeked);
   }
 
   private List<PageEdge<Registration>> seedRowsAsEdges(int size) {
