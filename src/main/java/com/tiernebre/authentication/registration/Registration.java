@@ -1,3 +1,6 @@
 package com.tiernebre.authentication.registration;
 
-public record Registration(long id, String username, String password) {}
+import com.tiernebre.util.pagination.Identifiable;
+
+public record Registration(long id, String username, String password)
+  implements Identifiable {}

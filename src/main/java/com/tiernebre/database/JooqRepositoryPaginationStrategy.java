@@ -35,6 +35,15 @@ public final class JooqRepositoryPaginationStrategy {
     Table<R> table,
     TableField<R, Long> field,
     PageRequest request,
+    Class<T> fetchInto
+  ) {
+    return seek(table, field, request, fetchInto, Collections.emptyList());
+  }
+
+  public <R extends Record, T extends Identifiable> Page<T> seek(
+    Table<R> table,
+    TableField<R, Long> field,
+    PageRequest request,
     Class<T> fetchInto,
     Collection<Condition> conditions
   ) {
