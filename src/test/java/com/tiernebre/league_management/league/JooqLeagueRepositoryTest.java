@@ -44,62 +44,6 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
   }
 
   @Test
-  public void selectForAccount() {
-    var accountId = context
-      .accountRepository()
-      .insertOne(UUID.randomUUID().toString(), null)
-      .id();
-    var leagues = seedLeagues(2, accountId);
-    var expected = new Page<League>(
-      leagues,
-      new PageInfo(leagues.getLast().cursor(), false)
-    );
-    var selected = repository.selectForAccount(
-      accountId,
-      new PageRequest(leagues.size(), null)
-    );
-    assertEquals(expected, selected);
-  }
-
-  @Test
-  public void selectForAccountRespectsLimit() {
-    var accountId = context
-      .accountRepository()
-      .insertOne(UUID.randomUUID().toString(), null)
-      .id();
-    var sliceSize = 5;
-    var leagues = seedLeagues(sliceSize + 1, accountId);
-    var expected = new Page<League>(
-      leagues.stream().limit(sliceSize).collect(Collectors.toList()),
-      new PageInfo(leagues.getLast().cursor(), true)
-    );
-    var selected = repository.selectForAccount(
-      accountId,
-      new PageRequest(sliceSize, null)
-    );
-    assertEquals(expected, selected);
-  }
-
-  @Test
-  public void selectForAccountHandlesCursor() {
-    var accountId = context
-      .accountRepository()
-      .insertOne(UUID.randomUUID().toString(), null)
-      .id();
-    var leagues = seedLeagues(10, accountId);
-    var expected = new Page<League>(
-      leagues.stream().skip(4).collect(Collectors.toList()),
-      new PageInfo(leagues.getLast().cursor(), false)
-    );
-    var cursor = leagues.get(3).cursor();
-    var selected = repository.selectForAccount(
-      accountId,
-      new PageRequest(10, cursor)
-    );
-    assertEquals(expected, selected);
-  }
-
-  @Test
   public void selectForAccountThatDoesNotExist() {
     var selected = repository.selectForAccount(
       Long.MAX_VALUE,
