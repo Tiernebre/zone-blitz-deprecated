@@ -29,6 +29,39 @@ public final class VavrLeagueValidatorTest {
                 "User League Request cannot be null."
               )
             )
+        ),
+        new TestCase<
+          UserLeagueRequest,
+          Either<ZoneBlitzError, UserLeagueRequest>
+        >(
+          "null name",
+          new UserLeagueRequest(null),
+          __ ->
+            Either.left(
+              new ZoneBlitzValidationError("Name is a required field.")
+            )
+        ),
+        new TestCase<
+          UserLeagueRequest,
+          Either<ZoneBlitzError, UserLeagueRequest>
+        >(
+          "empty name",
+          new UserLeagueRequest(""),
+          __ ->
+            Either.left(
+              new ZoneBlitzValidationError("Name is a required field.")
+            )
+        ),
+        new TestCase<
+          UserLeagueRequest,
+          Either<ZoneBlitzError, UserLeagueRequest>
+        >(
+          "blank name",
+          new UserLeagueRequest(" "),
+          __ ->
+            Either.left(
+              new ZoneBlitzValidationError("Name is a required field.")
+            )
         )
       ),
       validator::validateUserRequest

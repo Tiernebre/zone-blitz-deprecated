@@ -9,7 +9,7 @@ import io.vavr.control.Validation;
 
 public final class VavrLeagueValidator implements LeagueValidator {
 
-  private final String NAME_FIELD_NAME = "name";
+  private final String NAME_FIELD_NAME = "Name";
 
   @Override
   public Either<ZoneBlitzError, UserLeagueRequest> validateUserRequest(
