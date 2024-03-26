@@ -2,8 +2,12 @@ package com.tiernebre.league_management.league;
 
 import com.tiernebre.database.JooqRepositoryPaginationStrategy;
 import com.tiernebre.database.jooq.Tables;
+import com.tiernebre.util.error.ZoneBlitzError;
+import com.tiernebre.util.error.ZoneBlitzServerError;
 import com.tiernebre.util.pagination.Page;
 import com.tiernebre.util.pagination.PageRequest;
+import io.vavr.control.Either;
+import io.vavr.control.Try;
 import java.util.Collections;
 import org.jooq.DSLContext;
 
@@ -21,12 +25,21 @@ public final class JooqLeagueRepository implements LeagueRepository {
   }
 
   @Override
-  public League insertOne(InsertLeagueRequest request) {
-    return dsl
-      .insertInto(Tables.LEAGUE, Tables.LEAGUE.ACCOUNT_ID, Tables.LEAGUE.NAME)
-      .values(request.accountId(), request.userRequest().name())
-      .returning()
-      .fetchSingleInto(League.class);
+  public Either<ZoneBlitzError, League> insertOne(InsertLeagueRequest request) {
+    return Try.of(
+      () ->
+        dsl
+          .insertInto(
+            Tables.LEAGUE,
+            Tables.LEAGUE.ACCOUNT_ID,
+            Tables.LEAGUE.NAME
+          )
+          .values(request.accountId(), request.userRequest().name())
+          .returning()
+          .fetchSingleInto(League.class)
+    )
+      .toEither()
+      .mapLeft(error -> new ZoneBlitzServerError(error.getMessage()));
   }
 
   @Override

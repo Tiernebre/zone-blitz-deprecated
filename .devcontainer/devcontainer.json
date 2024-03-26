@@ -33,7 +33,6 @@
         "terminal.integrated.scrollback": 5000,
         "remote.autoForwardPorts": false,
         "editor.codeActionsOnSave": {
-          "source.fixAll": "always",
           "source.organizeImports": "always"
         }
       }

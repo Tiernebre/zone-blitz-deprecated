@@ -26,7 +26,7 @@ public final class DefaultLeagueService implements LeagueService {
     return validator
       .validateUserRequest(request)
       .map(req -> new InsertLeagueRequest(accountId, req))
-      .map(repository::insertOne);
+      .flatMap(repository::insertOne);
   }
 
   @Override

@@ -36,7 +36,7 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
     var inserted = repository.insertOne(request);
     assertNotNull(inserted);
     var expected = new League(
-      inserted.id(),
+      inserted.get().id(),
       request.accountId(),
       request.userRequest().name()
     );
