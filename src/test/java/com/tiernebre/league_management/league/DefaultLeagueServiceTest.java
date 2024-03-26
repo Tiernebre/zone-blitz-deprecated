@@ -41,6 +41,25 @@ public final class DefaultLeagueServiceTest {
               Either.left(output.getLeft())
             );
           }
+        ),
+        new TestCase<
+          Tuple2<Long, UserLeagueRequest>,
+          Either<ZoneBlitzError, League>
+        >(
+          "valid request",
+          new Tuple2<Long, UserLeagueRequest>(
+            0L,
+            new UserLeagueRequest("league")
+          ),
+          input -> Either.right(new League(0, input._1, input._2.name())),
+          (input, output) -> {
+            when(validator.validateUserRequest(input._2)).thenReturn(
+              Either.right(input._2)
+            );
+            when(
+              repository.insertOne(new InsertLeagueRequest(input._1, input._2))
+            ).thenReturn(output);
+          }
         )
       ),
       input -> service.create(input._1, input._2)

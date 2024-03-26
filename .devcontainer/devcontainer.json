@@ -31,10 +31,7 @@
           "src/main/resources/templates/**/*.mustache"
         ],
         "terminal.integrated.scrollback": 5000,
-        "remote.autoForwardPorts": false,
-        "editor.codeActionsOnSave": {
-          "source.organizeImports": "always"
-        }
+        "remote.autoForwardPorts": false
       }
     }
   }
