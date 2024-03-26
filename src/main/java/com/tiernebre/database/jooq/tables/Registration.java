@@ -172,7 +172,8 @@ public class Registration extends TableImpl<RegistrationRecord> {
     @Override
     public List<Check<RegistrationRecord>> getChecks() {
         return Arrays.asList(
-            Internal.createCheck(this, DSL.name("username_length"), "(((char_length(username) <= 64) AND (char_length(username) > 0)))", true)
+            Internal.createCheck(this, DSL.name("username_length"), "(((char_length(username) <= 64) AND (char_length(username) > 0)))", true),
+            Internal.createCheck(this, DSL.name("username_non_blank"), "(((char_length(username) <= 64) AND (char_length(username) > 0)))", true)
         );
     }
 
