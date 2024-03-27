@@ -30,21 +30,17 @@ public final class Server {
   }
 
   public Javalin start(int port) {
-    return errors
-      .register(
-        guards.register(
-          middlewares.register(
-            Javalin.create(config -> {
-              config.showJavalinBanner = false;
-              config.staticFiles.add(staticFiles -> {
-                staticFiles.hostedPath = "/";
-                staticFiles.directory = "/assets";
-              });
-              config.router.apiBuilder(routes::addEndpoints);
-            })
-          )
-        )
-      )
-      .start("0.0.0.0", port);
+    var server = Javalin.create(config -> {
+      config.showJavalinBanner = false;
+      config.staticFiles.add(staticFiles -> {
+        staticFiles.hostedPath = "/";
+        staticFiles.directory = "/assets";
+      });
+      config.router.apiBuilder(routes::addEndpoints);
+    });
+    middlewares.register(server);
+    guards.register(server);
+    errors.register(server);
+    return server.start("0.0.0.0", port);
   }
 }
