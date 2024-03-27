@@ -6,8 +6,11 @@ import com.tiernebre.web.controllers.IndexController;
 import com.tiernebre.web.controllers.authentication.LoginController;
 import com.tiernebre.web.controllers.authentication.LogoutController;
 import com.tiernebre.web.controllers.authentication.RegistrationController;
+import com.tiernebre.web.controllers.league_management.LeagueController;
 import com.tiernebre.web.routes.api.ApiRoutes;
 import com.tiernebre.web.routes.api.HealthRoutes;
+import com.tiernebre.web.routes.league_management.LeagueManagementRoutes;
+import com.tiernebre.web.routes.league_management.LeagueRoutes;
 
 public final class RoutesFactory {
 
@@ -43,6 +46,14 @@ public final class RoutesFactory {
         ),
         new LogoutRoutes(
           new LogoutController(web.sessionRegistry(), web.helper())
+        )
+      ),
+      new LeagueManagementRoutes(
+        new LeagueRoutes(
+          new LeagueController(
+            dependencyContext.leagueManagement().leagueService(),
+            helper
+          )
         )
       )
     );

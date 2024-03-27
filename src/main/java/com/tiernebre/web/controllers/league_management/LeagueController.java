@@ -7,6 +7,7 @@ import com.tiernebre.util.error.ZoneBlitzClientError;
 import com.tiernebre.util.error.ZoneBlitzError;
 import com.tiernebre.web.util.WebHelper;
 import io.javalin.http.Context;
+import io.javalin.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +50,8 @@ public final class LeagueController {
       })
       .peekLeft(error -> {
         LOG.debug("Failed to create a league, encountered error {}", error);
+        ctx.status(HttpStatus.BAD_REQUEST);
+        ctx.result(error.publicMessage());
       });
   }
 }
