@@ -1,4 +1,4 @@
-package com.tiernebre.web.routes;
+package com.tiernebre.web.routes.authentication;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
