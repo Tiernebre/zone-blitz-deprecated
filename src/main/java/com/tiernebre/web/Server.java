@@ -36,7 +36,7 @@ public final class Server {
         staticFiles.hostedPath = "/";
         staticFiles.directory = "/assets";
       });
-      config.router.apiBuilder(routes::addEndpoints);
+      config.router.apiBuilder(routes);
     });
     middlewares.register(server);
     guards.register(server);
