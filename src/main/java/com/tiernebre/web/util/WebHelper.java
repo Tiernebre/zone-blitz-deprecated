@@ -15,6 +15,18 @@ public interface WebHelper {
   public Option<Session> session(Context ctx);
 
   /**
+   * Returns the loaded upstream Session without the null safe Option wrapper.
+   *
+   * **This method should only be used for routes and controllers that enforce a WebUserRole.LOGGED_IN
+   * requirement via the AuthenticationGuard**. If the route does not have this, you should use the
+   * Option based `session` method instead.
+   *
+   * @param ctx Javalin context
+   * @return The session, can potentially be null unsafe (see above for details on usage).
+   */
+  public Session authenticatedSession(Context ctx);
+
+  /**
    * For a given context, renders a given JStachio template model into HTML.
    *
    * @param ctx Javalin context.

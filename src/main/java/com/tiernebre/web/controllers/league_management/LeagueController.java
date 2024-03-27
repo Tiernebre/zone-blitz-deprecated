@@ -1,10 +1,7 @@
 package com.tiernebre.web.controllers.league_management;
 
-import com.tiernebre.authentication.session.Session;
 import com.tiernebre.league_management.league.LeagueService;
 import com.tiernebre.league_management.league.UserLeagueRequest;
-import com.tiernebre.util.error.ZoneBlitzClientError;
-import com.tiernebre.util.error.ZoneBlitzError;
 import com.tiernebre.web.util.WebHelper;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
@@ -26,24 +23,10 @@ public final class LeagueController {
   }
 
   public void create(Context ctx) {
-    helper
-      .session(ctx)
-      .map(Session::accountId)
-      .toEither(
-        ZoneBlitzError.narrow(
-          new ZoneBlitzClientError(
-            "Creating a league requires a logged in session."
-          )
-        )
-      )
-      .flatMap(
-        accountId ->
-          service.create(
-            accountId,
-            new UserLeagueRequest(
-              ctx.formParam(Constants.LEAGUE_NAME_FIELD_NAME)
-            )
-          )
+    service
+      .create(
+        helper.authenticatedSession(ctx).accountId(),
+        new UserLeagueRequest(ctx.formParam(Constants.LEAGUE_NAME_FIELD_NAME))
       )
       .peek(league -> {
         LOG.debug("Successfully created league {}.", league);
