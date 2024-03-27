@@ -2,6 +2,7 @@ package com.tiernebre.web;
 
 import com.tiernebre.context.DependencyContext;
 import com.tiernebre.database.DatabaseConnectionError;
+import com.tiernebre.web.guards.GuardsFactory;
 import com.tiernebre.web.middlewares.MiddlewaresFactory;
 import com.tiernebre.web.routes.RoutesFactory;
 import java.io.IOException;
@@ -19,7 +20,8 @@ public final class ServerFactory {
     throws GeneralSecurityException, IOException, DatabaseConnectionError {
     return new Server(
       new RoutesFactory(dependencyContext).create(),
-      new MiddlewaresFactory(dependencyContext).create()
+      new MiddlewaresFactory(dependencyContext).create(),
+      new GuardsFactory(dependencyContext).create()
     );
   }
 }
