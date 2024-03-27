@@ -34,6 +34,11 @@ public final class DefaultWebHelper implements WebHelper {
   }
 
   @Override
+  public Session authenticatedSession(Context ctx) {
+    return session(ctx).getOrNull();
+  }
+
+  @Override
   public Option<Session> session(Context ctx) {
     return sessionRegistry.parse(ctx);
   }
