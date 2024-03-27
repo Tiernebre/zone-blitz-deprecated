@@ -47,6 +47,8 @@ public final class LeagueController {
       )
       .peek(league -> {
         LOG.debug("Successfully created league {}.", league);
+        ctx.status(HttpStatus.CREATED);
+        ctx.result("Created league");
       })
       .peekLeft(error -> {
         LOG.debug("Failed to create a league, encountered error {}", error);
