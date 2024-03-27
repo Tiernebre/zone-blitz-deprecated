@@ -9,6 +9,10 @@ import com.tiernebre.web.controllers.authentication.RegistrationController;
 import com.tiernebre.web.controllers.league_management.LeagueController;
 import com.tiernebre.web.routes.api.ApiRoutes;
 import com.tiernebre.web.routes.api.HealthRoutes;
+import com.tiernebre.web.routes.authentication.AuthenticationRoutes;
+import com.tiernebre.web.routes.authentication.LoginRoutes;
+import com.tiernebre.web.routes.authentication.LogoutRoutes;
+import com.tiernebre.web.routes.authentication.RegistrationRoutes;
 import com.tiernebre.web.routes.league_management.LeagueManagementRoutes;
 import com.tiernebre.web.routes.league_management.LeagueRoutes;
 
@@ -26,16 +30,8 @@ public final class RoutesFactory {
     var helper = web.helper();
     return new Routes(
       new ApiRoutes(new HealthRoutes(new HealthController())),
-      new PageRoutes(
-        new IndexController(web.helper()),
-        new RegistrationRoutes(
-          new RegistrationController(
-            authentication.registrationService(),
-            authentication.registrationAuthenticationStrategy(),
-            web.sessionRegistry(),
-            helper
-          )
-        ),
+      new PageRoutes(new IndexController(web.helper())),
+      new AuthenticationRoutes(
         new LoginRoutes(
           new LoginController(
             helper,
@@ -46,6 +42,14 @@ public final class RoutesFactory {
         ),
         new LogoutRoutes(
           new LogoutController(web.sessionRegistry(), web.helper())
+        ),
+        new RegistrationRoutes(
+          new RegistrationController(
+            authentication.registrationService(),
+            authentication.registrationAuthenticationStrategy(),
+            web.sessionRegistry(),
+            helper
+          )
         )
       ),
       new LeagueManagementRoutes(
