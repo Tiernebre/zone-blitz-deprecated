@@ -2,4 +2,7 @@ package com.tiernebre.database;
 
 import org.jooq.DSLContext;
 
-public record DatabaseContext(DSLContext dslContext) {}
+public record DatabaseContext(
+  DSLContext dslContext,
+  JooqRepositoryPaginationStrategy jooqRepositoryPaginationStrategy
+) {}

@@ -11,4 +11,12 @@ public interface ZoneBlitzError {
    * @return A public friendly obfuscated version of the error.
    */
   public String publicMessage();
+
+  /**
+   * Narrows a specific ZoneBlitzError implementation into a ZoneBlitzError. Useful for generic
+   * type mapping casting within functional chain methods.
+   */
+  static <T extends ZoneBlitzError> ZoneBlitzError narrow(T error) {
+    return (ZoneBlitzError) error;
+  }
 }
