@@ -6,5 +6,8 @@ test("not found page", async ({ page }) => {
     `/non-existent-uri/${crypto.randomUUID().toString()}`,
   );
   expect(notFoundPage?.status()).toStrictEqual(404);
-  await expect(page.getByText(/requested page could not found/i)).toBeVisible();
+  await page.screenshot({ path: "test-results/error.png" });
+  await expect(
+    page.getByText(/requested page could not be found/i),
+  ).toBeVisible();
 });
