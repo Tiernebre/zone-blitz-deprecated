@@ -12,10 +12,6 @@ public final class ErrorsFactory {
 
   public Errors create() {
     var helper = dependencyContext.web().helper();
-    return new Errors(
-      new CatchAllHandler(helper),
-      new NotFoundHandler(helper),
-      new UnauthenticatedForbiddenHandler(helper)
-    );
+    return new Errors(new CatchAllHandler(helper), new NotFoundHandler(helper));
   }
 }
