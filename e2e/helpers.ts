@@ -20,8 +20,8 @@ export const logoutQueries = {
 
 export const register = async (
   page: Page,
-  username = crypto.randomUUID.toString(),
-  password = crypto.randomUUID.toString(),
+  username = `USERNAME-${crypto.randomUUID().toString()}`,
+  password = `PASSWORD-${crypto.randomUUID().toString()}`,
 ) => {
   await page.goto("/registration");
   await registrationQueries.getUsernameInput(page).fill(username);
@@ -29,6 +29,7 @@ export const register = async (
   await registrationQueries.getConfirmPasswordInput(page).fill(password);
   await registrationQueries.clickRegisterButton(page);
   await expect(page).toHaveURL("/");
+  return { username, password };
 };
 
 export const logout = async (page: Page) =>
