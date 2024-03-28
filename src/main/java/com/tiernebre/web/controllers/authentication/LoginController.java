@@ -4,6 +4,7 @@ import com.tiernebre.authentication.google.GoogleAuthenticationRequest;
 import com.tiernebre.authentication.google.GoogleAuthenticationStrategy;
 import com.tiernebre.authentication.registration.RegistrationAuthenticationRequest;
 import com.tiernebre.authentication.registration.RegistrationAuthenticationStrategy;
+import com.tiernebre.web.constants.WebConstants;
 import com.tiernebre.web.templates.Login;
 import com.tiernebre.web.util.SessionRegistry;
 import com.tiernebre.web.util.WebHelper;
@@ -84,7 +85,10 @@ public final class LoginController {
   }
 
   private String warning(Context ctx) {
-    return ctx.queryParamMap().keySet().contains("loggedOut")
+    return ctx
+        .queryParamMap()
+        .keySet()
+        .contains(WebConstants.LOGGED_OUT_QUERY_PARAM)
       ? "The page or action you performed requires you to be logged in. Please log in again if you previously were or register if you haven't made an account yet."
       : null;
   }
