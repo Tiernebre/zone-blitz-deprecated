@@ -7,5 +7,6 @@ public record Login(
   GoogleSignOnButtonConfiguration google,
   AuthenticationForm form,
   String error,
-  String passwordAutocomplete
+  String passwordAutocomplete,
+  String warning
 ) {}

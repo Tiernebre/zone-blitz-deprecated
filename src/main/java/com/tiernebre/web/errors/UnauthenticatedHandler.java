@@ -1,5 +1,6 @@
 package com.tiernebre.web.errors;
 
+import com.tiernebre.web.constants.WebConstants;
 import io.javalin.http.Context;
 import io.javalin.http.ExceptionHandler;
 import io.javalin.http.UnauthorizedResponse;
@@ -22,6 +23,8 @@ public final class UnauthenticatedHandler
     LOG.debug(
       "An attempt to navigate to a page or perform an action when logged out occurred."
     );
-    ctx.redirect("/login");
+    ctx.redirect(
+      String.format("/login?%s=1", WebConstants.LOGGED_OUT_QUERY_PARAM)
+    );
   }
 }
