@@ -62,7 +62,7 @@ public final class LoginController {
         LOG.debug("Successful login, redirecting to home page");
       }).orElseRun(error -> {
         try {
-          ctx.status(HttpStatus.BAD_REQUEST);
+          ctx.status(error.httpStatus());
           page(ctx, error.publicMessage());
           LOG.debug("Failed login, got error {}", error);
         } catch (Exception e) {

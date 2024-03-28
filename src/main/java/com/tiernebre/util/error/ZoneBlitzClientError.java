@@ -1,11 +1,28 @@
 package com.tiernebre.util.error;
 
+import io.javalin.http.HttpStatus;
+
 public class ZoneBlitzClientError
   extends RuntimeException
   implements ZoneBlitzError {
 
-  public ZoneBlitzClientError(String message) {
+  private final HttpStatus httpStatus;
+
+  public ZoneBlitzClientError(String message, HttpStatus httpStatus) {
     super(message);
+    this.httpStatus = httpStatus;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (other instanceof ZoneBlitzClientError otherError) {
+      return (
+        publicMessage().equals(otherError.publicMessage()) &&
+        httpStatus().equals(otherError.httpStatus())
+      );
+    } else {
+      return false;
+    }
   }
 
   @Override
@@ -14,11 +31,7 @@ public class ZoneBlitzClientError
   }
 
   @Override
-  public boolean equals(Object other) {
-    if (other instanceof ZoneBlitzClientError otherError) {
-      return publicMessage().equals(otherError.publicMessage());
-    } else {
-      return false;
-    }
+  public HttpStatus httpStatus() {
+    return httpStatus;
   }
 }

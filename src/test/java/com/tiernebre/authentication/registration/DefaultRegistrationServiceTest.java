@@ -12,6 +12,7 @@ import com.tiernebre.test.TestCaseRunner;
 import com.tiernebre.util.error.ZoneBlitzClientError;
 import com.tiernebre.util.error.ZoneBlitzError;
 import com.tiernebre.util.error.ZoneBlitzServerError;
+import io.javalin.http.HttpStatus;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.List;
@@ -50,7 +51,13 @@ public final class DefaultRegistrationServiceTest {
         >(
           "invalid request",
           new CreateRegistrationRequest(null, null, null),
-          __ -> Either.left(new ZoneBlitzClientError("invalid request")),
+          __ ->
+            Either.left(
+              new ZoneBlitzClientError(
+                "invalid request",
+                HttpStatus.BAD_REQUEST
+              )
+            ),
           (request, expected) -> {
             when(validator.parse(request)).thenReturn(
               Either.left(expected.getLeft())
@@ -66,7 +73,8 @@ public final class DefaultRegistrationServiceTest {
           __ ->
             Either.left(
               new ZoneBlitzClientError(
-                "The requested username already exists. Please specify a different username."
+                "The requested username already exists. Please specify a different username.",
+                HttpStatus.CONFLICT
               )
             ),
           (request, expected) -> {

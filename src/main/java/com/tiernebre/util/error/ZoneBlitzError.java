@@ -1,5 +1,7 @@
 package com.tiernebre.util.error;
 
+import io.javalin.http.HttpStatus;
+
 public interface ZoneBlitzError {
   /**
    * Message that should be rendered and viewed by the "public" (any user of the Zone Blitz application).
@@ -11,6 +13,11 @@ public interface ZoneBlitzError {
    * @return A public friendly obfuscated version of the error.
    */
   public String publicMessage();
+
+  /**
+   * @return An associated HTTP status code with the error. Likely going to be 4xx+.
+   */
+  public HttpStatus httpStatus();
 
   /**
    * Narrows a specific ZoneBlitzError implementation into a ZoneBlitzError. Useful for generic

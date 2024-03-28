@@ -3,6 +3,7 @@ package com.tiernebre.authentication.registration;
 import com.tiernebre.authentication.account.AccountService;
 import com.tiernebre.util.error.ZoneBlitzClientError;
 import com.tiernebre.util.error.ZoneBlitzError;
+import io.javalin.http.HttpStatus;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,7 +37,8 @@ public final class DefaultRegistrationService implements RegistrationService {
         this::doesNotExist,
         __ ->
           new ZoneBlitzClientError(
-            "The requested username already exists. Please specify a different username."
+            "The requested username already exists. Please specify a different username.",
+            HttpStatus.CONFLICT
           )
       )
       .flatMap(this::persist)

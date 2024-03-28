@@ -23,7 +23,7 @@ public final class ServerFactory {
       new RoutesFactory(dependencyContext).create(),
       new MiddlewaresFactory(dependencyContext).create(),
       new GuardsFactory(dependencyContext).create(),
-      new ErrorsFactory().create()
+      new ErrorsFactory(dependencyContext).create()
     );
   }
 }

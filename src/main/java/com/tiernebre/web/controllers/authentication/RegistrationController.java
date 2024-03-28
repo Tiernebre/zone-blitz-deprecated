@@ -60,7 +60,7 @@ public final class RegistrationController {
         LOG.debug("Successful registration, redirecting to home page");
       })
       .peekLeft(error -> {
-        ctx.status(HttpStatus.BAD_REQUEST);
+        ctx.status(error.httpStatus());
         LOG.debug("Failed registration, got error {}", error);
         try {
           page(ctx, error.publicMessage());

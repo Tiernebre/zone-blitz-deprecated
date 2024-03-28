@@ -1,5 +1,7 @@
 package com.tiernebre.util.error;
 
+import io.javalin.http.HttpStatus;
+
 public class ZoneBlitzServerError
   extends RuntimeException
   implements ZoneBlitzError {
@@ -20,5 +22,10 @@ public class ZoneBlitzServerError
     } else {
       return false;
     }
+  }
+
+  @Override
+  public HttpStatus httpStatus() {
+    return HttpStatus.INTERNAL_SERVER_ERROR;
   }
 }
