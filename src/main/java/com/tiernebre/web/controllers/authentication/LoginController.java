@@ -86,6 +86,6 @@ public final class LoginController {
   private String warning(Context ctx) {
     return ctx.queryParamMap().keySet().contains("loggedOut")
       ? "The page or action you performed requires you to be logged in. Please log in again if you previously were or register if you haven't made an account yet."
-      : "";
+      : null;
   }
 }
