@@ -53,7 +53,7 @@ public class RegistrationAuthenticationStrategy
       .<ZoneBlitzError>toEither(
         new ZoneBlitzClientError(
           "Could not find a registration with the given username and password.",
-          HttpStatus.NOT_FOUND
+          HttpStatus.BAD_REQUEST
         )
       );
   }
