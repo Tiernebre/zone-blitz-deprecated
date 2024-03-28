@@ -17,6 +17,7 @@ public final class LeagueRoutes implements EndpointGroup {
 
   @Override
   public void addEndpoints() {
+    get(URI, controller::page, WebUserRole.LOGGED_IN);
     post(URI, controller::create, WebUserRole.LOGGED_IN);
   }
 }
