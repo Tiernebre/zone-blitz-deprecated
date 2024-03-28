@@ -1,7 +1,7 @@
 package com.tiernebre.web.errors;
 
 import io.javalin.Javalin;
-import io.javalin.http.HttpStatus;
+import io.javalin.http.NotFoundResponse;
 
 public final class Errors {
 
@@ -19,6 +19,6 @@ public final class Errors {
   public Javalin register(Javalin app) {
     return app
       .exception(Exception.class, catchAllHandler)
-      .error(HttpStatus.NOT_FOUND, notFoundHandler);
+      .exception(NotFoundResponse.class, notFoundHandler);
   }
 }

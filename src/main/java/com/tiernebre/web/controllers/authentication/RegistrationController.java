@@ -8,8 +8,6 @@ import com.tiernebre.web.templates.Registration;
 import com.tiernebre.web.util.SessionRegistry;
 import com.tiernebre.web.util.WebHelper;
 import io.javalin.http.Context;
-import io.javalin.http.HttpStatus;
-import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,17 +60,15 @@ public final class RegistrationController {
       .peekLeft(error -> {
         ctx.status(error.httpStatus());
         LOG.debug("Failed registration, got error {}", error);
-        try {
-          page(ctx, error.publicMessage());
-        } catch (IOException e) {}
+        page(ctx, error.publicMessage());
       });
   }
 
-  public void render(Context ctx) throws IOException {
+  public void render(Context ctx) {
     page(ctx, null);
   }
 
-  private void page(Context ctx, String error) throws IOException {
+  private void page(Context ctx, String error) {
     helper.template(
       ctx,
       new Registration(

@@ -10,4 +10,5 @@ test("not found page", async ({ page }) => {
   await expect(
     page.getByText(/requested page could not be found/i),
   ).toBeVisible();
+  await expect(page.getByText(/Zone Blitz/i)).toBeVisible();
 });
