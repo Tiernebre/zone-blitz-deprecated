@@ -33,5 +33,5 @@ public interface WebHelper {
    * @param model The JStachio template model.
    * @throws IOException If writing the HTML out into the ersponse ran into an error.
    */
-  public void template(Context ctx, Object model) throws IOException;
+  public void template(Context ctx, Object model);
 }

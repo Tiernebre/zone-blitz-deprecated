@@ -22,14 +22,20 @@ public final class DefaultWebHelper implements WebHelper {
   }
 
   @Override
-  public void template(Context ctx, Object model) throws IOException {
+  public void template(Context ctx, Object model) {
     Map<String, Boolean> contextAttributes = new HashMap<>();
     session(ctx).peek(__ -> contextAttributes.put("loggedIn", true));
-    ContextJStachio.of(JStachio.of()).execute(
-      model,
-      ContextNode.of(contextAttributes::get),
-      Output.of(ctx.res().getOutputStream(), Charset.forName("UTF-8"))
-    );
+    try {
+      ContextJStachio.of(JStachio.of()).execute(
+        model,
+        ContextNode.of(contextAttributes::get),
+        Output.of(ctx.res().getOutputStream(), Charset.forName("UTF-8"))
+      );
+    } catch (IOException e) {
+      throw new RuntimeException(
+        "Ran into an error when rendering a template."
+      );
+    }
     ctx.contentType(ContentType.TEXT_HTML);
   }
 

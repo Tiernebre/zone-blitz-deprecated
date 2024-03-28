@@ -8,8 +8,6 @@ import com.tiernebre.web.templates.Login;
 import com.tiernebre.web.util.SessionRegistry;
 import com.tiernebre.web.util.WebHelper;
 import io.javalin.http.Context;
-import io.javalin.http.HttpStatus;
-import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,21 +59,17 @@ public final class LoginController {
         ctx.redirect("/");
         LOG.debug("Successful login, redirecting to home page");
       }).orElseRun(error -> {
-        try {
-          ctx.status(error.httpStatus());
-          page(ctx, error.publicMessage());
-          LOG.debug("Failed login, got error {}", error);
-        } catch (Exception e) {
-          ctx.status(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        ctx.status(error.httpStatus());
+        page(ctx, error.publicMessage());
+        LOG.debug("Failed login, got error {}", error);
       });
   }
 
-  public void render(Context ctx) throws IOException {
+  public void render(Context ctx) {
     page(ctx, null);
   }
 
-  private void page(Context ctx, String error) throws IOException {
+  private void page(Context ctx, String error) {
     helper.template(
       ctx,
       new Login(

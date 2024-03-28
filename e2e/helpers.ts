@@ -1,5 +1,6 @@
 import { Page } from "playwright";
 import { expect } from "playwright/test";
+import crypto from "node:crypto";
 
 export const registrationQueries = {
   getUsernameInput: (page: Page) =>
@@ -19,8 +20,8 @@ export const logoutQueries = {
 
 export const register = async (
   page: Page,
-  username: string,
-  password: string,
+  username = `USERNAME-${crypto.randomUUID().toString()}`,
+  password = `PASSWORD-${crypto.randomUUID().toString()}`,
 ) => {
   await page.goto("/registration");
   await registrationQueries.getUsernameInput(page).fill(username);
@@ -28,6 +29,7 @@ export const register = async (
   await registrationQueries.getConfirmPasswordInput(page).fill(password);
   await registrationQueries.clickRegisterButton(page);
   await expect(page).toHaveURL("/");
+  return { username, password };
 };
 
 export const logout = async (page: Page) =>
