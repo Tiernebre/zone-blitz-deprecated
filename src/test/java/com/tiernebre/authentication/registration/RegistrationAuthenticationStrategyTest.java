@@ -12,6 +12,7 @@ import com.tiernebre.test.TestCaseRunner;
 import com.tiernebre.util.error.ZoneBlitzClientError;
 import com.tiernebre.util.error.ZoneBlitzError;
 import com.tiernebre.util.error.ZoneBlitzServerError;
+import io.javalin.http.HttpStatus;
 import io.vavr.collection.List;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
@@ -45,7 +46,8 @@ public final class RegistrationAuthenticationStrategyTest {
           __ ->
             Either.left(
               new ZoneBlitzClientError(
-                "Given registration authentication request was null."
+                "Given registration authentication request was null.",
+                HttpStatus.BAD_REQUEST
               )
             )
         ),
@@ -58,7 +60,8 @@ public final class RegistrationAuthenticationStrategyTest {
           __ ->
             Either.left(
               new ZoneBlitzClientError(
-                "Could not find a registration with the given username and password."
+                "Could not find a registration with the given username and password.",
+                HttpStatus.NOT_FOUND
               )
             ),
           (request, expected) -> {
