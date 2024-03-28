@@ -35,7 +35,7 @@ public final class LeagueController {
       })
       .peekLeft(error -> {
         LOG.debug("Failed to create a league, encountered error {}", error);
-        ctx.status(HttpStatus.BAD_REQUEST);
+        ctx.status(error.httpStatus());
         ctx.result(error.publicMessage());
       });
   }
