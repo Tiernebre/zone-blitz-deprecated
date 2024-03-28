@@ -22,6 +22,6 @@ public final class UnauthenticatedHandler
     LOG.debug(
       "An attempt to navigate to a page or perform an action when logged out occurred."
     );
-    ctx.redirect("/login");
+    ctx.redirect("/login?loggedOut=1");
   }
 }

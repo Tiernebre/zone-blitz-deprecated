@@ -15,4 +15,5 @@ test("not found page", async ({ page }) => {
 test("unauthorized handling", async ({ page }) => {
   await page.goto("/leagues");
   await expect(page).toHaveURL(/login/i);
+  await expect(page.getByText(/requires you to be logged in/i)).toBeVisible();
 });

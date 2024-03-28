@@ -76,9 +76,16 @@ public final class LoginController {
         AuthenticationWebConstants.GOOGLE_SIGN_ON_BUTTON_CONFIGURATION,
         AuthenticationWebConstants.SHARED_AUTHENTICATION_FORM,
         error,
-        "current-password"
+        "current-password",
+        warning(ctx)
       )
     );
     AuthenticationWebControllerHelper.allowGoogleScript(ctx);
+  }
+
+  private String warning(Context ctx) {
+    return ctx.queryParamMap().keySet().contains("loggedOut")
+      ? "The page or action you performed requires you to be logged in. Please log in again if you previously were or register if you haven't made an account yet."
+      : "";
   }
 }
