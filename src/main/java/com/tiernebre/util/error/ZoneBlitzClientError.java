@@ -14,11 +14,6 @@ public class ZoneBlitzClientError
   }
 
   @Override
-  public String publicMessage() {
-    return this.getMessage();
-  }
-
-  @Override
   public boolean equals(Object other) {
     if (other instanceof ZoneBlitzClientError otherError) {
       return (
@@ -28,6 +23,11 @@ public class ZoneBlitzClientError
     } else {
       return false;
     }
+  }
+
+  @Override
+  public String publicMessage() {
+    return this.getMessage();
   }
 
   @Override
