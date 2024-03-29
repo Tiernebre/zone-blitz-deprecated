@@ -2,6 +2,7 @@ package com.tiernebre.web;
 
 import com.tiernebre.authentication.AuthenticationContext;
 import com.tiernebre.context.UtilityContext;
+import com.tiernebre.util.pagination.DefaultWebPaginationHelper;
 import com.tiernebre.web.util.CookieSessionRegistry;
 import com.tiernebre.web.util.DefaultWebHelper;
 
@@ -25,7 +26,7 @@ public final class WebContextFactory {
     );
     return new WebContext(
       sessionRegistry,
-      new DefaultWebHelper(sessionRegistry)
+      new DefaultWebHelper(sessionRegistry, new DefaultWebPaginationHelper())
     );
   }
 }

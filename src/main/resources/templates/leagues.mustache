@@ -2,6 +2,13 @@
   {{$slot}}
     <section class="flex flex-col grow">
       <h1 class="text-8 font-bold text-center">Your Leagues</h1>
+      <ul>
+        {{#leagues}}
+          <li>
+            {{node.name}}
+          </li>
+        {{/leagues}}
+      </ul>
     </section>
   {{/slot}} 
 {{/page}}

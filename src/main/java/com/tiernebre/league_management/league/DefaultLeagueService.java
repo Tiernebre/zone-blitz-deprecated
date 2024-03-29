@@ -31,6 +31,6 @@ public final class DefaultLeagueService implements LeagueService {
 
   @Override
   public Page<League> pageForAccount(long accountId, PageRequest request) {
-    return null;
+    return repository.selectForAccount(accountId, request);
   }
 }
