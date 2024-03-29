@@ -69,7 +69,7 @@ public final class RegistrationController {
   }
 
   private void page(Context ctx, String error) {
-    helper.template(ctx, new Registration(error, null));
+    helper.template(ctx, new Registration(error));
     AuthenticationWebControllerHelper.allowGoogleScript(ctx);
   }
 }

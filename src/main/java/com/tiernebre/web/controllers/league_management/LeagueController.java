@@ -29,17 +29,16 @@ public final class LeagueController {
   }
 
   public void form(Context ctx) {
-    helper.template(
-      ctx,
-      new CreateLeague(Constants.LEAGUE_NAME_FIELD_NAME, null, null)
-    );
+    helper.template(ctx, new CreateLeague());
   }
 
   public void create(Context ctx) {
     service
       .create(
         helper.authenticatedSession(ctx).accountId(),
-        new UserLeagueRequest(ctx.formParam(Constants.LEAGUE_NAME_FIELD_NAME))
+        new UserLeagueRequest(
+          ctx.formParam(LeagueManagementWebConstants.LEAGUE_NAME_FIELD_NAME)
+        )
       )
       .peek(league -> {
         LOG.debug("Successfully created league {}.", league);
