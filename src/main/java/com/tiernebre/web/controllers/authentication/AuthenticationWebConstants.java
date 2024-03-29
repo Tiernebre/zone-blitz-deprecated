@@ -7,10 +7,10 @@ import com.tiernebre.web.templates.GoogleSignOnButtonConfiguration;
 
 public final class AuthenticationWebConstants {
 
-  static final String USERNAME_PARAMETER = "username";
-  static final String PASSWORD_PARAMETER = "password";
-  static final String CONFIRM_PASSWORD_PARAMETER = "confirmPassword";
-  static final AuthenticationForm SHARED_AUTHENTICATION_FORM =
+  public static final String USERNAME_PARAMETER = "username";
+  public static final String PASSWORD_PARAMETER = "password";
+  public static final String CONFIRM_PASSWORD_PARAMETER = "confirmPassword";
+  public static final AuthenticationForm SHARED_AUTHENTICATION_FORM =
     new AuthenticationForm(
       USERNAME_PARAMETER,
       PASSWORD_PARAMETER,
