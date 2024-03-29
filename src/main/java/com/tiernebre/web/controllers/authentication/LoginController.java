@@ -71,16 +71,7 @@ public final class LoginController {
   }
 
   private void page(Context ctx, String error) {
-    helper.template(
-      ctx,
-      new Login(
-        AuthenticationWebConstants.GOOGLE_SIGN_ON_BUTTON_CONFIGURATION,
-        AuthenticationWebConstants.SHARED_AUTHENTICATION_FORM,
-        error,
-        "current-password",
-        warning(ctx)
-      )
-    );
+    helper.template(ctx, new Login(error, warning(ctx)));
     AuthenticationWebControllerHelper.allowGoogleScript(ctx);
   }
 

@@ -4,14 +4,9 @@
     <script src="scripts/show-javascript-elements.js" async></script>
   {{/head}} 
   {{$slot}}
-    <section class="flex flex-col grow md:mx-auto md:w-160 px-4">
-      <h1 class="text-center text-8 font-bold mt-4 mb-2 md:text-left">Register</h1>
-      {{#error}}
-      <p class="bg-red-200 text-black border-1 border-red-400 text-center p-2">
-        {{error}}
-      </p>
-      {{/error}}
-      <form method="post" class="flex flex-col grow mt-2 w-full">
+    {{<form}}
+      {{$heading}}Register{{/heading}}
+      {{$inputs}}
         {{>authentication_form}}
         <label for="confirm-password">Confirm Password</label>
         <input
@@ -26,7 +21,7 @@
         />
         {{< button}} {{$text}}Register{{/text}} {{/button}}
         {{>google_sign_on_button}}
-      </form>
-    </section>
+      {{/inputs}}
+    {{/form}}
   {{/slot}} 
 {{/page}}

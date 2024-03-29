@@ -69,16 +69,7 @@ public final class RegistrationController {
   }
 
   private void page(Context ctx, String error) {
-    helper.template(
-      ctx,
-      new Registration(
-        AuthenticationWebConstants.SHARED_AUTHENTICATION_FORM,
-        AuthenticationWebConstants.CONFIRM_PASSWORD_PARAMETER,
-        error,
-        AuthenticationWebConstants.GOOGLE_SIGN_ON_BUTTON_CONFIGURATION,
-        "new-password"
-      )
-    );
+    helper.template(ctx, new Registration(error));
     AuthenticationWebControllerHelper.allowGoogleScript(ctx);
   }
 }
