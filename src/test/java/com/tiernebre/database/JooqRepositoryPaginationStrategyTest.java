@@ -8,6 +8,7 @@ import com.tiernebre.util.pagination.Page;
 import com.tiernebre.util.pagination.PageEdge;
 import com.tiernebre.util.pagination.PageInfo;
 import com.tiernebre.util.pagination.PageRequest;
+import com.tiernebre.util.pagination.PaginationConstants;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -150,6 +151,61 @@ public class JooqRepositoryPaginationStrategyTest extends JooqDatabaseTest {
     var edges = seedRowsAsEdges(first);
     assertEquals(
       new Page<>(edges, new PageInfo(edges.getLast().cursor(), false)),
+      paginationStrategy.seek(
+        Tables.REGISTRATION,
+        Tables.REGISTRATION.ID,
+        new PageRequest(first, null),
+        Registration.class,
+        null
+      )
+    );
+  }
+
+  @Test
+  public void seekWithNullRequest() {
+    var first = 2;
+    var edges = seedRowsAsEdges(first);
+    assertEquals(
+      new Page<>(edges, new PageInfo(edges.getLast().cursor(), false)),
+      paginationStrategy.seek(
+        Tables.REGISTRATION,
+        Tables.REGISTRATION.ID,
+        null,
+        Registration.class,
+        null
+      )
+    );
+  }
+
+  @Test
+  public void seekWithMinimumSize() {
+    var first = -1;
+    seedRowsAsEdges(2);
+    assertEquals(
+      new Page<>(Collections.emptyList(), new PageInfo(null, true)),
+      paginationStrategy.seek(
+        Tables.REGISTRATION,
+        Tables.REGISTRATION.ID,
+        new PageRequest(first, null),
+        Registration.class,
+        null
+      )
+    );
+  }
+
+  @Test
+  public void seekWithMaximumSize() {
+    var first = 2010;
+    var edges = seedRowsAsEdges(first);
+    var expectedEdges = edges
+      .stream()
+      .limit(PaginationConstants.MAX_PAGE_SIZE)
+      .collect(Collectors.toList());
+    assertEquals(
+      new Page<>(
+        expectedEdges,
+        new PageInfo(expectedEdges.getLast().cursor(), true)
+      ),
       paginationStrategy.seek(
         Tables.REGISTRATION,
         Tables.REGISTRATION.ID,

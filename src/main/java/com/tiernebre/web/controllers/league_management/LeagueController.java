@@ -25,11 +25,15 @@ public final class LeagueController {
   }
 
   public void leagues(Context ctx) {
-    helper.template(ctx, new Leagues());
+    var leagues = service.pageForAccount(
+      helper.authenticatedSession(ctx).accountId(),
+      helper.pageRequest(ctx)
+    );
+    helper.template(ctx, new Leagues(leagues.edges()));
   }
 
   public void form(Context ctx) {
-    helper.template(ctx, new CreateLeague());
+    formPage(ctx, null);
   }
 
   public void create(Context ctx) {
@@ -43,12 +47,16 @@ public final class LeagueController {
       .peek(league -> {
         LOG.debug("Successfully created league {}.", league);
         ctx.status(HttpStatus.CREATED);
-        ctx.result("Created league");
+        ctx.redirect("/leagues");
       })
       .peekLeft(error -> {
         LOG.debug("Failed to create a league, encountered error {}", error);
         ctx.status(error.httpStatus());
-        ctx.result(error.publicMessage());
+        formPage(ctx, error.publicMessage());
       });
+  }
+
+  private void formPage(Context ctx, String error) {
+    helper.template(ctx, new CreateLeague(error));
   }
 }

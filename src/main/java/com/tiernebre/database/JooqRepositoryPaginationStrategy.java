@@ -6,6 +6,8 @@ import com.tiernebre.util.pagination.Page;
 import com.tiernebre.util.pagination.PageEdge;
 import com.tiernebre.util.pagination.PageInfo;
 import com.tiernebre.util.pagination.PageRequest;
+import com.tiernebre.util.pagination.PaginationConstants;
+import io.vavr.control.Option;
 import io.vavr.control.Try;
 import java.util.Collection;
 import java.util.Collections;
@@ -73,13 +75,23 @@ public final class JooqRepositoryPaginationStrategy {
     Class<T> fetchInto,
     Collection<Condition> conditions
   ) {
+    var normalizedRequest = Option.of(request).getOrElse(
+      PaginationConstants.DEFAULT_PAGE_REQUEST
+    );
+    var pageSize = Math.clamp(
+      normalizedRequest.first(),
+      PaginationConstants.MIN_PAGE_SIZE,
+      PaginationConstants.MAX_PAGE_SIZE
+    );
     List<PageEdge<T>> edges = dsl
       .select()
       .from(table)
       .where(
         Stream.concat(
           Collections.singleton(
-            field.greaterThan(cursorMapper.cursorToId(request.after()))
+            field.greaterThan(
+              cursorMapper.cursorToId(normalizedRequest.after())
+            )
           ).stream(),
           Optional.ofNullable(conditions)
             .orElse(Collections.emptyList())
@@ -87,14 +99,14 @@ public final class JooqRepositoryPaginationStrategy {
         ).collect(Collectors.toUnmodifiableList())
       )
       .orderBy(field, field.desc())
-      .limit(request.first() + 1)
+      .limit(pageSize + 1)
       .fetchInto(fetchInto)
       .stream()
       .map(node -> new PageEdge<>(node, cursorMapper.toCursor(node)))
       .collect(Collectors.toUnmodifiableList());
     var limitedEdges = edges
       .stream()
-      .limit(request.first())
+      .limit(pageSize)
       .collect(Collectors.toUnmodifiableList());
     return new Page<>(
       limitedEdges,
@@ -103,7 +115,7 @@ public final class JooqRepositoryPaginationStrategy {
           .map(PageEdge::cursor)
           .toOption()
           .getOrNull(),
-        edges.size() > request.first()
+        edges.size() > pageSize
       )
     );
   }

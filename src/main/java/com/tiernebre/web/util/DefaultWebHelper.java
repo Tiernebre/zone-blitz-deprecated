@@ -1,6 +1,8 @@
 package com.tiernebre.web.util;
 
 import com.tiernebre.authentication.session.Session;
+import com.tiernebre.util.pagination.PageRequest;
+import com.tiernebre.util.pagination.WebPaginationHelper;
 import io.javalin.http.ContentType;
 import io.javalin.http.Context;
 import io.jstach.jstachio.JStachio;
@@ -16,9 +18,14 @@ import java.util.Map;
 public final class DefaultWebHelper implements WebHelper {
 
   private final SessionRegistry sessionRegistry;
+  private final WebPaginationHelper paginationHelper;
 
-  public DefaultWebHelper(SessionRegistry sessionRegistry) {
+  public DefaultWebHelper(
+    SessionRegistry sessionRegistry,
+    WebPaginationHelper paginationHelper
+  ) {
     this.sessionRegistry = sessionRegistry;
+    this.paginationHelper = paginationHelper;
   }
 
   @Override
@@ -47,5 +54,10 @@ public final class DefaultWebHelper implements WebHelper {
   @Override
   public Option<Session> session(Context ctx) {
     return sessionRegistry.parse(ctx);
+  }
+
+  @Override
+  public PageRequest pageRequest(Context ctx) {
+    return paginationHelper.pageRequest(ctx);
   }
 }

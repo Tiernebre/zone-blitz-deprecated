@@ -28,7 +28,7 @@ public final class VavrLeagueValidator implements LeagueValidator {
     return VavrValidationUtils.required(name, NAME_FIELD_NAME).flatMap(
       VavrValidationUtils.maximumLength(
         NAME_FIELD_NAME,
-        Constants.NAME_MAXIMUM_LENGTH
+        LeagueManagementConstants.NAME_MAXIMUM_LENGTH
       )
     );
   }

@@ -9,6 +9,7 @@ import io.javalin.apibuilder.EndpointGroup;
 public final class LeagueRoutes implements EndpointGroup {
 
   private static final String URI = "leagues";
+  private static final String CREATE_URI = String.format("%s/create", URI);
   private final LeagueController controller;
 
   public LeagueRoutes(LeagueController controller) {
@@ -18,11 +19,7 @@ public final class LeagueRoutes implements EndpointGroup {
   @Override
   public void addEndpoints() {
     get(URI, controller::leagues, WebUserRole.LOGGED_IN);
-    post(URI, controller::create, WebUserRole.LOGGED_IN);
-    get(
-      String.format("%s/create", URI),
-      controller::form,
-      WebUserRole.LOGGED_IN
-    );
+    post(CREATE_URI, controller::create, WebUserRole.LOGGED_IN);
+    get(CREATE_URI, controller::form, WebUserRole.LOGGED_IN);
   }
 }

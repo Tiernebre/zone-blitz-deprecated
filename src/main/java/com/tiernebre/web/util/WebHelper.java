@@ -1,6 +1,7 @@
 package com.tiernebre.web.util;
 
 import com.tiernebre.authentication.session.Session;
+import com.tiernebre.util.pagination.PageRequest;
 import io.javalin.http.Context;
 import io.vavr.control.Option;
 import java.io.IOException;
@@ -34,4 +35,12 @@ public interface WebHelper {
    * @throws IOException If writing the HTML out into the ersponse ran into an error.
    */
   public void template(Context ctx, Object model);
+
+  /**
+   * Parses a page request from the given context.
+   *
+   * @param ctx Javalin context.
+   * @return A PageRequest that is used for paginating through models on the service and repository layers.
+   */
+  public PageRequest pageRequest(Context ctx);
 }
