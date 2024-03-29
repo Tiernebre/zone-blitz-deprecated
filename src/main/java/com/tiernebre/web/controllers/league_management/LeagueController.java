@@ -29,7 +29,10 @@ public final class LeagueController {
   }
 
   public void form(Context ctx) {
-    helper.template(ctx, new CreateLeague(Constants.LEAGUE_NAME_FIELD_NAME));
+    helper.template(
+      ctx,
+      new CreateLeague(Constants.LEAGUE_NAME_FIELD_NAME, null, null)
+    );
   }
 
   public void create(Context ctx) {
