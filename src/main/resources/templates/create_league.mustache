@@ -1,7 +1,12 @@
 {{< page}} 
   {{$slot}}
-    <section class="flex flex-col grow justify-center px-4 md:px-0">
-      <h1 class="text-8 font-bold text-center">Create League</h1>
+    <section class="flex flex-col grow md:mx-auto md:w-160 px-4">
+      <h1 class="text-center text-8 font-bold text-center mt-4 mb-2 md:text-left">Create League</h1>
+      <form action="/leagues" method="post" class="flex flex-col grow mt-2 w-full">
+        <label for="name">Name</label>
+        <input class="mb-4" id="name" name="{{nameFieldName}}" type="text">
+        {{< button}} {{$text}}Create{{/text}} {{/button}}
+      </form>
     </section>
   {{/slot}} 
 {{/page}}
