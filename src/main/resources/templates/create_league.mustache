@@ -1,12 +1,12 @@
 {{< page}} 
   {{$slot}}
-    {{<full_page_form}}
+    {{<form}}
       {{$heading}}Create League{{/heading}}
       {{$inputs}}
         <label for="name">Name</label>
         <input class="mb-4" id="name" name="{{nameFieldName}}" type="text">
         {{< button}} {{$text}}Create{{/text}} {{/button}}
       {{/inputs}}
-    {{/full_page_form}}
+    {{/form}}
   {{/slot}} 
 {{/page}}

@@ -4,13 +4,13 @@
     <script src="scripts/show-javascript-elements.js" async></script>
   {{/head}} 
   {{$slot}}
-    {{<full_page_form}}
+    {{<form}}
       {{$heading}}Login{{/heading}}
       {{$inputs}}
         {{>authentication_form}}
         {{< button}} {{$text}}Login{{/text}} {{/button}}
         {{>google_sign_on_button}}
       {{/inputs}}
-    {{/full_page_form}}
+    {{/form}}
   {{/slot}} 
 {{/page}}
