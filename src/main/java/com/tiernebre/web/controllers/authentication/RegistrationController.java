@@ -76,7 +76,8 @@ public final class RegistrationController {
         AuthenticationWebConstants.CONFIRM_PASSWORD_PARAMETER,
         error,
         AuthenticationWebConstants.GOOGLE_SIGN_ON_BUTTON_CONFIGURATION,
-        "new-password"
+        "new-password",
+        null
       )
     );
     AuthenticationWebControllerHelper.allowGoogleScript(ctx);

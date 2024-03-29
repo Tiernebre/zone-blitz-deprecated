@@ -8,5 +8,6 @@ public record Registration(
   String confirmPasswordFieldName,
   String error,
   GoogleSignOnButtonConfiguration google,
-  String passwordAutocomplete
+  String passwordAutocomplete,
+  String warning
 ) {}
