@@ -25,6 +25,7 @@ public final class LeagueController {
   }
 
   public void leagues(Context ctx) {
+    service.pageForAccount(helper.authenticatedSession(ctx).accountId(), null);
     helper.template(ctx, new Leagues());
   }
 

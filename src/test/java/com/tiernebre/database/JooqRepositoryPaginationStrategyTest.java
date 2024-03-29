@@ -160,6 +160,22 @@ public class JooqRepositoryPaginationStrategyTest extends JooqDatabaseTest {
     );
   }
 
+  @Test
+  public void seekWithNullRequest() {
+    var first = 2;
+    var edges = seedRowsAsEdges(first);
+    assertEquals(
+      new Page<>(edges, new PageInfo(edges.getLast().cursor(), false)),
+      paginationStrategy.seek(
+        Tables.REGISTRATION,
+        Tables.REGISTRATION.ID,
+        null,
+        Registration.class,
+        null
+      )
+    );
+  }
+
   private List<PageEdge<Registration>> seedRowsAsEdges(int size) {
     return seedRows(size)
       .stream()
