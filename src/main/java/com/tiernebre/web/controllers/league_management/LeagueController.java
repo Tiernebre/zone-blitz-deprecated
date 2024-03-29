@@ -29,7 +29,7 @@ public final class LeagueController {
   }
 
   public void form(Context ctx) {
-    helper.template(ctx, new CreateLeague());
+    formPage(ctx, null);
   }
 
   public void create(Context ctx) {
@@ -48,7 +48,11 @@ public final class LeagueController {
       .peekLeft(error -> {
         LOG.debug("Failed to create a league, encountered error {}", error);
         ctx.status(error.httpStatus());
-        ctx.result(error.publicMessage());
+        formPage(ctx, error.publicMessage());
       });
+  }
+
+  private void formPage(Context ctx, String error) {
+    helper.template(ctx, new CreateLeague(error));
   }
 }
