@@ -2,6 +2,7 @@ package com.tiernebre.web.controllers.league_management;
 
 import com.tiernebre.league_management.league.LeagueService;
 import com.tiernebre.league_management.league.UserLeagueRequest;
+import com.tiernebre.web.templates.CreateLeague;
 import com.tiernebre.web.templates.Leagues;
 import com.tiernebre.web.util.WebHelper;
 import io.javalin.http.Context;
@@ -23,8 +24,12 @@ public final class LeagueController {
     this.helper = helper;
   }
 
-  public void page(Context ctx) {
+  public void leagues(Context ctx) {
     helper.template(ctx, new Leagues());
+  }
+
+  public void form(Context ctx) {
+    helper.template(ctx, new CreateLeague());
   }
 
   public void create(Context ctx) {
