@@ -5,7 +5,7 @@
       {{$attributes}}action="/leagues"{{/attributes}}
       {{$inputs}}
         <label for="name">Name</label>
-        <input class="mb-4" id="name" name="{{nameFieldName}}" type="text">
+        <input class="mb-4" id="name" name="{{nameFieldName}}" type="text" maxlength="{{nameMaximumLength}}">
         {{< button}} {{$text}}Create{{/text}} {{/button}}
       {{/inputs}}
     {{/form}}
