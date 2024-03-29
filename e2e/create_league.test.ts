@@ -1,6 +1,6 @@
 import { Page, test } from "@playwright/test";
 import { register } from "./helpers";
-import { expect } from "./expect";
+import { VALIDATION_MESSAGES, expect } from "./expect";
 import crypto from "node:crypto";
 
 const getNameInput = (page: Page) =>
@@ -31,4 +31,12 @@ test("enforces maximum length on league name", async ({ page }) => {
   const name = "a".repeat(64);
   await getNameInput(page).fill(name + "a");
   await expect(getNameInput(page)).toHaveValue(name);
+});
+
+test("enforces that league name is required", async ({ page }) => {
+  await register(page);
+  await page.goto("/leagues/create");
+  await submit(page);
+  await expect(getNameInput(page)).toBeInvalid(VALIDATION_MESSAGES.REQUIRED);
+  await expect(page).toHaveURL("/leagues/create");
 });
