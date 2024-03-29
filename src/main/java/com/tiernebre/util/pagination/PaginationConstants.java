@@ -10,4 +10,7 @@ public final class PaginationConstants {
     DEFAULT_PAGE_SIZE,
     null
   );
+
+  public static String FIRST_QUERY_PARAM_NAME = "first";
+  public static String CURSOR_QUERY_PARAM_NAME = "after";
 }
