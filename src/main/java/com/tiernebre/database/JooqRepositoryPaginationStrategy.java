@@ -78,7 +78,11 @@ public final class JooqRepositoryPaginationStrategy {
     var normalizedRequest = Option.of(request).getOrElse(
       PaginationConstants.DEFAULT_PAGE_REQUEST
     );
-    var pageSize = normalizedRequest.first();
+    var pageSize = Math.clamp(
+      normalizedRequest.first(),
+      PaginationConstants.MIN_PAGE_SIZE,
+      PaginationConstants.MAX_PAGE_SIZE
+    );
     List<PageEdge<T>> edges = dsl
       .select()
       .from(table)
