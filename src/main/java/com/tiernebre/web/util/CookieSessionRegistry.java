@@ -6,7 +6,6 @@ import com.tiernebre.web.constants.WebConstants;
 import com.tiernebre.web.controllers.authentication.AuthenticationWebConstants;
 import io.javalin.http.Context;
 import io.javalin.http.Cookie;
-import io.javalin.http.SameSite;
 import io.vavr.control.Option;
 import java.time.Clock;
 import java.time.Duration;
@@ -51,11 +50,12 @@ public final class CookieSessionRegistry implements SessionRegistry {
 
   @Override
   public void register(Context ctx, Session session) {
-    Cookie sessionCookie = new Cookie(
-      WebConstants.SESSION_COOKIE_TOKEN_NAME,
-      session.id().toString()
+    Cookie sessionCookie = CookieUtil.secure(
+      new Cookie(
+        WebConstants.SESSION_COOKIE_TOKEN_NAME,
+        session.id().toString()
+      )
     );
-    secureCookie(sessionCookie);
     sessionCookie.setMaxAge(
       (int) Duration.between(
         LocalDateTime.now(clock),
@@ -72,7 +72,7 @@ public final class CookieSessionRegistry implements SessionRegistry {
 
   @Override
   public void delete(Context ctx, Session session) {
-    deleteCookie(ctx, WebConstants.SESSION_COOKIE_TOKEN_NAME, true);
+    CookieUtil.delete(ctx, WebConstants.SESSION_COOKIE_TOKEN_NAME, true);
     deleteThirdPartyCookies(ctx);
     Option.of(session)
       .onEmpty(() -> {
@@ -115,28 +115,10 @@ public final class CookieSessionRegistry implements SessionRegistry {
     );
   }
 
-  private void secureCookie(Cookie cookie) {
-    cookie.setHttpOnly(true);
-    cookie.setSecure(true);
-    cookie.setPath("/");
-    cookie.setSameSite(SameSite.STRICT);
-  }
-
   private void deleteThirdPartyCookies(Context ctx) {
     List.of(
       AuthenticationWebConstants.GOOGLE_CSRF_TOKEN_FIELD_NAME,
       AuthenticationWebConstants.GOOGLE_STATE_FIELD_NAME
-    ).forEach(name -> this.deleteCookie(ctx, name));
-  }
-
-  private void deleteCookie(Context ctx, String name) {
-    deleteCookie(ctx, name, false);
-  }
-
-  private void deleteCookie(Context ctx, String name, boolean secure) {
-    Cookie deletedCookie = new Cookie(name, "");
-    deletedCookie.setMaxAge(0);
-    if (secure) secureCookie(deletedCookie);
-    ctx.cookie(deletedCookie);
+    ).forEach(name -> CookieUtil.delete(ctx, name));
   }
 }
