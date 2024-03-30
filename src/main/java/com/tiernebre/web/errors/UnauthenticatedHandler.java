@@ -1,7 +1,9 @@
 package com.tiernebre.web.errors;
 
 import com.tiernebre.web.constants.WebConstants;
+import com.tiernebre.web.util.CookieUtil;
 import io.javalin.http.Context;
+import io.javalin.http.Cookie;
 import io.javalin.http.ExceptionHandler;
 import io.javalin.http.UnauthorizedResponse;
 import org.jetbrains.annotations.NotNull;
@@ -25,6 +27,11 @@ public final class UnauthenticatedHandler
     );
     ctx.redirect(
       String.format("/login?%s=1", WebConstants.LOGGED_OUT_QUERY_PARAM)
+    );
+    ctx.cookie(
+      CookieUtil.secure(
+        new Cookie(WebConstants.REQUESTED_PATH_COOKIE_NAME, ctx.path())
+      )
     );
   }
 }

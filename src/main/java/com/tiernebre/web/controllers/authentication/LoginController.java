@@ -6,9 +6,11 @@ import com.tiernebre.authentication.registration.RegistrationAuthenticationReque
 import com.tiernebre.authentication.registration.RegistrationAuthenticationStrategy;
 import com.tiernebre.web.constants.WebConstants;
 import com.tiernebre.web.templates.Login;
+import com.tiernebre.web.util.CookieUtil;
 import com.tiernebre.web.util.SessionRegistry;
 import com.tiernebre.web.util.WebHelper;
 import io.javalin.http.Context;
+import io.vavr.control.Option;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +59,18 @@ public final class LoginController {
           )
         )).peek(session -> {
         sessionRegister.register(ctx, session);
-        ctx.redirect("/");
+        ctx.redirect(
+          Option.of(ctx.cookie(WebConstants.REQUESTED_PATH_COOKIE_NAME))
+            .filter(StringUtils::isNotBlank)
+            .peek(__ -> {
+              CookieUtil.delete(
+                ctx,
+                WebConstants.REQUESTED_PATH_COOKIE_NAME,
+                true
+              );
+            })
+            .getOrElse("/")
+        );
         LOG.debug("Successful login, redirecting to home page");
       }).orElseRun(error -> {
         ctx.status(error.httpStatus());

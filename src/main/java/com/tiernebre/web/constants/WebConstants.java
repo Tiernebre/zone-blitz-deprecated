@@ -12,6 +12,7 @@ public final class WebConstants {
     "Content-Security-Policy";
   public static final String JAVALIN_SESSION_ATTRIBUTE = "SESSION";
   public static final String SESSION_COOKIE_TOKEN_NAME = "zb_session_id";
+  public static final String REQUESTED_PATH_COOKIE_NAME = "zb_requested_path";
   public static final Duration SESSION_REFRESH_WINDOW = Duration.ofMinutes(10);
 
   public static final String LOGGED_OUT_QUERY_PARAM = "unauthenticated";
