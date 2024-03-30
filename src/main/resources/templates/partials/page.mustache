@@ -13,6 +13,10 @@
         </div>
       {{/@context.loggedIn}} 
       {{#@context.loggedIn}}
+        {{<link}}
+          {{$href}}/leagues{{/href}}
+          {{$text}}Leagues{{/text}}
+        {{/link}}
         <form method="post" action="/logout">{{< button}} {{$text}}Logout{{/text}} {{/button}}</form>
       {{/@context.loggedIn}}
     </div>
@@ -22,11 +26,10 @@
     <ul>
       <li>
         Copyright &copy;2024 by
-        <a
-          class="underline text-blue-700 hover:text-blue-800 focus:text-blue-800"
-          href="https://www.tiernebre.com"
-          >Brendan Tierney</a
-        >
+        {{<link}}
+          {{$href}}https://www.tiernebre.com{{/href}}
+          {{$text}}Brendan Tierney{{/text}}
+        {{/link}}
       </li>
     </ul>
   </footer>
