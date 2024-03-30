@@ -47,6 +47,7 @@ test("logs the user in", async ({ context, page }) => {
   await getPasswordInput(page).fill(PASSWORD);
   await submit(page);
   await expect(page).not.toHaveURL(/login/i);
+  await expect(page).toHaveURL("/");
   await expect({ context, page }).toBeLoggedIn();
 });
 
@@ -117,4 +118,21 @@ test("does not login for a password that does not exist", async ({
   await expect(page).toHaveURL(/login/i);
   await expect(getNoUserExistsError(page)).toBeVisible();
   await expect({ context, page }).toBeLoggedOut();
+});
+
+test("is used when a user accesses a page they are not authenticated for", async ({
+  context,
+  page,
+}) => {
+  await expect({ context, page }).toBeLoggedOut();
+  const originalPath = "/leagues";
+  await page.goto(originalPath);
+  await expect(page).toHaveURL(/login/i);
+  await expect(page.getByText(/requires you to be logged in/)).toBeVisible();
+  await getUsernameInput(page).fill(USERNAME);
+  await getPasswordInput(page).fill(PASSWORD);
+  await submit(page);
+  await expect(page).not.toHaveURL(/login/i);
+  await expect(page).toHaveURL(originalPath);
+  await expect({ context, page }).toBeLoggedIn();
 });
