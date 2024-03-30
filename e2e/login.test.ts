@@ -133,6 +133,6 @@ test("is used when a user accesses a page they are not authenticated for", async
   await getPasswordInput(page).fill(PASSWORD);
   await submit(page);
   await expect(page).not.toHaveURL(/login/i);
-  await expect(page).toHaveURL("/leagues");
+  await expect(page).toHaveURL(originalPath);
   await expect({ context, page }).toBeLoggedIn();
 });
