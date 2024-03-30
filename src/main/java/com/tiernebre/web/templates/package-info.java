@@ -30,6 +30,7 @@
       path = "partials/google_sign_on_button"
     ),
     @io.jstach.jstache.JStachePartial(name = "form", path = "components/form"),
+    @io.jstach.jstache.JStachePartial(name = "link", path = "components/link"),
   }
 )
 package com.tiernebre.web.templates;
