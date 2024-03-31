@@ -1,12 +1,15 @@
 package com.tiernebre.web.controllers.league_management;
 
+import com.tiernebre.league_management.league.League;
 import com.tiernebre.league_management.league.LeagueService;
 import com.tiernebre.league_management.league.UserLeagueRequest;
 import com.tiernebre.web.templates.CreateLeague;
+import com.tiernebre.web.templates.LeagueTemplate;
 import com.tiernebre.web.templates.Leagues;
 import com.tiernebre.web.util.WebHelper;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
+import io.javalin.http.NotFoundResponse;
 import io.vavr.Tuple2;
 import io.vavr.control.Option;
 import org.slf4j.Logger;
@@ -67,13 +70,19 @@ public final class LeagueController {
       .flatMap(ids -> service.getForAccount(ids._1, ids._2))
       .peek(league -> {
         LOG.debug("Got league {}", league);
+        leaguePage(ctx, league);
       })
       .onEmpty(() -> {
         LOG.debug("Could not find league");
-      });
+      })
+      .getOrElseThrow(() -> new NotFoundResponse());
   }
 
   private void formPage(Context ctx, String error) {
     helper.template(ctx, new CreateLeague(error));
+  }
+
+  private void leaguePage(Context ctx, League league) {
+    helper.template(ctx, new LeagueTemplate(league));
   }
 }
