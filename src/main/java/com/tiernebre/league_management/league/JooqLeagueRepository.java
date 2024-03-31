@@ -7,6 +7,7 @@ import com.tiernebre.util.error.ZoneBlitzServerError;
 import com.tiernebre.util.pagination.Page;
 import com.tiernebre.util.pagination.PageRequest;
 import io.vavr.control.Either;
+import io.vavr.control.Option;
 import io.vavr.control.Try;
 import java.util.Collections;
 import org.jooq.DSLContext;
@@ -50,6 +51,17 @@ public final class JooqLeagueRepository implements LeagueRepository {
       request,
       League.class,
       Collections.singleton(Tables.LEAGUE.ACCOUNT_ID.eq(accountId))
+    );
+  }
+
+  @Override
+  public Option<League> selectOneForAccount(long id, long accountId) {
+    return Option.of(
+      dsl
+        .selectFrom(Tables.LEAGUE)
+        .where(Tables.LEAGUE.ID.eq(id))
+        .and(Tables.LEAGUE.ACCOUNT_ID.eq(accountId))
+        .fetchOneInto(League.class)
     );
   }
 }
