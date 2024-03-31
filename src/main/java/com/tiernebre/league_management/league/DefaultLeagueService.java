@@ -37,9 +37,6 @@ public final class DefaultLeagueService implements LeagueService {
 
   @Override
   public Option<League> getForAccount(long id, long accountId) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException(
-      "Unimplemented method 'getForAccount'"
-    );
+    return repository.selectOneForAccount(id, accountId);
   }
 }
