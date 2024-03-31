@@ -1,6 +1,7 @@
 import { BrowserContext, Page } from "playwright";
 import { expect } from "./expect";
 import { lazyRegister } from "./auth";
+import crypto from "node:crypto";
 
 export const LEAGUES_URI = "/leagues";
 export const CREATE_LEAGUE_URI = `${LEAGUES_URI}/create`;
