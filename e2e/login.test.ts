@@ -1,6 +1,7 @@
 import { Page, test } from "@playwright/test";
 import crypto from "node:crypto";
 import { VALIDATION_MESSAGES, expect } from "./expect";
+import { LEAGUES_URI } from "./league";
 
 const URI = "/login";
 const USERNAME = `LOGIN-${crypto.randomUUID().toString()}`;
@@ -125,7 +126,7 @@ test("is used when a user accesses a page they are not authenticated for", async
   page,
 }) => {
   await expect({ context, page }).toBeLoggedOut();
-  const originalPath = "/leagues";
+  const originalPath = LEAGUES_URI;
   await page.goto(originalPath);
   await expect(page).toHaveURL(/login/i);
   await expect(page.getByText(/requires you to be logged in/)).toBeVisible();

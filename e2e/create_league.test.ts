@@ -3,6 +3,7 @@ import { VALIDATION_MESSAGES, expect } from "./expect";
 import crypto from "node:crypto";
 import {
   CREATE_LEAGUE_URI,
+  LEAGUES_URI,
   createLeague,
   createLeagueQueries,
   navigateToCreateLeague,
@@ -21,7 +22,7 @@ test("renders for a logged in user", async ({ page }) => {
 test("creates a league", async ({ page }) => {
   const name = `LEAGUE-${crypto.randomUUID().toString()}`;
   await createLeague(page, name, false);
-  await expect(page).toHaveURL("/leagues");
+  await expect(page).toHaveURL(LEAGUES_URI);
   await expect(page.getByText(/your leagues/i)).toBeVisible();
   await expect(page.getByText(name)).toBeVisible();
 });
