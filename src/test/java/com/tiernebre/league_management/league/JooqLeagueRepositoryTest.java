@@ -2,6 +2,7 @@ package com.tiernebre.league_management.league;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.tiernebre.database.JooqDatabaseTest;
 import com.tiernebre.database.jooq.Tables;
@@ -40,7 +41,7 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       request.accountId(),
       request.userRequest().name()
     );
-    assertEquals(expected, inserted);
+    assertEquals(expected, inserted.get());
   }
 
   @Test
@@ -75,17 +76,63 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
     assertEquals(expected, selected);
   }
 
+  @Test
+  public void selectOneForAccountReturnsValid() {
+    var accountId = context
+      .accountRepository()
+      .insertOne(UUID.randomUUID().toString(), null)
+      .id();
+    var existingLeague = seedLeague(accountId);
+    var selectedLeague = repository.selectOneForAccount(
+      existingLeague.id(),
+      accountId
+    );
+    assertTrue(selectedLeague.isDefined());
+    assertEquals(existingLeague, selectedLeague.get());
+  }
+
+  @Test
+  public void selectOneForAccountReturnsEmptyForNonExistentId() {
+    var accountId = context
+      .accountRepository()
+      .insertOne(UUID.randomUUID().toString(), null)
+      .id();
+    var selectedLeague = repository.selectOneForAccount(
+      Long.MAX_VALUE,
+      accountId
+    );
+    assertTrue(selectedLeague.isEmpty());
+  }
+
+  @Test
+  public void selectOneForAccountReturnsEmptyForIncorrectAccountId() {
+    var accountId = context
+      .accountRepository()
+      .insertOne(UUID.randomUUID().toString(), null)
+      .id();
+    var existingLeague = seedLeague(accountId);
+    var selectedLeague = repository.selectOneForAccount(
+      existingLeague.id(),
+      accountId + 1
+    );
+    assertTrue(selectedLeague.isEmpty());
+  }
+
   private List<PageEdge<League>> seedLeagues(int size, long accountId) {
     return IntStream.range(0, size)
       .boxed()
       .map(__ -> {
-        var league = dsl.newRecord(Tables.LEAGUE);
-        league.setAccountId(accountId);
-        league.setName(UUID.randomUUID().toString());
-        league.store();
-        var mapped = league.into(League.class);
-        return new PageEdge<League>(mapped, cursorMapper.toCursor(mapped));
+        var league = seedLeague(accountId);
+        return new PageEdge<League>(league, cursorMapper.toCursor(league));
       })
       .collect(Collectors.toUnmodifiableList());
+  }
+
+  private League seedLeague(long accountId) {
+    var league = dsl.newRecord(Tables.LEAGUE);
+    league.setAccountId(accountId);
+    league.setName(UUID.randomUUID().toString());
+    league.store();
+    return league.into(League.class);
   }
 }
