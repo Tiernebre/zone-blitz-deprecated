@@ -11,17 +11,17 @@ import {
 
 const { getNameInput, submit } = createLeagueQueries;
 
-test.beforeEach(async ({ page }) => {
-  await navigateToCreateLeague(page);
+test.beforeEach(async ({ page, context }) => {
+  await navigateToCreateLeague(page, context);
 });
 
 test("renders for a logged in user", async ({ page }) => {
   await expect(page.getByText(/create league/i)).toBeVisible();
 });
 
-test("creates a league", async ({ page }) => {
+test("creates a league", async ({ page, context }) => {
   const name = `LEAGUE-${crypto.randomUUID().toString()}`;
-  await createLeague(page, name, false);
+  await createLeague(page, context, name);
   await expect(page).toHaveURL(LEAGUES_URI);
   await expect(page.getByText(/your leagues/i)).toBeVisible();
   await expect(page.getByText(name)).toBeVisible();

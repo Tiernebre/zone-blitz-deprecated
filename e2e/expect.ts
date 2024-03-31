@@ -5,22 +5,13 @@ import {
   Page,
   expect as baseExpect,
 } from "@playwright/test";
+import { assertLoggedIn, assertLoggedOut } from "./session";
 
 export const VALIDATION_MESSAGES = Object.freeze({
   REQUIRED: /fill out this field/i,
   PATTERN: /match the requested format/i,
   MINLENGTH: (length: number) => new RegExp(`${length} characters`, "i"),
 });
-
-const getHeaderLoginButton = (page: Page) =>
-  page.locator("header").getByRole("link", { name: /login/i });
-const getHeaderRegisterButton = (page: Page) =>
-  page.locator("header").getByRole("link", { name: /register/i });
-const getHeaderLogoutButton = (page: Page) =>
-  page.locator("header").getByRole("button", { name: /logout/i });
-
-const getSessionCookie = async (context: BrowserContext) =>
-  (await context.cookies()).find((cookie) => cookie.name === "zb_session_id");
 
 export const expect = baseExpect.extend({
   async toBeValid(locator: Locator) {
@@ -108,17 +99,7 @@ export const expect = baseExpect.extend({
   }) {
     let pass;
     try {
-      await expect(getHeaderLogoutButton(page)).toBeVisible();
-      await expect(getHeaderLoginButton(page)).not.toBeVisible();
-      await expect(getHeaderRegisterButton(page)).not.toBeVisible();
-      const sessionCookie = await getSessionCookie(context);
-      expect(sessionCookie).toBeTruthy();
-      expect(sessionCookie!.httpOnly).toBeTruthy();
-      expect(sessionCookie!.sameSite).toStrictEqual("Strict");
-      expect(sessionCookie!.domain).toStrictEqual("dev.zoneblitz.app");
-      expect(sessionCookie!.secure).toBeTruthy();
-      expect(sessionCookie!.value).toBeTruthy();
-      expect(sessionCookie!.expires).toBeTruthy();
+      await assertLoggedIn(page, context);
       pass = true;
     } catch (error) {
       pass = false;
@@ -138,11 +119,7 @@ export const expect = baseExpect.extend({
   }) {
     let pass;
     try {
-      await expect(getHeaderLogoutButton(page)).not.toBeVisible();
-      await expect(getHeaderLoginButton(page)).toBeVisible();
-      await expect(getHeaderRegisterButton(page)).toBeVisible();
-      const sessionCookie = await getSessionCookie(context);
-      expect(sessionCookie).toBeFalsy();
+      await assertLoggedOut(page, context);
       pass = true;
     } catch (error) {
       pass = false;

@@ -1,6 +1,7 @@
 import { Page } from "playwright";
-import { expect } from "playwright/test";
+import { BrowserContext, expect } from "playwright/test";
 import crypto from "node:crypto";
+import { sessionCookieExists } from "./session";
 
 export const registrationQueries = {
   getUsernameInput: (page: Page) =>
@@ -30,6 +31,12 @@ export const register = async (
   await registrationQueries.clickRegisterButton(page);
   await expect(page).toHaveURL("/");
   return { username, password };
+};
+
+export const lazyRegister = async (page: Page, context: BrowserContext) => {
+  if (!(await sessionCookieExists(context))) {
+    await register(page);
+  }
 };
 
 export const logout = async (page: Page) =>

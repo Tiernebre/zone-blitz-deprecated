@@ -1,6 +1,6 @@
-import { Page } from "playwright";
+import { BrowserContext, Page } from "playwright";
 import { expect } from "./expect";
-import { register } from "./auth";
+import { lazyRegister } from "./auth";
 
 export const LEAGUES_URI = "/leagues";
 export const CREATE_LEAGUE_URI = `${LEAGUES_URI}/create`;
@@ -10,20 +10,34 @@ export const createLeagueQueries = {
   submit: (page: Page) => page.getByRole("button", { name: /create/i }).click(),
 };
 
-export const navigateToCreateLeague = async (page: Page) => {
-  await register(page);
+export const navigateToCreateLeague = async (
+  page: Page,
+  context: BrowserContext,
+) => {
+  await lazyRegister(page, context);
   await page.goto(CREATE_LEAGUE_URI);
+  await expect(page.getByText(/create league/i)).toBeVisible();
+};
+
+export const navigateToLeagues = async (
+  page: Page,
+  context: BrowserContext,
+) => {
+  await lazyRegister(page, context);
+  await page.goto(LEAGUES_URI);
+  await expect(page.getByText(/your leagues/i)).toBeVisible();
 };
 
 export const createLeague = async (
   page: Page,
+  context: BrowserContext,
   name = `LEAGUE-${crypto.randomUUID().toString()}`,
-  navigate = true,
 ) => {
-  if (navigate) {
-    await navigateToCreateLeague(page);
-  }
+  await navigateToCreateLeague(page, context);
   await createLeagueQueries.getNameInput(page).fill(name);
   await createLeagueQueries.submit(page);
   await expect(page).toHaveURL(LEAGUES_URI);
+  return {
+    name,
+  };
 };

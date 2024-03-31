@@ -1,10 +1,6 @@
 import { test } from "@playwright/test";
-import { register } from "./auth";
-import { expect } from "./expect";
-import { LEAGUES_URI } from "./league";
+import { navigateToLeagues } from "./league";
 
-test("renders for a logged in user", async ({ page }) => {
-  await register(page);
-  await page.goto(LEAGUES_URI);
-  await expect(page.getByText(/your leagues/i)).toBeVisible();
+test("renders for a logged in user", async ({ page, context }) => {
+  await navigateToLeagues(page, context);
 });
