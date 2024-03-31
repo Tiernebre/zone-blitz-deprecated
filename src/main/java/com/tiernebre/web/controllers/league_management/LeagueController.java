@@ -7,6 +7,8 @@ import com.tiernebre.web.templates.Leagues;
 import com.tiernebre.web.util.WebHelper;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
+import io.vavr.Tuple2;
+import io.vavr.control.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,12 +49,27 @@ public final class LeagueController {
       .peek(league -> {
         LOG.debug("Successfully created league {}.", league);
         ctx.status(HttpStatus.CREATED);
-        ctx.redirect("/leagues");
+        ctx.redirect(LeagueWebConstants.LEAGUES_URI);
       })
       .peekLeft(error -> {
         LOG.debug("Failed to create a league, encountered error {}", error);
         ctx.status(error.httpStatus());
         formPage(ctx, error.publicMessage());
+      });
+  }
+
+  public void get(Context ctx) {
+    Option.of(ctx.pathParam(LeagueWebConstants.LEAGUE_ID_PATH_PARAM))
+      .toTry()
+      .mapTry(Long::parseLong)
+      .toOption()
+      .map(id -> new Tuple2<>(id, helper.authenticatedSession(ctx).accountId()))
+      .flatMap(ids -> service.getForAccount(ids._1, ids._2))
+      .peek(league -> {
+        LOG.debug("Got league {}", league);
+      })
+      .onEmpty(() -> {
+        LOG.debug("Could not find league");
       });
   }
 
