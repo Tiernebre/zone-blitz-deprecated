@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import crypto from "node:crypto";
 import { VALIDATION_MESSAGES, expect } from "./expect";
-import { logout, registrationQueries } from "./helpers";
+import { logout, registrationQueries } from "./auth";
 
 const URI = "/registration";
 const USERNAME = `REGISTER-${crypto.randomUUID().toString()}`;
