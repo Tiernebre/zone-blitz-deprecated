@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import crypto from "node:crypto";
+import { LEAGUES_URI } from "./league";
 
 test("not found page", async ({ page }) => {
   const notFoundPage = await page.goto(
@@ -13,7 +14,7 @@ test("not found page", async ({ page }) => {
 });
 
 test("unauthorized handling", async ({ page }) => {
-  await page.goto("/leagues");
+  await page.goto(LEAGUES_URI);
   await expect(page).toHaveURL(/login/i);
   await expect(page.getByText(/requires you to be logged in/i)).toBeVisible();
 });

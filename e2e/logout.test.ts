@@ -1,6 +1,6 @@
 import test from "playwright/test";
 import crypto from "node:crypto";
-import { logout, register } from "./helpers";
+import { logout, register } from "./auth";
 import { expect } from "./expect";
 
 test("logs a user out", async ({ context, page }) => {
