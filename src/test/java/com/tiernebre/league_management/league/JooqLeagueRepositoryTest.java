@@ -41,7 +41,7 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       request.accountId(),
       request.userRequest().name()
     );
-    assertEquals(expected, inserted.get());
+    assertEquals(expected, inserted);
   }
 
   @Test
