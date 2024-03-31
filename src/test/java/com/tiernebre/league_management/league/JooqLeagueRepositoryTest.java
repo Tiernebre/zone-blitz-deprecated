@@ -41,7 +41,7 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
       request.accountId(),
       request.userRequest().name()
     );
-    assertEquals(expected, inserted);
+    assertEquals(expected, inserted.get());
   }
 
   @Test
@@ -89,6 +89,33 @@ public final class JooqLeagueRepositoryTest extends JooqDatabaseTest {
     );
     assertTrue(selectedLeague.isDefined());
     assertEquals(existingLeague, selectedLeague.get());
+  }
+
+  @Test
+  public void selectOneForAccountReturnsEmptyForNonExistentId() {
+    var accountId = context
+      .accountRepository()
+      .insertOne(UUID.randomUUID().toString(), null)
+      .id();
+    var selectedLeague = repository.selectOneForAccount(
+      Long.MAX_VALUE,
+      accountId
+    );
+    assertTrue(selectedLeague.isEmpty());
+  }
+
+  @Test
+  public void selectOneForAccountReturnsEmptyForIncorrectAccountId() {
+    var accountId = context
+      .accountRepository()
+      .insertOne(UUID.randomUUID().toString(), null)
+      .id();
+    var existingLeague = seedLeague(accountId);
+    var selectedLeague = repository.selectOneForAccount(
+      existingLeague.id(),
+      accountId + 1
+    );
+    assertTrue(selectedLeague.isEmpty());
   }
 
   private List<PageEdge<League>> seedLeagues(int size, long accountId) {
