@@ -1,6 +1,6 @@
 plugins {
     id 'application'
-    id "org.jooq.jooq-codegen-gradle" version "3.19.5"
+    id "org.jooq.jooq-codegen-gradle" version "3.19.8"
 }
 
 application {
@@ -29,7 +29,7 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.12")
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation("org.apache.commons:commons-lang3:3.14.0")
-    implementation("org.jooq:jooq:3.19.5")
+    implementation("org.jooq:jooq:3.19.8")
     implementation("org.postgresql:postgresql:42.7.2")
     implementation("com.google.api-client:google-api-client:2.3.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
@@ -37,7 +37,7 @@ dependencies {
     implementation("org.bouncycastle:bcprov-jdk18on:1.77")
     implementation("org.springframework.security:spring-security-crypto:6.0.3")
 
-    jooqCodegen("org.jooq:jooq-postgres-extensions:3.19.5")
+    jooqCodegen("org.jooq:jooq-postgres-extensions:3.19.8")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     testImplementation("org.mockito:mockito-core:5.10.0")
