@@ -71,13 +71,9 @@ jobs:
         run: docker compose -f .devcontainer/docker-compose.devcontainer.yml up -d
       - name: Start web server in its development container
         run: docker compose -f .devcontainer/docker-compose.devcontainer.yml exec -T -w /workspace web make &
-      - name: Trust self signed SSL certificate
-        run: |
-          mkdir -p $HOME/.pki/nssdb 
-          certutil -d $HOME/.pki/nssdb -N --empty-password
-          certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n dev.zoneblitz.app -i .devcontainer/certs/dev.zoneblitz.app.cert;
       - name: Run E2E tests
         run: |
+          npm install
           npx playwright install --with-deps
           make e2e
 
