@@ -37,7 +37,7 @@ dependencies {
     implementation("org.bouncycastle:bcprov-jdk18on:1.78.1")
     implementation("org.springframework.security:spring-security-crypto:6.3.0")
 
-    jooqCodegen("org.jooq:jooq-postgres-extensions:3.19.8")
+    jooqCodegen("org.jooq:jooq-postgres-extensions:3.19.9")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     testImplementation("org.mockito:mockito-core:5.12.0")
