@@ -1,6 +1,6 @@
 plugins {
     id 'application'
-    id "org.jooq.jooq-codegen-gradle" version "3.19.8"
+    id "org.jooq.jooq-codegen-gradle" version "3.19.9"
 }
 
 application {
