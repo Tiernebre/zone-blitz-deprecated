@@ -42,6 +42,8 @@ const CI_CONFIG: PlaywrightTestConfig = {
       use: { ...devices["Desktop Safari"] },
     },
   ],
+  workers: 1,
+  fullyParallel: false,
 };
 
 const additionalConfiguration: PlaywrightTestConfig = process.env.CI
