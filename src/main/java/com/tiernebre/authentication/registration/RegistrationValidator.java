@@ -7,8 +7,4 @@ public interface RegistrationValidator {
   public Either<ZoneBlitzError, RegistrationRequest> parse(
     CreateRegistrationRequest request
   );
-
-  public Either<ZoneBlitzError, RegistrationAuthenticationRequest> parse(
-    RegistrationAuthenticationRequest request
-  );
 }
