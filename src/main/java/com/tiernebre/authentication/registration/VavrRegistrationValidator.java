@@ -58,12 +58,4 @@ public final class VavrRegistrationValidator implements RegistrationValidator {
       .flatMap(matches(PASSWORD_FIELD_NAME, "Confirm Password"))
       .map(passwords -> passwords._1);
   }
-
-  @Override
-  public Either<ZoneBlitzError, RegistrationAuthenticationRequest> parse(
-    RegistrationAuthenticationRequest request
-  ) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'parse'");
-  }
 }
