@@ -3,8 +3,10 @@ package com.tiernebre.game_simulation.play.regular;
 import com.tiernebre.game_simulation.EngineConstants;
 import com.tiernebre.game_simulation.dto.DtoMockFactory;
 import com.tiernebre.game_simulation.dto.Player;
+import com.tiernebre.game_simulation.dto.personnel.OffensiveLine;
 import com.tiernebre.game_simulation.dto.personnel.RegularPlayDefensivePersonnel;
-import com.tiernebre.game_simulation.dto.personnel.RegularPlayOffensivePersonnel;
+import com.tiernebre.game_simulation.playbook.offense.personnel.OneOnePersonnel;
+import com.tiernebre.game_simulation.playbook.offense.personnel.RegularPlayOffensivePersonnel;
 
 public final class RegularPlaySimulatorMockFactory {
 
@@ -66,20 +68,20 @@ public final class RegularPlaySimulatorMockFactory {
   public static RegularPlayOffensivePersonnel offensivePersonnel(
     int attribute
   ) {
-    return new RegularPlayOffensivePersonnel(
+    return new OneOnePersonnel(
       DtoMockFactory.player(attribute),
-      new Player[] { DtoMockFactory.player(attribute) },
-      new Player[] { DtoMockFactory.player(attribute) },
-      new Player[] {
+      DtoMockFactory.player(attribute),
+      DtoMockFactory.player(attribute),
+      DtoMockFactory.player(attribute),
+      DtoMockFactory.player(attribute),
+      DtoMockFactory.player(attribute),
+      new OffensiveLine(
         DtoMockFactory.player(attribute),
         DtoMockFactory.player(attribute),
         DtoMockFactory.player(attribute),
-      },
-      DtoMockFactory.player(attribute),
-      DtoMockFactory.player(attribute),
-      DtoMockFactory.player(attribute),
-      DtoMockFactory.player(attribute),
-      DtoMockFactory.player(attribute)
+        DtoMockFactory.player(attribute),
+        DtoMockFactory.player(attribute)
+      )
     );
   }
 }

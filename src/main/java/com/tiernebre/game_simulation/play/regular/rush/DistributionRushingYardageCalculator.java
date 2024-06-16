@@ -40,7 +40,7 @@ public class DistributionRushingYardageCalculator
 
   private int calculateOffensiveRating(RegularPlayOffensiveDecision decision) {
     int runBlocking = (int) (RegularPlayPersonnelUtils.getAverageAttribute(
-        RegularPlayPersonnelUtils.getAllOffensiveLinemen(decision.personnel()),
+        decision.personnel().offensiveLinemen(),
         attributes -> attributes.runBlocking()
       ) *
       RUN_BLOCKING_WEIGHT);

@@ -3,7 +3,7 @@ package com.tiernebre.game_simulation.playbook.offense.personnel;
 import com.tiernebre.game_simulation.dto.Player;
 import com.tiernebre.game_simulation.dto.personnel.OffensiveLine;
 
-public final class OneOnePersonnel extends RegularOffensivePlayPersonnel {
+public final class OneOnePersonnel extends RegularPlayOffensivePersonnel {
 
   public OneOnePersonnel(
     Player quarterback,

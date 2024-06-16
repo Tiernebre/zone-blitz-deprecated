@@ -4,7 +4,7 @@ import com.tiernebre.game_simulation.EngineConstants;
 import com.tiernebre.game_simulation.dto.Player;
 import com.tiernebre.game_simulation.dto.PlayerAttributes;
 import com.tiernebre.game_simulation.dto.personnel.RegularPlayDefensivePersonnel;
-import com.tiernebre.game_simulation.dto.personnel.RegularPlayOffensivePersonnel;
+import com.tiernebre.game_simulation.playbook.offense.personnel.RegularPlayOffensivePersonnel;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -14,7 +14,7 @@ public final class RegularPlayPersonnelUtils {
     RegularPlayOffensivePersonnel offensivePersonnel,
     Function<PlayerAttributes, Integer> toAttribute
   ) {
-    return getAverageAttribute(getAllPlayers(offensivePersonnel), toAttribute);
+    return getAverageAttribute(offensivePersonnel.players(), toAttribute);
   }
 
   public static int getAverageAttribute(
@@ -65,48 +65,5 @@ public final class RegularPlayPersonnelUtils {
     defensivePlayers[defensivePlayersIndex++] =
       defensivePersonnel.strongSafety();
     return defensivePlayers;
-  }
-
-  public static Player[] getAllPlayers(
-    RegularPlayOffensivePersonnel offensivePersonnel
-  ) {
-    Player[] offensivePlayers =
-      new Player[EngineConstants.NUMBER_OF_PLAYERS_ON_FIELD_PER_SIDE];
-    var offensivePlayersIndex = 0;
-    for (int i = 0; i < offensivePersonnel.runningBacks().length; i++) {
-      offensivePlayers[offensivePlayersIndex++] =
-        offensivePersonnel.runningBacks()[i];
-    }
-    for (int i = 0; i < offensivePersonnel.wideReceivers().length; i++) {
-      offensivePlayers[offensivePlayersIndex++] =
-        offensivePersonnel.wideReceivers()[i];
-    }
-    for (int i = 0; i < offensivePersonnel.tightEnds().length; i++) {
-      offensivePlayers[offensivePlayersIndex++] =
-        offensivePersonnel.tightEnds()[i];
-    }
-    offensivePlayers[offensivePlayersIndex++] =
-      offensivePersonnel.quarterback();
-    offensivePlayers[offensivePlayersIndex++] = offensivePersonnel.leftTackle();
-    offensivePlayers[offensivePlayersIndex++] = offensivePersonnel.leftGuard();
-    offensivePlayers[offensivePlayersIndex++] = offensivePersonnel.center();
-    offensivePlayers[offensivePlayersIndex++] = offensivePersonnel.rightGuard();
-    offensivePlayers[offensivePlayersIndex++] =
-      offensivePersonnel.rightTackle();
-    return offensivePlayers;
-  }
-
-  public static Player[] getAllOffensiveLinemen(
-    RegularPlayOffensivePersonnel offensivePersonnel
-  ) {
-    Player[] offensiveLinemen =
-      new Player[EngineConstants.NUMBER_OF_OFFENSIVE_LINEMEN];
-    var i = 0;
-    offensiveLinemen[i++] = offensivePersonnel.leftTackle();
-    offensiveLinemen[i++] = offensivePersonnel.leftGuard();
-    offensiveLinemen[i++] = offensivePersonnel.center();
-    offensiveLinemen[i++] = offensivePersonnel.rightGuard();
-    offensiveLinemen[i++] = offensivePersonnel.rightTackle();
-    return offensiveLinemen;
   }
 }

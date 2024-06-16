@@ -4,15 +4,15 @@ import com.tiernebre.game_simulation.EngineConstants;
 import com.tiernebre.game_simulation.dto.Player;
 import com.tiernebre.game_simulation.dto.personnel.OffensiveLine;
 
-public abstract class RegularOffensivePlayPersonnel {
+public abstract class RegularPlayOffensivePersonnel {
 
-  protected final Player quarterback;
-  protected final Player[] runningBacks;
-  protected final Player[] tightEnds;
-  protected final Player[] wideReceivers;
-  protected final OffensiveLine offensiveLine;
+  private final Player quarterback;
+  private final Player[] runningBacks;
+  private final Player[] tightEnds;
+  private final Player[] wideReceivers;
+  private final OffensiveLine offensiveLine;
 
-  public RegularOffensivePlayPersonnel(
+  public RegularPlayOffensivePersonnel(
     Player quarterback,
     Player[] runningBacks,
     Player[] tightEnds,
@@ -24,6 +24,42 @@ public abstract class RegularOffensivePlayPersonnel {
     this.tightEnds = tightEnds;
     this.wideReceivers = wideReceivers;
     this.offensiveLine = offensiveLine;
+  }
+
+  public Player quarterback() {
+    return quarterback;
+  }
+
+  public Player[] runningBacks() {
+    return runningBacks;
+  }
+
+  public Player[] wideReceivers() {
+    return wideReceivers;
+  }
+
+  public Player[] tightEnds() {
+    return tightEnds;
+  }
+
+  public Player leftTackle() {
+    return offensiveLine.leftTackle();
+  }
+
+  public Player leftGuard() {
+    return offensiveLine.leftGuard();
+  }
+
+  public Player center() {
+    return offensiveLine.center();
+  }
+
+  public Player rightGuard() {
+    return offensiveLine.rightGuard();
+  }
+
+  public Player rightTackle() {
+    return offensiveLine.rightTackle();
   }
 
   public Player[] players() {
