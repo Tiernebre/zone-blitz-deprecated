@@ -1,10 +1,9 @@
 package com.tiernebre.game_simulation.play.regular.rush;
 
 import com.tiernebre.game_simulation.EngineConstants;
-import com.tiernebre.game_simulation.dto.personnel.RegularPlayDefensivePersonnel;
 import com.tiernebre.game_simulation.play.regular.RegularPlayOffensiveDecision;
-import com.tiernebre.game_simulation.play.regular.RegularPlayPersonnelUtils;
 import com.tiernebre.game_simulation.play.regular.RegularPlaySimulatorArguments;
+import com.tiernebre.game_simulation.playbook.defense.RegularPlayDefensivePersonnel;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 public class DistributionRushingYardageCalculator
@@ -39,10 +38,11 @@ public class DistributionRushingYardageCalculator
   }
 
   private int calculateOffensiveRating(RegularPlayOffensiveDecision decision) {
-    int runBlocking = (int) (RegularPlayPersonnelUtils.getAverageAttribute(
-        decision.personnel().offensiveLinemen(),
-        attributes -> attributes.runBlocking()
-      ) *
+    int runBlocking = (int) (decision
+        .personnel()
+        .offensiveLinemenAverageAttribute(
+          attributes -> attributes.runBlocking()
+        ) *
       RUN_BLOCKING_WEIGHT);
     int rushingAbility = (int) (decision
         .target()
@@ -55,13 +55,11 @@ public class DistributionRushingYardageCalculator
   private int calculateDefensiveRating(
     RegularPlayDefensivePersonnel defensivePersonnel
   ) {
-    int blockShedding = (int) (RegularPlayPersonnelUtils.getAverageAttribute(
-        defensivePersonnel,
+    int blockShedding = (int) (defensivePersonnel.averageAttribute(
         attributes -> attributes.blockShedding()
       ) *
       BLOCK_SHEDDING_WEIGHT);
-    int tackling = (int) (RegularPlayPersonnelUtils.getAverageAttribute(
-        defensivePersonnel,
+    int tackling = (int) (defensivePersonnel.averageAttribute(
         attributes -> attributes.tackling()
       ) *
       TACKLING_WEIGHT);

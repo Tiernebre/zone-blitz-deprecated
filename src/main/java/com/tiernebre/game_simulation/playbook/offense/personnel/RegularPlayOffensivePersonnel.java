@@ -2,9 +2,13 @@ package com.tiernebre.game_simulation.playbook.offense.personnel;
 
 import com.tiernebre.game_simulation.EngineConstants;
 import com.tiernebre.game_simulation.dto.Player;
+import com.tiernebre.game_simulation.dto.PlayerAttributes;
 import com.tiernebre.game_simulation.dto.personnel.OffensiveLine;
+import com.tiernebre.game_simulation.playbook.personnel.RegularPlayPersonnel;
+import java.util.function.Function;
 
-public abstract class RegularPlayOffensivePersonnel {
+public abstract class RegularPlayOffensivePersonnel
+  extends RegularPlayPersonnel {
 
   private final Player quarterback;
   private final Player[] runningBacks;
@@ -94,5 +98,15 @@ public abstract class RegularPlayOffensivePersonnel {
     offensiveLinemen[i++] = offensiveLine.rightGuard();
     offensiveLinemen[i++] = offensiveLine.rightTackle();
     return offensiveLinemen;
+  }
+
+  public int averageAttribute(Function<PlayerAttributes, Integer> toAttribute) {
+    return super.averageAttribute(players(), toAttribute);
+  }
+
+  public int offensiveLinemenAverageAttribute(
+    Function<PlayerAttributes, Integer> toAttribute
+  ) {
+    return super.averageAttribute(offensiveLinemen(), toAttribute);
   }
 }

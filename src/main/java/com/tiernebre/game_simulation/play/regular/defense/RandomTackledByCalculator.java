@@ -1,8 +1,7 @@
 package com.tiernebre.game_simulation.play.regular.defense;
 
 import com.tiernebre.game_simulation.dto.Player;
-import com.tiernebre.game_simulation.dto.personnel.RegularPlayDefensivePersonnel;
-import com.tiernebre.game_simulation.play.regular.RegularPlayPersonnelUtils;
+import com.tiernebre.game_simulation.playbook.defense.RegularPlayDefensivePersonnel;
 import com.tiernebre.game_simulation.playbook.offense.personnel.RegularPlayOffensivePersonnel;
 import java.util.Random;
 
@@ -16,7 +15,7 @@ public class RandomTackledByCalculator implements TackledByCalculator {
 
   @Override
   public Player tackledBy(RegularPlayDefensivePersonnel defense) {
-    return tackledBy(RegularPlayPersonnelUtils.getAllPlayers(defense));
+    return tackledBy(defense.players());
   }
 
   @Override
