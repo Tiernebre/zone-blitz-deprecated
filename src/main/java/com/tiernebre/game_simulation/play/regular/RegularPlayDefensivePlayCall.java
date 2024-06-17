@@ -1,7 +1,7 @@
 package com.tiernebre.game_simulation.play.regular;
 
-import com.tiernebre.game_simulation.dto.personnel.RegularPlayDefensivePersonnel;
 import com.tiernebre.game_simulation.play.call.DefensivePlayCall;
+import com.tiernebre.game_simulation.playbook.defense.RegularPlayDefensivePersonnel;
 
 public class RegularPlayDefensivePlayCall extends DefensivePlayCall {
 
