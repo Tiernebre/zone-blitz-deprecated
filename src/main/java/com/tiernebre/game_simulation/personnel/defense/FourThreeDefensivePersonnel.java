@@ -1,4 +1,4 @@
-package com.tiernebre.game_simulation.playbook.defense;
+package com.tiernebre.game_simulation.personnel.defense;
 
 import com.tiernebre.game_simulation.dto.Player;
 

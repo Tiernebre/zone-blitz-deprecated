@@ -1,9 +1,9 @@
 package com.tiernebre.game_simulation.play.regular.rush;
 
 import com.tiernebre.game_simulation.EngineConstants;
+import com.tiernebre.game_simulation.personnel.defense.RegularPlayDefensivePersonnel;
 import com.tiernebre.game_simulation.play.regular.RegularPlayOffensiveDecision;
 import com.tiernebre.game_simulation.play.regular.RegularPlaySimulatorArguments;
-import com.tiernebre.game_simulation.playbook.defense.RegularPlayDefensivePersonnel;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 public class DistributionRushingYardageCalculator

@@ -1,7 +1,7 @@
 package com.tiernebre.game_simulation.play.regular;
 
+import com.tiernebre.game_simulation.personnel.offense.RegularPlayOffensivePersonnel;
 import com.tiernebre.game_simulation.play.call.OffensivePlayCall;
-import com.tiernebre.game_simulation.playbook.offense.personnel.RegularPlayOffensivePersonnel;
 
 public final class RegularPlayOffensivePlayCall extends OffensivePlayCall {
 

@@ -4,10 +4,10 @@ import com.tiernebre.game_simulation.EngineConstants;
 import com.tiernebre.game_simulation.dto.DtoMockFactory;
 import com.tiernebre.game_simulation.dto.Player;
 import com.tiernebre.game_simulation.dto.personnel.OffensiveLine;
-import com.tiernebre.game_simulation.playbook.defense.FourThreeDefensivePersonnel;
-import com.tiernebre.game_simulation.playbook.defense.RegularPlayDefensivePersonnel;
-import com.tiernebre.game_simulation.playbook.offense.personnel.OneOnePersonnel;
-import com.tiernebre.game_simulation.playbook.offense.personnel.RegularPlayOffensivePersonnel;
+import com.tiernebre.game_simulation.personnel.defense.FourThreeDefensivePersonnel;
+import com.tiernebre.game_simulation.personnel.defense.RegularPlayDefensivePersonnel;
+import com.tiernebre.game_simulation.personnel.offense.OneOnePersonnel;
+import com.tiernebre.game_simulation.personnel.offense.RegularPlayOffensivePersonnel;
 
 public final class RegularPlaySimulatorMockFactory {
 

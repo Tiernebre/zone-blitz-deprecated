@@ -1,8 +1,8 @@
 package com.tiernebre.game_simulation.play.regular.offensive_target;
 
 import com.tiernebre.game_simulation.dto.Player;
-import com.tiernebre.game_simulation.playbook.defense.RegularPlayDefensivePersonnel;
-import com.tiernebre.game_simulation.playbook.offense.personnel.RegularPlayOffensivePersonnel;
+import com.tiernebre.game_simulation.personnel.defense.RegularPlayDefensivePersonnel;
+import com.tiernebre.game_simulation.personnel.offense.RegularPlayOffensivePersonnel;
 
 public final class DefaultRushingTargetDecider implements RushingTargetDecider {
 

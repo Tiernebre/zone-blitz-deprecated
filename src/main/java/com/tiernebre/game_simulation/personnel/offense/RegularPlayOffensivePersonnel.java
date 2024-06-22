@@ -1,4 +1,4 @@
-package com.tiernebre.game_simulation.playbook.offense.personnel;
+package com.tiernebre.game_simulation.personnel.offense;
 
 import com.tiernebre.game_simulation.EngineConstants;
 import com.tiernebre.game_simulation.dto.Player;
