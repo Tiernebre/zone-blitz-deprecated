@@ -23,19 +23,22 @@ public final class DefaultGameSimulator implements GameSimulator {
     var state = game.state();
     var offense = GameUtils.offensiveTeam(game);
     var defense = GameUtils.defensiveTeam(game);
-    var offensivePlayCall = offense
-      .coachingStaff()
-      .headCoach()
-      .offensivePlaybook()
-      .call(state, offense.depthChart().offense());
-    var defensivePlayCall = defense
-      .coachingStaff()
-      .headCoach()
-      .defensivePlaybook()
-      .call(state, defense.depthChart().defense());
-    var result = playSimulator.simulate(
-      new PlaySimulatorArguments(offensivePlayCall, defensivePlayCall)
+    return gameStateMachine.handlePlayResult(
+      game,
+      playSimulator.simulate(
+        new PlaySimulatorArguments(
+          offense
+            .coachingStaff()
+            .headCoach()
+            .offensivePlaybook()
+            .call(state, offense.depthChart().offense()),
+          defense
+            .coachingStaff()
+            .headCoach()
+            .defensivePlaybook()
+            .call(state, defense.depthChart().defense())
+        )
+      )
     );
-    return gameStateMachine.handlePlayResult(game, result);
   }
 }
