@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import com.tiernebre.game_simulation.personnel.defense.RegularPlayDefensivePersonnel;
+import com.tiernebre.game_simulation.personnel.offense.RegularPlayOffensivePersonnel;
 import com.tiernebre.game_simulation.play.regular.RegularPlaySimulatorMockFactory;
 import com.tiernebre.game_simulation.play.regular.defense.TackledByCalculator;
 import com.tiernebre.game_simulation.play.regular.turnover.FumbleCalculator;
 import com.tiernebre.game_simulation.play.regular.turnover.FumbleResult;
-import com.tiernebre.game_simulation.playbook.defense.RegularPlayDefensivePersonnel;
-import com.tiernebre.game_simulation.playbook.offense.personnel.RegularPlayOffensivePersonnel;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
