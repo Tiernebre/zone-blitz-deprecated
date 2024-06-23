@@ -34,6 +34,7 @@ public class GameSimulationContextFactory {
       null
     );
 
+    // TODO: inject a play simulator
     var gameSimulator = new DefaultGameSimulator(null, gameStateMachine);
     return new GameSimulationContext(gameSimulator);
   }
