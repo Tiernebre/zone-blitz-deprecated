@@ -3,6 +3,7 @@ package com.tiernebre.context;
 import com.tiernebre.authentication.AuthenticationContextFactory;
 import com.tiernebre.database.DatabaseConnectionError;
 import com.tiernebre.database.DatabaseContextFactory;
+import com.tiernebre.game_simulation.GameSimulationContextFactory;
 import com.tiernebre.league_management.LeagueManagementContextFactory;
 import com.tiernebre.web.WebContextFactory;
 import java.io.IOException;
@@ -22,7 +23,8 @@ public final class DependencyContextFactory {
       databaseContext,
       authenticationContext,
       new WebContextFactory(authenticationContext, utilityContext).create(),
-      new LeagueManagementContextFactory(databaseContext).create()
+      new LeagueManagementContextFactory(databaseContext).create(),
+      new GameSimulationContextFactory().create()
     );
   }
 }
