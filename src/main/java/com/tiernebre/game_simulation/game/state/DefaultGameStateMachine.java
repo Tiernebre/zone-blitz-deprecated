@@ -1,15 +1,15 @@
 package com.tiernebre.game_simulation.game.state;
 
 import com.tiernebre.game_simulation.dto.game.Game;
+import com.tiernebre.game_simulation.game.play.PlayResult;
+import com.tiernebre.game_simulation.game.play.field_goal.result.FieldGoalResult;
+import com.tiernebre.game_simulation.game.play.kickoff.KickoffResult;
+import com.tiernebre.game_simulation.game.play.punt.PuntResult;
+import com.tiernebre.game_simulation.game.play.regular.RegularPlayResult;
 import com.tiernebre.game_simulation.game.state.handlers.field_goal.FieldGoalHandler;
 import com.tiernebre.game_simulation.game.state.handlers.kickoff.KickoffHandler;
 import com.tiernebre.game_simulation.game.state.handlers.punt.PuntHandler;
 import com.tiernebre.game_simulation.game.state.handlers.regular.RegularPlayHandler;
-import com.tiernebre.game_simulation.play.PlayResult;
-import com.tiernebre.game_simulation.play.field_goal.result.FieldGoalResult;
-import com.tiernebre.game_simulation.play.kickoff.KickoffResult;
-import com.tiernebre.game_simulation.play.punt.PuntResult;
-import com.tiernebre.game_simulation.play.regular.RegularPlayResult;
 
 public final class DefaultGameStateMachine implements GameStateMachine {
 
