@@ -13,7 +13,10 @@ import com.tiernebre.game_simulation.dto.game.GameTime;
 import com.tiernebre.game_simulation.dto.game.Side;
 import java.util.Random;
 
-public class GameMockFactory {
+public final class GameMockFactory {
+
+  private static final int DEFAULT_DRIVE_LINE_OF_SCRIMMAGE = 0;
+  private static final Direction DEFAULT_DRIVE_DIRECTION = Direction.EAST;
 
   private static final Random random = new Random();
 
@@ -61,11 +64,19 @@ public class GameMockFactory {
   }
 
   public static Drive drive() {
-    return drive(0);
+    return drive(DEFAULT_DRIVE_LINE_OF_SCRIMMAGE, DEFAULT_DRIVE_DIRECTION);
   }
 
   public static Drive drive(int lineOfScrimmage) {
-    return new Drive(Down.FIRST, lineOfScrimmage, 10, Direction.EAST);
+    return drive(lineOfScrimmage, DEFAULT_DRIVE_DIRECTION);
+  }
+
+  public static Drive drive(Direction direction) {
+    return drive(DEFAULT_DRIVE_LINE_OF_SCRIMMAGE, direction);
+  }
+
+  public static Drive drive(int lineOfScrimmage, Direction direction) {
+    return new Drive(Down.FIRST, lineOfScrimmage, 10, direction);
   }
 
   public static GameScoreboard score() {
