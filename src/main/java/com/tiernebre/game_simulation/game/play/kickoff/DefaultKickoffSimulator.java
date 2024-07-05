@@ -13,9 +13,10 @@ public final class DefaultKickoffSimulator implements KickoffSimulator {
     KickReturnPlayCall kickReturnPlayCall,
     KickoffPlayCall kickoffPlayCall
   ) {
+    var kicker = kickoffPlayCall.personnel().kickOffSpecialist();
     return new KickoffReturnResult(
-      kickoffPlayCall.personnel().kickOffSpecialist(),
-      0
+      kicker,
+      distanceCalculator.calculate(kicker)
     );
   }
 }
