@@ -24,14 +24,16 @@
         "redhat.fabric8-analytics",
         "github.vscode-github-actions",
         "william-voyek.vscode-nginx",
-        "bierner.markdown-mermaid"
+        "bierner.markdown-mermaid",
+        "zhuangtongfa.material-theme"
       ],
       "settings": {
         "unocss.include": [
           "src/main/resources/templates/**/*.mustache"
         ],
         "terminal.integrated.scrollback": 5000,
-        "remote.autoForwardPorts": false
+        "remote.autoForwardPorts": false,
+        "workbench.colorTheme": "One Dark Pro Darker"
       }
     }
   }
