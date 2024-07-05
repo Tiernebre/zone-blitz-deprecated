@@ -23,7 +23,8 @@ public class RandomTackledByCalculator implements TackledByCalculator {
     return tackledBy(offense.players());
   }
 
-  private Player tackledBy(Player[] players) {
+  @Override
+  public Player tackledBy(Player[] players) {
     return players[random.nextInt(players.length)];
   }
 }
