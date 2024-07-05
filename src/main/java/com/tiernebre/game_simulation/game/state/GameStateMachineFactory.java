@@ -2,6 +2,7 @@ package com.tiernebre.game_simulation.game.state;
 
 import com.tiernebre.game_simulation.dto.game.ScoringConfiguration;
 import com.tiernebre.game_simulation.game.state.handlers.field_goal.DefaultFieldGoalHandler;
+import com.tiernebre.game_simulation.game.state.handlers.kickoff.DefaultKickoffHandler;
 import com.tiernebre.game_simulation.game.state.handlers.punt.DefaultPuntHandler;
 import com.tiernebre.game_simulation.game.state.handlers.regular.DefaultRegularPlayHandler;
 import com.tiernebre.game_simulation.game.state.handlers.scoring.DefaultScoringPlayHandler;
@@ -24,12 +25,12 @@ public final class GameStateMachineFactory {
       scoringPlayHandler
     );
     var puntHandler = new DefaultPuntHandler();
+    var kickoffHandler = new DefaultKickoffHandler();
     return new DefaultGameStateMachine(
       regularPlayHandler,
       fieldGoalHandler,
       puntHandler,
-      // TODO: Implement kickoff handler
-      null
+      kickoffHandler
     );
   }
 }

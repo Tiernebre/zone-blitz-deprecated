@@ -16,6 +16,14 @@ public final class EngineConstants {
   public static final int EAST_END_ZONE_YARD_LINE = END_ZONE_YARD_LINE;
   public static final int WEST_GOAL_POST_YARD_LINE = -GOAL_POST_YARD_LINE;
   public static final int EAST_GOAL_POST_YARD_LINE = GOAL_POST_YARD_LINE;
+  public static final int KICKOFF_YARD_LINE = 15;
+  public static final int WEST_KICKOFF_YARD_LINE = -KICKOFF_YARD_LINE;
+  public static final int EAST_KICKOFF_YARD_LINE = KICKOFF_YARD_LINE;
+  public static final int TOUCHBACK_STARTING_YARD_LINE = 25;
+  public static final int WEST_TOUCHBACK_STARTING_YARD_LINE =
+    -TOUCHBACK_STARTING_YARD_LINE;
+  public static final int EAST_TOUCHBACK_STARTING_YARD_LINE =
+    TOUCHBACK_STARTING_YARD_LINE;
 
   public static final int FIELD_GOAL_YARDS_BEHIND_LINE_ATTEMPT = 7;
 
