@@ -1,4 +1,4 @@
-package com.tiernebre.game_simulation.play.regular;
+package com.tiernebre.game_simulation.game.play.regular;
 
 import com.tiernebre.game_simulation.EngineConstants;
 import com.tiernebre.game_simulation.dto.DtoMockFactory;

@@ -1,4 +1,4 @@
-package com.tiernebre.game_simulation.play.field_goal;
+package com.tiernebre.game_simulation.game.play.field_goal;
 
 import com.tiernebre.game_simulation.dto.DtoMockFactory;
 import com.tiernebre.game_simulation.dto.Player;

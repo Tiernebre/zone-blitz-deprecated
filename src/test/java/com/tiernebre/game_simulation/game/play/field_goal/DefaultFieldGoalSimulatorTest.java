@@ -1,4 +1,4 @@
-package com.tiernebre.game_simulation.play.field_goal;
+package com.tiernebre.game_simulation.game.play.field_goal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

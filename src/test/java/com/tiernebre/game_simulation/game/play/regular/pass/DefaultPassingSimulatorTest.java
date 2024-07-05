@@ -1,10 +1,11 @@
-package com.tiernebre.game_simulation.play.regular.pass;
+package com.tiernebre.game_simulation.game.play.regular.pass;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import com.tiernebre.game_simulation.game.play.regular.RegularPlaySimulatorMockFactory;
 import com.tiernebre.game_simulation.game.play.regular.defense.TackledByCalculator;
 import com.tiernebre.game_simulation.game.play.regular.pass.DefaultPassingSimulator;
 import com.tiernebre.game_simulation.game.play.regular.pass.PassResult;
@@ -14,7 +15,6 @@ import com.tiernebre.game_simulation.game.play.regular.pass.interception.Interce
 import com.tiernebre.game_simulation.game.play.regular.pass.interception.InterceptionResult;
 import com.tiernebre.game_simulation.personnel.defense.RegularPlayDefensivePersonnel;
 import com.tiernebre.game_simulation.personnel.offense.RegularPlayOffensivePersonnel;
-import com.tiernebre.game_simulation.play.regular.RegularPlaySimulatorMockFactory;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

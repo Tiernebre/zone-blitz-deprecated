@@ -1,4 +1,4 @@
-package com.tiernebre.game_simulation.play;
+package com.tiernebre.game_simulation.game.play;
 
 import com.tiernebre.game_simulation.dto.DtoMockFactory;
 import com.tiernebre.game_simulation.game.play.field_goal.blocked.BlockedFieldGoalResult;
