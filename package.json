@@ -9,15 +9,15 @@
     "@playwright/test": "^1.42.1",
     "@prettier/plugin-xml": "^3.2.2",
     "@types/node": "^20.11.25",
-    "@unocss/reset": "^0.58.5",
-    "htmx.org": "^1.9.10",
-    "husky": "^8.0.3",
+    "@unocss/reset": "^0.61.0",
+    "htmx.org": "^2.0.0",
+    "husky": "^9.0.11",
     "lint-staged": "^15.2.0",
     "playwright": "^1.42.1",
     "prettier": "^3.1.1",
     "prettier-plugin-java": "^2.5.0",
     "prettier-plugin-sh": "^0.14.0",
-    "unocss": "^0.58.3"
+    "unocss": "^0.61.0"
   },
   "lint-staged": {
     "*.{java,xml,md,yml,mustache,sh,ts,js,css}": "prettier --write"
