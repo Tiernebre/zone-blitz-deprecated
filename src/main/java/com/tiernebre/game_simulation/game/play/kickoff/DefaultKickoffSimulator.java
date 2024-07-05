@@ -1,13 +1,21 @@
 package com.tiernebre.game_simulation.game.play.kickoff;
 
-public class DefaultKickoffSimulator implements KickoffSimulator {
+public final class DefaultKickoffSimulator implements KickoffSimulator {
+
+  private final KickoffDistanceCalculator distanceCalculator;
+
+  public DefaultKickoffSimulator(KickoffDistanceCalculator distanceCalculator) {
+    this.distanceCalculator = distanceCalculator;
+  }
 
   @Override
   public KickoffResult simulate(
     KickReturnPlayCall kickReturnPlayCall,
     KickoffPlayCall kickoffPlayCall
   ) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'simulate'");
+    return new KickoffReturnResult(
+      kickoffPlayCall.personnel().kickOffSpecialist(),
+      0
+    );
   }
 }
