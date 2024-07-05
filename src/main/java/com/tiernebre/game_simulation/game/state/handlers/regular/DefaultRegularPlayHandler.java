@@ -5,12 +5,12 @@ import com.tiernebre.game_simulation.dto.game.Down;
 import com.tiernebre.game_simulation.dto.game.Drive;
 import com.tiernebre.game_simulation.dto.game.GameState;
 import com.tiernebre.game_simulation.dto.game.Score;
+import com.tiernebre.game_simulation.game.play.regular.RegularPlayResult;
 import com.tiernebre.game_simulation.game.state.handlers.scoring.ScoringPlayHandler;
 import com.tiernebre.game_simulation.game.state.handlers.turnover.TurnoverHandler;
 import com.tiernebre.game_simulation.game.state.util.DirectionUtils;
 import com.tiernebre.game_simulation.game.state.util.DownUtils;
 import com.tiernebre.game_simulation.game.state.util.YardNormalizer;
-import com.tiernebre.game_simulation.play.regular.RegularPlayResult;
 
 public final class DefaultRegularPlayHandler implements RegularPlayHandler {
 

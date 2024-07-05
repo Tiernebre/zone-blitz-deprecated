@@ -1,9 +1,9 @@
 package com.tiernebre.game_simulation.game;
 
 import com.tiernebre.game_simulation.dto.game.Game;
+import com.tiernebre.game_simulation.game.play.PlaySimulator;
+import com.tiernebre.game_simulation.game.play.PlaySimulatorArguments;
 import com.tiernebre.game_simulation.game.state.GameStateMachine;
-import com.tiernebre.game_simulation.play.PlaySimulator;
-import com.tiernebre.game_simulation.play.PlaySimulatorArguments;
 
 public final class DefaultGameSimulator implements GameSimulator {
 

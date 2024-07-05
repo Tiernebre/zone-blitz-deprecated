@@ -11,9 +11,9 @@ import com.tiernebre.game_simulation.dto.game.Down;
 import com.tiernebre.game_simulation.dto.game.Drive;
 import com.tiernebre.game_simulation.dto.game.Score;
 import com.tiernebre.game_simulation.game.GameMockFactory;
+import com.tiernebre.game_simulation.game.play.PlayResultMockFactory;
 import com.tiernebre.game_simulation.game.state.handlers.scoring.ScoringPlayHandler;
 import com.tiernebre.game_simulation.game.state.handlers.turnover.TurnoverHandler;
-import com.tiernebre.game_simulation.play.PlayResultMockFactory;
 import org.junit.jupiter.api.Test;
 
 public class DefaultRegularPlayHandlerTest {
