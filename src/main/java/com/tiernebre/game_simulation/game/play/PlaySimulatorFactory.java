@@ -2,6 +2,7 @@ package com.tiernebre.game_simulation.game.play;
 
 import com.tiernebre.game_simulation.GameSimulationCommonDependencies;
 import com.tiernebre.game_simulation.game.play.field_goal.FieldGoalSimulatorFactory;
+import com.tiernebre.game_simulation.game.play.punt.PuntSimulatorFactory;
 import com.tiernebre.game_simulation.game.play.regular.RegularPlaySimulatorFactory;
 import com.tiernebre.game_simulation.game.play.regular.defense.RandomTackledByCalculator;
 import com.tiernebre.game_simulation.util.PercentageCalculator;
@@ -20,8 +21,7 @@ public final class PlaySimulatorFactory {
     return new DefaultPlaySimulator(
       new RegularPlaySimulatorFactory().create(dependencies),
       new FieldGoalSimulatorFactory().create(dependencies),
-      // TODO: punt simulator
-      null,
+      new PuntSimulatorFactory().create(),
       // TODO: kickoff simulator
       null
     );
