@@ -1,4 +1,4 @@
-package com.tiernebre.game_simulation.play.punt;
+package com.tiernebre.game_simulation.game.play.punt;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
 
