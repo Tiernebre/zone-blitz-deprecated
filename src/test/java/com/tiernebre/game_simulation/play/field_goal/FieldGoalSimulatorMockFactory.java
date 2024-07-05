@@ -4,6 +4,8 @@ import com.tiernebre.game_simulation.dto.DtoMockFactory;
 import com.tiernebre.game_simulation.dto.Player;
 import com.tiernebre.game_simulation.dto.personnel.FieldGoalBlockPersonnel;
 import com.tiernebre.game_simulation.dto.personnel.FieldGoalKickingPersonnel;
+import com.tiernebre.game_simulation.game.play.field_goal.FieldGoalBlockPlayCall;
+import com.tiernebre.game_simulation.game.play.field_goal.FieldGoalKickPlayCall;
 
 public final class FieldGoalSimulatorMockFactory {
 

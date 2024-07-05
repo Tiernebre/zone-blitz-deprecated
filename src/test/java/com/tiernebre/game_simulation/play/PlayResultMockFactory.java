@@ -1,9 +1,9 @@
 package com.tiernebre.game_simulation.play;
 
 import com.tiernebre.game_simulation.dto.DtoMockFactory;
-import com.tiernebre.game_simulation.play.field_goal.blocked.BlockedFieldGoalResult;
-import com.tiernebre.game_simulation.play.field_goal.result.FieldGoalAttemptResult;
-import com.tiernebre.game_simulation.play.regular.rush.RushResult;
+import com.tiernebre.game_simulation.game.play.field_goal.blocked.BlockedFieldGoalResult;
+import com.tiernebre.game_simulation.game.play.field_goal.result.FieldGoalAttemptResult;
+import com.tiernebre.game_simulation.game.play.regular.rush.RushResult;
 
 public final class PlayResultMockFactory {
 

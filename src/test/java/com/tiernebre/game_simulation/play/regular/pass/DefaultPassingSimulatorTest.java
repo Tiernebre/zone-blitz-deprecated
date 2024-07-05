@@ -5,13 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import com.tiernebre.game_simulation.game.play.regular.defense.TackledByCalculator;
+import com.tiernebre.game_simulation.game.play.regular.pass.DefaultPassingSimulator;
+import com.tiernebre.game_simulation.game.play.regular.pass.PassResult;
+import com.tiernebre.game_simulation.game.play.regular.pass.PassingYardageCalculator;
+import com.tiernebre.game_simulation.game.play.regular.pass.completion.CompletedPassCalculator;
+import com.tiernebre.game_simulation.game.play.regular.pass.interception.InterceptionCalculator;
+import com.tiernebre.game_simulation.game.play.regular.pass.interception.InterceptionResult;
 import com.tiernebre.game_simulation.personnel.defense.RegularPlayDefensivePersonnel;
 import com.tiernebre.game_simulation.personnel.offense.RegularPlayOffensivePersonnel;
 import com.tiernebre.game_simulation.play.regular.RegularPlaySimulatorMockFactory;
-import com.tiernebre.game_simulation.play.regular.defense.TackledByCalculator;
-import com.tiernebre.game_simulation.play.regular.pass.completion.CompletedPassCalculator;
-import com.tiernebre.game_simulation.play.regular.pass.interception.InterceptionCalculator;
-import com.tiernebre.game_simulation.play.regular.pass.interception.InterceptionResult;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

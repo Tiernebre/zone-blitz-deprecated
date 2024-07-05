@@ -3,13 +3,13 @@ package com.tiernebre.game_simulation.game.state.handlers.field_goal;
 import com.tiernebre.game_simulation.EngineConstants;
 import com.tiernebre.game_simulation.dto.game.GameState;
 import com.tiernebre.game_simulation.dto.game.Score;
+import com.tiernebre.game_simulation.game.play.field_goal.blocked.BlockedFieldGoalResult;
+import com.tiernebre.game_simulation.game.play.field_goal.result.FieldGoalAttemptResult;
+import com.tiernebre.game_simulation.game.play.field_goal.result.FieldGoalResult;
 import com.tiernebre.game_simulation.game.state.handlers.scoring.ScoringPlayHandler;
 import com.tiernebre.game_simulation.game.state.handlers.turnover.TurnoverHandler;
 import com.tiernebre.game_simulation.game.state.util.DirectionUtils;
 import com.tiernebre.game_simulation.game.state.util.YardNormalizer;
-import com.tiernebre.game_simulation.play.field_goal.blocked.BlockedFieldGoalResult;
-import com.tiernebre.game_simulation.play.field_goal.result.FieldGoalAttemptResult;
-import com.tiernebre.game_simulation.play.field_goal.result.FieldGoalResult;
 
 public final class DefaultFieldGoalHandler implements FieldGoalHandler {
 

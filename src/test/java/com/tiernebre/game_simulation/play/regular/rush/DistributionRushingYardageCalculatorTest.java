@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.tiernebre.game_simulation.EngineConstants;
+import com.tiernebre.game_simulation.game.play.regular.rush.DistributionRushingYardageCalculator;
 import com.tiernebre.game_simulation.play.regular.RegularPlaySimulatorMockFactory;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.random.JDKRandomGenerator;

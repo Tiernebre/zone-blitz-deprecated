@@ -3,9 +3,9 @@ package com.tiernebre.game_simulation.playbook.offense;
 import com.tiernebre.game_simulation.dto.game.Down;
 import com.tiernebre.game_simulation.dto.game.GameState;
 import com.tiernebre.game_simulation.dto.personnel.OffensiveDepthChart;
+import com.tiernebre.game_simulation.game.play.call.OffensivePlayCall;
+import com.tiernebre.game_simulation.game.play.punt.PuntOffensivePlaycall;
 import com.tiernebre.game_simulation.personnel.DepthChartToPersonnelMapper;
-import com.tiernebre.game_simulation.play.call.OffensivePlayCall;
-import com.tiernebre.game_simulation.play.punt.PuntOffensivePlaycall;
 
 public final class BalancedOffensivePlaybook implements OffensivePlaybook {
 
