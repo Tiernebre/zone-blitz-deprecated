@@ -1,12 +1,17 @@
 package com.tiernebre.web;
 
+import com.tiernebre.web.constants.WebConstants;
 import com.tiernebre.web.errors.Errors;
 import com.tiernebre.web.guards.Guards;
 import com.tiernebre.web.middlewares.Middlewares;
 import com.tiernebre.web.routes.Routes;
 import io.javalin.Javalin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class Server {
+
+  private static final Logger LOG = LoggerFactory.getLogger(Server.class);
 
   private final Routes routes;
   private final Middlewares middlewares;
@@ -41,6 +46,11 @@ public final class Server {
     middlewares.register(server);
     guards.register(server);
     errors.register(server);
-    return server.start("0.0.0.0", port);
+    server = server.start("0.0.0.0", port);
+    LOG.debug(
+      "DEVELOPERS: Access Zone Blitz through proxy server at {}",
+      WebConstants.URL
+    );
+    return server;
   }
 }
