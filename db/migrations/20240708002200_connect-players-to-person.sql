@@ -1,5 +1,5 @@
 -- migrate:up
-ALTER TABLE player ADD person_id BIGINT UNIQUE REFERENCES person (id);
+ALTER TABLE player ADD person_id BIGINT NOT NULL UNIQUE REFERENCES person (id);
 
 
 -- migrate:down
