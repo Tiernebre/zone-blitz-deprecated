@@ -65,7 +65,7 @@ public class Player extends TableImpl<PlayerRecord> {
     /**
      * The column <code>public.player.person_id</code>.
      */
-    public final TableField<PlayerRecord, Long> PERSON_ID = createField(DSL.name("person_id"), SQLDataType.BIGINT, this, "");
+    public final TableField<PlayerRecord, Long> PERSON_ID = createField(DSL.name("person_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     private Player(Name alias, Table<PlayerRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
