@@ -32,6 +32,34 @@ public class PersonRecord extends UpdatableRecordImpl<PersonRecord> {
         return (Long) get(0);
     }
 
+    /**
+     * Setter for <code>public.person.first_name</code>.
+     */
+    public void setFirstName(String value) {
+        set(1, value);
+    }
+
+    /**
+     * Getter for <code>public.person.first_name</code>.
+     */
+    public String getFirstName() {
+        return (String) get(1);
+    }
+
+    /**
+     * Setter for <code>public.person.last_name</code>.
+     */
+    public void setLastName(String value) {
+        set(2, value);
+    }
+
+    /**
+     * Getter for <code>public.person.last_name</code>.
+     */
+    public String getLastName() {
+        return (String) get(2);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -55,10 +83,12 @@ public class PersonRecord extends UpdatableRecordImpl<PersonRecord> {
     /**
      * Create a detached, initialised PersonRecord
      */
-    public PersonRecord(Long id) {
+    public PersonRecord(Long id, String firstName, String lastName) {
         super(Person.PERSON);
 
         setId(id);
+        setFirstName(firstName);
+        setLastName(lastName);
         resetChangedOnNotNull();
     }
 }

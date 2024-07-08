@@ -60,6 +60,16 @@ public class Person extends TableImpl<PersonRecord> {
      */
     public final TableField<PersonRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false).identity(true), this, "");
 
+    /**
+     * The column <code>public.person.first_name</code>.
+     */
+    public final TableField<PersonRecord, String> FIRST_NAME = createField(DSL.name("first_name"), SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>public.person.last_name</code>.
+     */
+    public final TableField<PersonRecord, String> LAST_NAME = createField(DSL.name("last_name"), SQLDataType.CLOB.nullable(false), this, "");
+
     private Person(Name alias, Table<PersonRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }
