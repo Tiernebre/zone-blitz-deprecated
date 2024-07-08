@@ -6,6 +6,7 @@ package com.tiernebre.database.jooq;
 
 import com.tiernebre.database.jooq.tables.Account;
 import com.tiernebre.database.jooq.tables.League;
+import com.tiernebre.database.jooq.tables.Person;
 import com.tiernebre.database.jooq.tables.Player;
 import com.tiernebre.database.jooq.tables.Registration;
 import com.tiernebre.database.jooq.tables.Session;
@@ -42,6 +43,11 @@ public class Public extends SchemaImpl {
     public final League LEAGUE = League.LEAGUE;
 
     /**
+     * The table <code>public.person</code>.
+     */
+    public final Person PERSON = Person.PERSON;
+
+    /**
      * The table <code>public.player</code>.
      */
     public final Player PLAYER = Player.PLAYER;
@@ -74,6 +80,7 @@ public class Public extends SchemaImpl {
         return Arrays.asList(
             Account.ACCOUNT,
             League.LEAGUE,
+            Person.PERSON,
             Player.PLAYER,
             Registration.REGISTRATION,
             Session.SESSION

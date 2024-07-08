@@ -6,11 +6,13 @@ package com.tiernebre.database.jooq;
 
 import com.tiernebre.database.jooq.tables.Account;
 import com.tiernebre.database.jooq.tables.League;
+import com.tiernebre.database.jooq.tables.Person;
 import com.tiernebre.database.jooq.tables.Player;
 import com.tiernebre.database.jooq.tables.Registration;
 import com.tiernebre.database.jooq.tables.Session;
 import com.tiernebre.database.jooq.tables.records.AccountRecord;
 import com.tiernebre.database.jooq.tables.records.LeagueRecord;
+import com.tiernebre.database.jooq.tables.records.PersonRecord;
 import com.tiernebre.database.jooq.tables.records.PlayerRecord;
 import com.tiernebre.database.jooq.tables.records.RegistrationRecord;
 import com.tiernebre.database.jooq.tables.records.SessionRecord;
@@ -37,6 +39,7 @@ public class Keys {
     public static final UniqueKey<AccountRecord> UNIQUE_GOOGLE_ACCOUNT_ID = Internal.createUniqueKey(Account.ACCOUNT, DSL.name("unique_google_account_id"), new TableField[] { Account.ACCOUNT.GOOGLE_ACCOUNT_ID }, true);
     public static final UniqueKey<AccountRecord> UNIQUE_REGISTRATION_ID = Internal.createUniqueKey(Account.ACCOUNT, DSL.name("unique_registration_id"), new TableField[] { Account.ACCOUNT.REGISTRATION_ID }, true);
     public static final UniqueKey<LeagueRecord> LEAGUE_PKEY = Internal.createUniqueKey(League.LEAGUE, DSL.name("league_pkey"), new TableField[] { League.LEAGUE.ID }, true);
+    public static final UniqueKey<PersonRecord> PERSON_PKEY = Internal.createUniqueKey(Person.PERSON, DSL.name("person_pkey"), new TableField[] { Person.PERSON.ID }, true);
     public static final UniqueKey<PlayerRecord> PLAYER_PKEY = Internal.createUniqueKey(Player.PLAYER, DSL.name("player_pkey"), new TableField[] { Player.PLAYER.ID }, true);
     public static final UniqueKey<RegistrationRecord> REGISTRATION_PKEY = Internal.createUniqueKey(Registration.REGISTRATION, DSL.name("registration_pkey"), new TableField[] { Registration.REGISTRATION.ID }, true);
     public static final UniqueKey<RegistrationRecord> REGISTRATION_USERNAME_KEY = Internal.createUniqueKey(Registration.REGISTRATION, DSL.name("registration_username_key"), new TableField[] { Registration.REGISTRATION.USERNAME }, true);
