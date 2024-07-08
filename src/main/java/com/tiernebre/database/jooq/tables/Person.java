@@ -6,16 +6,21 @@ package com.tiernebre.database.jooq.tables;
 
 import com.tiernebre.database.jooq.Keys;
 import com.tiernebre.database.jooq.Public;
+import com.tiernebre.database.jooq.tables.Player.PlayerPath;
 import com.tiernebre.database.jooq.tables.records.PersonRecord;
 
 import java.util.Collection;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -84,6 +89,39 @@ public class Person extends TableImpl<PersonRecord> {
         this(DSL.name("person"), null);
     }
 
+    public <O extends Record> Person(Table<O> path, ForeignKey<O, PersonRecord> childPath, InverseForeignKey<O, PersonRecord> parentPath) {
+        super(path, childPath, parentPath, PERSON);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class PersonPath extends Person implements Path<PersonRecord> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> PersonPath(Table<O> path, ForeignKey<O, PersonRecord> childPath, InverseForeignKey<O, PersonRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private PersonPath(Name alias, Table<PersonRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public PersonPath as(String alias) {
+            return new PersonPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public PersonPath as(Name alias) {
+            return new PersonPath(alias, this);
+        }
+
+        @Override
+        public PersonPath as(Table<?> alias) {
+            return new PersonPath(alias.getQualifiedName(), this);
+        }
+    }
+
     @Override
     public Schema getSchema() {
         return aliased() ? null : Public.PUBLIC;
@@ -97,6 +135,19 @@ public class Person extends TableImpl<PersonRecord> {
     @Override
     public UniqueKey<PersonRecord> getPrimaryKey() {
         return Keys.PERSON_PKEY;
+    }
+
+    private transient PlayerPath _player;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.player</code>
+     * table
+     */
+    public PlayerPath player() {
+        if (_player == null)
+            _player = new PlayerPath(this, null, Keys.PLAYER__PLAYER_PERSON_ID_FKEY.getInverseKey());
+
+        return _player;
     }
 
     @Override
