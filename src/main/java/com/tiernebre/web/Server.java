@@ -48,7 +48,7 @@ public final class Server {
     errors.register(server);
     server = server.start("0.0.0.0", port);
     LOG.debug(
-      "DEVELOPERS: Access Zone Blitz through proxy server at {}",
+      "DEVELOPERS: Ignore the 'listening' log above. Access Zone Blitz through proxy server at {}",
       WebConstants.URL
     );
     return server;
