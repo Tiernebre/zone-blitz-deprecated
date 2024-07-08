@@ -1,6 +1,10 @@
 package com.tiernebre.game_simulation.dto;
 
-public class DtoMockFactory {
+import net.datafaker.Faker;
+
+public final class DtoMockFactory {
+
+  private static final Faker FAKER = new Faker();
 
   public static Team team() {
     return new Team(
@@ -12,12 +16,17 @@ public class DtoMockFactory {
     );
   }
 
-  public static Player player(int attribute) {
-    return new Player("Joe", "Bob", 0, playerAttributes(attribute));
+  public static Player player() {
+    return player(0);
   }
 
-  public static Player player() {
-    return new Player("Joe", "Bob", 0, playerAttributes(0));
+  public static Player player(int attribute) {
+    return new Player(
+      FAKER.name().malefirstName(),
+      FAKER.name().lastName(),
+      0,
+      playerAttributes(attribute)
+    );
   }
 
   public static PlayerAttributes playerAttributes(int attribute) {
