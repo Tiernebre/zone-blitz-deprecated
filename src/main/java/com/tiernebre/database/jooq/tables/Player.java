@@ -6,16 +6,23 @@ package com.tiernebre.database.jooq.tables;
 
 import com.tiernebre.database.jooq.Keys;
 import com.tiernebre.database.jooq.Public;
+import com.tiernebre.database.jooq.tables.Person.PersonPath;
 import com.tiernebre.database.jooq.tables.records.PlayerRecord;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -55,6 +62,11 @@ public class Player extends TableImpl<PlayerRecord> {
      */
     public final TableField<PlayerRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false).identity(true), this, "");
 
+    /**
+     * The column <code>public.player.person_id</code>.
+     */
+    public final TableField<PlayerRecord, Long> PERSON_ID = createField(DSL.name("person_id"), SQLDataType.BIGINT.nullable(false), this, "");
+
     private Player(Name alias, Table<PlayerRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }
@@ -84,6 +96,39 @@ public class Player extends TableImpl<PlayerRecord> {
         this(DSL.name("player"), null);
     }
 
+    public <O extends Record> Player(Table<O> path, ForeignKey<O, PlayerRecord> childPath, InverseForeignKey<O, PlayerRecord> parentPath) {
+        super(path, childPath, parentPath, PLAYER);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class PlayerPath extends Player implements Path<PlayerRecord> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> PlayerPath(Table<O> path, ForeignKey<O, PlayerRecord> childPath, InverseForeignKey<O, PlayerRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private PlayerPath(Name alias, Table<PlayerRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public PlayerPath as(String alias) {
+            return new PlayerPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public PlayerPath as(Name alias) {
+            return new PlayerPath(alias, this);
+        }
+
+        @Override
+        public PlayerPath as(Table<?> alias) {
+            return new PlayerPath(alias.getQualifiedName(), this);
+        }
+    }
+
     @Override
     public Schema getSchema() {
         return aliased() ? null : Public.PUBLIC;
@@ -97,6 +142,28 @@ public class Player extends TableImpl<PlayerRecord> {
     @Override
     public UniqueKey<PlayerRecord> getPrimaryKey() {
         return Keys.PLAYER_PKEY;
+    }
+
+    @Override
+    public List<UniqueKey<PlayerRecord>> getUniqueKeys() {
+        return Arrays.asList(Keys.PLAYER_PERSON_ID_KEY);
+    }
+
+    @Override
+    public List<ForeignKey<PlayerRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.PLAYER__PLAYER_PERSON_ID_FKEY);
+    }
+
+    private transient PersonPath _person;
+
+    /**
+     * Get the implicit join path to the <code>public.person</code> table.
+     */
+    public PersonPath person() {
+        if (_person == null)
+            _person = new PersonPath(this, Keys.PLAYER__PLAYER_PERSON_ID_FKEY, null);
+
+        return _person;
     }
 
     @Override

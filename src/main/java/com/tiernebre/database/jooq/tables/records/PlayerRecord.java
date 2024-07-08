@@ -32,6 +32,20 @@ public class PlayerRecord extends UpdatableRecordImpl<PlayerRecord> {
         return (Long) get(0);
     }
 
+    /**
+     * Setter for <code>public.player.person_id</code>.
+     */
+    public void setPersonId(Long value) {
+        set(1, value);
+    }
+
+    /**
+     * Getter for <code>public.player.person_id</code>.
+     */
+    public Long getPersonId() {
+        return (Long) get(1);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -55,10 +69,11 @@ public class PlayerRecord extends UpdatableRecordImpl<PlayerRecord> {
     /**
      * Create a detached, initialised PlayerRecord
      */
-    public PlayerRecord(Long id) {
+    public PlayerRecord(Long id, Long personId) {
         super(Player.PLAYER);
 
         setId(id);
+        setPersonId(personId);
         resetChangedOnNotNull();
     }
 }
