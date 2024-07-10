@@ -5,11 +5,14 @@ package com.tiernebre.database.jooq;
 
 
 import com.tiernebre.database.jooq.tables.Account;
+import com.tiernebre.database.jooq.tables.Coach;
 import com.tiernebre.database.jooq.tables.League;
 import com.tiernebre.database.jooq.tables.Person;
 import com.tiernebre.database.jooq.tables.Player;
 import com.tiernebre.database.jooq.tables.Registration;
 import com.tiernebre.database.jooq.tables.Session;
+import com.tiernebre.database.jooq.tables.Team;
+import com.tiernebre.database.jooq.tables.TeamBrand;
 
 
 /**
@@ -22,6 +25,11 @@ public class Tables {
      * The table <code>public.account</code>.
      */
     public static final Account ACCOUNT = Account.ACCOUNT;
+
+    /**
+     * The table <code>public.coach</code>.
+     */
+    public static final Coach COACH = Coach.COACH;
 
     /**
      * The table <code>public.league</code>.
@@ -47,4 +55,14 @@ public class Tables {
      * The table <code>public.session</code>.
      */
     public static final Session SESSION = Session.SESSION;
+
+    /**
+     * The table <code>public.team</code>.
+     */
+    public static final Team TEAM = Team.TEAM;
+
+    /**
+     * The table <code>public.team_brand</code>.
+     */
+    public static final TeamBrand TEAM_BRAND = TeamBrand.TEAM_BRAND;
 }

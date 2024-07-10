@@ -5,11 +5,14 @@ package com.tiernebre.database.jooq;
 
 
 import com.tiernebre.database.jooq.tables.Account;
+import com.tiernebre.database.jooq.tables.Coach;
 import com.tiernebre.database.jooq.tables.League;
 import com.tiernebre.database.jooq.tables.Person;
 import com.tiernebre.database.jooq.tables.Player;
 import com.tiernebre.database.jooq.tables.Registration;
 import com.tiernebre.database.jooq.tables.Session;
+import com.tiernebre.database.jooq.tables.Team;
+import com.tiernebre.database.jooq.tables.TeamBrand;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +41,11 @@ public class Public extends SchemaImpl {
     public final Account ACCOUNT = Account.ACCOUNT;
 
     /**
+     * The table <code>public.coach</code>.
+     */
+    public final Coach COACH = Coach.COACH;
+
+    /**
      * The table <code>public.league</code>.
      */
     public final League LEAGUE = League.LEAGUE;
@@ -63,6 +71,16 @@ public class Public extends SchemaImpl {
     public final Session SESSION = Session.SESSION;
 
     /**
+     * The table <code>public.team</code>.
+     */
+    public final Team TEAM = Team.TEAM;
+
+    /**
+     * The table <code>public.team_brand</code>.
+     */
+    public final TeamBrand TEAM_BRAND = TeamBrand.TEAM_BRAND;
+
+    /**
      * No further instances allowed
      */
     private Public() {
@@ -79,11 +97,14 @@ public class Public extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             Account.ACCOUNT,
+            Coach.COACH,
             League.LEAGUE,
             Person.PERSON,
             Player.PLAYER,
             Registration.REGISTRATION,
-            Session.SESSION
+            Session.SESSION,
+            Team.TEAM,
+            TeamBrand.TEAM_BRAND
         );
     }
 }
