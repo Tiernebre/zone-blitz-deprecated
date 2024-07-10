@@ -6,6 +6,7 @@ package com.tiernebre.database.jooq;
 
 import com.tiernebre.database.jooq.tables.Account;
 import com.tiernebre.database.jooq.tables.Coach;
+import com.tiernebre.database.jooq.tables.GeneralManager;
 import com.tiernebre.database.jooq.tables.League;
 import com.tiernebre.database.jooq.tables.Person;
 import com.tiernebre.database.jooq.tables.Player;
@@ -30,6 +31,11 @@ public class Tables {
      * The table <code>public.coach</code>.
      */
     public static final Coach COACH = Coach.COACH;
+
+    /**
+     * The table <code>public.general_manager</code>.
+     */
+    public static final GeneralManager GENERAL_MANAGER = GeneralManager.GENERAL_MANAGER;
 
     /**
      * The table <code>public.league</code>.

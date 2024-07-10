@@ -6,6 +6,7 @@ package com.tiernebre.database.jooq;
 
 import com.tiernebre.database.jooq.tables.Account;
 import com.tiernebre.database.jooq.tables.Coach;
+import com.tiernebre.database.jooq.tables.GeneralManager;
 import com.tiernebre.database.jooq.tables.League;
 import com.tiernebre.database.jooq.tables.Person;
 import com.tiernebre.database.jooq.tables.Player;
@@ -15,6 +16,7 @@ import com.tiernebre.database.jooq.tables.Team;
 import com.tiernebre.database.jooq.tables.TeamBrand;
 import com.tiernebre.database.jooq.tables.records.AccountRecord;
 import com.tiernebre.database.jooq.tables.records.CoachRecord;
+import com.tiernebre.database.jooq.tables.records.GeneralManagerRecord;
 import com.tiernebre.database.jooq.tables.records.LeagueRecord;
 import com.tiernebre.database.jooq.tables.records.PersonRecord;
 import com.tiernebre.database.jooq.tables.records.PlayerRecord;
@@ -45,6 +47,7 @@ public class Keys {
     public static final UniqueKey<AccountRecord> UNIQUE_GOOGLE_ACCOUNT_ID = Internal.createUniqueKey(Account.ACCOUNT, DSL.name("unique_google_account_id"), new TableField[] { Account.ACCOUNT.GOOGLE_ACCOUNT_ID }, true);
     public static final UniqueKey<AccountRecord> UNIQUE_REGISTRATION_ID = Internal.createUniqueKey(Account.ACCOUNT, DSL.name("unique_registration_id"), new TableField[] { Account.ACCOUNT.REGISTRATION_ID }, true);
     public static final UniqueKey<CoachRecord> COACH_PKEY = Internal.createUniqueKey(Coach.COACH, DSL.name("coach_pkey"), new TableField[] { Coach.COACH.ID }, true);
+    public static final UniqueKey<GeneralManagerRecord> GENERAL_MANAGER_PKEY = Internal.createUniqueKey(GeneralManager.GENERAL_MANAGER, DSL.name("general_manager_pkey"), new TableField[] { GeneralManager.GENERAL_MANAGER.ID }, true);
     public static final UniqueKey<LeagueRecord> LEAGUE_PKEY = Internal.createUniqueKey(League.LEAGUE, DSL.name("league_pkey"), new TableField[] { League.LEAGUE.ID }, true);
     public static final UniqueKey<PersonRecord> PERSON_PKEY = Internal.createUniqueKey(Person.PERSON, DSL.name("person_pkey"), new TableField[] { Person.PERSON.ID }, true);
     public static final UniqueKey<PlayerRecord> PLAYER_PERSON_ID_KEY = Internal.createUniqueKey(Player.PLAYER, DSL.name("player_person_id_key"), new TableField[] { Player.PLAYER.PERSON_ID }, true);
