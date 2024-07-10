@@ -68,4 +68,5 @@ public class Keys {
     public static final ForeignKey<LeagueRecord, AccountRecord> LEAGUE__LEAGUE_ACCOUNT_ID_FKEY = Internal.createForeignKey(League.LEAGUE, DSL.name("league_account_id_fkey"), new TableField[] { League.LEAGUE.ACCOUNT_ID }, Keys.ACCOUNT_PKEY, new TableField[] { Account.ACCOUNT.ID }, true);
     public static final ForeignKey<PlayerRecord, PersonRecord> PLAYER__PLAYER_PERSON_ID_FKEY = Internal.createForeignKey(Player.PLAYER, DSL.name("player_person_id_fkey"), new TableField[] { Player.PLAYER.PERSON_ID }, Keys.PERSON_PKEY, new TableField[] { Person.PERSON.ID }, true);
     public static final ForeignKey<SessionRecord, AccountRecord> SESSION__SESSION_ACCOUNT_ID_FKEY = Internal.createForeignKey(Session.SESSION, DSL.name("session_account_id_fkey"), new TableField[] { Session.SESSION.ACCOUNT_ID }, Keys.ACCOUNT_PKEY, new TableField[] { Account.ACCOUNT.ID }, true);
+    public static final ForeignKey<TeamRecord, LeagueRecord> TEAM__TEAM_LEAGUE_ID_FKEY = Internal.createForeignKey(Team.TEAM, DSL.name("team_league_id_fkey"), new TableField[] { Team.TEAM.LEAGUE_ID }, Keys.LEAGUE_PKEY, new TableField[] { League.LEAGUE.ID }, true);
 }

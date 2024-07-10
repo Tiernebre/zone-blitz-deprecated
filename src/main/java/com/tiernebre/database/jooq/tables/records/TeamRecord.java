@@ -32,6 +32,20 @@ public class TeamRecord extends UpdatableRecordImpl<TeamRecord> {
         return (Long) get(0);
     }
 
+    /**
+     * Setter for <code>public.team.league_id</code>.
+     */
+    public void setLeagueId(Long value) {
+        set(1, value);
+    }
+
+    /**
+     * Getter for <code>public.team.league_id</code>.
+     */
+    public Long getLeagueId() {
+        return (Long) get(1);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -55,10 +69,11 @@ public class TeamRecord extends UpdatableRecordImpl<TeamRecord> {
     /**
      * Create a detached, initialised TeamRecord
      */
-    public TeamRecord(Long id) {
+    public TeamRecord(Long id, Long leagueId) {
         super(Team.TEAM);
 
         setId(id);
+        setLeagueId(leagueId);
         resetChangedOnNotNull();
     }
 }

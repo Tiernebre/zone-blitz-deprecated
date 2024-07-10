@@ -7,9 +7,12 @@ package com.tiernebre.database.jooq.tables;
 import com.tiernebre.database.jooq.Keys;
 import com.tiernebre.database.jooq.Public;
 import com.tiernebre.database.jooq.tables.GeneralManager.GeneralManagerPath;
+import com.tiernebre.database.jooq.tables.League.LeaguePath;
 import com.tiernebre.database.jooq.tables.records.TeamRecord;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
@@ -59,6 +62,11 @@ public class Team extends TableImpl<TeamRecord> {
      * The column <code>public.team.id</code>.
      */
     public final TableField<TeamRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false).identity(true), this, "");
+
+    /**
+     * The column <code>public.team.league_id</code>.
+     */
+    public final TableField<TeamRecord, Long> LEAGUE_ID = createField(DSL.name("league_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     private Team(Name alias, Table<TeamRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -135,6 +143,23 @@ public class Team extends TableImpl<TeamRecord> {
     @Override
     public UniqueKey<TeamRecord> getPrimaryKey() {
         return Keys.TEAM_PKEY;
+    }
+
+    @Override
+    public List<ForeignKey<TeamRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.TEAM__TEAM_LEAGUE_ID_FKEY);
+    }
+
+    private transient LeaguePath _league;
+
+    /**
+     * Get the implicit join path to the <code>public.league</code> table.
+     */
+    public LeaguePath league() {
+        if (_league == null)
+            _league = new LeaguePath(this, Keys.TEAM__TEAM_LEAGUE_ID_FKEY, null);
+
+        return _league;
     }
 
     private transient GeneralManagerPath _generalManager;
