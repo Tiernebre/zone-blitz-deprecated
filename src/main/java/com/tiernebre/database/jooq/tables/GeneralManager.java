@@ -7,6 +7,7 @@ package com.tiernebre.database.jooq.tables;
 import com.tiernebre.database.jooq.Keys;
 import com.tiernebre.database.jooq.Public;
 import com.tiernebre.database.jooq.tables.Account.AccountPath;
+import com.tiernebre.database.jooq.tables.Team.TeamPath;
 import com.tiernebre.database.jooq.tables.records.GeneralManagerRecord;
 
 import java.util.Arrays;
@@ -66,6 +67,11 @@ public class GeneralManager extends TableImpl<GeneralManagerRecord> {
      * The column <code>public.general_manager.user_id</code>.
      */
     public final TableField<GeneralManagerRecord, Long> USER_ID = createField(DSL.name("user_id"), SQLDataType.BIGINT, this, "");
+
+    /**
+     * The column <code>public.general_manager.team_id</code>.
+     */
+    public final TableField<GeneralManagerRecord, Long> TEAM_ID = createField(DSL.name("team_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     private GeneralManager(Name alias, Table<GeneralManagerRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -146,7 +152,7 @@ public class GeneralManager extends TableImpl<GeneralManagerRecord> {
 
     @Override
     public List<ForeignKey<GeneralManagerRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.GENERAL_MANAGER__GENERAL_MANAGER_USER_ID_FKEY);
+        return Arrays.asList(Keys.GENERAL_MANAGER__GENERAL_MANAGER_USER_ID_FKEY, Keys.GENERAL_MANAGER__GENERAL_MANAGER_TEAM_ID_FKEY);
     }
 
     private transient AccountPath _account;
@@ -159,6 +165,18 @@ public class GeneralManager extends TableImpl<GeneralManagerRecord> {
             _account = new AccountPath(this, Keys.GENERAL_MANAGER__GENERAL_MANAGER_USER_ID_FKEY, null);
 
         return _account;
+    }
+
+    private transient TeamPath _team;
+
+    /**
+     * Get the implicit join path to the <code>public.team</code> table.
+     */
+    public TeamPath team() {
+        if (_team == null)
+            _team = new TeamPath(this, Keys.GENERAL_MANAGER__GENERAL_MANAGER_TEAM_ID_FKEY, null);
+
+        return _team;
     }
 
     @Override

@@ -46,6 +46,20 @@ public class GeneralManagerRecord extends UpdatableRecordImpl<GeneralManagerReco
         return (Long) get(1);
     }
 
+    /**
+     * Setter for <code>public.general_manager.team_id</code>.
+     */
+    public void setTeamId(Long value) {
+        set(2, value);
+    }
+
+    /**
+     * Getter for <code>public.general_manager.team_id</code>.
+     */
+    public Long getTeamId() {
+        return (Long) get(2);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -69,11 +83,12 @@ public class GeneralManagerRecord extends UpdatableRecordImpl<GeneralManagerReco
     /**
      * Create a detached, initialised GeneralManagerRecord
      */
-    public GeneralManagerRecord(Long id, Long userId) {
+    public GeneralManagerRecord(Long id, Long userId, Long teamId) {
         super(GeneralManager.GENERAL_MANAGER);
 
         setId(id);
         setUserId(userId);
+        setTeamId(teamId);
         resetChangedOnNotNull();
     }
 }

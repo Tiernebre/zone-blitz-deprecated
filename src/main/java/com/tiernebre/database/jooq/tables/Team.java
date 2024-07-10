@@ -6,16 +6,21 @@ package com.tiernebre.database.jooq.tables;
 
 import com.tiernebre.database.jooq.Keys;
 import com.tiernebre.database.jooq.Public;
+import com.tiernebre.database.jooq.tables.GeneralManager.GeneralManagerPath;
 import com.tiernebre.database.jooq.tables.records.TeamRecord;
 
 import java.util.Collection;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -84,6 +89,39 @@ public class Team extends TableImpl<TeamRecord> {
         this(DSL.name("team"), null);
     }
 
+    public <O extends Record> Team(Table<O> path, ForeignKey<O, TeamRecord> childPath, InverseForeignKey<O, TeamRecord> parentPath) {
+        super(path, childPath, parentPath, TEAM);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class TeamPath extends Team implements Path<TeamRecord> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> TeamPath(Table<O> path, ForeignKey<O, TeamRecord> childPath, InverseForeignKey<O, TeamRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private TeamPath(Name alias, Table<TeamRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public TeamPath as(String alias) {
+            return new TeamPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public TeamPath as(Name alias) {
+            return new TeamPath(alias, this);
+        }
+
+        @Override
+        public TeamPath as(Table<?> alias) {
+            return new TeamPath(alias.getQualifiedName(), this);
+        }
+    }
+
     @Override
     public Schema getSchema() {
         return aliased() ? null : Public.PUBLIC;
@@ -97,6 +135,19 @@ public class Team extends TableImpl<TeamRecord> {
     @Override
     public UniqueKey<TeamRecord> getPrimaryKey() {
         return Keys.TEAM_PKEY;
+    }
+
+    private transient GeneralManagerPath _generalManager;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.general_manager</code> table
+     */
+    public GeneralManagerPath generalManager() {
+        if (_generalManager == null)
+            _generalManager = new GeneralManagerPath(this, null, Keys.GENERAL_MANAGER__GENERAL_MANAGER_TEAM_ID_FKEY.getInverseKey());
+
+        return _generalManager;
     }
 
     @Override
