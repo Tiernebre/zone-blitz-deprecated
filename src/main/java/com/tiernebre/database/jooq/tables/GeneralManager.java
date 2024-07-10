@@ -6,16 +6,23 @@ package com.tiernebre.database.jooq.tables;
 
 import com.tiernebre.database.jooq.Keys;
 import com.tiernebre.database.jooq.Public;
+import com.tiernebre.database.jooq.tables.Account.AccountPath;
 import com.tiernebre.database.jooq.tables.records.GeneralManagerRecord;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -55,6 +62,11 @@ public class GeneralManager extends TableImpl<GeneralManagerRecord> {
      */
     public final TableField<GeneralManagerRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false).identity(true), this, "");
 
+    /**
+     * The column <code>public.general_manager.user_id</code>.
+     */
+    public final TableField<GeneralManagerRecord, Long> USER_ID = createField(DSL.name("user_id"), SQLDataType.BIGINT, this, "");
+
     private GeneralManager(Name alias, Table<GeneralManagerRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }
@@ -84,6 +96,39 @@ public class GeneralManager extends TableImpl<GeneralManagerRecord> {
         this(DSL.name("general_manager"), null);
     }
 
+    public <O extends Record> GeneralManager(Table<O> path, ForeignKey<O, GeneralManagerRecord> childPath, InverseForeignKey<O, GeneralManagerRecord> parentPath) {
+        super(path, childPath, parentPath, GENERAL_MANAGER);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class GeneralManagerPath extends GeneralManager implements Path<GeneralManagerRecord> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> GeneralManagerPath(Table<O> path, ForeignKey<O, GeneralManagerRecord> childPath, InverseForeignKey<O, GeneralManagerRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private GeneralManagerPath(Name alias, Table<GeneralManagerRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public GeneralManagerPath as(String alias) {
+            return new GeneralManagerPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public GeneralManagerPath as(Name alias) {
+            return new GeneralManagerPath(alias, this);
+        }
+
+        @Override
+        public GeneralManagerPath as(Table<?> alias) {
+            return new GeneralManagerPath(alias.getQualifiedName(), this);
+        }
+    }
+
     @Override
     public Schema getSchema() {
         return aliased() ? null : Public.PUBLIC;
@@ -97,6 +142,23 @@ public class GeneralManager extends TableImpl<GeneralManagerRecord> {
     @Override
     public UniqueKey<GeneralManagerRecord> getPrimaryKey() {
         return Keys.GENERAL_MANAGER_PKEY;
+    }
+
+    @Override
+    public List<ForeignKey<GeneralManagerRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.GENERAL_MANAGER__GENERAL_MANAGER_USER_ID_FKEY);
+    }
+
+    private transient AccountPath _account;
+
+    /**
+     * Get the implicit join path to the <code>public.account</code> table.
+     */
+    public AccountPath account() {
+        if (_account == null)
+            _account = new AccountPath(this, Keys.GENERAL_MANAGER__GENERAL_MANAGER_USER_ID_FKEY, null);
+
+        return _account;
     }
 
     @Override
