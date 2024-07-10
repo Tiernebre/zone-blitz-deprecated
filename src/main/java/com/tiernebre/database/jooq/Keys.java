@@ -6,6 +6,7 @@ package com.tiernebre.database.jooq;
 
 import com.tiernebre.database.jooq.tables.Account;
 import com.tiernebre.database.jooq.tables.Coach;
+import com.tiernebre.database.jooq.tables.GeneralManager;
 import com.tiernebre.database.jooq.tables.League;
 import com.tiernebre.database.jooq.tables.Person;
 import com.tiernebre.database.jooq.tables.Player;
@@ -15,6 +16,7 @@ import com.tiernebre.database.jooq.tables.Team;
 import com.tiernebre.database.jooq.tables.TeamBrand;
 import com.tiernebre.database.jooq.tables.records.AccountRecord;
 import com.tiernebre.database.jooq.tables.records.CoachRecord;
+import com.tiernebre.database.jooq.tables.records.GeneralManagerRecord;
 import com.tiernebre.database.jooq.tables.records.LeagueRecord;
 import com.tiernebre.database.jooq.tables.records.PersonRecord;
 import com.tiernebre.database.jooq.tables.records.PlayerRecord;
@@ -45,6 +47,7 @@ public class Keys {
     public static final UniqueKey<AccountRecord> UNIQUE_GOOGLE_ACCOUNT_ID = Internal.createUniqueKey(Account.ACCOUNT, DSL.name("unique_google_account_id"), new TableField[] { Account.ACCOUNT.GOOGLE_ACCOUNT_ID }, true);
     public static final UniqueKey<AccountRecord> UNIQUE_REGISTRATION_ID = Internal.createUniqueKey(Account.ACCOUNT, DSL.name("unique_registration_id"), new TableField[] { Account.ACCOUNT.REGISTRATION_ID }, true);
     public static final UniqueKey<CoachRecord> COACH_PKEY = Internal.createUniqueKey(Coach.COACH, DSL.name("coach_pkey"), new TableField[] { Coach.COACH.ID }, true);
+    public static final UniqueKey<GeneralManagerRecord> GENERAL_MANAGER_PKEY = Internal.createUniqueKey(GeneralManager.GENERAL_MANAGER, DSL.name("general_manager_pkey"), new TableField[] { GeneralManager.GENERAL_MANAGER.ID }, true);
     public static final UniqueKey<LeagueRecord> LEAGUE_PKEY = Internal.createUniqueKey(League.LEAGUE, DSL.name("league_pkey"), new TableField[] { League.LEAGUE.ID }, true);
     public static final UniqueKey<PersonRecord> PERSON_PKEY = Internal.createUniqueKey(Person.PERSON, DSL.name("person_pkey"), new TableField[] { Person.PERSON.ID }, true);
     public static final UniqueKey<PlayerRecord> PLAYER_PERSON_ID_KEY = Internal.createUniqueKey(Player.PLAYER, DSL.name("player_person_id_key"), new TableField[] { Player.PLAYER.PERSON_ID }, true);
@@ -60,7 +63,10 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final ForeignKey<AccountRecord, RegistrationRecord> ACCOUNT__ACCOUNT_REGISTRATION_ID_FKEY = Internal.createForeignKey(Account.ACCOUNT, DSL.name("account_registration_id_fkey"), new TableField[] { Account.ACCOUNT.REGISTRATION_ID }, Keys.REGISTRATION_PKEY, new TableField[] { Registration.REGISTRATION.ID }, true);
+    public static final ForeignKey<GeneralManagerRecord, TeamRecord> GENERAL_MANAGER__GENERAL_MANAGER_TEAM_ID_FKEY = Internal.createForeignKey(GeneralManager.GENERAL_MANAGER, DSL.name("general_manager_team_id_fkey"), new TableField[] { GeneralManager.GENERAL_MANAGER.TEAM_ID }, Keys.TEAM_PKEY, new TableField[] { Team.TEAM.ID }, true);
+    public static final ForeignKey<GeneralManagerRecord, AccountRecord> GENERAL_MANAGER__GENERAL_MANAGER_USER_ID_FKEY = Internal.createForeignKey(GeneralManager.GENERAL_MANAGER, DSL.name("general_manager_user_id_fkey"), new TableField[] { GeneralManager.GENERAL_MANAGER.USER_ID }, Keys.ACCOUNT_PKEY, new TableField[] { Account.ACCOUNT.ID }, true);
     public static final ForeignKey<LeagueRecord, AccountRecord> LEAGUE__LEAGUE_ACCOUNT_ID_FKEY = Internal.createForeignKey(League.LEAGUE, DSL.name("league_account_id_fkey"), new TableField[] { League.LEAGUE.ACCOUNT_ID }, Keys.ACCOUNT_PKEY, new TableField[] { Account.ACCOUNT.ID }, true);
     public static final ForeignKey<PlayerRecord, PersonRecord> PLAYER__PLAYER_PERSON_ID_FKEY = Internal.createForeignKey(Player.PLAYER, DSL.name("player_person_id_fkey"), new TableField[] { Player.PLAYER.PERSON_ID }, Keys.PERSON_PKEY, new TableField[] { Person.PERSON.ID }, true);
     public static final ForeignKey<SessionRecord, AccountRecord> SESSION__SESSION_ACCOUNT_ID_FKEY = Internal.createForeignKey(Session.SESSION, DSL.name("session_account_id_fkey"), new TableField[] { Session.SESSION.ACCOUNT_ID }, Keys.ACCOUNT_PKEY, new TableField[] { Account.ACCOUNT.ID }, true);
+    public static final ForeignKey<TeamRecord, LeagueRecord> TEAM__TEAM_LEAGUE_ID_FKEY = Internal.createForeignKey(Team.TEAM, DSL.name("team_league_id_fkey"), new TableField[] { Team.TEAM.LEAGUE_ID }, Keys.LEAGUE_PKEY, new TableField[] { League.LEAGUE.ID }, true);
 }
