@@ -12,6 +12,7 @@ import com.tiernebre.database.jooq.tables.Player;
 import com.tiernebre.database.jooq.tables.Registration;
 import com.tiernebre.database.jooq.tables.Session;
 import com.tiernebre.database.jooq.tables.Team;
+import com.tiernebre.database.jooq.tables.TeamBrand;
 
 import java.util.Arrays;
 import java.util.List;
@@ -75,6 +76,11 @@ public class Public extends SchemaImpl {
     public final Team TEAM = Team.TEAM;
 
     /**
+     * The table <code>public.team_brand</code>.
+     */
+    public final TeamBrand TEAM_BRAND = TeamBrand.TEAM_BRAND;
+
+    /**
      * No further instances allowed
      */
     private Public() {
@@ -97,7 +103,8 @@ public class Public extends SchemaImpl {
             Player.PLAYER,
             Registration.REGISTRATION,
             Session.SESSION,
-            Team.TEAM
+            Team.TEAM,
+            TeamBrand.TEAM_BRAND
         );
     }
 }

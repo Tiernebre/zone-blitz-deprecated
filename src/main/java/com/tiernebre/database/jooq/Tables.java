@@ -12,6 +12,7 @@ import com.tiernebre.database.jooq.tables.Player;
 import com.tiernebre.database.jooq.tables.Registration;
 import com.tiernebre.database.jooq.tables.Session;
 import com.tiernebre.database.jooq.tables.Team;
+import com.tiernebre.database.jooq.tables.TeamBrand;
 
 
 /**
@@ -59,4 +60,9 @@ public class Tables {
      * The table <code>public.team</code>.
      */
     public static final Team TEAM = Team.TEAM;
+
+    /**
+     * The table <code>public.team_brand</code>.
+     */
+    public static final TeamBrand TEAM_BRAND = TeamBrand.TEAM_BRAND;
 }
