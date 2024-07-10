@@ -10,12 +10,14 @@ import com.tiernebre.database.jooq.tables.Person;
 import com.tiernebre.database.jooq.tables.Player;
 import com.tiernebre.database.jooq.tables.Registration;
 import com.tiernebre.database.jooq.tables.Session;
+import com.tiernebre.database.jooq.tables.Team;
 import com.tiernebre.database.jooq.tables.records.AccountRecord;
 import com.tiernebre.database.jooq.tables.records.LeagueRecord;
 import com.tiernebre.database.jooq.tables.records.PersonRecord;
 import com.tiernebre.database.jooq.tables.records.PlayerRecord;
 import com.tiernebre.database.jooq.tables.records.RegistrationRecord;
 import com.tiernebre.database.jooq.tables.records.SessionRecord;
+import com.tiernebre.database.jooq.tables.records.TeamRecord;
 
 import org.jooq.ForeignKey;
 import org.jooq.TableField;
@@ -45,6 +47,7 @@ public class Keys {
     public static final UniqueKey<RegistrationRecord> REGISTRATION_PKEY = Internal.createUniqueKey(Registration.REGISTRATION, DSL.name("registration_pkey"), new TableField[] { Registration.REGISTRATION.ID }, true);
     public static final UniqueKey<RegistrationRecord> REGISTRATION_USERNAME_KEY = Internal.createUniqueKey(Registration.REGISTRATION, DSL.name("registration_username_key"), new TableField[] { Registration.REGISTRATION.USERNAME }, true);
     public static final UniqueKey<SessionRecord> SESSION_PKEY = Internal.createUniqueKey(Session.SESSION, DSL.name("session_pkey"), new TableField[] { Session.SESSION.ID }, true);
+    public static final UniqueKey<TeamRecord> TEAM_PKEY = Internal.createUniqueKey(Team.TEAM, DSL.name("team_pkey"), new TableField[] { Team.TEAM.ID }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions

@@ -10,6 +10,7 @@ import com.tiernebre.database.jooq.tables.Person;
 import com.tiernebre.database.jooq.tables.Player;
 import com.tiernebre.database.jooq.tables.Registration;
 import com.tiernebre.database.jooq.tables.Session;
+import com.tiernebre.database.jooq.tables.Team;
 
 
 /**
@@ -47,4 +48,9 @@ public class Tables {
      * The table <code>public.session</code>.
      */
     public static final Session SESSION = Session.SESSION;
+
+    /**
+     * The table <code>public.team</code>.
+     */
+    public static final Team TEAM = Team.TEAM;
 }
