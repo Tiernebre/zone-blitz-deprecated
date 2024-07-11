@@ -36,7 +36,7 @@ dependencies {
     implementation("io.vavr:vavr:0.10.4")
     implementation("org.bouncycastle:bcprov-jdk18on:1.78.1")
     implementation("org.springframework.security:spring-security-crypto:6.3.1")
-    implementation("net.datafaker:datafaker:2.3.0")
+    implementation("net.datafaker:datafaker:2.3.1")
 
     jooqCodegen("org.jooq:jooq-postgres-extensions:3.19.10")
 
